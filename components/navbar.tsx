@@ -47,8 +47,8 @@ export function Navbar() {
             <Image
               src="/image/Logoblack.png"
               alt="Travel Tribes"
-              width={110}
-              height={30}
+              width={160}
+              height={45}
               style={{ objectFit: 'contain', height: 'auto' }}
               priority
             />

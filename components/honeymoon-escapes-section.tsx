@@ -9,7 +9,7 @@ import { honeymoonTrips } from '@/lib/travel-data'
 export function HoneymoonEscapesSection() {
   return (
     <section 
-      className="py-[110px] max-[850px]:py-[75px] bg-[var(--sky-pale)]"
+      className="py-[110px] max-[850px]:py-[40px] bg-[var(--sky-pale)]"
       style={{
         paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
         paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',
@@ -21,6 +21,7 @@ export function HoneymoonEscapesSection() {
         text="Unhurried days, beautiful stays and places made for celebrating two." 
         href="/contact" 
         label="Plan something personal" 
+        center
       />
       <HorizontalRail label="Honeymoon trips">
         {honeymoonTrips.map(t => (

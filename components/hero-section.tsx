@@ -258,7 +258,7 @@ export function Hero() {
             </div>
 
             <span className="text-xs text-white/50 block font-medium">
-              #seekersforlife · Guided group tours & customizable packages
+              Guided group tours & customizable packages
             </span>
           </div>
 

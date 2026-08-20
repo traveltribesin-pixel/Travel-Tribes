@@ -6,11 +6,13 @@ import { trips } from '@/lib/travel-data'
 
 export function DomesticJourneysSection() {
   return (
-    <section className="w-full max-w-[1280px] py-[110px] max-[850px]:py-[75px] px-[5vw] mx-auto editorial-section">
+    <section className="w-full max-w-[1280px] py-[110px] max-[850px]:py-[40px] px-[5vw] mx-auto editorial-section">
       <SectionHeading 
         eyebrow="Stay close to home" 
         title="Domestic journeys." 
+        text="Incredible destinations right in our own backyard. Experience the hidden gems and breathtaking landscapes closer to home."
         href="/domestic-trips" 
+        center
       />
       <HorizontalRail label="Domestic trips">
         {trips

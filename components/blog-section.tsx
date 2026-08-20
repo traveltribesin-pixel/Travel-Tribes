@@ -8,12 +8,14 @@ import { blogs } from '@/lib/travel-data'
 
 export function BlogSection() {
   return (
-    <section className="w-full max-w-[1280px] py-[110px] max-[850px]:py-[75px] px-[5vw] mx-auto blog-section">
+    <section className="w-full max-w-[1280px] py-[110px] max-[850px]:py-[40px] px-[5vw] mx-auto blog-section">
       <SectionHeading 
         eyebrow="The travel journal" 
         title="Notes from the road." 
+        text="Travel tips, destination guides, and stories from our guides. Dive into our journal to fuel your wanderlust for your next trip."
         href="/about" 
         label="Read our journal" 
+        center
       />
       <HorizontalRail label="Travel blog">
         {blogs.map(blog => (
