@@ -60,7 +60,103 @@ export function HorizontalRail({ children, label = 'Scrollable content' }: { chi
 }
 import { TripCard } from './trip-card'
 export { TripCard }
-export function TripExplorer({ trips }: { trips: Trip[] }) { const [query, setQuery] = useState(''); const [filter, setFilter] = useState('All'); const filtered = useMemo(() => trips.filter(t => (filter === 'All' || t.region === filter) && `${t.title} ${t.location}`.toLowerCase().includes(query.toLowerCase())), [trips, query, filter]); return <div><div className="explorer"><div className="search-wrap"><Search size={18} /><input aria-label="Search trips" value={query} onChange={e => setQuery(e.target.value)} placeholder="Where do you want to go?" /></div><div className="filter-tabs">{['All', 'Domestic', 'International', 'Weekend', 'Honeymoon'].map(item => <button key={item} className={filter === item ? 'selected' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div></div>{filtered.length ? <div className="trip-grid">{filtered.map(trip => <TripCard key={trip.slug} trip={trip} />)}</div> : <div className="empty-state"><h3>No trips found</h3><p>Try a different destination or clear your filters.</p></div>}</div> }
+export function TripExplorer({ trips }: { trips: Trip[] }) { 
+  const [query, setQuery] = useState(''); 
+  const [filter, setFilter] = useState('All'); 
+  const filtered = useMemo(() => trips.filter(t => (filter === 'All' || t.region === filter) && `${t.title} ${t.location}`.toLowerCase().includes(query.toLowerCase())), [trips, query, filter]); 
+
+  const articlesCategories = [
+    { value: 'All', title: 'All' },
+    { value: 'Domestic', title: 'Domestic' },
+    { value: 'International', title: 'International' },
+    { value: 'Weekend', title: 'Weekend' },
+    { value: 'Honeymoon', title: 'Honeymoon' },
+  ];
+
+  return <div>
+    {/* Desktop Tabs & Search */}
+    <div className="hidden lg:flex items-center justify-between mb-8 gap-4">
+        {/* Custom Tabs */}
+        <div className="flex items-center justify-between bg-[#F9F8FB] p-1 rounded-xl border border-gray-200 w-fit gap-2">
+            {articlesCategories.map((category) => (
+                <button
+                    key={category.value}
+                    onClick={() => setFilter(category.value)}
+                    className={`
+                        relative flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium transition-all
+                        ${filter === category.value
+                            ? 'bg-white text-gray-900 shadow-sm'
+                            : 'bg-transparent text-gray-600 hover:text-gray-900'
+                        }
+                    `}
+                >
+                    <div
+                        className={`h-2 w-2 rounded-full ${filter === category.value
+                            ? 'bg-[#43a9d1]'
+                            : 'bg-gray-400'
+                            }`}
+                    />
+                    {category.title}
+                </button>
+            ))}
+        </div>
+
+        {/* Search bar - Desktop */}
+        <div className="relative w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+                type="text"
+                placeholder="Search trips..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="pl-9 pr-4 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-[#43a9d1]"
+            />
+        </div>
+    </div>
+
+    {/* Mobile Tabs & Search */}
+    <div className="lg:hidden mb-8 space-y-3 flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
+        {/* Custom Tabs - Mobile */}
+        <div className="flex gap-2 bg-[#F9F8FB] p-1 rounded-xl border border-gray-100 overflow-x-auto w-full sm:w-fit" style={{ scrollbarWidth: 'none' }}>
+            {articlesCategories.map((category) => (
+                <button
+                    key={category.value}
+                    onClick={() => setFilter(category.value)}
+                    className={`
+                        relative flex items-center gap-2 px-4 py-3 text-sm rounded-lg font-medium transition-all whitespace-nowrap
+                        ${filter === category.value
+                            ? 'bg-white text-gray-900 shadow-sm'
+                            : 'bg-transparent text-gray-600 hover:text-gray-900'
+                        }
+                    `}
+                >
+                    <div
+                        className={`h-2 w-2 rounded-full ${filter === category.value
+                            ? 'bg-[#43a9d1]'
+                            : 'bg-gray-400'
+                            }`}
+                    />
+                    {category.title}
+                </button>
+            ))}
+        </div>
+
+        {/* Search bar - Mobile */}
+        <div className="relative w-full sm:max-w-[300px]">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <input
+                type="text"
+                placeholder="Search trips..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="pl-9 pr-4 w-full bg-white border border-gray-200 h-12 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-[#43a9d1]"
+            />
+        </div>
+    </div>
+
+    {filtered.length ? <div className="trip-grid">{filtered.map(trip => <TripCard key={trip.slug} trip={trip} />)}</div> : <div className="empty-state"><h3>No trips found</h3><p>Try a different destination or clear your filters.</p></div>}
+  </div> 
+}
 export function SectionHeading({ eyebrow, title, text, href, label = 'See all trips', center = false }: { eyebrow: string; title: string; text?: string; href?: string; label?: string; center?: boolean }) {
   return (
     <div className={`section-heading ${center ? 'relative w-full !flex !flex-col lg:!flex-row !justify-center !items-center mb-4! lg:mb-10!' : ''}`}>

@@ -7,7 +7,7 @@ import type { Trip } from '@/lib/travel-data'
 
 export function TripCard({ trip, featured = false }: { trip: Trip; featured?: boolean }) {
   return (
-    <article className="group relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.06)] flex flex-col w-[310px] shrink-0">
+    <article className="group relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.06)] flex flex-col w-full h-full">
       
       {/* Image Container with tag overlays */}
       <Link href={`/contact?trip=${trip.slug}`} className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-50">
