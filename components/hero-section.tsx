@@ -98,7 +98,7 @@ export function Hero() {
           window.location.href = `/domestic-trips?search=${encodeURIComponent(searchQuery.trim())}`
         }
       } else {
-        //  Default fallback: search in domestic-trips
+        // Default fallback: search in domestic-trips
         window.location.href = `/domestic-trips?search=${encodeURIComponent(searchQuery.trim())}`
       }
     } else {
