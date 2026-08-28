@@ -36,11 +36,18 @@ export function TripContent({ trip }: { trip: Trip }) {
     return () => observer.disconnect()
   }, [])
 
+  // Force scroll to top on mount (fixes Next.js router scroll issues)
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   // Auto-scroll active tab into view horizontally on mobile
   useEffect(() => {
     const activeBtn = document.getElementById(`tab-${activeTab}`)
-    if (activeBtn) {
-      activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    const container = document.getElementById('tabs-container')
+    if (activeBtn && container) {
+      const scrollLeft = activeBtn.offsetLeft - (container.offsetWidth / 2) + (activeBtn.offsetWidth / 2)
+      container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
     }
   }, [activeTab])
 
@@ -55,8 +62,8 @@ export function TripContent({ trip }: { trip: Trip }) {
     <div className="bg-slate-50 min-h-screen pb-24">
 
       {/* 1. Hero Gallery */}
-      <section className="pt-10 lg:pt-16 pb-8 max-w-[1160px] mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 aspect-[4/3] md:aspect-[21/9] overflow-hidden rounded-3xl mb-8">
+      <section className="pt-4 lg:pt-4 pb-8 max-w-[1160px] mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 aspect-[3/2] md:aspect-[24/9] overflow-hidden rounded-3xl mb-8">
           <div className="col-span-1 md:col-span-3 relative h-full group overflow-hidden">
             <Image
               src={trip.image}
@@ -81,11 +88,11 @@ export function TripContent({ trip }: { trip: Trip }) {
 
         {/* 2. Title & Metadata */}
         <div>
-          <div className="flex items-center gap-2 text-[var(--sky)] font-bold text-xs tracking-wider uppercase mb-3">
+          <div className="flex items-center gap-2 text-[var(--sky)] font-bold text-xs tracking-wider uppercase mb-1">
             <MapPin size={14} />
             <span>{trip.location}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-serif text-[var(--navy)] mb-6 leading-tight">
+          <h1 className="text-4xl lg:text-5xl font-serif text-[var(--navy)] mb-3 leading-tight">
             {trip.title}
           </h1>
           <div className="flex flex-wrap items-center gap-4 text-slate-500 font-medium text-sm">
@@ -104,7 +111,7 @@ export function TripContent({ trip }: { trip: Trip }) {
 
       {/* Sticky Tabs */}
       <div className="sticky top-[68px] min-[560px]:top-[78px] z-10 bg-[#f7fbfd]/95 backdrop-blur-md border-y border-[var(--border)] shadow-sm">
-        <div className="max-w-[1160px] mx-auto px-6 lg:px-8 flex gap-8 overflow-x-auto no-scrollbar">
+        <div id="tabs-container" className="max-w-[1160px] mx-auto px-6 lg:px-8 flex gap-8 overflow-x-auto no-scrollbar scroll-smooth">
           {[
             { id: 'overview', label: 'Overview' },
             { id: 'itinerary', label: 'Itinerary' },

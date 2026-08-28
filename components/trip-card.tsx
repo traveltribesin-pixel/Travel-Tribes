@@ -7,15 +7,15 @@ import type { Trip } from '@/lib/travel-data'
 
 export function TripCard({ trip, featured = false }: { trip: Trip; featured?: boolean }) {
   return (
-    <article className="group relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.06)] flex flex-col w-full h-full">
-      
+    <Link href={`/itinerary/${trip.slug}`} className="group relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.06)] flex flex-col w-full h-full block">
+
       {/* Image Container with tag overlays */}
-      <Link href={`/itinerary/${trip.slug}`} className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-50">
-        <Image 
-          src={trip.image} 
-          alt={trip.alt} 
-          fill 
-          sizes="(max-width: 700px) 84vw, 33vw" 
+      <div className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-50">
+        <Image
+          src={trip.image}
+          alt={trip.alt}
+          fill
+          sizes="(max-width: 700px) 84vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {/* Featured Tag (top left) */}
@@ -24,11 +24,8 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
             {trip.tag}
           </span>
         )}
-        {/* Floating Arrow Indicator (bottom right) */}
-        <span className="absolute bottom-4 right-4 z-10 w-9 h-9 rounded-full bg-white flex items-center justify-center text-slate-800 shadow-md transform translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-          <ArrowRight size={15} />
-        </span>
-      </Link>
+
+      </div>
 
       {/* Card Details Body */}
       <div className="p-6 flex-grow flex flex-col">
@@ -40,7 +37,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
 
         {/* Title */}
         <h3 className="font-sans font-bold text-[17px] text-slate-800 group-hover:text-[var(--sky)] transition-colors mt-3 mb-2 leading-snug">
-          <Link href={`/itinerary/${trip.slug}`}>{trip.title}</Link>
+          {trip.title}
         </h3>
 
         {/* Description Snippet */}
@@ -68,14 +65,12 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
           <strong className="text-slate-800 text-[17px] font-black tracking-tight">
             {trip.price}
           </strong>
-          {trip.spots && (
-            <span className="bg-amber-50 text-amber-600 text-[10px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-md border border-amber-100">
-              {trip.spots}
-            </span>
-          )}
+          <span className="bg-[var(--sky-pale)] text-[var(--sky)] text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-full group-hover:bg-[var(--sky)] group-hover:text-white transition-colors duration-300 flex items-center gap-1">
+            View Details <ArrowRight size={12} />
+          </span>
         </div>
       </div>
 
-    </article>
+    </Link>
   )
 }

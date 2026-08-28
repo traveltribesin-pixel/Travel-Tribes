@@ -25,7 +25,7 @@ export function Navbar() {
       ? 'bg-[#f7fbfd]/90 backdrop-blur-[12px] border-b border-[var(--border)] shadow-sm'
       : 'bg-transparent border-b border-transparent'
       }`}>
-      <div className="flex items-center gap-[34px] h-[78px] max-[560px]:h-[68px] w-full max-w-[100vw] px-[2vw] mx-auto">
+      <div className="flex items-center gap-[34px] h-[78px] max-[560px]:h-[68px] w-full max-w-[1160px] px-6 lg:px-8 mx-auto justify-between lg:justify-start">
         <Link
           href="/"
           className="flex items-center gap-[9px] text-[12px] leading-[0.92] font-bold tracking-[-0.03em] text-[var(--navy)] min-w-[112px]"
@@ -36,8 +36,8 @@ export function Navbar() {
             <Image
               src="/image/Logoblack.png"
               alt="Travel Tribes"
-              width={240}
-              height={38}
+              width={100}
+              height={40}
               style={{ objectFit: 'contain', height: 'auto' }}
               priority
             />
@@ -47,7 +47,7 @@ export function Navbar() {
             <Image
               src="/image/Logoblack.png"
               alt="Travel Tribes"
-              width={160}
+              width={110}
               height={45}
               style={{ objectFit: 'contain', height: 'auto' }}
               priority
@@ -89,7 +89,7 @@ export function Navbar() {
 
       {
         open && (
-          <nav className="grid p-[14px_5vw_22px] gap-[4px] border-t border-[var(--border)]" aria-label="Mobile navigation">
+          <nav className="absolute top-full left-0 w-full grid p-[14px_5vw_22px] gap-[4px] bg-[#f7fbfd]/95 backdrop-blur-[12px] border-b border-[var(--border)] shadow-md" aria-label="Mobile navigation">
             {navItems.map((item) => (
               <Link
                 key={item.href}

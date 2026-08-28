@@ -82,7 +82,7 @@ export function Hero() {
     e.preventDefault()
     const query = searchQuery.trim().toLowerCase()
     if (query) {
-      //  Find a matching trip dynamically in the dataset
+      // Find a matching trip dynamically in the dataset
       const matchedTrip = SAMPLE_TRIPS.find((trip) =>
         trip.title.toLowerCase().includes(query) ||
         trip.destination.toLowerCase().includes(query) ||
@@ -92,17 +92,10 @@ export function Hero() {
       )
 
       if (matchedTrip) {
-        if (matchedTrip.type === 'weekend') {
-          window.location.href = `/weekend-getaways?search=${encodeURIComponent(searchQuery.trim())}`
-        } else {
-          window.location.href = `/domestic-trips?search=${encodeURIComponent(searchQuery.trim())}`
-        }
+        window.location.href = `/itinerary/${matchedTrip.id}`
       } else {
-        // Default fallback: search in domestic-trips
-        window.location.href = `/domestic-trips?search=${encodeURIComponent(searchQuery.trim())}`
+        alert('Sorry, no trips found for this location. Please try another destination.')
       }
-    } else {
-      window.location.href = '/domestic-trips'
     }
   }
 
@@ -210,7 +203,7 @@ export function Hero() {
                   </div>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 sm:px-8 sm:py-3 bg-[#0cc0df] hover:bg-[#0aa6c2] text-white font-semibold rounded-full transition-colors duration-200 flex items-center gap-1.5 text-sm cursor-pointer"
+                    className="glow-btn inline-flex items-center justify-center gap-[9px] px-[22px] py-[12px] sm:px-[28px] sm:py-[14px] text-[12px] sm:text-[14px] font-bold rounded-full cursor-pointer transition-all duration-300"
                   >
                     Search
                   </button>
@@ -228,7 +221,7 @@ export function Hero() {
                     className="absolute top-full left-0 right-0 mt-2 z-30 bg-white rounded-2xl border border-gray-100 shadow-2xl overflow-hidden max-h-[300px] overflow-y-auto no-scrollbar"
                   >
                     {suggestions.map((trip) => (
-                      <Link href={`/trip/${trip.id}`} key={trip.id} className="block no-underline">
+                      <Link href={`/itinerary/${trip.id}`} key={trip.id} className="block no-underline">
                         <div className="flex items-center justify-between px-5 py-3.5 hover:bg-accent/5 transition-colors border-b border-gray-100 last:border-0 group cursor-pointer">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center flex-shrink-0">
