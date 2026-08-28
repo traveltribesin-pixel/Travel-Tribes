@@ -21,7 +21,7 @@ export function Navbar() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-20 transition-all duration-300 ${scrolled
+    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled
       ? 'bg-[#f7fbfd]/90 backdrop-blur-[12px] border-b border-[var(--border)] shadow-sm'
       : 'bg-transparent border-b border-transparent'
       }`}>
