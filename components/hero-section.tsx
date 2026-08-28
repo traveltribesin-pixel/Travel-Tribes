@@ -82,7 +82,7 @@ export function Hero() {
     e.preventDefault()
     const query = searchQuery.trim().toLowerCase()
     if (query) {
-      // Find a matching trip dynamically in the dataset
+      //  Find a matching trip dynamically in the dataset
       const matchedTrip = SAMPLE_TRIPS.find((trip) =>
         trip.title.toLowerCase().includes(query) ||
         trip.destination.toLowerCase().includes(query) ||
