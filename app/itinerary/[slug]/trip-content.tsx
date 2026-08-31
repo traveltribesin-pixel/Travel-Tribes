@@ -123,7 +123,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               key={tab.id}
               id={`tab-${tab.id}`}
               onClick={() => scrollTo(tab.id)}
-              className={`py-4 px-2 text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-colors relative ${activeTab === tab.id ? 'text-[var(--sky)]' : 'text-slate-500 hover:text-[var(--navy)]'
+              className={`py-3 px-2 text-[12px]! font-bold uppercase tracking-wider whitespace-nowrap transition-colors relative ${activeTab === tab.id ? 'text-[var(--sky)]' : 'text-slate-500 hover:text-[var(--navy)]'
                 }`}
             >
               {tab.label}
@@ -179,10 +179,10 @@ export function TripContent({ trip }: { trip: Trip }) {
                     <div key={idx} className={`bg-white rounded-2xl border transition-all duration-300 ${isOpen ? 'border-[var(--sky)] shadow-[0_4px_15px_rgba(67,169,209,0.2)]' : 'border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]'}`}>
                       <button
                         onClick={() => setOpenDay(isOpen ? null : day.day)}
-                        className="w-full flex items-center justify-between p-6 text-left"
+                        className="w-full flex items-center justify-between p-5 text-left"
                       >
                         <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
-                          <span className={`px-4 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider transition-colors w-fit ${isOpen ? 'bg-[var(--sky)] text-white' : 'bg-[var(--sky-pale)] text-[var(--sky)]'}`}>
+                          <span className={`px-3 py-1.5 leading-none rounded-full text-[12px] font-bold uppercase tracking-wider transition-colors w-fit ${isOpen ? 'bg-[var(--sky)] text-white' : 'bg-[var(--sky-pale)] text-[var(--sky)]'}`}>
                             Day {day.day}
                           </span>
                           <span className={`text-xl font-serif transition-colors ${isOpen ? 'text-[var(--navy)]' : 'text-slate-700'}`}>
@@ -304,16 +304,17 @@ export function TripContent({ trip }: { trip: Trip }) {
 
           {/* Right Column / Sticky Booking Widget */}
           <div className="lg:col-span-1">
-            <div className="sticky top-[160px] bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
-              <div className="mb-6 pb-6 border-b border-[var(--border)]">
-                <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Starting from</span>
-                <div className="flex items-end gap-2">
-                  <span className="text-3xl font-serif text-[var(--navy)]">{trip.price}</span>
-                  <span className="text-slate-500 font-medium pb-1 text-sm">/ person</span>
+            <div className="fixed bottom-0 left-0 w-full z-40 lg:sticky lg:top-[160px] bg-white lg:rounded-3xl px-6 py-4 lg:p-8 border-t lg:border border-[var(--border)] lg:border-[var(--sky-pale)] transition-all duration-300 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] lg:shadow-[0_4px_10px_rgba(67,169,209,0.2)] lg:hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] flex flex-row lg:flex-col items-center lg:items-stretch justify-between lg:justify-start gap-4 lg:gap-0">
+              <div className="lg:mb-6 lg:pb-6 lg:border-b border-[var(--border)] flex flex-col">
+                <span className="hidden lg:block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Starting from</span>
+                <span className="lg:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Price</span>
+                <div className="flex items-end gap-1 lg:gap-2">
+                  <span className="text-xl lg:text-3xl font-serif text-[var(--navy)]">{trip.price}</span>
+                  <span className="hidden lg:inline-block text-slate-500 font-medium pb-1 text-sm">/ person</span>
                 </div>
               </div>
 
-              <div className="space-y-4 mb-8">
+              <div className="hidden lg:block space-y-4 mb-8">
                 {/* Date Selector */}
                 <div className="relative">
                   <div
@@ -365,15 +366,16 @@ export function TripContent({ trip }: { trip: Trip }) {
               </div>
 
               {/* Animated Button */}
-              <Link href={`/contact?trip=${trip.slug}`} className="block w-full">
-                <button className="glow-btn w-full inline-flex items-center justify-center gap-2 py-4 rounded-full font-bold text-sm">
-                  Continue Booking <ArrowRight size={16} />
-                </button>
-              </Link>
-
-              <p className="text-center text-[11px] text-slate-400 mt-4">
-                You won't be charged yet.
-              </p>
+              <div className="w-[160px] lg:w-full">
+                <Link href={`/contact?trip=${trip.slug}`} className="block w-full">
+                  <button className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 lg:py-4 rounded-full font-bold text-[13px] lg:text-sm">
+                    Book Now <ArrowRight size={16} className="hidden lg:block" />
+                  </button>
+                </Link>
+                <p className="hidden lg:block text-center text-[11px] text-slate-400 mt-4">
+                  You won't be charged yet.
+                </p>
+              </div>
             </div>
           </div>
 
