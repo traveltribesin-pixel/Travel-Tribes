@@ -52,7 +52,7 @@ export function HorizontalRail({ children, label = 'Scrollable content' }: { chi
       </button>
 
       {/* Scrollable Container */}
-      <div className="horizontal-rail [&>*]:!w-[75%] [&>*]:!flex-none lg:[&>*]:!w-[calc((100%-44px)/3)]" ref={ref} onScroll={checkScroll} aria-label={label}>
+      <div className="horizontal-rail [&>*]:!w-[88%] sm:[&>*]:!w-[48%] md:[&>*]:!w-[45%] [&>*]:!flex-none lg:[&>*]:!w-[calc((100%-44px)/3)]" ref={ref} onScroll={checkScroll} aria-label={label}>
         {children}
       </div>
     </div>
@@ -177,7 +177,7 @@ export function SectionHeading({ eyebrow, title, text, href, label = 'See all tr
 }
 export function ReviewCard({ quote, name, detail }: { quote: string; name: string; detail: string }) {
   return (
-    <article className="bg-white rounded-3xl p-8 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.05)] flex flex-col justify-between w-[350px] shrink-0">
+    <article className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-[88vw] max-w-[360px] shrink-0">
       <div>
         <div className="flex gap-0.5 text-amber-400 mb-6" aria-label="5 out of 5 stars">
           {[1, 2, 3, 4, 5].map(i => (

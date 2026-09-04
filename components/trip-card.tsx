@@ -7,7 +7,7 @@ import type { Trip } from '@/lib/travel-data'
 
 export function TripCard({ trip, featured = false }: { trip: Trip; featured?: boolean }) {
   return (
-    <Link href={`/itinerary/${trip.slug}`} className="group relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.06)] flex flex-col w-full h-full block">
+    <Link href={`/itinerary/${trip.slug}`} className="group relative bg-white rounded-3xl overflow-hidden border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.2)] transition-all duration-300 hover:-translate-y-1 flex flex-col w-full h-full block">
 
       {/* Image Container with tag overlays */}
       <div className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-50">
@@ -15,7 +15,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
           src={trip.image}
           alt={trip.alt}
           fill
-          sizes="(max-width: 700px) 84vw, 33vw"
+          sizes="(max-width: 700px) 90vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {/* Featured Tag (top left) */}
@@ -28,7 +28,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
       </div>
 
       {/* Card Details Body */}
-      <div className="p-6 flex-grow flex flex-col">
+      <div className="p-4 flex-grow flex flex-col">
         {/* Location Badge */}
         <div className="text-[10px] font-extrabold text-[var(--sky)] uppercase tracking-widest flex items-center gap-1.5 leading-none">
           <MapPin size={11} className="shrink-0" />

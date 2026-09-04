@@ -15,7 +15,7 @@ export function GallerySection() {
       />
       <HorizontalRail label="Travel gallery">
         {gallery.map((item, i) => (
-          <div className={`gallery-card gallery-${i} group relative overflow-hidden rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.05)] border border-slate-100`} key={item.image}>
+          <div className={`gallery-card gallery-${i} group relative overflow-hidden rounded-3xl shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 border border-[var(--sky-pale)] hover:border-[var(--sky)]`} key={item.image}>
             <Image 
               src={item.image} 
               alt={item.alt} 

@@ -100,7 +100,7 @@ export function Hero() {
   }
 
   return (
-    <section className="min-h-screen pt-10 pb-36 relative overflow-hidden flex items-center bg-primary">
+    <section className="h-[85vh] md:min-h-screen pt-20 md:pt-10 md:pb-36 relative overflow-hidden flex items-center bg-primary">
       {/* CSS Styles for the Infinite Scrolling client tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -319,29 +319,60 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Absolute Bottom Stats Row styled after the design screenshot */}
-      {/* <div className="absolute bottom-0 left-0 right-0 bg-black/65 backdrop-blur-md border-t border-white/10 py-5 z-20">
+      {/* Bottom Statistics Row */}
+      <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-xl border-t border-white/15 py-4 sm:py-5 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-white">
-            <div className="text-center md:border-r border-white/10 last:border-0">
-              <div className="text-xl sm:text-2xl font-bold text-accent">10000+</div>
-              <div className="text-[10px] sm:text-xs text-white/70 font-semibold tracking-wider uppercase mt-0.5">Reviews</div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-6 text-white items-center divide-x divide-white/10">
+
+            {/* Stat 1: Google Reviews */}
+            <div className="text-center px-1 sm:px-4">
+              <div className="flex items-center justify-center gap-1 mb-0.5 sm:mb-1">
+                <span className="text-lg sm:text-2xl lg:text-3xl font-serif font-black text-amber-400">
+                  4.9
+                </span>
+                <div className="hidden md:flex items-center gap-0.5 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} className="fill-amber-400" />
+                  ))}
+                </div>
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+                Google Reviews
+              </div>
+              <div className="hidden sm:block text-[10px] text-white/60 mt-0.5">
+                1,200+ 5-Star Ratings
+              </div>
             </div>
-            <div className="text-center md:border-r border-white/10 last:border-0">
-              <div className="text-xl sm:text-2xl font-bold text-accent">80000+</div>
-              <div className="text-[10px] sm:text-xs text-white/70 font-semibold tracking-wider uppercase mt-0.5">Satisfied Seekers</div>
+
+            {/* Stat 2: Happy Travellers */}
+            <div className="text-center px-1 sm:px-4">
+              <div className="text-lg sm:text-2xl lg:text-3xl font-serif font-black text-[var(--sky)] mb-0.5 sm:mb-1">
+                5,000+
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+                Happy Travellers
+              </div>
+              <div className="hidden sm:block text-[10px] text-white/60 mt-0.5">
+                Solo & Group Explorers
+              </div>
             </div>
-            <div className="text-center md:border-r border-white/10 last:border-0">
-              <div className="text-xl sm:text-2xl font-bold text-accent">50+</div>
-              <div className="text-[10px] sm:text-xs text-white/70 font-semibold tracking-wider uppercase mt-0.5">Destinations</div>
+
+            {/* Stat 3: Experience */}
+            <div className="text-center px-1 sm:px-4">
+              <div className="text-lg sm:text-2xl lg:text-3xl font-serif font-black text-[var(--sun)] mb-0.5 sm:mb-1">
+                5+ Years
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+                Experience
+              </div>
+              <div className="hidden sm:block text-[10px] text-white/60 mt-0.5">
+                100+ Trips Curated
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-accent">12 Years+</div>
-              <div className="text-[10px] sm:text-xs text-white/70 font-semibold tracking-wider uppercase mt-0.5">Experience</div>
-            </div>
+
           </div>
         </div>
-      </div> */}
+      </div>
 
     </section>
   )

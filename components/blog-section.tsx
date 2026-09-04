@@ -19,7 +19,7 @@ export function BlogSection() {
       />
       <HorizontalRail label="Travel blog">
         {blogs.map(blog => (
-          <article className="group relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(11,41,64,0.06)] flex flex-col w-[340px] shrink-0" key={blog.title}>
+          <article className="group relative bg-white rounded-3xl overflow-hidden border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col w-[88vw] max-w-[340px] shrink-0" key={blog.title}>
             {/* Top image block */}
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50">
               <Image 
