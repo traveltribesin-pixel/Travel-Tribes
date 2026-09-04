@@ -21,9 +21,9 @@ export function Navbar() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled
-      ? 'bg-[#f7fbfd]/90 backdrop-blur-[12px] border-b border-[var(--border)] shadow-sm'
-      : 'bg-transparent border-b border-transparent'
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
+      ? 'bg-[#f7fbfd]/95 backdrop-blur-[12px] border-b border-[var(--border)] shadow-sm'
+      : 'bg-[#f7fbfd]/80 backdrop-blur-[8px] border-b border-transparent'
       }`}>
       <div className="flex items-center gap-[34px] h-[78px] max-[560px]:h-[68px] w-full max-w-[1160px] px-6 lg:px-8 mx-auto justify-between lg:justify-start">
         <Link

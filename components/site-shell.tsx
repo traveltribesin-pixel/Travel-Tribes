@@ -142,13 +142,13 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:+919876543210" className="flex flex-col lg:flex-row items-center lg:items-start gap-3 lg:gap-4 group text-center lg:text-left">
+                <a href="tel:+919975822023" className="flex flex-col lg:flex-row items-center lg:items-start gap-3 lg:gap-4 group text-center lg:text-left">
                   <div className="lg:mt-1 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#43a9d1] group-hover:bg-[#43a9d1] group-hover:text-white transition-colors duration-300 flex-shrink-0">
                     <Phone size={14} />
                   </div>
                   <div>
                     <span className="block text-white text-sm font-medium mb-1">Call us</span>
-                    <span className="block text-[#c8dce5] text-sm group-hover:text-white transition-colors">+91 98765 43210</span>
+                    <span className="block text-[#c8dce5] text-sm group-hover:text-white transition-colors">+91 99758 22023</span>
                   </div>
                 </a>
               </li>
