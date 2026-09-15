@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useMemo, useRef, useState, useEffect } from 'react'
-import { ArrowLeft, ArrowRight, CalendarDays, Clock3, MapPin, Search, Star } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CalendarDays, Clock3, MapPin, Search, Star, ChevronDown, RotateCcw } from 'lucide-react'
 import type { Trip } from '@/lib/travel-data'
 
 export function HorizontalRail({ children, label = 'Scrollable content' }: { children: React.ReactNode; label?: string }) {
@@ -60,106 +60,209 @@ export function HorizontalRail({ children, label = 'Scrollable content' }: { chi
 }
 import { TripCard } from './trip-card'
 export { TripCard }
-export function TripExplorer({ trips }: { trips: Trip[] }) { 
+
+const defaultCategories = [
+  { value: 'All', title: 'All' },
+  { value: 'Domestic', title: 'Domestic' },
+  { value: 'International', title: 'International' },
+  { value: 'Weekend', title: 'Weekend' },
+  { value: 'Xmas & New Year', title: 'Xmas & New Year' },
+];
+
+const monthsList = [
+  { value: 'All', label: 'All Months' },
+  { value: 'Jan', label: 'January' },
+  { value: 'Feb', label: 'February' },
+  { value: 'Mar', label: 'March' },
+  { value: 'Apr', label: 'April' },
+  { value: 'May', label: 'May' },
+  { value: 'Jun', label: 'June' },
+  { value: 'Jul', label: 'July' },
+  { value: 'Aug', label: 'August' },
+  { value: 'Sep', label: 'September' },
+  { value: 'Oct', label: 'October' },
+  { value: 'Nov', label: 'November' },
+  { value: 'Dec', label: 'December' },
+];
+
+export function TripExplorer({
+  trips,
+  categories,
+}: {
+  trips: Trip[];
+  categories?: { value: string; title: string }[];
+}) { 
   const [query, setQuery] = useState(''); 
   const [filter, setFilter] = useState('All'); 
-  const filtered = useMemo(() => trips.filter(t => (filter === 'All' || t.region === filter) && `${t.title} ${t.location}`.toLowerCase().includes(query.toLowerCase())), [trips, query, filter]); 
+  const [selectedMonth, setSelectedMonth] = useState('All');
 
-  const articlesCategories = [
-    { value: 'All', title: 'All' },
-    { value: 'Domestic', title: 'Domestic' },
-    { value: 'International', title: 'International' },
-    { value: 'Weekend', title: 'Weekend' },
-    { value: 'Honeymoon', title: 'Honeymoon' },
-  ];
+  const activeCategories = categories || defaultCategories;
 
-  return <div>
-    {/* Desktop Tabs & Search */}
-    <div className="hidden lg:flex items-center justify-between mb-8 gap-4">
-        {/* Custom Tabs */}
-        <div className="flex items-center justify-between bg-[#F9F8FB] p-1 rounded-xl border border-gray-200 w-fit gap-2">
-            {articlesCategories.map((category) => (
-                <button
-                    key={category.value}
-                    onClick={() => setFilter(category.value)}
-                    className={`
-                        relative flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium transition-all
-                        ${filter === category.value
-                            ? 'bg-white text-gray-900 shadow-sm'
-                            : 'bg-transparent text-gray-600 hover:text-gray-900'
-                        }
-                    `}
-                >
-                    <div
-                        className={`h-2 w-2 rounded-full ${filter === category.value
-                            ? 'bg-[#43a9d1]'
-                            : 'bg-gray-400'
-                            }`}
-                    />
-                    {category.title}
-                </button>
-            ))}
+  const filtered = useMemo(() => {
+    return trips.filter((t) => {
+      // 1. Category Filter
+      let matchesCategory = true;
+      if (filter !== 'All') {
+        if (filter === 'Xmas & New Year') {
+          matchesCategory =
+            t.region === 'Xmas & New Year' ||
+            t.tag?.toLowerCase().includes('new year') ||
+            t.tag?.toLowerCase().includes('xmas') ||
+            t.date?.toLowerCase().includes('dec 2') ||
+            t.date?.toLowerCase().includes('dec 3');
+        } else {
+          matchesCategory = t.region === filter;
+        }
+      }
+
+      // 2. Month Filter
+      let matchesMonth = true;
+      if (selectedMonth !== 'All') {
+        matchesMonth = Boolean(
+          t.date && t.date.toLowerCase().includes(selectedMonth.toLowerCase())
+        );
+      }
+
+      // 3. Search Query Filter
+      let matchesQuery = true;
+      if (query.trim() !== '') {
+        const q = query.toLowerCase();
+        matchesQuery = Boolean(
+          `${t.title} ${t.location} ${t.tag || ''} ${t.region || ''} ${t.date || ''}`
+            .toLowerCase()
+            .includes(q)
+        );
+      }
+
+      return matchesCategory && matchesMonth && matchesQuery;
+    });
+  }, [trips, query, filter, selectedMonth]);
+
+  const hasActiveFilters = filter !== 'All' || selectedMonth !== 'All' || query.trim() !== '';
+
+  const resetFilters = () => {
+    setFilter('All');
+    setSelectedMonth('All');
+    setQuery('');
+  };
+
+  return (
+    <div>
+      {/* Desktop & Mobile Filter Controls */}
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-8 gap-4">
+        {/* Custom Category Tabs */}
+        <div
+          className="flex items-center bg-[#F9F8FB] p-1.5 rounded-2xl border border-gray-200/90 w-fit gap-1 sm:gap-1.5 overflow-x-auto max-w-full shadow-sm"
+          style={{ scrollbarWidth: 'none' }}
+        >
+          {activeCategories.map((category) => (
+            <button
+              key={category.value}
+              onClick={() => setFilter(category.value)}
+              className={`
+                relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap
+                ${filter === category.value
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'bg-transparent text-gray-500 hover:text-gray-900'
+                }
+              `}
+            >
+              <div
+                className={`h-2 w-2 rounded-full transition-colors ${
+                  filter === category.value ? 'bg-[#43a9d1]' : 'bg-gray-300'
+                }`}
+              />
+              {category.title}
+            </button>
+          ))}
         </div>
 
-        {/* Search bar - Desktop */}
-        <div className="relative w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        {/* Filter Controls (Month + Search Bar) */}
+        <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+          {/* Month Dropdown */}
+          <div className="relative min-w-[160px] flex-1 sm:flex-initial">
+            <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
+              aria-label="Filter by month"
+            >
+              {monthsList.map((m) => (
+                <option key={m.value} value={m.value}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          </div>
+
+          {/* Search bar */}
+          <div className="relative min-w-[200px] flex-1 sm:w-64 sm:flex-initial">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             <input
-                type="text"
-                placeholder="Search trips..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="pl-9 pr-4 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-[#43a9d1]"
+              type="text"
+              placeholder="Search trips..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="pl-9.5 pr-8 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] shadow-sm transition-all"
             />
+            {query && (
+              <button
+                onClick={() => setQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs transition-colors"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Reset button */}
+          {hasActiveFilters && (
+            <button
+              onClick={resetFilters}
+              title="Reset all filters"
+              className="h-11 px-3.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Reset</span>
+            </button>
+          )}
         </div>
+      </div>
+
+      {/* Grid or Empty State */}
+      {filtered.length ? (
+        <div className="trip-grid">
+          {filtered.map((trip) => (
+            <TripCard key={trip.slug} trip={trip} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state py-16 px-6 text-center bg-white rounded-3xl border border-gray-200/80 shadow-sm my-8 flex flex-col items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-[#43a9d1]/10 flex items-center justify-center text-[#43a9d1] mb-4">
+            <CalendarDays className="w-7 h-7" />
+          </div>
+          <h3 className="font-sans font-bold text-xl text-slate-800 mb-2">No trips found</h3>
+          <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
+            We couldn&apos;t find any trips matching your selected filters. Try choosing a different month or category.
+          </p>
+          <button
+            onClick={resetFilters}
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#43a9d1] text-white rounded-xl text-sm font-semibold hover:bg-[#3592b5] transition-all shadow-md shadow-[#43a9d1]/20 hover:scale-[1.02]"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reset all filters
+          </button>
+        </div>
+      )}
     </div>
-
-    {/* Mobile Tabs & Search */}
-    <div className="lg:hidden mb-8 space-y-3 flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
-        {/* Custom Tabs - Mobile */}
-        <div className="flex gap-2 bg-[#F9F8FB] p-1 rounded-xl border border-gray-100 overflow-x-auto w-full sm:w-fit" style={{ scrollbarWidth: 'none' }}>
-            {articlesCategories.map((category) => (
-                <button
-                    key={category.value}
-                    onClick={() => setFilter(category.value)}
-                    className={`
-                        relative flex items-center gap-2 px-4 py-3 text-sm rounded-lg font-medium transition-all whitespace-nowrap
-                        ${filter === category.value
-                            ? 'bg-white text-gray-900 shadow-sm'
-                            : 'bg-transparent text-gray-600 hover:text-gray-900'
-                        }
-                    `}
-                >
-                    <div
-                        className={`h-2 w-2 rounded-full ${filter === category.value
-                            ? 'bg-[#43a9d1]'
-                            : 'bg-gray-400'
-                            }`}
-                    />
-                    {category.title}
-                </button>
-            ))}
-        </div>
-
-        {/* Search bar - Mobile */}
-        <div className="relative w-full sm:max-w-[300px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <input
-                type="text"
-                placeholder="Search trips..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="pl-9 pr-4 w-full bg-white border border-gray-200 h-12 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-[#43a9d1]"
-            />
-        </div>
-    </div>
-
-    {filtered.length ? <div className="trip-grid">{filtered.map(trip => <TripCard key={trip.slug} trip={trip} />)}</div> : <div className="empty-state"><h3>No trips found</h3><p>Try a different destination or clear your filters.</p></div>}
-  </div> 
+  )
 }
 export function SectionHeading({ eyebrow, title, text, href, label = 'See all trips', center = false }: { eyebrow: string; title: string; text?: string; href?: string; label?: string; center?: boolean }) {
   return (
-    <div className={`section-heading ${center ? 'relative w-full !flex !flex-col lg:!flex-row !justify-center !items-center mb-4! lg:mb-10!' : ''}`}>
+    <div className={`section-heading ${center ? 'relative w-full !flex !flex-col lg:!flex-row !justify-center !items-center mb-4! lg:mb-6!' : ''}`}>
       <div className={center ? 'flex flex-col items-center text-center w-full max-w-4xl' : ''}>
         <span className="eyebrow">{eyebrow}</span>
         <h2>{title}</h2>
@@ -175,27 +278,79 @@ export function SectionHeading({ eyebrow, title, text, href, label = 'See all tr
     </div>
   )
 }
-export function ReviewCard({ quote, name, detail }: { quote: string; name: string; detail: string }) {
+export function ReviewCard({
+  quote,
+  name,
+  detail,
+  role,
+  reviewCount,
+  photoCount,
+  rating = 5,
+  timeAgo
+}: {
+  quote: string
+  name: string
+  detail?: string
+  role?: string
+  reviewCount?: string
+  photoCount?: string
+  rating?: number
+  timeAgo?: string
+}) {
+  const initials = name
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+
   return (
-    <article className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-[88vw] max-w-[360px] shrink-0">
+    <article className="bg-white rounded-3xl p-6 sm:p-7 border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-full h-full">
       <div>
-        <div className="flex gap-0.5 text-amber-400 mb-6" aria-label="5 out of 5 stars">
-          {[1, 2, 3, 4, 5].map(i => (
-            <Star key={i} size={15} fill="currentColor" className="stroke-none" />
-          ))}
+        {/* Header: Avatar, Name & Google/Local Guide Badge */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[var(--navy)] to-[var(--sky)] text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+            {initials}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <strong className="font-sans font-bold text-sm text-slate-900 truncate">
+                {name}
+              </strong>
+              {role === 'Local Guide' && (
+                <span className="text-[10px] bg-amber-100 text-amber-900 font-extrabold px-1.5 py-0.5 rounded flex items-center gap-1">
+                  ★ Local Guide
+                </span>
+              )}
+            </div>
+            <div className="text-[11px] text-slate-400 font-medium truncate">
+              {reviewCount ? `${reviewCount}${photoCount ? ` · ${photoCount}` : ''}` : (detail || 'Verified Google Review')}
+            </div>
+          </div>
         </div>
-        <blockquote className="font-serif italic text-[18px] text-slate-700 leading-relaxed font-medium mb-6">
+
+        {/* Star Rating */}
+        <div className="flex items-center gap-1.5 text-amber-400 mb-3" aria-label={`${rating} out of 5 stars`}>
+          <div className="flex gap-0.5">
+            {[...Array(rating)].map((_, i) => (
+              <Star key={i} size={14} fill="currentColor" className="stroke-none" />
+            ))}
+          </div>
+          {timeAgo && <span className="text-[10px] text-slate-400 font-normal">· {timeAgo}</span>}
+        </div>
+
+        {/* Review Quote */}
+        <blockquote className="text-[14px] sm:text-[15px] text-slate-700 leading-relaxed font-normal">
           “{quote}”
         </blockquote>
       </div>
-      <div className="mt-auto">
-        <strong className="font-sans font-bold text-sm text-slate-800 block">
-          {name}
-        </strong>
-        <span className="text-xs text-slate-400 font-medium mt-1 block">
-          {detail}
-        </span>
-      </div>
+
+      {detail && (
+        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-[var(--sky)] font-semibold">
+          <span>{detail}</span>
+          <span className="text-slate-400 text-[10px]">Google Review</span>
+        </div>
+      )}
     </article>
   )
 }
@@ -203,8 +358,11 @@ export function Newsletter() {
   return (
     <section className="newsletter">
       <div className="max-[560px]:text-center max-[560px]:flex max-[560px]:flex-col max-[560px]:items-center">
-        <span className="eyebrow">A note from the road</span>
-        <h2>Good trips, straight<br />to your inbox.</h2>
+        <span className="eyebrow">FROM THE TRIBE</span>
+        <h2>Good trips. Great stories.<br />Straight to your inbox.</h2>
+        <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-md">
+          Get first dibs on new trips, fresh destinations, travel inspiration and limited-seat adventures.
+        </p>
       </div>
       <form onSubmit={e => e.preventDefault()}>
         <label htmlFor="newsletter-email">Your email address</label>
@@ -212,7 +370,7 @@ export function Newsletter() {
           <input id="newsletter-email" type="email" required placeholder="you@example.com" />
           <button type="submit" aria-label="Subscribe"><ArrowRight /></button>
         </div>
-        <small>No spam. Just places worth going.</small>
+        <small>No spam. Just trips worth taking.</small>
       </form>
     </section>
   ) 

@@ -19,24 +19,24 @@ export function HomeCtaSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mt-8">
-        <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.25em] uppercase text-[#c5eaf6] mb-6 inline-block bg-[#0b2940]/40 px-5 py-2 rounded-full backdrop-blur-md border border-[#c5eaf6]/20">
-          Your next great story
+        <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.25em] uppercase text-[#c5eaf6] mb-6 inline-block bg-[#0b2940]/60 px-5 py-2 rounded-full backdrop-blur-md border border-[#c5eaf6]/20 shadow-md">
+          YOUR NEXT STORY IS WAITING
         </span>
 
-        <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white mb-6 drop-shadow-lg">
-          Go somewhere <br />
-          <em className="text-[#ef9b62] italic font-light drop-shadow-md">that changes you.</em>
+        <h2 className="font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-white mb-6 drop-shadow-lg tracking-tight uppercase">
+          Your friends are busy. <br />
+          <span className="text-[#ef9b62] drop-shadow-md">Go anyway.</span>
         </h2>
 
-        <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mb-10 font-medium drop-shadow-md leading-relaxed">
-          Embark on a journey designed for the curious soul. Handcrafted itineraries, small groups, and moments that stay with you forever.
+        <p className="text-white/95 text-base md:text-xl max-w-2xl mx-auto mb-10 font-bold drop-shadow-md leading-relaxed">
+          Meet new people. Explore new places. Find your tribe.
         </p>
 
         <Link
-          className="glow-btn inline-flex items-center justify-center gap-3 px-10 py-5 text-[15px] font-bold rounded-full mt-4"
-          href="/contact"
+          className="glow-btn inline-flex items-center justify-center gap-3 px-10 py-5 text-[15px] font-extrabold rounded-full mt-2 shadow-2xl hover:scale-105 transition-all uppercase tracking-wider"
+          href="/upcoming-trips"
         >
-          Start planning <ArrowRight size={18} />
+          Explore Trips <ArrowRight size={18} />
         </Link>
       </div>
     </section>

@@ -153,7 +153,7 @@ export function VideoGallerySection() {
   }
 
   return (
-    <section className="py-14 lg:py-20 bg-white relative overflow-hidden">
+    <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
       {/* Background Subtle Gradient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--sky-pale)]/50 rounded-full blur-3xl pointer-events-none" />
 
@@ -166,7 +166,7 @@ export function VideoGallerySection() {
               <Video size={14} />
               <span>Real Tribe Moments</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[var(--navy)]">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] tracking-tight">
               Watch The Adventures Come Alive
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm max-w-xl mt-2">
@@ -271,7 +271,7 @@ export function VideoGallerySection() {
                     <Compass size={12} className="text-[var(--sun)]" />
                     <span>{reel.location}</span>
                   </div>
-                  <h3 className="font-serif font-bold text-lg sm:text-xl text-white leading-snug mb-2 group-hover:text-[var(--sky)] transition-colors">
+                  <h3 className="font-extrabold text-lg sm:text-xl text-white leading-snug mb-2 group-hover:text-[var(--sky)] transition-colors">
                     {reel.title}
                   </h3>
                   <p className="text-slate-300 text-xs line-clamp-2 mb-3 font-normal opacity-90 leading-relaxed">
@@ -359,7 +359,7 @@ export function VideoGallerySection() {
                     <span className="text-[10px] font-bold text-[var(--sky)] uppercase tracking-wider block">
                       {selectedVideo.location}
                     </span>
-                    <h4 className="font-serif font-bold text-lg text-white">
+                    <h4 className="font-extrabold text-lg text-white">
                       {selectedVideo.title}
                     </h4>
                   </div>

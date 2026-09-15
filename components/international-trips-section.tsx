@@ -7,7 +7,7 @@ import { trips } from '@/lib/travel-data'
 export function InternationalTripsSection() {
   return (
     <section 
-      className="py-[110px] max-[850px]:py-[40px] bg-[var(--sky-pale)]"
+      className="py-12 sm:py-16 bg-[var(--sky-pale)]"
       style={{
         paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
         paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',

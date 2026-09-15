@@ -1,6 +1,7 @@
 import { PageFrame } from '@/components/site-shell'
 import { Newsletter } from '@/components/trip-components'
 import { HeroSection } from '@/components/hero-section'
+import { BrandValuesSection } from '@/components/brand-values-section'
 import { FeaturedRecognitionSection } from '@/components/featured-recognition-section'
 import { UpcomingTripsSection } from '@/components/upcoming-trips-section'
 import { DomesticJourneysSection } from '@/components/domestic-journeys-section'
@@ -9,6 +10,7 @@ import { InternationalTripsSection } from '@/components/international-trips-sect
 import { HoneymoonEscapesSection } from '@/components/honeymoon-escapes-section'
 import { VideoGallerySection } from '@/components/video-gallery-section'
 import { ReviewsSection } from '@/components/reviews-section'
+import { FaqAccordionSection } from '@/components/faq-accordion-section'
 import { GallerySection } from '@/components/gallery-section'
 import { BlogSection } from '@/components/blog-section'
 import { HomeCtaSection } from '@/components/home-cta-section'
@@ -20,7 +22,10 @@ export default function Home() {
         {/* 1. Hero Section */}
         <HeroSection />
 
-        {/* 2. Upcoming Trips */}
+        {/* 2. Not Your Usual Travel Company (Brand Values) */}
+        <BrandValuesSection />
+
+        {/* 3. Upcoming Trips */}
         <UpcomingTripsSection />
 
         {/* 3. Domestic Journeys */}
@@ -41,19 +46,27 @@ export default function Home() {
         {/* 9. Travellers Reviews */}
         <ReviewsSection />
 
-        {/* 10. Photo Gallery */}
+        {/* 10. Why Us & FAQ Accordion Section */}
+        <FaqAccordionSection
+          title="Why Choose Travel Tribes?"
+          eyebrow="WHY US & FAQS"
+          subtitle="Everything you need to know about our community trips, solo travel safety, on-ground trip captains, and bookings."
+          showViewAllButton
+        />
+
+        {/* 11. Photo Gallery */}
         <GallerySection />
 
-        {/* 2. Featured & Recognition (Auto-sliding brand logos & media) */}
+        {/* 12. Featured & Recognition (Auto-sliding brand logos & media) */}
         <FeaturedRecognitionSection />
 
-        {/* 11. Blog & Travel Guides */}
+        {/* 13. Blog & Travel Guides */}
         <BlogSection />
 
-        {/* 12. Community CTA Section */}
+        {/* 14. Community CTA Section */}
         <HomeCtaSection />
 
-        {/* 13. Newsletter */}
+        {/* 15. Newsletter */}
         <Newsletter />
       </main>
     </PageFrame>

@@ -1,3 +1,14 @@
+export type TripReview = {
+  name: string
+  quote: string
+  role?: string
+  detail?: string
+  reviewCount?: string
+  photoCount?: string
+  rating?: number
+  timeAgo?: string
+}
+
 export type TripPricingOption = {
   label: string
   price: string
@@ -8,7 +19,7 @@ export type Trip = {
   slug: string
   title: string
   location: string
-  region: 'Domestic' | 'International' | 'Weekend' | 'Honeymoon'
+  region: 'Domestic' | 'International' | 'Weekend' | 'Honeymoon' | 'Xmas & New Year'
   date: string
   duration: string
   price: string
@@ -26,6 +37,7 @@ export type Trip = {
   policies?: string[]
   pricingOptions?: TripPricingOption[]
   bookingAmount?: string
+  reviews?: TripReview[]
 }
 
 const img = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=88`
@@ -183,7 +195,106 @@ export const trips: Trip[] = [
       { label: 'Ex-Mumbai (AC 3-Tier Train)', price: '₹11,499 / person' },
       { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' }
     ],
-    bookingAmount: '₹4,000 / person'
+    bookingAmount: '₹4,000 / person',
+    reviews: [
+      {
+        name: 'Deepak Dhiver',
+        role: 'Local Guide',
+        reviewCount: '16 reviews',
+        photoCount: '51 photos',
+        rating: 5,
+        quote: 'I went on a trip to Gokarna, and this was my 1st Solo trip ever, I met great people during the trip. We visited many places in 3 days and our tour guide (Mr.Shah) was very experienced. All the arrangents were perfectly made. I enjoyed my 1st solo trip ✨️'
+      },
+      {
+        name: 'Shrutika More',
+        reviewCount: '2 reviews',
+        photoCount: '13 photos',
+        rating: 5,
+        quote: 'Recently had my second trip to Gokarna with travel tribes and it was the hella amazing trip I ever had. The trip was absolutely amazing and all the credit goes to our fantastic trio Adil, Parag and Nihir who managed everything well. I’m really grateful to travel tribes for arranging a cake for my birthday and making it a special day for me. It was unexpected surprise for me. I will always cherish this memorable trip as I met so many amazing people, we bonded and enjoyed together. I would highly recommend you all to go with travel tribes and have your banger trip because Tribe hai to vibe hai guyss 🔥🫶🥳'
+      },
+      {
+        name: 'Sayli Rane',
+        role: 'Local Guide',
+        reviewCount: '21 reviews',
+        photoCount: '6 photos',
+        rating: 5,
+        quote: 'I recently went on gokarna trip with travel tribes. It was my first solo trip was bit nervous till I boarded the train..but as the journey began…it was a trip filled with fun and adventure. All the trip leaders adil arzoo raj viju were so friendly and caring. Best trip i had in 2023. Stay location was also good its near the beach . Room conditions can be improved by the resort owner. Though not bad as resort is besides beach.'
+      },
+      {
+        name: 'Abhishek Dutta',
+        reviewCount: '10 reviews',
+        photoCount: '9 photos',
+        timeAgo: '2 years ago',
+        rating: 5,
+        quote: 'Had one of the best trips ever with Travel Tribes. Really nice people and awesome management team. This was my 1st group trip as strangers and we left the trip becoming great friends. Had gone to Gokarna for new year party and had the best beach front resort & party.'
+      },
+      {
+        name: 'Raj Jaiswal',
+        reviewCount: '6 reviews',
+        photoCount: '12 photos',
+        timeAgo: '2 years ago',
+        rating: 5,
+        quote: 'I think Travel Tribes is one of the most friendly travel organising company, I had recently gone to Gokarna with them & never felt that I am with the strangers on the trip, they just took trip to next level & it\'s been almost 5 days I am still mentally with them & lost in those memories. Highly recommended for solo as well for group travellers, if you wanna #Vibe then Choose the Travel Tribes.'
+      },
+      {
+        name: 'Bhakti Shirke',
+        reviewCount: '5 reviews',
+        photoCount: '8 photos',
+        timeAgo: 'a year ago',
+        rating: 5,
+        quote: 'Had an amazing time on the Gokarna trip! Everything was perfectly organized – from the transportation to the accommodations and the itinerary. The team ensured we had a seamless and fun experience. Highly recommend for anyone looking for a stress-free and memorable group getaway!'
+      },
+      {
+        name: 'Khushi Singh',
+        role: 'Local Guide',
+        reviewCount: '13 reviews',
+        photoCount: '12 photos',
+        timeAgo: 'a year ago',
+        rating: 5,
+        quote: 'Gokarna trip with travel tribes was the best trip I have ever had. It was my first solo trip and trust me the experience I had with people and with parag it was really special to me. I will always remember this memorable trip I met so many amazing people we bonded quickly and enjoyed so much I would highly recommend to go with travel tribes. As it was my pre- birthday trip so parag made it special for me as well celebrated, overall the trip was worth every penny. 🫶🏻'
+      },
+      {
+        name: 'Nakusa Indalkar',
+        role: 'Local Guide',
+        reviewCount: '12 reviews',
+        photoCount: '11 photos',
+        timeAgo: '2 years ago',
+        rating: 5,
+        quote: 'Gokarna was my second solo trip with Travel Tribe. Our host Adil is a cool guy. All the arrangements done starting from train journey, local travel at Gokarna, accommodation, meals everything was hassle-free. We could visit all places as mentioned in itinerary easily. Not for a moment we felt that we are solo travelers meeting for the first time. And as we all experienced it I will definitely say - TRIBE HAI TO VIBE HAI !'
+      },
+      {
+        name: 'Daksha Bhanushali',
+        reviewCount: '10 reviews',
+        photoCount: '4 photos',
+        timeAgo: 'a year ago',
+        rating: 5,
+        quote: 'I just finished my Gokarna trip with Travel Tribes, as this was my 2nd trip with them everything went well as expected, it was an incredible experience from start to finish. Our tour Captain Parag was friendly, he took care of every detail, making sure everything went smoothly. Honestly, everything was perfect. I highly recommend them to anyone looking for a well-coordinated and enjoyable travel specially for solo travelers. I am looking forward to the book more such amazing trips with them. Thanks to the Travel tribe for this amazing experience.'
+      },
+      {
+        name: 'Mohil Khare',
+        role: 'Local Guide',
+        reviewCount: '82 reviews',
+        photoCount: '101 photos',
+        timeAgo: 'a year ago',
+        rating: 5,
+        quote: 'This was my second trip with Travel Tribes and they just seem to keep pushing the bar for amazing travel experiences. My trip to Gokarna was made memorable with a great itinerary, good planning and kindest friends made through the trip. Our trip captain Parag was simply a delight and was on top of things at all times, while ensuring we all had a great time. Anyone considering a trip should definitely give these guys a shot! Highly recommended! ❤️'
+      },
+      {
+        name: 'Nidhi Gupta',
+        role: 'Local Guide',
+        reviewCount: '9 reviews',
+        photoCount: '6 photos',
+        rating: 5,
+        quote: 'I joined Travel Tribes Gokarna trip as a solo traveler, and had a memorable time with them. The group members and leader were friendly, warm and approachable. They ensured the temple darshans, chill time at the beach/waterfall and most importantly safety. Every single person\'s comfort, health and food preferences were considered and respected. It was heartwarming to see other solo travelers, and being a part of group games, group videos, singing sessions and ice cream treats. By the second day I had forgotten I had joined solo - we all had become friends, had inside jokes, took beautiful pictures of each other and made sweet memories together. One of the best trips! ❤️'
+      },
+      {
+        name: 'Akshay Karnik',
+        reviewCount: '8 reviews',
+        photoCount: '1 photo',
+        rating: 5,
+        quote: 'Thank you Travel Tribes for the lovely experience. The Trip was very well planned. We reached Gokarna with a mind full of excitement and curiosity about the place and the travel group and we returned with a bag full of memories and happiness. 😊'
+      }
+    ]
   },
   {
     slug: 'coorg-backpacking',
@@ -340,7 +451,45 @@ export const trips: Trip[] = [
       { label: 'Ex-Mumbai (3AC Train Ticket)', price: '₹11,999 / person' },
       { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' }
     ],
-    bookingAmount: '₹4,000 / person'
+    bookingAmount: '₹4,000 / person',
+    reviews: [
+      {
+        name: 'Snigdha More',
+        detail: 'First Solo Trip',
+        rating: 5,
+        quote: 'Chooses Travel tribes for my first solo trip to coorg and glad I went with them. They handled the trip from tickets, covering points even changing itenrary when required as per our preference. Adil was very helpful and involved throughout and always part of the group. The team handled trip very smoothly. They not just covered the points for the sake of it, but also looked into the ice breaking and involvement sessions which made the solo travellers bonding with others strong. So though we came as strangers, we left as family.'
+      },
+      {
+        name: 'Gauravi More',
+        rating: 5,
+        quote: 'I recently went on a trip to Coorg, and honestly, it was incredibly well-managed. We were able to enjoy every single sightseeing point properly, without ever feeling rushed. The tour guide was very friendly and created a wonderful vibe throughout the journey. Thanks to the fun ice-breaking sessions and games, a group of strangers quickly felt like family. I would definitely travel with this agency again!! ❤️✨'
+      },
+      {
+        name: 'Himani More',
+        rating: 5,
+        quote: 'Coorg was such a vibe! 🌿🫶🏻 Had a really fun and memorable trip with Travel Tribe. Everything was well managed, the coordination was smooth, and the group energy made the experience even better. From the beautiful views to all the random fun moments, it was the perfect little escape from the routine. 💚 Thank you, Travel Tribe & trip coordinator, for making the trip so enjoyable 🎀 Would definitely love to join another trip with you guys. 🏔️✨'
+      },
+      {
+        name: 'Rutuja Kore',
+        rating: 5,
+        quote: 'It was really the awesome trip that I have ever experienced.🔥🔥the vibe,the arrangements,the stay everything was perfect and top notch .we didn\'t skip any places and visited each and every spot mentioned in iternery 😊😊and about the tour leader Adil, he was the best leader ever,he maintained the vibe, managed everything,guided us throughout,played ice breaking games with us and bcoz of him the vibe was maintained throughout. Thank you travel tribe for giving us such a beautiful and memorable experience. Bcoz of you the coorg has a special place in my heart ❤️ Thank you so much ❤️'
+      },
+      {
+        name: 'Tejas Pangarikar',
+        rating: 5,
+        quote: 'Had a really great experience with Travel Tribe! Definitely one of the best options for solo travellers. Everything was well planned and the team was super friendly and helpful throughout the trip. The best part was meeting new people, making friends, and enjoying the whole trip together. If you’re travelling solo and want a fun, hassle-free experience, I’d definitely recommend Travel Tribe! 🌍✨'
+      },
+      {
+        name: 'Swaranjali Teli',
+        rating: 5,
+        quote: 'Had an amazing Coorg trip with Travel Tribes! 🌿✨ Everything was well planned and experience was truly memorable. A special thanks to Jatin and Prem for being such amazing leaders, energetic and making sure everyone had a great time.'
+      },
+      {
+        name: 'Shruti Thakur',
+        rating: 5,
+        quote: 'I had such a great time in Coorg! The trip was full of fun, beautiful places, and good memories. Big thanks to Prem and Jatin for coordinating everything so well and being super supportive throughout. Really enjoyed the whole experience!'
+      }
+    ]
   },
   {
     slug: 'udaipur-backpacking',
@@ -489,7 +638,51 @@ export const trips: Trip[] = [
       { label: 'Mumbai to Mumbai (3AC Train)', price: '₹11,999 / person' },
       { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' }
     ],
-    bookingAmount: '₹4,000 / person'
+    bookingAmount: '₹4,000 / person',
+    reviews: [
+      {
+        name: 'Anushree',
+        detail: 'Girls Trip',
+        rating: 5,
+        quote: 'Superb experience!!! we went to udaipur recently with travel tribes it was our first trip with them, and that too a girls trip, we were very skeptical to go on a girls trip with a bunch of strangers but the hosts made us feel so much at home. All i can say is its gonna be an experience you remember for a life time 10/10 recommended ♥️'
+      },
+      {
+        name: 'Mansi Sinha',
+        rating: 5,
+        quote: 'One of the best travel experiences I’ve had so far, especially compared to other travel companies I’ve travelled with! ❤️ What I loved most was how flexible and thoughtfully planned the itinerary was. It wasn’t hellishly packed, yet we managed to cover so much without ever feeling rushed. The way Adil & Aarjoo manages to pull everything together so effortlessly is truly wonderful. It was an absolutely memorable experience, and I’m already looking forward to planning my next trip with them! ✨ Thank you, Travel Tribes, for making Udaipur so beautiful and memorable. 💛'
+      },
+      {
+        name: 'Vindu Pal',
+        rating: 5,
+        quote: 'Really enjoyed my Udaipur trip with travel tribe. The overall experience was very good, the arrangements were well managed, and the trip was comfortable and enjoyable. Adil and Arzoo were really helpful and cooperative throughout. Had a great time exploring Udaipur and making some lovely memories. Definitely recommended for anyone planning a trip! 😊'
+      },
+      {
+        name: 'Kajal Rambhia',
+        detail: 'Solo Traveller',
+        rating: 5,
+        quote: 'I planned two trips with Travel Tribes and both of these were the best trips of my life! The vibe is amazing. New friends, new places, new experiences - truly positive, safe, comfortable and memorable. Especially the Udaipur trip... I travelled SOLO! What fun and memories!!'
+      },
+      {
+        name: 'Ankita Iyer',
+        rating: 5,
+        quote: 'Udaipur is seriously one of those places that looks even better in real life! 🥹 The sunset by the lake was unreal and the sunrise from Bahubali Hills was 100% worth waking up early for. 🌅 Travel Tribes planned the trip really well and our trip leader made the whole experience even better. Loved every bit of it!'
+      },
+      {
+        name: 'Kunal Jadhav',
+        rating: 5,
+        quote: 'Still not over this Udaipur trip! 😭❤️ The lakeside sunset was straight out of a movie and Bahubali Hills at sunrise was just WOW. The itinerary was really well planned, stay and food were good, and our trip leader was amazing. Such a wholesome group trip!'
+      },
+      {
+        name: 'Ankita Patil',
+        rating: 5,
+        quote: 'Had such a good time in Udaipur! The city is gorgeous, especially during sunset by the lake. The sunrise at Bahubali Hills was honestly worth waking up early for. 😭🌅 Travel Tribes handled everything really well and our trip leader was super helpful and fun. Definitely coming back for another trip!'
+      },
+      {
+        name: 'Vipul Choube',
+        rating: 5,
+        quote: 'Udaipur was SUCH a vibe! 🥹🌅 Sunset by the lake, sunrise at Bahubali Hills, beautiful streets and the whole city just hits different. Travel Tribes made it even better — everything was sorted and our trip leader was a total W. Would 100% do this trip again!'
+      }
+    ]
   },
   {
     slug: 'spiti-valley-chandrataal',
@@ -873,21 +1066,240 @@ export const navItems = [
   { label: 'Domestic', href: '/domestic-trips' },
   { label: 'International', href: '/international-trips' },
   { label: 'Weekend getaways', href: '/weekend-getaways' },
+  { label: 'Xmas & New Year', href: '/xmas-new-year-trips' },
+  { label: 'Why Us', href: '/why-us' },
   { label: 'About us', href: '/about' }
 ]
 
-export const testimonials = [
-  { quote: 'The rare group trip that feels genuinely personal. Every detail was considered.', name: 'Aditi S.', detail: 'Gokarna Backpacking, 2025' },
-  { quote: 'I came for the itinerary and stayed for the people. Travelled solo, came home with a new circle.', name: 'Rohan M.', detail: 'Coorg Backpacking, 2025' },
-  { quote: 'Camping under the stars at Chandrataal with the tribe was pure magic. Unforgettable!', name: 'Nisha K.', detail: 'Spiti Valley Expedition, 2026' }
+export const testimonials: TripReview[] = [
+  // --- GOKARNA REVIEWS (12) ---
+  {
+    name: 'Deepak Dhiver',
+    role: 'Local Guide',
+    reviewCount: '16 reviews',
+    photoCount: '51 photos',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'I went on a trip to Gokarna, and this was my 1st Solo trip ever, I met great people during the trip. We visited many places in 3 days and our tour guide (Mr.Shah) was very experienced. All the arrangents were perfectly made. I enjoyed my 1st solo trip ✨️'
+  },
+  {
+    name: 'Shrutika More',
+    reviewCount: '2 reviews',
+    photoCount: '13 photos',
+    detail: 'Gokarna Backpacking (2nd Trip)',
+    rating: 5,
+    quote: 'Recently had my second trip to Gokarna with travel tribes and it was the hella amazing trip I ever had. The trip was absolutely amazing and all the credit goes to our fantastic trio Adil, Parag and Nihir who managed everything well. I’m really grateful to travel tribes for arranging a cake for my birthday and making it a special day for me. It was unexpected surprise for me. I will always cherish this memorable trip as I met so many amazing people, we bonded and enjoyed together. I would highly recommend you all to go with travel tribes and have your banger trip because Tribe hai to vibe hai guyss 🔥🫶🥳'
+  },
+  {
+    name: 'Sayli Rane',
+    role: 'Local Guide',
+    reviewCount: '21 reviews',
+    photoCount: '6 photos',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'I recently went on gokarna trip with travel tribes. It was my first solo trip was bit nervous till I boarded the train..but as the journey began…it was a trip filled with fun and adventure. All the trip leaders adil arzoo raj viju were so friendly and caring. Best trip i had in 2023. Stay location was also good its near the beach . Room conditions can be improved by the resort owner. Though not bad as resort is besides beach.'
+  },
+  {
+    name: 'Abhishek Dutta',
+    reviewCount: '10 reviews',
+    photoCount: '9 photos',
+    timeAgo: '2 years ago',
+    detail: 'Gokarna New Year Party',
+    rating: 5,
+    quote: 'Had one of the best trips ever with Travel Tribes. Really nice people and awesome management team. This was my 1st group trip as strangers and we left the trip becoming great friends. Had gone to Gokarna for new year party and had the best beach front resort & party.'
+  },
+  {
+    name: 'Raj Jaiswal',
+    reviewCount: '6 reviews',
+    photoCount: '12 photos',
+    timeAgo: '2 years ago',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'I think Travel Tribes is one of the most friendly travel organising company, I had recently gone to Gokarna with them & never felt that I am with the strangers on the trip, they just took trip to next level & it\'s been almost 5 days I am still mentally with them & lost in those memories. Highly recommended for solo as well for group travellers, if you wanna #Vibe then Choose the Travel Tribes.'
+  },
+  {
+    name: 'Bhakti Shirke',
+    reviewCount: '5 reviews',
+    photoCount: '8 photos',
+    timeAgo: 'a year ago',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'Had an amazing time on the Gokarna trip! Everything was perfectly organized – from the transportation to the accommodations and the itinerary. The team ensured we had a seamless and fun experience. Highly recommend for anyone looking for a stress-free and memorable group getaway!'
+  },
+  {
+    name: 'Khushi Singh',
+    role: 'Local Guide',
+    reviewCount: '13 reviews',
+    photoCount: '12 photos',
+    timeAgo: 'a year ago',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'Gokarna trip with travel tribes was the best trip I have ever had. It was my first solo trip and trust me the experience I had with people and with parag it was really special to me. I will always remember this memorable trip I met so many amazing people we bonded quickly and enjoyed so much I would highly recommend to go with travel tribes. As it was my pre- birthday trip so parag made it special for me as well celebrated, overall the trip was worth every penny. 🫶🏻'
+  },
+  {
+    name: 'Nakusa Indalkar',
+    role: 'Local Guide',
+    reviewCount: '12 reviews',
+    photoCount: '11 photos',
+    timeAgo: '2 years ago',
+    detail: 'Gokarna Backpacking (2nd Trip)',
+    rating: 5,
+    quote: 'Gokarna was my second solo trip with Travel Tribe. Our host Adil is a cool guy. All the arrangements done starting from train journey, local travel at Gokarna, accommodation, meals everything was hassle-free. We could visit all places as mentioned in itinerary easily. Not for a moment we felt that we are solo travelers meeting for the first time. And as we all experienced it I will definitely say - TRIBE HAI TO VIBE HAI !'
+  },
+  {
+    name: 'Daksha Bhanushali',
+    reviewCount: '10 reviews',
+    photoCount: '4 photos',
+    timeAgo: 'a year ago',
+    detail: 'Gokarna Backpacking (2nd Trip)',
+    rating: 5,
+    quote: 'I just finished my Gokarna trip with Travel Tribes, as this was my 2nd trip with them everything went well as expected, it was an incredible experience from start to finish. Our tour Captain Parag was friendly, he took care of every detail, making sure everything went smoothly. Honestly, everything was perfect. I highly recommend them to anyone looking for a well-coordinated and enjoyable travel specially for solo travelers. I am looking forward to the book more such amazing trips with them. Thanks to the Travel tribe for this amazing experience.'
+  },
+  {
+    name: 'Mohil Khare',
+    role: 'Local Guide',
+    reviewCount: '82 reviews',
+    photoCount: '101 photos',
+    timeAgo: 'a year ago',
+    detail: 'Gokarna Backpacking (2nd Trip)',
+    rating: 5,
+    quote: 'This was my second trip with Travel Tribes and they just seem to keep pushing the bar for amazing travel experiences. My trip to Gokarna was made memorable with a great itinerary, good planning and kindest friends made through the trip. Our trip captain Parag was simply a delight and was on top of things at all times, while ensuring we all had a great time. Anyone considering a trip should definitely give these guys a shot! Highly recommended! ❤️'
+  },
+  {
+    name: 'Nidhi Gupta',
+    role: 'Local Guide',
+    reviewCount: '9 reviews',
+    photoCount: '6 photos',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'I joined Travel Tribes Gokarna trip as a solo traveler, and had a memorable time with them. The group members and leader were friendly, warm and approachable. They ensured the temple darshans, chill time at the beach/waterfall and most importantly safety. Every single person\'s comfort, health and food preferences were considered and respected. It was heartwarming to see other solo travelers, and being a part of group games, group videos, singing sessions and ice cream treats. By the second day I had forgotten I had joined solo - we all had become friends, had inside jokes, took beautiful pictures of each other and made sweet memories together. One of the best trips! ❤️'
+  },
+  {
+    name: 'Akshay Karnik',
+    reviewCount: '8 reviews',
+    photoCount: '1 photo',
+    detail: 'Gokarna Backpacking Trip',
+    rating: 5,
+    quote: 'Thank you Travel Tribes for the lovely experience. The Trip was very well planned. We reached Gokarna with a mind full of excitement and curiosity about the place and the travel group and we returned with a bag full of memories and happiness. 😊'
+  },
+
+  // --- COORG REVIEWS (7) ---
+  {
+    name: 'Snigdha More',
+    detail: 'Coorg Backpacking (Solo Trip)',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Chooses Travel tribes for my first solo trip to coorg and glad I went with them. They handled the trip from tickets, covering points even changing itenrary when required as per our preference. Adil was very helpful and involved throughout and always part of the group. The team handled trip very smoothly. They not just covered the points for the sake of it, but also looked into the ice breaking and involvement sessions which made the solo travellers bonding with others strong. So though we came as strangers, we left as family.'
+  },
+  {
+    name: 'Gauravi More',
+    detail: 'Coorg Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'I recently went on a trip to Coorg, and honestly, it was incredibly well-managed. We were able to enjoy every single sightseeing point properly, without ever feeling rushed. The tour guide was very friendly and created a wonderful vibe throughout the journey. Thanks to the fun ice-breaking sessions and games, a group of strangers quickly felt like family. I would definitely travel with this agency again!! ❤️✨'
+  },
+  {
+    name: 'Himani More',
+    detail: 'Coorg Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Coorg was such a vibe! 🌿🫶🏻 Had a really fun and memorable trip with Travel Tribe. Everything was well managed, the coordination was smooth, and the group energy made the experience even better. From the beautiful views to all the random fun moments, it was the perfect little escape from the routine. 💚 Thank you, Travel Tribe & trip coordinator, for making the trip so enjoyable 🎀 Would definitely love to join another trip with you guys. 🏔️✨'
+  },
+  {
+    name: 'Rutuja Kore',
+    detail: 'Coorg Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'It was really the awesome trip that I have ever experienced.🔥🔥the vibe,the arrangements,the stay everything was perfect and top notch .we didn\'t skip any places and visited each and every spot mentioned in iternery 😊😊and about the tour leader Adil, he was the best leader ever,he maintained the vibe, managed everything,guided us throughout,played ice breaking games with us and bcoz of him the vibe was maintained throughout. Thank you travel tribe for giving us such a beautiful and memorable experience. Bcoz of you the coorg has a special place in my heart ❤️ Thank you so much ❤️'
+  },
+  {
+    name: 'Tejas Pangarikar',
+    detail: 'Coorg Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Had a really great experience with Travel Tribe! Definitely one of the best options for solo travellers. Everything was well planned and the team was super friendly and helpful throughout the trip. The best part was meeting new people, making friends, and enjoying the whole trip together. If you’re travelling solo and want a fun, hassle-free experience, I’d definitely recommend Travel Tribe! 🌍✨'
+  },
+  {
+    name: 'Swaranjali Teli',
+    detail: 'Coorg Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Had an amazing Coorg trip with Travel Tribes! 🌿✨ Everything was well planned and experience was truly memorable. A special thanks to Jatin and Prem for being such amazing leaders, energetic and making sure everyone had a great time.'
+  },
+  {
+    name: 'Shruti Thakur',
+    detail: 'Coorg Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'I had such a great time in Coorg! The trip was full of fun, beautiful places, and good memories. Big thanks to Prem and Jatin for coordinating everything so well and being super supportive throughout. Really enjoyed the whole experience!'
+  },
+
+  // --- UDAIPUR REVIEWS (8) ---
+  {
+    name: 'Anushree',
+    detail: 'Udaipur Backpacking (Girls Trip)',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Superb experience!!! we went to udaipur recently with travel tribes it was our first trip with them, and that too a girls trip, we were very skeptical to go on a girls trip with a bunch of strangers but the hosts made us feel so much at home. All i can say is its gonna be an experience you remember for a life time 10/10 recommended ♥️'
+  },
+  {
+    name: 'Mansi Sinha',
+    detail: 'Udaipur Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'One of the best travel experiences I’ve had so far, especially compared to other travel companies I’ve travelled with! ❤️ What I loved most was how flexible and thoughtfully planned the itinerary was. It wasn’t hellishly packed, yet we managed to cover so much without ever feeling rushed. The way Adil & Aarjoo manages to pull everything together so effortlessly is truly wonderful. It was an absolutely memorable experience, and I’m already looking forward to planning my next trip with them! ✨ Thank you, Travel Tribes, for making Udaipur so beautiful and memorable. 💛'
+  },
+  {
+    name: 'Vindu Pal',
+    detail: 'Udaipur Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Really enjoyed my Udaipur trip with travel tribe. The overall experience was very good, the arrangements were well managed, and the trip was comfortable and enjoyable. Adil and Arzoo were really helpful and cooperative throughout. Had a great time exploring Udaipur and making some lovely memories. Definitely recommended for anyone planning a trip! 😊'
+  },
+  {
+    name: 'Kajal Rambhia',
+    detail: 'Udaipur Backpacking (Solo Trip)',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'I planned two trips with Travel Tribes and both of these were the best trips of my life! The vibe is amazing. New friends, new places, new experiences - truly positive, safe, comfortable and memorable. Especially the Udaipur trip... I travelled SOLO! What fun and memories!!'
+  },
+  {
+    name: 'Ankita Iyer',
+    detail: 'Udaipur Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Udaipur is seriously one of those places that looks even better in real life! 🥹 The sunset by the lake was unreal and the sunrise from Bahubali Hills was 100% worth waking up early for. 🌅 Travel Tribes planned the trip really well and our trip leader made the whole experience even better. Loved every bit of it!'
+  },
+  {
+    name: 'Kunal Jadhav',
+    detail: 'Udaipur Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Still not over this Udaipur trip! 😭❤️ The lakeside sunset was straight out of a movie and Bahubali Hills at sunrise was just WOW. The itinerary was really well planned, stay and food were good, and our trip leader was amazing. Such a wholesome group trip!'
+  },
+  {
+    name: 'Ankita Patil',
+    detail: 'Udaipur Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Had such a good time in Udaipur! The city is gorgeous, especially during sunset by the lake. The sunrise at Bahubali Hills was honestly worth waking up early for. 😭🌅 Travel Tribes handled everything really well and our trip leader was super helpful and fun. Definitely coming back for another trip!'
+  },
+  {
+    name: 'Vipul Choube',
+    detail: 'Udaipur Backpacking Trip',
+    role: 'Verified Traveller',
+    rating: 5,
+    quote: 'Udaipur was SUCH a vibe! 🥹🌅 Sunset by the lake, sunrise at Bahubali Hills, beautiful streets and the whole city just hits different. Travel Tribes made it even better — everything was sorted and our trip leader was a total W. Would 100% do this trip again!'
+  }
 ]
 
 export const gallery = [
-  { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Kayak on a turquoise lake' },
-  { image: img('photo-1500534623283-312aade485b7'), alt: 'Mountain landscape at golden hour' },
-  { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Traveller walking through a valley' },
-  { image: img('photo-1528127269322-539801943592'), alt: 'Tropical beach and palm trees' },
-  { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Colourful European coastal town' }
+  { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Kayak on a turquoise lake', title: 'Emerald Lake Serenity', location: 'Honnavar Backwaters' },
+  { image: img('photo-1500534623283-312aade485b7'), alt: 'Mountain landscape at golden hour', title: 'Golden Hour Trails', location: 'Spiti Valley Peaks' },
+  { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Traveller walking through a valley', title: 'Wanderer in Paradise', location: 'Meghalaya Living Roots' },
+  { image: img('photo-1528127269322-539801943592'), alt: 'Tropical beach and palm trees', title: 'Sunset at Kudle Beach', location: 'Gokarna Coastline' },
+  { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Colourful coastal town', title: 'Heritage & Old Town Vibes', location: 'Vietnam & Bali' },
+  { image: img('photo-1533105079780-92b9be482077'), alt: 'Starlit Mountain Camping', title: 'Stargazing with Tribe', location: 'Chandrataal Lake' }
 ]
 
 export const blogs = [
@@ -897,9 +1309,117 @@ export const blogs = [
 ]
 
 export const honeymoonTrips = trips.filter(t => t.region === 'Honeymoon')
+export const xmasNewYearTrips = trips.filter(t => t.region === 'Xmas & New Year' || t.tag?.toLowerCase().includes('new year') || t.date?.toLowerCase().includes('dec 2') || t.date?.toLowerCase().includes('dec 3'))
 
 export const categories = [
   { title: 'Domestic', desc: 'Closer than you think.', href: '/domestic-trips', image: img('photo-1506461883276-594a12b11cf3') },
   { title: 'International', desc: 'Go further, together.', href: '/international-trips', image: img('photo-1516483638261-f4dbaf036963') },
   { title: 'Honeymoons', desc: 'For your next chapter.', href: '/contact', image: img('photo-1533105079780-92b9be482077') }
 ]
+
+export interface FaqItem {
+  id: string
+  question: string
+  answer: string
+  category?: string
+}
+
+export const whyUsFaqs: FaqItem[] = [
+  {
+    id: 'what-is-travel-tribes',
+    question: 'What is Travel Tribes?',
+    category: 'About Us',
+    answer: 'Travel Tribes is a New age community-led travel brand that brings people together through group trips across India and around the world. Whether you come solo, with friends or as a couple, our goal is simple — help you explore more, meet great people and find your tribe.'
+  },
+  {
+    id: 'different-from-regular-tours',
+    question: 'What makes our trips different from regular group tours?',
+    category: 'Experience',
+    answer: 'We don’t do cookie-cutter tours or checklist-style travel. Our trips are built around small groups, real experiences and the people you travel with. You’ll explore the destination, meet like-minded travellers and have enough room for spontaneous moments along the way.'
+  },
+  {
+    id: 'what-are-community-trips',
+    question: 'What are community trips?',
+    category: 'Community',
+    answer: 'Community trips are group adventures designed to bring like-minded travellers together. You may arrive knowing nobody, but shared experiences, conversations and a little travel chaos have a way of turning strangers into friends.'
+  },
+  {
+    id: 'safe-for-solo-female-travellers',
+    question: 'Are your trips safe for solo female travellers?',
+    category: 'Safety',
+    answer: 'Yes. Solo female travellers are welcome on our trips. We carefully plan our stays, transportation and experiences, with trip leaders supporting the group throughout the journey. We also believe everyone should feel comfortable, respected and included while travelling with us.'
+  },
+  {
+    id: 'who-manages-trip-on-ground',
+    question: 'Who travels with us and manages the trip on-ground?',
+    category: 'Trip Captain',
+    answer: 'Every Travel Tribes trip is accompanied by a Trip Captain - someone from our team who is there to handle the on-ground logistics, keep the trip running smoothly and, most importantly, keep the Tribe together.\n\nFrom coordinating transport and stays to helping with plans, activities and those unexpected travel moments, your Trip Captain has got it covered.\n\nYou focus on exploring. We’ll handle the rest.'
+  },
+  {
+    id: 'what-is-a-trip-captain',
+    question: 'What is a Trip Captain?',
+    category: 'Trip Captain',
+    answer: 'A Trip Captain is more than just a trip coordinator. They’re your on-ground point of contact, problem-solver and vibe keeper throughout the journey.\n\nThey make sure the group stays connected, the plans stay on track and nobody feels like they’re travelling alone.\n\nBasically: logistics handled. Good vibes guaranteed.'
+  },
+  {
+    id: 'join-trip-alone',
+    question: 'Can I join a trip alone?',
+    category: 'Solo Travel',
+    answer: 'Absolutely. Most of our travellers join solo. You don’t need to know anyone before the trip — that’s kind of the point. You’ll meet your tribe along the way.'
+  },
+  {
+    id: 'who-usually-travels',
+    question: 'Who usually travels with Travel Tribes?',
+    category: 'Community',
+    answer: 'Our trips are for curious, easy-going travellers who love exploring new places and meeting new people. Expect a mix of solo travellers, friends, couples, and small groups.'
+  },
+  {
+    id: 'only-for-young-people',
+    question: 'Are Travel Tribes trips only for young people?',
+    category: 'Community',
+    answer: 'Our community is largely made up of young travellers, but we care more about your travel vibe than your age. If you’re curious, social and up for an adventure, you’ll fit right in.'
+  },
+  {
+    id: 'group-size',
+    question: 'How big are the groups?',
+    category: 'Group Travel',
+    answer: 'We keep our groups small enough to actually connect, rather than feeling like a typical large tour group. Group size can vary by destination and trip.'
+  },
+  {
+    id: 'share-room',
+    question: 'Do I have to share a room with someone?',
+    category: 'Stay & Rooms',
+    answer: 'Most of our trips are planned on a sharing basis. Room-sharing details and available options are mentioned on the respective trip page.'
+  },
+  {
+    id: 'how-to-book',
+    question: 'How do I book a trip?',
+    category: 'Booking',
+    answer: 'Choose your destination, select your travel date and book your spot through the trip page. Once your booking is confirmed, we\'ll share the next steps and trip details with you.'
+  },
+  {
+    id: 'dont-know-anyone',
+    question: 'What if I don\'t know anyone on the trip?',
+    category: 'Solo Travel',
+    answer: 'Perfect. 😄 Come solo, show up with an open mind, and let the trip do the rest. Many of our travellers meet their future travel buddies on their very first trip with us.'
+  },
+  {
+    id: 'customise-trip',
+    question: 'Can I customise a trip?',
+    category: 'Custom Trips',
+    answer: 'Yes. If your dream destination or dates aren\'t on our calendar, reach out to us and we\'ll help you plan a customised trip.'
+  },
+  {
+    id: 'travelling-with-friends',
+    question: 'Can I join if I’m travelling with my friends?',
+    category: 'Group Travel',
+    answer: 'Of course. Bring your people or come solo — either way, you’re part of the Tribe.'
+  },
+  {
+    id: 'cancellation-policy',
+    question: 'What happens if I need to cancel my trip?',
+    category: 'Policies',
+    answer: 'Cancellation and refund policies vary by trip. Please check the cancellation policy on your specific trip page before booking.'
+  }
+]
+

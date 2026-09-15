@@ -21,10 +21,12 @@ import {
   Sparkles,
   CreditCard,
   Building2,
-  Smartphone
+  Smartphone,
+  AlertCircle
 } from 'lucide-react'
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
+import { calculateBookingPricing, sanitizeGuests, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
 
 export function BookingContent() {
   const searchParams = useSearchParams()
@@ -54,10 +56,8 @@ export function BookingContent() {
     dateParam ? decodeURIComponent(dateParam) : availableDates[0]
   )
 
-  // Guests
-  const [guests, setGuests] = useState<number>(
-    guestsParam ? Math.max(1, parseInt(guestsParam, 10) || 1) : 2
-  )
+  // Guests - rigorously sanitized
+  const [guests, setGuests] = useState<number>(() => sanitizeGuests(guestsParam || 2))
 
   // Package options
   const [selectedPackageIndex, setSelectedPackageIndex] = useState<number>(0)
@@ -79,35 +79,30 @@ export function BookingContent() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [isBooked, setIsBooked] = useState(false)
   const [bookingId, setBookingId] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  // Calculate pricing
-  const basePricePerPerson = useMemo(() => {
-    if (selectedTrip.pricingOptions && selectedTrip.pricingOptions[selectedPackageIndex]) {
-      const pStr = selectedTrip.pricingOptions[selectedPackageIndex].price
-      const num = parseInt(pStr.replace(/[^\d]/g, ''), 10)
-      return isNaN(num) ? 8499 : num
-    }
-    const num = parseInt(selectedTrip.price.replace(/[^\d]/g, ''), 10)
-    return isNaN(num) ? 8499 : num
-  }, [selectedTrip, selectedPackageIndex])
+  // Rigorous Anti-Tamper Pricing Engine Calculation
+  const pricing = useMemo(() => {
+    return calculateBookingPricing({
+      tripSlug: selectedTrip.slug,
+      packageIndex: selectedPackageIndex,
+      guests,
+      isDoubleSharing,
+      paymentType
+    })
+  }, [selectedTrip.slug, selectedPackageIndex, guests, isDoubleSharing, paymentType])
 
-  const doubleSharingAddon = isDoubleSharing ? 1500 : 0
-  const totalPerPerson = basePricePerPerson + doubleSharingAddon
-  const subtotal = totalPerPerson * guests
-  const gstAmount = Math.round(subtotal * 0.05)
-  const grandTotal = subtotal + gstAmount
-
-  const advancePerPerson = useMemo(() => {
-    if (selectedTrip.bookingAmount) {
-      const num = parseInt(selectedTrip.bookingAmount.replace(/[^\d]/g, ''), 10)
-      return isNaN(num) ? 4000 : num
-    }
-    return 4000
-  }, [selectedTrip])
-
-  const advanceTotal = advancePerPerson * guests
-  const amountToPayToday = paymentType === 'advance' ? advanceTotal : grandTotal
-  const remainingBalance = grandTotal - amountToPayToday
+  const {
+    basePricePerPerson,
+    subtotal,
+    gstAmount,
+    grandTotal,
+    advanceTotal,
+    fullPaymentDiscount,
+    amountToPayToday,
+    remainingBalance,
+    isFullPayment
+  } = pricing
 
   const handleTripChange = (slug: string) => {
     const found = trips.find((t) => t.slug === slug)
@@ -118,23 +113,71 @@ export function BookingContent() {
     }
   }
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const updateGuests = (nextVal: number) => {
+    setGuests(sanitizeGuests(nextVal))
+  }
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.fullName || !formData.email || !formData.phone) {
-      alert('Please fill all required fields (Name, Email, WhatsApp Number).')
+    setErrorMessage(null)
+
+    const trimmedName = formData.fullName.trim()
+    const trimmedEmail = formData.email.trim()
+    const trimmedPhone = formData.phone.trim()
+
+    if (!trimmedName || !trimmedEmail || !trimmedPhone) {
+      setErrorMessage('Please fill all required fields (Name, Email, WhatsApp Number).')
+      return
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setErrorMessage('Please provide a valid email address.')
+      return
+    }
+
+    const phoneDigits = trimmedPhone.replace(/[^\d]/g, '')
+    if (phoneDigits.length < 10) {
+      setErrorMessage('Please enter a valid 10-digit WhatsApp/phone number.')
       return
     }
 
     setIsProcessing(true)
 
-    // Simulate instant payment gateway & voucher generation
-    setTimeout(() => {
-      const randomId = `TT-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`
-      setBookingId(randomId)
+    try {
+      // Call secure server-side booking endpoint which strictly verifies and recalculates prices
+      const response = await fetch('/api/create-booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tripSlug: selectedTrip.slug,
+          packageIndex: selectedPackageIndex,
+          guests,
+          isDoubleSharing,
+          paymentType,
+          date: selectedDate,
+          fullName: trimmedName,
+          email: trimmedEmail,
+          phone: trimmedPhone,
+          city: formData.city.trim(),
+          specialRequest: formData.specialRequest.trim()
+        })
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Booking verification failed. Please try again.')
+      }
+
+      setBookingId(result.bookingId)
       setIsProcessing(false)
       setIsBooked(true)
       window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, 1800)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Payment connection failed. Please retry.'
+      setErrorMessage(msg)
+      setIsProcessing(false)
+    }
   }
 
   return (
@@ -151,7 +194,7 @@ export function BookingContent() {
               <span>/</span>
               <span className="text-slate-400">Checkout</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[var(--navy)]">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
               {isBooked ? 'Booking Confirmed! 🎉' : 'Complete Your Booking'}
             </h1>
           </div>
@@ -175,7 +218,7 @@ export function BookingContent() {
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--sky)] bg-[var(--sky-pale)] px-3 py-1 rounded-full">
                 Booking ID: {bookingId}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif text-[var(--navy)] mt-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mt-3">
                 Pack Your Bags, {formData.fullName.split(' ')[0]}!
               </h2>
               <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
@@ -202,13 +245,30 @@ export function BookingContent() {
                 <span className="font-semibold text-slate-800">{formData.fullName} ({formData.phone})</span>
               </div>
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Payment Option</span>
+                <span className="font-bold text-[var(--navy)]">
+                  {isFullPayment ? 'Full Payment (Discount Applied)' : 'Advance Booking'}
+                </span>
+              </div>
+              {isFullPayment && (
+                <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
+                  <span className="flex items-center gap-1.5"><Sparkles size={14} className="text-emerald-600" /> Full Payment Discount</span>
+                  <span>-₹1,000</span>
+                </div>
+              )}
+              <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
                 <span className="text-slate-500">Amount Paid Today</span>
                 <span className="font-bold text-emerald-600 text-base">₹{amountToPayToday.toLocaleString('en-IN')}</span>
               </div>
-              {remainingBalance > 0 && (
+              {remainingBalance > 0 ? (
                 <div className="flex justify-between items-center pt-1 text-slate-600 text-xs">
                   <span>Balance Due (Before Departure)</span>
                   <span className="font-semibold">₹{remainingBalance.toLocaleString('en-IN')}</span>
+                </div>
+              ) : (
+                <div className="flex justify-between items-center pt-1 text-emerald-700 text-xs font-bold">
+                  <span>Booking Status</span>
+                  <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full text-[11px]">100% Fully Paid</span>
                 </div>
               )}
             </div>
@@ -217,7 +277,7 @@ export function BookingContent() {
             <div className="space-y-3 pt-2">
               <a
                 href={`https://wa.me/919975822023?text=${encodeURIComponent(
-                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests). My Booking ID is *${bookingId}*. Please share the group chat link and preparation guide!`
+                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests). My Booking ID is *${bookingId}*. Payment Mode: ${isFullPayment ? `Full Payment (₹${amountToPayToday.toLocaleString('en-IN')} with ₹1,000 discount)` : `Advance Payment (₹${amountToPayToday.toLocaleString('en-IN')})`}. Please share the group chat link and preparation guide!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -256,7 +316,7 @@ export function BookingContent() {
                     1
                   </span>
                   <div>
-                    <h2 className="text-lg font-serif text-[var(--navy)]">Select Dates & Travellers</h2>
+                    <h2 className="text-lg font-bold text-[var(--navy)]">Select Dates & Travellers</h2>
                     <p className="text-xs text-slate-400">Confirm your batch and group size</p>
                   </div>
                 </div>
@@ -322,16 +382,18 @@ export function BookingContent() {
                       <div className="flex items-center gap-3">
                         <button
                           type="button"
-                          onClick={() => setGuests(Math.max(1, guests - 1))}
-                          className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-[var(--sky-pale)] hover:text-[var(--sky)] transition-colors font-bold text-base shadow-sm"
+                          onClick={() => updateGuests(guests - 1)}
+                          disabled={guests <= MIN_GUESTS}
+                          className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-[var(--sky-pale)] hover:text-[var(--sky)] disabled:opacity-40 disabled:pointer-events-none transition-colors font-bold text-base shadow-sm"
                         >
                           -
                         </button>
                         <span className="w-6 text-center font-bold text-base text-[var(--navy)]">{guests}</span>
                         <button
                           type="button"
-                          onClick={() => setGuests(guests + 1)}
-                          className="w-9 h-9 rounded-full bg-[var(--sky)] text-white flex items-center justify-center hover:bg-[var(--navy)] transition-colors font-bold text-base shadow-sm"
+                          onClick={() => updateGuests(guests + 1)}
+                          disabled={guests >= MAX_GUESTS}
+                          className="w-9 h-9 rounded-full bg-[var(--sky)] text-white flex items-center justify-center hover:bg-[var(--navy)] disabled:opacity-40 disabled:pointer-events-none transition-colors font-bold text-base shadow-sm"
                         >
                           +
                         </button>
@@ -407,7 +469,7 @@ export function BookingContent() {
                     2
                   </span>
                   <div>
-                    <h2 className="text-lg font-serif text-[var(--navy)]">Lead Traveller Details</h2>
+                    <h2 className="text-lg font-bold text-[var(--navy)]">Lead Traveller Details</h2>
                     <p className="text-xs text-slate-400">We’ll send trip vouchers & updates to these details</p>
                   </div>
                 </div>
@@ -487,6 +549,14 @@ export function BookingContent() {
                   </div>
                 </div>
 
+                {/* Error Banner */}
+                {errorMessage && (
+                  <div className="mt-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2.5 text-xs text-rose-700 font-semibold animate-in fade-in duration-200">
+                    <AlertCircle size={16} className="text-rose-600 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 {/* Mobile Pay CTA inside form */}
                 <div className="mt-8 pt-6 border-t border-slate-100 lg:hidden">
                   <button
@@ -526,7 +596,7 @@ export function BookingContent() {
                     <span className="text-[10px] font-bold text-[var(--sky)] uppercase tracking-wider flex items-center gap-1">
                       <MapPin size={11} /> {selectedTrip.location.split(' · ')[0]}
                     </span>
-                    <h3 className="font-serif font-bold text-lg text-[var(--navy)] leading-snug mt-1">
+                    <h3 className="font-bold text-lg text-[var(--navy)] leading-snug mt-1">
                       {selectedTrip.title}
                     </h3>
                     <div className="flex items-center gap-3 text-xs text-slate-500 mt-2 font-medium">
@@ -539,31 +609,60 @@ export function BookingContent() {
 
                 {/* Payment Option Toggle: Advance vs Full */}
                 <div className="pt-5">
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-                    Payment Preference
-                  </label>
-                  <div className="grid grid-cols-2 gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                      Payment Preference
+                    </label>
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles size={11} className="text-emerald-600" /> ₹1,000 OFF on Full Payment
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
                     <button
                       type="button"
                       onClick={() => setPaymentType('advance')}
-                      className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
+                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between ${
                         paymentType === 'advance'
                           ? 'bg-[var(--sky)] text-white shadow-sm'
-                          : 'text-slate-600 hover:text-[var(--navy)]'
+                          : 'bg-white/70 hover:bg-white text-slate-600 hover:text-[var(--navy)] border border-transparent'
                       }`}
                     >
-                      Pay Advance Only (₹{advanceTotal.toLocaleString('en-IN')})
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-xs font-bold">Pay Advance Only</span>
+                        {paymentType === 'advance' && <CheckCircle2 size={15} className="text-white shrink-0" />}
+                      </div>
+                      <span className={`text-[11px] mt-1 font-semibold ${paymentType === 'advance' ? 'text-sky-100' : 'text-slate-500'}`}>
+                        ₹{advanceTotal.toLocaleString('en-IN')}
+                      </span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setPaymentType('full')}
-                      className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
+                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden ${
                         paymentType === 'full'
-                          ? 'bg-[var(--sky)] text-white shadow-sm'
-                          : 'text-slate-600 hover:text-[var(--navy)]'
+                          ? 'bg-emerald-600 text-white shadow-sm'
+                          : 'bg-white/70 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-emerald-200/80'
                       }`}
                     >
-                      Pay Full Amount
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-bold">Pay Full Amount</span>
+                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${
+                            paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
+                          }`}>
+                            ₹1,000 OFF
+                          </span>
+                        </div>
+                        {paymentType === 'full' && <CheckCircle2 size={15} className="text-white shrink-0" />}
+                      </div>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className={`text-[11px] line-through ${paymentType === 'full' ? 'text-emerald-200/80' : 'text-slate-400'}`}>
+                          ₹{grandTotal.toLocaleString('en-IN')}
+                        </span>
+                        <span className={`text-xs font-bold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
+                          ₹{Math.max(0, grandTotal - 1000).toLocaleString('en-IN')}
+                        </span>
+                      </div>
                     </button>
                   </div>
                 </div>
@@ -584,26 +683,81 @@ export function BookingContent() {
                     <span>GST (5%)</span>
                     <span>₹{gstAmount.toLocaleString('en-IN')}</span>
                   </div>
+
+                  <div className="flex justify-between pt-1 border-t border-slate-100">
+                    <span className="text-slate-600">Total Price</span>
+                    <span className={`font-semibold ${isFullPayment ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+                      ₹{grandTotal.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+
+                  {isFullPayment && (
+                    <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-3 py-2 rounded-xl text-xs border border-emerald-200/80 animate-in fade-in duration-300">
+                      <span className="flex items-center gap-1.5">
+                        <Sparkles size={14} className="text-emerald-600 shrink-0" />
+                        Full Payment Instant Discount
+                      </span>
+                      <span>-₹1,000</span>
+                    </div>
+                  )}
+
                   <div className="flex justify-between pt-2 border-t border-slate-100 text-sm">
-                    <span className="font-serif font-bold text-[var(--navy)]">Total Trip Cost</span>
-                    <span className="font-serif font-bold text-[var(--navy)]">₹{grandTotal.toLocaleString('en-IN')}</span>
+                    <span className="font-bold text-[var(--navy)]">
+                      {isFullPayment ? 'Final Total (After Discount)' : 'Total Trip Cost'}
+                    </span>
+                    <span className="font-extrabold text-[var(--navy)]">
+                      ₹{(isFullPayment ? Math.max(0, grandTotal - fullPaymentDiscount) : grandTotal).toLocaleString('en-IN')}
+                    </span>
                   </div>
                 </div>
 
                 {/* Amount to Pay Today Highlight Box */}
-                <div className="mt-5 p-4 rounded-2xl bg-gradient-to-br from-sky-50 to-blue-50/60 border border-[var(--sky-pale)]">
+                <div className={`mt-5 p-4 rounded-2xl border transition-all duration-300 ${
+                  isFullPayment
+                    ? 'bg-gradient-to-br from-emerald-50 via-teal-50/40 to-emerald-50/20 border-emerald-200 shadow-sm'
+                    : 'bg-gradient-to-br from-sky-50 to-blue-50/60 border-[var(--sky-pale)]'
+                }`}>
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Amount To Pay Now</span>
-                    <span className="text-2xl font-serif font-black text-[var(--sky)]">
-                      ₹{amountToPayToday.toLocaleString('en-IN')}
-                    </span>
+                    <div className="text-right">
+                      {isFullPayment && (
+                        <span className="text-xs text-slate-400 line-through mr-2 font-medium">
+                          ₹{grandTotal.toLocaleString('en-IN')}
+                        </span>
+                      )}
+                      <span className={`text-2xl font-black ${isFullPayment ? 'text-emerald-600' : 'text-[var(--sky)]'}`}>
+                        ₹{amountToPayToday.toLocaleString('en-IN')}
+                      </span>
+                    </div>
                   </div>
-                  {paymentType === 'advance' && (
-                    <p className="text-[11px] text-slate-500">
-                      Remaining ₹{remainingBalance.toLocaleString('en-IN')} can be paid before departure.
-                    </p>
+                  {paymentType === 'advance' ? (
+                    <div className="space-y-1.5 mt-2">
+                      <p className="text-[11px] text-slate-500">
+                        Remaining ₹{remainingBalance.toLocaleString('en-IN')} can be paid before departure.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setPaymentType('full')}
+                        className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
+                      >
+                        <Sparkles size={12} className="text-emerald-600" /> Pay full amount & save ₹1,000 instantly!
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-3 rounded-lg border border-emerald-200">
+                      <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                      <span>🎉 Flat ₹1,000 automatic discount applied!</span>
+                    </div>
                   )}
                 </div>
+
+                {/* Right Column Error Banner */}
+                {errorMessage && (
+                  <div className="mt-4 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-xs text-rose-700 font-semibold animate-in fade-in duration-200">
+                    <AlertCircle size={15} className="text-rose-600 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
 
                 {/* Desktop Pay Here Button */}
                 <div className="hidden lg:block mt-6">

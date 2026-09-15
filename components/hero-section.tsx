@@ -26,7 +26,7 @@ const CLIENT_IMAGES_COL2 = [
   { name: 'James', loc: 'Bali', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
 ]
 
-const ROTATING_WORDS = ['Ladakh', 'Spiti', 'Kashmir', 'Meghalaya', 'Kerala', 'Rajasthan']
+const ROTATING_WORDS = ['Gokarna', 'Spiti', 'Coorg', 'Udaipur', 'Meghalaya', 'Kerala', 'Rajasthan', 'Ladakh']
 
 export function Hero() {
   const [currentImage, setCurrentImage] = useState(0)
@@ -100,7 +100,7 @@ export function Hero() {
   }
 
   return (
-    <section className="h-[85vh] md:min-h-screen pt-20 md:pt-10 md:pb-36 relative overflow-hidden flex items-center bg-primary">
+    <section className="min-h-[85vh] md:min-h-[90vh] pt-16 md:pt-10 pb-12 md:pb-16 lg:pb-20 relative overflow-hidden flex items-center bg-primary">
       {/* CSS Styles for the Infinite Scrolling client tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -146,15 +146,15 @@ export function Hero() {
 
           {/* Left Column: Booking Content */}
           <div className="lg:col-span-7 text-left text-white">
-            <span className="inline-block px-3 py-1.5 bg-accent/25 backdrop-blur-md text-accent-foreground rounded-full text-xs sm:text-sm font-semibold border border-accent/25 mb-6">
-              ✨ Where Adventure Meets Community
+            <span className="inline-block px-3.5 py-1.5 bg-accent/25 backdrop-blur-md text-accent-foreground rounded-full text-xs sm:text-sm font-bold border border-accent/25 mb-6 uppercase tracking-wider">
+              ✨ WHERE ADVENTURE MEETS COMMUNITY
             </span>
 
             {/* Embedded Oval Image inside the Header Title */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-white drop-shadow-md">
-              Book Your <br className="hidden sm:inline" />
-              Trip to
-              <span className="text-[#0cc0df] sm:ml-[1.4vw] sm:mb-2 inline-block  relative overflow-hidden h-[1.12em] align-bottom min-w-[300px] sm:min-w-[400px]">
+              Travel with your <br className="hidden sm:inline" />
+              Tribe to
+              <span className="text-[#0cc0df] sm:ml-[1.4vw] sm:mb-2 inline-block relative overflow-hidden h-[1.12em] align-bottom min-w-[300px] sm:min-w-[400px]">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={wordIndex}
@@ -171,20 +171,24 @@ export function Hero() {
               </span>
             </h1>
 
-            {/* Sub-Badges styled after JustWravel */}
-            <div className="flex flex-wrap gap-2 text-xs sm:text-sm font-bold text-accent-foreground mb-6 uppercase tracking-wider">
-              <span>Wander</span>
-              <span className="text-white/40">|</span>
-              <span>Travel</span>
-              <span className="text-white/40">|</span>
-              <span>Connect</span>
-              <span className="text-white/40">|</span>
-              <span>Repeat</span>
+            {/* Sub-Badges */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm font-bold text-accent-foreground mb-6 uppercase tracking-wider">
+              <span>GROUP TRIPS</span>
+              <span className="text-white/40">•</span>
+              <span>SOLO FRIENDLY</span>
+              <span className="text-white/40">•</span>
+              <span>REAL EXPERIENCES</span>
             </div>
 
-            <p className="text-base sm:text-lg text-white/80 max-w-xl mb-8 leading-relaxed">
-              Curated journeys to the world&apos;s most exotic destinations. Travel with purpose, explore with like-minded explorers.
-            </p>
+            {/* Client Headline and Sub-text */}
+            <div className="mb-8 max-w-xl">
+              <h2 className="text-lg sm:text-xl font-bold text-white mb-2 leading-snug">
+                Group trips for people who don&apos;t do boring.
+              </h2>
+              <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal">
+                Meet new people, explore incredible places and make memories worth coming back for.
+              </p>
+            </div>
 
             {/* Search Input Box styled after JustWravel */}
             <div ref={searchRef} className="max-w-md w-full relative mb-6">
@@ -197,7 +201,7 @@ export function Hero() {
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onFocus={() => setShowSuggestions(true)}
-                      placeholder="Plan Your Next Trip..."
+                      placeholder="Where do you want to go?"
                       className="w-full py-2 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none text-sm sm:text-base font-medium"
                     />
                   </div>
@@ -320,53 +324,54 @@ export function Hero() {
       </div>
 
       {/* Bottom Statistics Row */}
-      <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-xl border-t border-white/15 py-4 sm:py-5 z-20">
+      <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-xl border-t border-white/15 py-3 sm:py-4 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-3 gap-2 sm:gap-6 text-white items-center divide-x divide-white/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 text-white items-center divide-y-0 md:divide-x divide-white/10">
 
-            {/* Stat 1: Google Reviews */}
-            <div className="text-center px-1 sm:px-4">
-              <div className="flex items-center justify-center gap-1 mb-0.5 sm:mb-1">
-                <span className="text-lg sm:text-2xl lg:text-3xl font-serif font-black text-amber-400">
+            {/* Stat 1: Google Review */}
+            <div className="text-center px-2 sm:px-4 py-1">
+              <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                <span className="text-lg sm:text-2xl lg:text-3xl font-black text-amber-400">
                   4.9
                 </span>
-                <div className="hidden md:flex items-center gap-0.5 text-amber-400">
+                <div className="flex items-center gap-0.5 text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-amber-400" />
+                    <Star key={i} size={13} className="fill-amber-400" />
                   ))}
                 </div>
               </div>
               <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
-                Google Reviews
-              </div>
-              <div className="hidden sm:block text-[10px] text-white/60 mt-0.5">
-                1,200+ 5-Star Ratings
+                Google Review
               </div>
             </div>
 
-            {/* Stat 2: Happy Travellers */}
-            <div className="text-center px-1 sm:px-4">
-              <div className="text-lg sm:text-2xl lg:text-3xl font-serif font-black text-[var(--sky)] mb-0.5 sm:mb-1">
-                5,000+
+            {/* Stat 2: Happy Traveller */}
+            <div className="text-center px-2 sm:px-4 py-1">
+              <div className="text-lg sm:text-2xl lg:text-3xl font-black text-[var(--sky)] mb-0.5">
+                10,000+
               </div>
               <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 Happy Travellers
               </div>
-              <div className="hidden sm:block text-[10px] text-white/60 mt-0.5">
-                Solo & Group Explorers
-              </div>
             </div>
 
-            {/* Stat 3: Experience */}
-            <div className="text-center px-1 sm:px-4">
-              <div className="text-lg sm:text-2xl lg:text-3xl font-serif font-black text-[var(--sun)] mb-0.5 sm:mb-1">
+            {/* Stat 3: 5+ Year Experience */}
+            <div className="text-center px-2 sm:px-4 py-1">
+              <div className="text-lg sm:text-2xl lg:text-3xl font-black text-[var(--sun)] mb-0.5">
                 5+ Years
               </div>
               <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 Experience
               </div>
-              <div className="hidden sm:block text-[10px] text-white/60 mt-0.5">
-                100+ Trips Curated
+            </div>
+
+            {/* Stat 4: 1000+ Trips Serve */}
+            <div className="text-center px-2 sm:px-4 py-1">
+              <div className="text-lg sm:text-2xl lg:text-3xl font-black text-emerald-400 mb-0.5">
+                1,000+
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+                Trips Served
               </div>
             </div>
 

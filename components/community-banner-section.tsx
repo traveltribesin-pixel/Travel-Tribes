@@ -17,7 +17,7 @@ import {
 
 export function CommunityBannerSection() {
   return (
-    <section className="py-12 lg:py-16 bg-[#f7fbfd]">
+    <section className="py-10 sm:py-12 bg-[#f7fbfd]">
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl overflow-hidden bg-[var(--navy)] text-white p-8 sm:p-12 lg:p-16 border border-slate-700/40 shadow-[0_20px_50px_rgba(11,41,64,0.25)]">
 
@@ -45,7 +45,7 @@ export function CommunityBannerSection() {
                 <span>Next Departures Filling Fast</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white leading-tight font-bold">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
                 Come as a Solo Explorer. <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-[var(--sky)] via-sky-300 to-[var(--sun)] bg-clip-text text-transparent">
                   Return with a Lifelong Tribe.
@@ -108,14 +108,14 @@ export function CommunityBannerSection() {
 
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="p-3 bg-black/20 rounded-2xl border border-white/5">
-                  <div className="text-2xl sm:text-3xl font-serif font-bold text-[var(--sky)]">5,000+</div>
+                  <div className="text-2xl sm:text-3xl font-black text-[var(--sky)]">5,000+</div>
                   <div className="text-[10px] sm:text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
                     Happy Travellers
                   </div>
                 </div>
 
                 <div className="p-3 bg-black/20 rounded-2xl border border-white/5">
-                  <div className="text-2xl sm:text-3xl font-serif font-bold text-[var(--sun)]">100+</div>
+                  <div className="text-2xl sm:text-3xl font-black text-[var(--sun)]">100+</div>
                   <div className="text-[10px] sm:text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
                     Batches Done
                   </div>

@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ArrowRight, Backpack, ShieldAlert } from 'lucide-react'
+import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, Backpack, ShieldAlert, Sparkles, Compass } from 'lucide-react'
+import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
+import { TripCard } from '@/components/trip-card'
 
 export function TripContent({ trip }: { trip: Trip }) {
   const [activeTab, setActiveTab] = useState('overview')
@@ -14,11 +16,54 @@ export function TripContent({ trip }: { trip: Trip }) {
   const [selectedDate, setSelectedDate] = useState(trip.date)
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false)
 
+  const reviewsSliderRef = useRef<HTMLDivElement>(null)
+  const [isReviewsPaused, setIsReviewsPaused] = useState(false)
+
+  const slideReviews = useCallback((direction: 'left' | 'right') => {
+    if (!reviewsSliderRef.current) return
+    const container = reviewsSliderRef.current
+    const item = container.querySelector('.itinerary-review-item') as HTMLElement
+    const scrollAmount = item ? item.offsetWidth + 24 : container.clientWidth
+    if (direction === 'right') {
+      const maxScroll = container.scrollWidth - container.clientWidth
+      if (container.scrollLeft >= maxScroll - 20) {
+        container.scrollTo({ left: 0, behavior: 'smooth' })
+      } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+      }
+    } else {
+      if (container.scrollLeft <= 20) {
+        container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' })
+      } else {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' })
+      }
+    }
+  }, [])
+
+  // Auto-scroll every 3 seconds, paused on hover/touch
+  useEffect(() => {
+    if (!trip.reviews || trip.reviews.length === 0 || isReviewsPaused) return
+
+    const interval = setInterval(() => {
+      slideReviews('right')
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [trip.reviews, isReviewsPaused, slideReviews])
+
+  // Find related trips prioritizing the same region/category
+  const relatedTrips = useMemo(() => {
+    const sameRegion = trips.filter((t) => t.slug !== trip.slug && t.region === trip.region)
+    const others = trips.filter((t) => t.slug !== trip.slug && t.region !== trip.region)
+    return [...sameRegion, ...others].slice(0, 3)
+  }, [trip.slug, trip.region])
+
   const availableTabs = [
     { id: 'overview', label: 'Overview' },
     ...(trip.itinerary && trip.itinerary.length > 0 ? [{ id: 'itinerary', label: 'Itinerary' }] : []),
     ...(trip.inclusions && trip.inclusions.length > 0 ? [{ id: 'inclusions', label: 'Inclusive/Exclusive' }] : []),
     ...(trip.thingsToCarry && trip.thingsToCarry.length > 0 ? [{ id: 'carry', label: 'Things to Carry' }] : []),
+    ...(trip.reviews && trip.reviews.length > 0 ? [{ id: 'reviews', label: `Reviews (${trip.reviews.length})` }] : []),
     ...(trip.policies && trip.policies.length > 0 ? [{ id: 'policy', label: 'Policy' }] : [])
   ]
 
@@ -100,7 +145,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             <MapPin size={14} />
             <span>{trip.location}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-serif text-[var(--navy)] mb-3 leading-tight">
+          <h1 className="text-4xl lg:text-5xl font-extrabold text-[var(--navy)] mb-3 leading-tight">
             {trip.title}
           </h1>
           <div className="flex flex-wrap items-center gap-4 text-slate-500 font-medium text-sm">
@@ -149,14 +194,14 @@ export function TripContent({ trip }: { trip: Trip }) {
 
             {/* 3. Overview */}
             <section id="overview" className="scroll-mt-40">
-              <h2 className="text-3xl font-serif text-[var(--navy)] mb-4">Overview</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4">Overview</h2>
               <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
                 {trip.description} This carefully curated journey takes you through the heart of {trip.location}, offering a perfect blend of adventure, culture, and relaxation.
               </p>
 
               {trip.highlights && trip.highlights.length > 0 && (
                 <div className="bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] mb-8">
-                  <h3 className="text-xl font-serif text-[var(--navy)] mb-4">Trip Highlights</h3>
+                  <h3 className="text-xl font-bold text-[var(--navy)] mb-4">Trip Highlights</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {trip.highlights.map((highlight, idx) => (
                       <div key={idx} className="flex items-start gap-3">
@@ -171,7 +216,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               {trip.pricingOptions && trip.pricingOptions.length > 0 && (
                 <div className="bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-                    <h3 className="text-xl font-serif text-[var(--navy)]">Pricing Packages</h3>
+                    <h3 className="text-xl font-bold text-[var(--navy)]">Pricing Packages</h3>
                     {trip.bookingAmount && (
                       <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--sky)] bg-[var(--sky-pale)] px-3.5 py-1.5 rounded-full w-fit">
                         Booking Advance: {trip.bookingAmount}
@@ -182,7 +227,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                     {trip.pricingOptions.map((opt, idx) => (
                       <div key={idx} className="p-4 rounded-2xl bg-slate-50/80 border border-slate-100 flex flex-col justify-between">
                         <span className="text-xs text-slate-500 font-medium mb-1.5">{opt.label}</span>
-                        <span className="text-lg font-serif font-bold text-[var(--navy)]">{opt.price}</span>
+                        <span className="text-lg font-extrabold text-[var(--navy)]">{opt.price}</span>
                       </div>
                     ))}
                   </div>
@@ -195,7 +240,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="itinerary" className="scroll-mt-40">
-                  <h2 className="text-3xl font-serif text-[var(--navy)] mb-4">Detailed Itinerary</h2>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4">Detailed Itinerary</h2>
                   <div className="space-y-4">
                     {trip.itinerary.map((day, idx) => {
                       const isOpen = openDay === day.day
@@ -209,7 +254,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                               <span className={`px-3 py-1.5 leading-none rounded-full text-[12px] font-bold uppercase tracking-wider transition-colors w-fit ${isOpen ? 'bg-[var(--sky)] text-white' : 'bg-[var(--sky-pale)] text-[var(--sky)]'}`}>
                                 Day {day.day}
                               </span>
-                              <span className={`text-xl font-serif transition-colors ${isOpen ? 'text-[var(--navy)]' : 'text-slate-700'}`}>
+                              <span className={`text-lg sm:text-xl font-bold transition-colors ${isOpen ? 'text-[var(--navy)]' : 'text-slate-700'}`}>
                                 {day.title}
                               </span>
                             </div>
@@ -256,12 +301,12 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="inclusions" className="scroll-mt-40">
-                  <h2 className="text-3xl font-serif text-[var(--navy)] mb-4">Inclusive & Exclusive</h2>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4">Inclusive & Exclusive</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Included */}
                     {trip.inclusions && trip.inclusions.length > 0 && (
                       <div className="bg-emerald-50/50 rounded-3xl p-8 border border-emerald-100 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
-                        <h3 className="text-lg font-serif text-[var(--navy)] mb-4 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-[var(--navy)] mb-4 flex items-center gap-2">
                           <CheckCircle2 className="text-emerald-500" size={20} /> What's Included
                         </h3>
                         <ul className="space-y-4">
@@ -277,7 +322,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                     {/* Excluded */}
                     {trip.exclusions && trip.exclusions.length > 0 && (
                       <div className="bg-rose-50/50 rounded-3xl p-8 border border-rose-100 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
-                        <h3 className="text-lg font-serif text-[var(--navy)] mb-4 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-[var(--navy)] mb-4 flex items-center gap-2">
                           <XCircle className="text-rose-400" size={20} /> What's Excluded
                         </h3>
                         <ul className="space-y-4">
@@ -300,7 +345,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="carry" className="scroll-mt-40">
-                  <h2 className="text-3xl font-serif text-[var(--navy)] mb-4 flex items-center gap-3">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4 flex items-center gap-3">
                     <Backpack className="text-[var(--sun)]" size={28} /> Things to Carry
                   </h2>
                   <div className="bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
@@ -322,7 +367,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="policy" className="scroll-mt-40">
-                  <h2 className="text-3xl font-serif text-[var(--navy)] mb-4 flex items-center gap-3">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4 flex items-center gap-3">
                     <ShieldAlert className="text-slate-400" size={28} /> Policies
                   </h2>
                   <div className="bg-slate-100/50 rounded-3xl p-8 border border-slate-200 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
@@ -348,7 +393,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 <span className="hidden lg:block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Starting from</span>
                 <span className="lg:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Price</span>
                 <div className="flex items-end gap-1 lg:gap-2">
-                  <span className="text-xl lg:text-3xl font-serif text-[var(--navy)]">{trip.price}</span>
+                  <span className="text-xl lg:text-3xl font-black text-[var(--navy)]">{trip.price}</span>
                   <span className="hidden lg:inline-block text-slate-500 font-medium pb-1 text-sm">/ person</span>
                 </div>
               </div>
@@ -422,6 +467,15 @@ export function TripContent({ trip }: { trip: Trip }) {
                       <span className="font-bold text-[var(--sky)]">{trip.bookingAmount}</span>
                     </div>
                   )}
+                  <div className="mt-2 p-2 bg-emerald-50/80 border border-emerald-200/80 rounded-xl flex items-center justify-between text-[11px] text-emerald-800 font-bold">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles size={12} className="text-emerald-600 shrink-0" />
+                      Full Payment Discount
+                    </span>
+                    <span className="text-emerald-700 bg-white px-2 py-0.5 rounded-md border border-emerald-200 text-[10px] font-black">
+                      ₹1,000 OFF
+                    </span>
+                  </div>
                 </div>
               )}
 
@@ -443,6 +497,186 @@ export function TripContent({ trip }: { trip: Trip }) {
           </div>
 
         </div>
+
+        {/* RELATED TRIPS SECTION */}
+        {relatedTrips.length > 0 && (
+          <section className="mt-20 pt-16 border-t border-[var(--border)]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+              <div>
+                <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
+                  <Compass size={15} className="text-[var(--sky)]" />
+                  <span>More Adventures To Explore</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
+                  Related Trips You Might Love
+                </h2>
+                <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
+                  Discover more unforgettable getaways, scenic trails, and tribe journeys tailored for wanderers like you.
+                </p>
+              </div>
+
+              <Link
+                href="/upcoming-trips"
+                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[var(--sky)] hover:text-[var(--navy)] transition-colors shrink-0"
+              >
+                <span>View All Upcoming Trips</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* 3-Column Responsive Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {relatedTrips.map((relatedTrip) => (
+                <div key={relatedTrip.slug} className="h-full flex flex-col">
+                  <TripCard trip={relatedTrip} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* DESTINATION-SPECIFIC REVIEWS SLIDER (AUTO-SCROLL EVERY 3 SECONDS) */}
+        {trip.reviews && trip.reviews.length > 0 && (
+          <section id="reviews" className="mt-20 pt-16 border-t border-[var(--border)] scroll-mt-32">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+              <div>
+                <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
+                  <Star size={15} className="text-amber-400 fill-amber-400" />
+                  <span>Real Feedback from Past {trip.title.replace(' Trip', '')} Batches</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
+                  Traveller Reviews for {trip.title}
+                </h2>
+                <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
+                  Showing {trip.reviews.length} authentic experiences from travellers who explored {trip.location.split(' · ')[0]}.
+                </p>
+              </div>
+
+              {/* Rating Badge */}
+              <div className="flex items-center gap-2.5 bg-white border border-[var(--sky-pale)] px-4 py-2.5 rounded-2xl shadow-sm self-start sm:self-auto">
+                <div className="text-amber-400 flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={15} className="fill-amber-400" />
+                  ))}
+                </div>
+                <div className="text-xs font-black text-[var(--navy)]">4.9 / 5.0</div>
+                <span className="text-[10px] text-slate-400 border-l border-slate-200 pl-2">Google</span>
+              </div>
+            </div>
+
+            {/* Horizontal Auto-scrolling Review Rail with Left & Right Positioned Navigation Arrows */}
+            <div className="relative group/slider">
+              {/* Left Navigation Arrow */}
+              <button
+                type="button"
+                onClick={() => slideReviews('left')}
+                className="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 hover:border-[var(--sky)] hover:bg-[var(--sky)] hover:text-white text-[var(--navy)] flex items-center justify-center transition-all duration-300 shadow-[0_6px_20px_rgba(11,41,64,0.18)] active:scale-95 cursor-pointer"
+                aria-label="Previous review"
+              >
+                <ChevronLeft size={22} className="stroke-[2.5]" />
+              </button>
+
+              {/* Slider Track */}
+              <div
+                ref={reviewsSliderRef}
+                onMouseEnter={() => setIsReviewsPaused(true)}
+                onMouseLeave={() => setIsReviewsPaused(false)}
+                onTouchStart={() => setIsReviewsPaused(true)}
+                onTouchEnd={() => setIsReviewsPaused(false)}
+                className="flex gap-6 overflow-x-auto scroll-smooth py-4 no-scrollbar snap-x snap-mandatory"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {trip.reviews.map((rev, idx) => {
+                  const initials = rev.name
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('')
+                    .slice(0, 2)
+                    .toUpperCase()
+
+                  return (
+                    <div
+                      key={idx}
+                      className="itinerary-review-item flex-none w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] snap-start shrink-0 flex flex-col"
+                    >
+                      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_12px_24px_rgba(67,169,209,0.18)] hover:-translate-y-1 flex flex-col justify-between h-full">
+                        <div>
+                          {/* Reviewer Header */}
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[var(--navy)] to-[var(--sky)] text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+                              {initials}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                <span className="font-bold text-sm text-[var(--navy)] truncate">
+                                  {rev.name}
+                                </span>
+                                {rev.role === 'Local Guide' && (
+                                  <span className="text-[9px] bg-amber-100 text-amber-900 font-extrabold px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                                    ★ Local Guide
+                                  </span>
+                                )}
+                                {rev.detail && (
+                                  <span className="text-[9px] bg-[var(--sky-pale)] text-[var(--sky)] font-bold px-1.5 py-0.5 rounded">
+                                    {rev.detail}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[11px] text-slate-400 truncate mt-0.5">
+                                {rev.reviewCount ? `${rev.reviewCount}${rev.photoCount ? ` · ${rev.photoCount}` : ''}` : 'Verified Traveller'}
+                                {rev.timeAgo && ` · ${rev.timeAgo}`}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Stars */}
+                          <div className="flex gap-0.5 text-amber-400 mb-3">
+                            {[...Array(rev.rating || 5)].map((_, i) => (
+                              <Star key={i} size={14} className="fill-amber-400" />
+                            ))}
+                          </div>
+
+                          {/* Review Quote */}
+                          <p className="text-[13px] text-slate-600 leading-relaxed font-normal line-clamp-6">
+                            “{rev.quote}”
+                          </p>
+                        </div>
+
+                        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-[var(--sky)] font-semibold">
+                          <span>{trip.title}</span>
+                          <span className="text-slate-400 text-[10px]">Google Review</span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Right Navigation Arrow */}
+              <button
+                type="button"
+                onClick={() => slideReviews('right')}
+                className="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 hover:border-[var(--sky)] hover:bg-[var(--sky)] hover:text-white text-[var(--navy)] flex items-center justify-center transition-all duration-300 shadow-[0_6px_20px_rgba(11,41,64,0.18)] active:scale-95 cursor-pointer"
+                aria-label="Next review"
+              >
+                <ChevronRight size={22} className="stroke-[2.5]" />
+              </button>
+            </div>
+
+            {/* Slider status & hint */}
+            <div className="mt-4 flex items-center justify-between text-xs text-slate-400 px-1">
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${isReviewsPaused ? 'bg-amber-400' : 'bg-emerald-500 animate-pulse'}`} />
+                <span className="text-[11px]">
+                  {isReviewsPaused ? 'Paused (Reading review)' : 'Auto-scrolling every 3s'}
+                </span>
+              </div>
+              <span className="text-[11px] hidden sm:inline text-slate-400">
+                Hover to pause • Swipe or use arrows to navigate
+              </span>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )

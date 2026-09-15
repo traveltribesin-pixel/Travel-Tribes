@@ -6,7 +6,7 @@ import { trips } from '@/lib/travel-data'
 
 export function DomesticJourneysSection() {
   return (
-    <section className="w-full max-w-[1280px] py-[110px] max-[850px]:py-[40px] px-[5vw] mx-auto editorial-section">
+    <section className="w-full max-w-[1280px] py-12 sm:py-16 px-[5vw] mx-auto editorial-section">
       <SectionHeading 
         eyebrow="Stay close to home" 
         title="Domestic journeys." 
