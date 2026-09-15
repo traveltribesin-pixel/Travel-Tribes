@@ -100,7 +100,7 @@ export function Hero() {
   }
 
   return (
-    <section className="min-h-[92vh] sm:min-h-[85vh] md:min-h-[95vh] pt-14 sm:pt-16 md:pt-10 pb-44 sm:pb-36 md:pb-24 lg:pb-20 relative overflow-hidden flex items-center bg-primary">
+    <section className="min-h-[92vh] sm:min-h-[85vh] md:min-h-[90vh] pt-16 sm:pt-20 md:pt-14 pb-40 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-hidden flex items-center bg-primary">
       {/* CSS Styles for the Infinite Scrolling client tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -146,15 +146,15 @@ export function Hero() {
 
           {/* Left Column: Booking Content */}
           <div className="lg:col-span-7 text-left text-white">
-            <span className="inline-block px-3 py-1 sm:px-3.5 sm:py-1.5 bg-accent/25 backdrop-blur-md text-accent-foreground rounded-full text-[11px] sm:text-xs md:text-sm font-bold border border-accent/25 mb-3 sm:mb-5 uppercase tracking-wider">
+            <span className="inline-block px-3.5 py-1.5 bg-accent/25 backdrop-blur-md text-accent-foreground rounded-full text-[11px] sm:text-xs md:text-sm font-bold border border-accent/25 mb-4 sm:mb-6 uppercase tracking-wider">
               ✨ WHERE ADVENTURE MEETS COMMUNITY
             </span>
 
             {/* Embedded Rotating Word inside the Header Title */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-5 leading-[1.15] tracking-tight text-white drop-shadow-md">
-              Travel with your <br className="hidden sm:inline" />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 leading-tight tracking-tight text-white drop-shadow-md">
+              Travel with your <br />
               Tribe to{' '}
-              <span className="text-[#0cc0df] inline-block relative overflow-hidden h-[1.15em] align-bottom min-w-[125px] sm:min-w-[180px] md:min-w-[260px]">
+              <span className="text-[#0cc0df] inline-block relative overflow-hidden h-[1.15em] align-bottom min-w-[130px] sm:min-w-[180px] md:min-w-[260px]">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={wordIndex}
@@ -172,7 +172,7 @@ export function Hero() {
             </h1>
 
             {/* Sub-Badges */}
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-3 text-[10.5px] sm:text-xs md:text-sm font-bold text-accent-foreground mb-3 sm:mb-5 uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs md:text-sm font-bold text-accent-foreground mb-4 sm:mb-6 uppercase tracking-wider">
               <span>GROUP TRIPS</span>
               <span className="text-white/40">•</span>
               <span>SOLO FRIENDLY</span>
@@ -181,19 +181,19 @@ export function Hero() {
             </div>
 
             {/* Client Headline and Sub-text */}
-            <div className="mb-4 sm:mb-6 max-w-xl">
-              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 sm:mb-2 leading-snug">
+            <div className="mb-6 sm:mb-8 max-w-xl">
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 leading-snug">
                 Group trips for people who don&apos;t do boring.
               </h2>
-              <p className="text-xs sm:text-sm md:text-base text-white/80 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm md:text-base text-white/85 leading-relaxed font-normal">
                 Meet new people, explore incredible places and make memories worth coming back for.
               </p>
             </div>
 
-            {/* Search Input Box styled after JustWravel */}
-            <div ref={searchRef} className="max-w-md w-full relative mb-3 sm:mb-5">
+            {/* Search Input Box */}
+            <div ref={searchRef} className="max-w-md w-full relative mb-4 sm:mb-6">
               <form onSubmit={handleSearchSubmit} className="w-full relative">
-                <div className="flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-1 sm:p-1.5 border border-white/20">
+                <div className="flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-1.5 border border-white/20">
                   <div className="flex items-center flex-grow pl-3 sm:pl-4 min-w-0">
                     <Search className="text-muted-foreground mr-2 shrink-0" size={16} />
                     <input
@@ -254,7 +254,7 @@ export function Hero() {
               </AnimatePresence>
             </div>
 
-            <span className="text-[11px] sm:text-xs text-white/60 block font-medium">
+            <span className="text-[11px] sm:text-xs text-white/70 block font-medium">
               Guided group tours & customizable packages
             </span>
           </div>
