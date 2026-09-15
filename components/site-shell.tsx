@@ -51,7 +51,7 @@ export function Footer() {
                 alt="Travel Tribes" 
                 width={180} 
                 height={54} 
-                style={{ objectFit: 'contain', height: 'auto' }} 
+                className="w-auto h-auto max-h-12 object-contain" 
               />
             </Link>
             <div className="text-[11px] font-extrabold uppercase tracking-widest text-[#85cfe7] mb-2">

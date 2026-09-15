@@ -38,7 +38,7 @@ export function Navbar() {
               alt="Travel Tribes"
               width={105}
               height={42}
-              style={{ objectFit: 'contain', height: 'auto' }}
+              className="w-auto h-auto max-h-10 object-contain"
               priority
             />
           </span>
@@ -49,7 +49,7 @@ export function Navbar() {
               alt="Travel Tribes"
               width={100}
               height={40}
-              style={{ objectFit: 'contain', height: 'auto' }}
+              className="w-auto h-auto max-h-9 object-contain"
               priority
             />
           </span>

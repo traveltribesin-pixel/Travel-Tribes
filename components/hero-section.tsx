@@ -100,7 +100,7 @@ export function Hero() {
   }
 
   return (
-    <section className="min-h-[85vh] md:min-h-[90vh] pt-16 md:pt-10 pb-12 md:pb-16 lg:pb-20 relative overflow-hidden flex items-center bg-primary">
+    <section className="min-h-[92vh] sm:min-h-[85vh] md:min-h-[95vh] pt-14 sm:pt-16 md:pt-10 pb-44 sm:pb-36 md:pb-24 lg:pb-20 relative overflow-hidden flex items-center bg-primary">
       {/* CSS Styles for the Infinite Scrolling client tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -142,19 +142,19 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Booking Content */}
           <div className="lg:col-span-7 text-left text-white">
-            <span className="inline-block px-3.5 py-1.5 bg-accent/25 backdrop-blur-md text-accent-foreground rounded-full text-xs sm:text-sm font-bold border border-accent/25 mb-6 uppercase tracking-wider">
+            <span className="inline-block px-3 py-1 sm:px-3.5 sm:py-1.5 bg-accent/25 backdrop-blur-md text-accent-foreground rounded-full text-[11px] sm:text-xs md:text-sm font-bold border border-accent/25 mb-3 sm:mb-5 uppercase tracking-wider">
               ✨ WHERE ADVENTURE MEETS COMMUNITY
             </span>
 
-            {/* Embedded Oval Image inside the Header Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-white drop-shadow-md">
+            {/* Embedded Rotating Word inside the Header Title */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-5 leading-[1.15] tracking-tight text-white drop-shadow-md">
               Travel with your <br className="hidden sm:inline" />
-              Tribe to
-              <span className="text-[#0cc0df] sm:ml-[1.4vw] sm:mb-2 inline-block relative overflow-hidden h-[1.12em] align-bottom min-w-[300px] sm:min-w-[400px]">
+              Tribe to{' '}
+              <span className="text-[#0cc0df] inline-block relative overflow-hidden h-[1.15em] align-bottom min-w-[125px] sm:min-w-[180px] md:min-w-[260px]">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={wordIndex}
@@ -163,7 +163,7 @@ export function Hero() {
                     exit={{ y: '-65%', opacity: 0, rotateX: -45 }}
                     transition={{ duration: 0.55, ease: 'easeOut' }}
                     style={{ originY: 0.5 }}
-                    className="absolute left-0"
+                    className="absolute left-0 whitespace-nowrap"
                   >
                     {ROTATING_WORDS[wordIndex]}
                   </motion.span>
@@ -172,7 +172,7 @@ export function Hero() {
             </h1>
 
             {/* Sub-Badges */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm font-bold text-accent-foreground mb-6 uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-3 text-[10.5px] sm:text-xs md:text-sm font-bold text-accent-foreground mb-3 sm:mb-5 uppercase tracking-wider">
               <span>GROUP TRIPS</span>
               <span className="text-white/40">•</span>
               <span>SOLO FRIENDLY</span>
@@ -181,33 +181,33 @@ export function Hero() {
             </div>
 
             {/* Client Headline and Sub-text */}
-            <div className="mb-8 max-w-xl">
-              <h2 className="text-lg sm:text-xl font-bold text-white mb-2 leading-snug">
+            <div className="mb-4 sm:mb-6 max-w-xl">
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 sm:mb-2 leading-snug">
                 Group trips for people who don&apos;t do boring.
               </h2>
-              <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm md:text-base text-white/80 leading-relaxed font-normal">
                 Meet new people, explore incredible places and make memories worth coming back for.
               </p>
             </div>
 
             {/* Search Input Box styled after JustWravel */}
-            <div ref={searchRef} className="max-w-md w-full relative mb-6">
+            <div ref={searchRef} className="max-w-md w-full relative mb-3 sm:mb-5">
               <form onSubmit={handleSearchSubmit} className="w-full relative">
-                <div className="flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-1.5 border border-white/20">
-                  <div className="flex items-center flex-grow pl-4">
-                    <Search className="text-muted-foreground mr-2.5 flex-shrink-0" size={18} />
+                <div className="flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-1 sm:p-1.5 border border-white/20">
+                  <div className="flex items-center flex-grow pl-3 sm:pl-4 min-w-0">
+                    <Search className="text-muted-foreground mr-2 shrink-0" size={16} />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onFocus={() => setShowSuggestions(true)}
                       placeholder="Where do you want to go?"
-                      className="w-full py-2 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none text-sm sm:text-base font-medium"
+                      className="w-full py-1.5 sm:py-2 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none text-xs sm:text-sm md:text-base font-medium min-w-0"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="glow-btn inline-flex items-center justify-center gap-[9px] px-[22px] py-[12px] sm:px-[28px] sm:py-[14px] text-[12px] sm:text-[14px] font-bold rounded-full cursor-pointer transition-all duration-300"
+                    className="glow-btn inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 text-xs sm:text-sm font-bold rounded-full cursor-pointer transition-all duration-300 shrink-0"
                   >
                     Search
                   </button>
@@ -226,24 +226,24 @@ export function Hero() {
                   >
                     {suggestions.map((trip) => (
                       <Link href={`/itinerary/${trip.id}`} key={trip.id} className="block no-underline">
-                        <div className="flex items-center justify-between px-5 py-3.5 hover:bg-accent/5 transition-colors border-b border-gray-100 last:border-0 group cursor-pointer">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center flex-shrink-0">
-                              <Compass size={16} />
+                        <div className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-3.5 hover:bg-accent/5 transition-colors border-b border-gray-100 last:border-0 group cursor-pointer">
+                          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                              <Compass size={15} />
                             </div>
-                            <div className="text-left">
-                              <p className="text-sm font-bold text-gray-900 group-hover:text-accent transition-colors line-clamp-1">
+                            <div className="text-left min-w-0">
+                              <p className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-accent transition-colors line-clamp-1">
                                 {trip.title}
                               </p>
-                              <div className="flex items-center gap-1 text-[11px] text-gray-500 font-medium mt-0.5">
-                                <MapPin size={10} className="text-accent" />
-                                <span>{trip.destination}</span>
+                              <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-gray-500 font-medium mt-0.5">
+                                <MapPin size={9} className="text-accent shrink-0" />
+                                <span className="truncate">{trip.destination}</span>
                                 <span className="mx-1">•</span>
-                                <span>{trip.duration} {trip.duration === 1 ? 'Day' : 'Days'}</span>
+                                <span className="shrink-0">{trip.duration} {trip.duration === 1 ? 'Day' : 'Days'}</span>
                               </div>
                             </div>
                           </div>
-                          <span className="bg-gray-100 text-gray-600 font-bold text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full flex-shrink-0">
+                          <span className="bg-gray-100 text-gray-600 font-bold text-[8.5px] sm:text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0 ml-2">
                             {trip.category}
                           </span>
                         </div>
@@ -254,7 +254,7 @@ export function Hero() {
               </AnimatePresence>
             </div>
 
-            <span className="text-xs text-white/50 block font-medium">
+            <span className="text-[11px] sm:text-xs text-white/60 block font-medium">
               Guided group tours & customizable packages
             </span>
           </div>
@@ -324,53 +324,53 @@ export function Hero() {
       </div>
 
       {/* Bottom Statistics Row */}
-      <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-xl border-t border-white/15 py-3 sm:py-4 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 text-white items-center divide-y-0 md:divide-x divide-white/10">
+      <div className="absolute bottom-0 left-0 right-0 bg-black/75 backdrop-blur-xl border-t border-white/15 py-2.5 sm:py-3.5 z-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-6 text-white items-center divide-y-0 md:divide-x divide-white/10">
 
             {/* Stat 1: Google Review */}
-            <div className="text-center px-2 sm:px-4 py-1">
-              <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                <span className="text-lg sm:text-2xl lg:text-3xl font-black text-amber-400">
+            <div className="text-center px-1 sm:px-4 py-0.5 sm:py-1">
+              <div className="flex items-center justify-center gap-1 sm:gap-1.5 mb-0.5">
+                <span className="text-base sm:text-2xl lg:text-3xl font-black text-amber-400">
                   4.9
                 </span>
                 <div className="flex items-center gap-0.5 text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={13} className="fill-amber-400" />
+                    <Star key={i} size={11} className="fill-amber-400 sm:w-3.5 sm:h-3.5" />
                   ))}
                 </div>
               </div>
-              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+              <div className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 Google Review
               </div>
             </div>
 
             {/* Stat 2: Happy Traveller */}
-            <div className="text-center px-2 sm:px-4 py-1">
-              <div className="text-lg sm:text-2xl lg:text-3xl font-black text-[var(--sky)] mb-0.5">
+            <div className="text-center px-1 sm:px-4 py-0.5 sm:py-1">
+              <div className="text-base sm:text-2xl lg:text-3xl font-black text-[var(--sky)] mb-0.5">
                 10,000+
               </div>
-              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+              <div className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 Happy Travellers
               </div>
             </div>
 
             {/* Stat 3: 5+ Year Experience */}
-            <div className="text-center px-2 sm:px-4 py-1">
-              <div className="text-lg sm:text-2xl lg:text-3xl font-black text-[var(--sun)] mb-0.5">
+            <div className="text-center px-1 sm:px-4 py-0.5 sm:py-1">
+              <div className="text-base sm:text-2xl lg:text-3xl font-black text-[var(--sun)] mb-0.5">
                 5+ Years
               </div>
-              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+              <div className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 Experience
               </div>
             </div>
 
             {/* Stat 4: 1000+ Trips Serve */}
-            <div className="text-center px-2 sm:px-4 py-1">
-              <div className="text-lg sm:text-2xl lg:text-3xl font-black text-emerald-400 mb-0.5">
+            <div className="text-center px-1 sm:px-4 py-0.5 sm:py-1">
+              <div className="text-base sm:text-2xl lg:text-3xl font-black text-emerald-400 mb-0.5">
                 1,000+
               </div>
-              <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
+              <div className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 Trips Served
               </div>
             </div>
