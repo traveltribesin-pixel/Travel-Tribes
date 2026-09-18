@@ -166,7 +166,7 @@ export default function WhyUsPage() {
 
         {/* The Full FAQ Accordion Section */}
         <FaqAccordionSection
-          title="Frequently Asked Questions & Why Us"
+          title="Frequently Asked Questions"
           eyebrow="EVERYTHING EXPLAINED"
           subtitle="Clear, upfront answers to everything you wanted to know before booking your adventure."
         />

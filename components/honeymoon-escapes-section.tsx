@@ -18,9 +18,6 @@ export function HoneymoonEscapesSection() {
       <SectionHeading 
         eyebrow="For your next chapter" 
         title="Honeymoon escapes." 
-        text="Unhurried days, beautiful stays and places made for celebrating two." 
-        href="/contact" 
-        label="Plan something personal" 
         center
       />
       <HorizontalRail label="Honeymoon trips">
@@ -42,6 +39,17 @@ export function HoneymoonEscapesSection() {
           </div>
         </Link>
       </HorizontalRail>
+
+      {/* Centered Glow Button Below Cards */}
+      <div className="mt-8 sm:mt-10 flex justify-center">
+        <Link
+          href="/contact"
+          className="glow-btn inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold rounded-full shadow-lg !text-white cursor-pointer"
+        >
+          <span>Plan something personal</span>
+          <ArrowRight size={15} />
+        </Link>
+      </div>
     </section>
   )
 }

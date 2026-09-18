@@ -23,10 +23,11 @@ export default function Home() {
         <HeroSection />
 
         {/* 2. Not Your Usual Travel Company (Brand Values) */}
-        <BrandValuesSection />
+
 
         {/* 3. Upcoming Trips */}
         <UpcomingTripsSection />
+        <BrandValuesSection />
 
         {/* 3. Domestic Journeys */}
         <DomesticJourneysSection />
@@ -46,10 +47,10 @@ export default function Home() {
         {/* 9. Travellers Reviews */}
         <ReviewsSection />
 
-        {/* 10. Why Us & FAQ Accordion Section */}
+        {/* 10. Frequently Asked Questions Accordion Section */}
         <FaqAccordionSection
-          title="Why Choose Travel Tribes?"
-          eyebrow="WHY US & FAQS"
+          title="Frequently Asked Questions"
+          eyebrow="GOT QUESTIONS?"
           subtitle="Everything you need to know about our community trips, solo travel safety, on-ground trip captains, and bookings."
           showViewAllButton
         />

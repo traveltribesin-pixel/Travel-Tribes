@@ -12,9 +12,6 @@ export function BlogSection() {
       <SectionHeading 
         eyebrow="The travel journal" 
         title="Notes from the road." 
-        text="Travel tips, destination guides, and stories from our guides. Dive into our journal to fuel your wanderlust for your next trip."
-        href="/about" 
-        label="Read our journal" 
         center
       />
       <HorizontalRail label="Travel blog">
@@ -45,6 +42,17 @@ export function BlogSection() {
           </article>
         ))}
       </HorizontalRail>
+
+      {/* Centered Glow Button Below Cards */}
+      <div className="mt-8 sm:mt-10 flex justify-center">
+        <Link
+          href="/about"
+          className="glow-btn inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold rounded-full shadow-lg !text-white cursor-pointer"
+        >
+          <span>Read our journal</span>
+          <ArrowRight size={15} />
+        </Link>
+      </div>
     </section>
   )
 }

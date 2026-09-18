@@ -23,7 +23,7 @@ export function HomeCtaSection() {
           YOUR NEXT STORY IS WAITING
         </span>
 
-        <h2 className="font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-white mb-6 drop-shadow-lg tracking-tight uppercase">
+        <h2 className="font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-white mb-6 drop-shadow-lg tracking-tight uppercase">
           Your friends are busy. <br />
           <span className="text-[#ef9b62] drop-shadow-md">Go anyway.</span>
         </h2>

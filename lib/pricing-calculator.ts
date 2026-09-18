@@ -84,7 +84,17 @@ export function calculateBookingPricing(params: {
 
   // 4. Double sharing calculation
   const isDoubleSharing = Boolean(params.isDoubleSharing)
-  const doubleSharingAddonPerPerson = isDoubleSharing ? DOUBLE_SHARING_ADDON_RATE : 0
+  const isPackageAlreadyDoubleSharing = packageLabel.toLowerCase().includes('double sharing')
+  const doubleSharingAddonOpt = availablePricingOptions.find(
+    (o) =>
+      o.label.toLowerCase().includes('double sharing') &&
+      (o.label.toLowerCase().includes('add-on') || o.price.startsWith('+'))
+  )
+  const dynamicDoubleSharingRate = doubleSharingAddonOpt
+    ? parseNumericPrice(doubleSharingAddonOpt.price, DOUBLE_SHARING_ADDON_RATE)
+    : DOUBLE_SHARING_ADDON_RATE
+  const doubleSharingAddonPerPerson =
+    isDoubleSharing && !isPackageAlreadyDoubleSharing ? dynamicDoubleSharingRate : 0
   const totalPerPerson = basePricePerPerson + doubleSharingAddonPerPerson
 
   // 5. Subtotal & GST

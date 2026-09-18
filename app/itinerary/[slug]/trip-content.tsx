@@ -4,17 +4,93 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, Backpack, ShieldAlert, Sparkles, Compass } from 'lucide-react'
+import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, ShieldAlert, Sparkles, Compass, Camera, Images, Maximize2, X } from 'lucide-react'
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
+import { useSearchParams } from 'next/navigation'
+import { getTripPrimaryDate, filterUpcomingDates, isFestiveDate } from '@/lib/date-utils'
 import { TripCard } from '@/components/trip-card'
+import { ReviewCard } from '@/components/trip-components'
 
 export function TripContent({ trip }: { trip: Trip }) {
+  const searchParams = useSearchParams()
+  const isFestiveParam = searchParams.get('festive') === '1' || searchParams.get('festive') === 'true'
   const [activeTab, setActiveTab] = useState('overview')
   const [guests, setGuests] = useState(2)
   const [openDay, setOpenDay] = useState<number | null>(1)
-  const [selectedDate, setSelectedDate] = useState(trip.date)
+
+  const primaryDate = useMemo(() => getTripPrimaryDate(trip), [trip])
+  const upcomingDates = useMemo(() => {
+    if (trip.dates && trip.dates.length > 0) {
+      const filtered = filterUpcomingDates(trip.dates)
+      if (filtered.length > 0) return filtered
+    }
+    return [primaryDate]
+  }, [trip, primaryDate])
+
+  const initialDate = useMemo(() => {
+    if (isFestiveParam && trip.dates && trip.dates.length > 0) {
+      const festiveUpcoming = filterUpcomingDates(trip.dates).filter(isFestiveDate)
+      if (festiveUpcoming.length > 0) return festiveUpcoming[0]
+      const allFestive = trip.dates.filter(isFestiveDate)
+      if (allFestive.length > 0) return allFestive[0]
+    }
+    return primaryDate
+  }, [isFestiveParam, trip.dates, primaryDate])
+
+  const [selectedDate, setSelectedDate] = useState(initialDate)
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [showAllPhotos, setShowAllPhotos] = useState(false)
+
+  useEffect(() => {
+    setSelectedDate(initialDate)
+  }, [initialDate])
+
+  // Dynamic price resolving based on selected date (automatically adjusts for New Year / Xmas batches)
+  const displayPrice = useMemo(() => {
+    if (isFestiveDate(selectedDate) && trip.pricingOptions && trip.pricingOptions.length > 0) {
+      const festiveOpt = trip.pricingOptions.find(
+        (opt) =>
+          opt.label.toLowerCase().includes('xmas') ||
+          opt.label.toLowerCase().includes('new year') ||
+          opt.label.toLowerCase().includes('festive')
+      )
+      if (festiveOpt) {
+        if (festiveOpt.price.startsWith('+')) {
+          const baseNum = parseInt(trip.price.replace(/[^\d]/g, ''), 10) || 0
+          const addNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 1000
+          return `₹${(baseNum + addNum).toLocaleString('en-IN')}`
+        } else {
+          const optNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 0
+          return `₹${optNum.toLocaleString('en-IN')}`
+        }
+      }
+    }
+    return trip.price
+  }, [selectedDate, trip])
+
+  const galleryImages = useMemo(() => {
+    if (trip.gallery && trip.gallery.length > 0) return trip.gallery
+    return [{ image: trip.image, alt: trip.alt }]
+  }, [trip])
+
+  // Keyboard navigation for photo lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return
+      if (e.key === 'Escape') setLightboxIndex(null)
+      if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev !== null ? (prev - 1 + galleryImages.length) % galleryImages.length : null))
+      }
+      if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev !== null ? (prev + 1) % galleryImages.length : null))
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [lightboxIndex, galleryImages.length])
 
   const reviewsSliderRef = useRef<HTMLDivElement>(null)
   const [isReviewsPaused, setIsReviewsPaused] = useState(false)
@@ -62,7 +138,7 @@ export function TripContent({ trip }: { trip: Trip }) {
     { id: 'overview', label: 'Overview' },
     ...(trip.itinerary && trip.itinerary.length > 0 ? [{ id: 'itinerary', label: 'Itinerary' }] : []),
     ...(trip.inclusions && trip.inclusions.length > 0 ? [{ id: 'inclusions', label: 'Inclusive/Exclusive' }] : []),
-    ...(trip.thingsToCarry && trip.thingsToCarry.length > 0 ? [{ id: 'carry', label: 'Things to Carry' }] : []),
+    ...(galleryImages.length > 0 ? [{ id: 'gallery', label: `Gallery (${galleryImages.length})` }] : []),
     ...(trip.reviews && trip.reviews.length > 0 ? [{ id: 'reviews', label: `Reviews (${trip.reviews.length})` }] : []),
     ...(trip.policies && trip.policies.length > 0 ? [{ id: 'policy', label: 'Policy' }] : [])
   ]
@@ -116,8 +192,11 @@ export function TripContent({ trip }: { trip: Trip }) {
 
       {/* 1. Hero Gallery */}
       <section className="pt-4 lg:pt-4 pb-8 max-w-[1160px] mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 aspect-[3/2] md:aspect-[24/9] overflow-hidden rounded-3xl mb-8">
-          <div className="col-span-1 md:col-span-3 relative h-full group overflow-hidden">
+        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-1 aspect-[3/2] md:aspect-[24/9] overflow-hidden rounded-3xl mb-8 group/hero">
+          <div
+            onClick={() => setLightboxIndex(0)}
+            className="col-span-1 md:col-span-3 relative h-full group overflow-hidden cursor-pointer"
+          >
             <Image
               src={trip.image}
               alt={trip.alt}
@@ -127,16 +206,31 @@ export function TripContent({ trip }: { trip: Trip }) {
             />
           </div>
           <div className="hidden md:flex flex-col gap-1 col-span-1 h-full">
-            {trip.gallery?.slice(0, 2).map((img, idx) => (
-              <div key={idx} className="relative flex-1 overflow-hidden group">
-                <Image src={img.image} alt={img.alt} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+            {(galleryImages.length > 1 ? galleryImages.slice(1, 3) : galleryImages.slice(0, 2)).map((img, idx) => (
+              <div
+                key={idx}
+                onClick={() => setLightboxIndex(idx + 1 < galleryImages.length ? idx + 1 : 0)}
+                className="relative flex-1 overflow-hidden group cursor-pointer"
+              >
+                <Image
+                  src={img.image}
+                  alt={img.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
               </div>
-            )) || (
-                <div className="relative flex-1 overflow-hidden group">
-                  <Image src={trip.image} alt={trip.alt} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                </div>
-              )}
+            ))}
           </div>
+
+          {/* Floating "View All Photos" Pill */}
+          <button
+            type="button"
+            onClick={() => setLightboxIndex(0)}
+            className="absolute bottom-4 right-4 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/20 transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer z-10"
+          >
+            <Camera size={15} className="text-[var(--sun)]" />
+            <span>View All Photos ({galleryImages.length})</span>
+          </button>
         </div>
 
         {/* 2. Title & Metadata */}
@@ -153,7 +247,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               <Clock3 size={16} className="text-[var(--sky)]" /> {trip.duration}
             </span>
             <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
-              <CalendarDays size={16} className="text-[var(--sky)]" /> {trip.date}
+              <CalendarDays size={16} className="text-[var(--sky)]" /> {primaryDate}
             </span>
             <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
               <Users size={16} className="text-[var(--sky)]" /> {trip.spots}
@@ -340,29 +434,68 @@ export function TripContent({ trip }: { trip: Trip }) {
               </>
             )}
 
-            {/* 6. Things to Carry */}
-            {trip.thingsToCarry && trip.thingsToCarry.length > 0 && (
+
+            {/* 5. Destination Photo Gallery */}
+            {galleryImages.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
-                <section id="carry" className="scroll-mt-40">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4 flex items-center gap-3">
-                    <Backpack className="text-[var(--sun)]" size={28} /> Things to Carry
-                  </h2>
-                  <div className="bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
-                      {trip.thingsToCarry.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-[14px] text-slate-600">
-                          <div className="w-2 h-2 rounded-full bg-[var(--sun)] mt-[7px] shrink-0" />
-                          <span className="leading-relaxed">{item}</span>
-                        </li>
+                <section id="gallery" className="scroll-mt-40">
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] flex items-center gap-3">
+                        <Camera className="text-[var(--sky)]" size={28} /> Destination Photo Gallery
+                      </h2>
+                      <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                        Authentic glimpses & moments from {trip.title} ({galleryImages.length} photos)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
+                    {/* Responsive Modern Photo Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+                      {(showAllPhotos ? galleryImages : galleryImages.slice(0, 8)).map((item, idx) => (
+                        <div
+                          key={idx}
+                          onClick={() => setLightboxIndex(idx)}
+                          className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer bg-slate-100 border border-slate-200/60 hover:border-[var(--sky)] transition-all shadow-sm"
+                        >
+                          <Image
+                            src={item.image}
+                            alt={item.alt || `${trip.title} photo ${idx + 1}`}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
+                            <span className="text-white text-[11px] font-medium line-clamp-1 flex items-center gap-1.5">
+                              <Maximize2 size={12} className="shrink-0 text-[var(--sun)]" />
+                              {item.alt}
+                            </span>
+                          </div>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
+
+                    {/* Show More / Show Less Toggle Button */}
+                    {galleryImages.length > 8 && (
+                      <div className="mt-6 text-center">
+                        <button
+                          type="button"
+                          onClick={() => setShowAllPhotos(!showAllPhotos)}
+                          className="px-6 py-2.5 rounded-full border border-[var(--sky)] text-[var(--sky)] hover:bg-[var(--sky)] hover:text-white font-bold text-xs sm:text-sm transition-all duration-300 shadow-sm inline-flex items-center gap-2 cursor-pointer"
+                        >
+                          <Images size={16} />
+                          <span>{showAllPhotos ? 'Show Less Photos' : `View All ${galleryImages.length} Photos`}</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </section>
               </>
             )}
 
-            {/* 7. Policy */}
+            {/* 6. Policy */}
             {trip.policies && trip.policies.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
@@ -393,7 +526,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 <span className="hidden lg:block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Starting from</span>
                 <span className="lg:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Price</span>
                 <div className="flex items-end gap-1 lg:gap-2">
-                  <span className="text-xl lg:text-3xl font-black text-[var(--navy)]">{trip.price}</span>
+                  <span className="text-xl lg:text-3xl font-black text-[var(--navy)]">{displayPrice}</span>
                   <span className="hidden lg:inline-block text-slate-500 font-medium pb-1 text-sm">/ person</span>
                 </div>
               </div>
@@ -417,9 +550,9 @@ export function TripContent({ trip }: { trip: Trip }) {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.12)] overflow-hidden z-30"
+                        className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.12)] overflow-hidden z-30 max-h-60 overflow-y-auto review-scroll"
                       >
-                        {[trip.date, 'Nov 12–16, 2026', 'Dec 05–09, 2026', 'Jan 15–19, 2027'].map((d, i) => (
+                        {upcomingDates.map((d, i) => (
                           <button
                             key={i}
                             onClick={() => {
@@ -586,70 +719,14 @@ export function TripContent({ trip }: { trip: Trip }) {
                 className="flex gap-6 overflow-x-auto scroll-smooth py-4 no-scrollbar snap-x snap-mandatory"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {trip.reviews.map((rev, idx) => {
-                  const initials = rev.name
-                    .split(' ')
-                    .map(n => n[0])
-                    .join('')
-                    .slice(0, 2)
-                    .toUpperCase()
-
-                  return (
-                    <div
-                      key={idx}
-                      className="itinerary-review-item flex-none w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] snap-start shrink-0 flex flex-col"
-                    >
-                      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_12px_24px_rgba(67,169,209,0.18)] hover:-translate-y-1 flex flex-col justify-between h-full">
-                        <div>
-                          {/* Reviewer Header */}
-                          <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[var(--navy)] to-[var(--sky)] text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
-                              {initials}
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center gap-1.5 flex-wrap">
-                                <span className="font-bold text-sm text-[var(--navy)] truncate">
-                                  {rev.name}
-                                </span>
-                                {rev.role === 'Local Guide' && (
-                                  <span className="text-[9px] bg-amber-100 text-amber-900 font-extrabold px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                                    ★ Local Guide
-                                  </span>
-                                )}
-                                {rev.detail && (
-                                  <span className="text-[9px] bg-[var(--sky-pale)] text-[var(--sky)] font-bold px-1.5 py-0.5 rounded">
-                                    {rev.detail}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-[11px] text-slate-400 truncate mt-0.5">
-                                {rev.reviewCount ? `${rev.reviewCount}${rev.photoCount ? ` · ${rev.photoCount}` : ''}` : 'Verified Traveller'}
-                                {rev.timeAgo && ` · ${rev.timeAgo}`}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Stars */}
-                          <div className="flex gap-0.5 text-amber-400 mb-3">
-                            {[...Array(rev.rating || 5)].map((_, i) => (
-                              <Star key={i} size={14} className="fill-amber-400" />
-                            ))}
-                          </div>
-
-                          {/* Review Quote */}
-                          <p className="text-[13px] text-slate-600 leading-relaxed font-normal line-clamp-6">
-                            “{rev.quote}”
-                          </p>
-                        </div>
-
-                        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-[var(--sky)] font-semibold">
-                          <span>{trip.title}</span>
-                          <span className="text-slate-400 text-[10px]">Google Review</span>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
+                {trip.reviews.map((rev, idx) => (
+                  <div
+                    key={idx}
+                    className="itinerary-review-item flex-none w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] snap-start shrink-0 flex flex-col"
+                  >
+                    <ReviewCard {...rev} detail={rev.detail || trip.title} />
+                  </div>
+                ))}
               </div>
 
               {/* Right Navigation Arrow */}
@@ -677,6 +754,92 @@ export function TripContent({ trip }: { trip: Trip }) {
             </div>
           </section>
         )}
+        {/* FULLSCREEN PHOTO LIGHTBOX MODAL */}
+        <AnimatePresence>
+          {lightboxIndex !== null && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-8"
+              onClick={() => setLightboxIndex(null)}
+            >
+              {/* Top Bar (Counter + Close Button) */}
+              <div
+                className="w-full max-w-5xl flex items-center justify-between z-10"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="bg-white/10 text-white text-xs font-bold px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+                  {lightboxIndex + 1} / {galleryImages.length}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setLightboxIndex(null)}
+                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Close lightbox"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Main Image Stage */}
+              <div
+                className="relative w-full max-w-5xl flex-1 flex items-center justify-center my-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Previous Button */}
+                {galleryImages.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setLightboxIndex((lightboxIndex - 1 + galleryImages.length) % galleryImages.length)
+                    }
+                    className="absolute left-0 sm:-left-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-xl"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                )}
+
+                {/* Photo */}
+                <div className="relative w-full h-[65vh] sm:h-[75vh] max-w-4xl">
+                  <Image
+                    src={galleryImages[lightboxIndex].image}
+                    alt={galleryImages[lightboxIndex].alt}
+                    fill
+                    priority
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Next Button */}
+                {galleryImages.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxIndex((lightboxIndex + 1) % galleryImages.length)}
+                    className="absolute right-0 sm:-right-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-xl"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                )}
+              </div>
+
+              {/* Bottom Caption */}
+              <div
+                className="w-full max-w-xl text-center z-10"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <p className="text-white/90 text-sm font-medium">
+                  {galleryImages[lightboxIndex].alt}
+                </p>
+                <span className="text-white/50 text-xs mt-1 block">
+                  {trip.title} · Click anywhere to close or use arrow keys
+                </span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )

@@ -65,14 +65,17 @@ export function BrandValuesSection() {
         </p>
       </div>
 
-      {/* 3 Pillars Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+      {/* 3 Pillars Cards: Horizontal Rail on Mobile, 3-Col Grid on Desktop */}
+      <div 
+        className="flex overflow-x-auto md:grid md:grid-cols-3 gap-5 sm:gap-6 md:gap-8 max-w-6xl mx-auto pb-4 md:pb-0 no-scrollbar snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         {values.map((v, idx) => {
           const Icon = v.icon
           return (
             <div
               key={idx}
-              className={`bg-gradient-to-b ${v.color} rounded-3xl p-7 sm:p-8 border ${v.border} shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_rgba(67,169,209,0.14)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group`}
+              className={`bg-gradient-to-b ${v.color} rounded-3xl p-7 sm:p-8 border ${v.border} shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_rgba(67,169,209,0.14)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group shrink-0 w-[84vw] max-w-[340px] md:w-auto md:max-w-none snap-start`}
             >
               <div>
                 {/* Top Badge & Icon */}

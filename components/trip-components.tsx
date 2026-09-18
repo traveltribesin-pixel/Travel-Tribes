@@ -3,7 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useMemo, useRef, useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight, CalendarDays, Clock3, MapPin, Search, Star, ChevronDown, RotateCcw } from 'lucide-react'
-import type { Trip } from '@/lib/travel-data'
+import { filterUpcomingDates, getTripPrimaryDate } from '@/lib/date-utils'
+import { toFestiveTrip, type Trip } from '@/lib/travel-data'
 
 export function HorizontalRail({ children, label = 'Scrollable content' }: { children: React.ReactNode; label?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -99,36 +100,35 @@ export function TripExplorer({
   const activeCategories = categories || defaultCategories;
 
   const filtered = useMemo(() => {
-    return trips.filter((t) => {
+    let sourceTrips = trips;
+    if (filter === 'Xmas & New Year') {
+      sourceTrips = trips
+        .map((t) => toFestiveTrip(t))
+        .filter((t): t is Trip => t !== null);
+    }
+
+    return sourceTrips.filter((t) => {
       // 1. Category Filter
       let matchesCategory = true;
-      if (filter !== 'All') {
-        if (filter === 'Xmas & New Year') {
-          matchesCategory =
-            t.region === 'Xmas & New Year' ||
-            t.tag?.toLowerCase().includes('new year') ||
-            t.tag?.toLowerCase().includes('xmas') ||
-            t.date?.toLowerCase().includes('dec 2') ||
-            t.date?.toLowerCase().includes('dec 3');
-        } else {
-          matchesCategory = t.region === filter;
-        }
+      if (filter !== 'All' && filter !== 'Xmas & New Year') {
+        matchesCategory = t.region === filter;
       }
 
-      // 2. Month Filter
+      // 2. Month Filter (matches any upcoming date for this trip in that month)
       let matchesMonth = true;
       if (selectedMonth !== 'All') {
-        matchesMonth = Boolean(
-          t.date && t.date.toLowerCase().includes(selectedMonth.toLowerCase())
-        );
+        const monthQuery = selectedMonth.toLowerCase();
+        const upcoming = t.dates && t.dates.length > 0 ? filterUpcomingDates(t.dates) : [t.date];
+        matchesMonth = upcoming.some((d) => d && d.toLowerCase().includes(monthQuery));
       }
 
       // 3. Search Query Filter
       let matchesQuery = true;
       if (query.trim() !== '') {
         const q = query.toLowerCase();
+        const primaryDate = getTripPrimaryDate(t);
         matchesQuery = Boolean(
-          `${t.title} ${t.location} ${t.tag || ''} ${t.region || ''} ${t.date || ''}`
+          `${t.title} ${t.location} ${t.tag || ''} ${t.region || ''} ${primaryDate}`
             .toLowerCase()
             .includes(q)
         );
@@ -265,8 +265,8 @@ export function SectionHeading({ eyebrow, title, text, href, label = 'See all tr
     <div className={`section-heading ${center ? 'relative w-full !flex !flex-col lg:!flex-row !justify-center !items-center mb-4! lg:mb-6!' : ''}`}>
       <div className={center ? 'flex flex-col items-center text-center w-full max-w-4xl' : ''}>
         <span className="eyebrow">{eyebrow}</span>
-        <h2>{title}</h2>
-        {text && <p className={center ? '!max-w-none w-full mt-3' : ''}>{text}</p>}
+        <h2 className="!text-3xl sm:!text-4xl lg:!text-5xl font-extrabold text-[var(--navy)] leading-tight">{title}</h2>
+        {text && <p className={center ? '!max-w-none w-full mt-2 sm:mt-3 text-xs sm:text-sm' : ''}>{text}</p>}
       </div>
       {href && (
         <div className={center ? 'mt-0 self-end lg:mt-0 lg:absolute lg:right-0 lg:bottom-0 lg:self-auto' : ''}>
@@ -297,6 +297,9 @@ export function ReviewCard({
   rating?: number
   timeAgo?: string
 }) {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const isLong = quote.length > 170
+
   const initials = name
     .split(' ')
     .map(n => n[0])
@@ -305,10 +308,10 @@ export function ReviewCard({
     .toUpperCase()
 
   return (
-    <article className="bg-white rounded-3xl p-6 sm:p-7 border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-full h-full">
-      <div>
+    <article className="bg-white rounded-3xl p-5 sm:p-6 border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-full h-[330px] sm:h-[340px]">
+      <div className="flex flex-col">
         {/* Header: Avatar, Name & Google/Local Guide Badge */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[var(--navy)] to-[var(--sky)] text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
             {initials}
           </div>
@@ -330,7 +333,7 @@ export function ReviewCard({
         </div>
 
         {/* Star Rating */}
-        <div className="flex items-center gap-1.5 text-amber-400 mb-3" aria-label={`${rating} out of 5 stars`}>
+        <div className="flex items-center gap-1.5 text-amber-400 mb-2.5" aria-label={`${rating} out of 5 stars`}>
           <div className="flex gap-0.5">
             {[...Array(rating)].map((_, i) => (
               <Star key={i} size={14} fill="currentColor" className="stroke-none" />
@@ -339,18 +342,53 @@ export function ReviewCard({
           {timeAgo && <span className="text-[10px] text-slate-400 font-normal">· {timeAgo}</span>}
         </div>
 
-        {/* Review Quote */}
-        <blockquote className="text-[14px] sm:text-[15px] text-slate-700 leading-relaxed font-normal">
-          “{quote}”
-        </blockquote>
+        {/* Review Quote (Fixed 135px container: 6 lines clamped or internal scroll) */}
+        {!isExpanded ? (
+          <div className="h-[135px] flex flex-col justify-between overflow-hidden">
+            <blockquote className="text-[13.5px] sm:text-[14px] text-slate-700 leading-[1.55] font-normal line-clamp-5">
+              “{quote}”
+            </blockquote>
+            {isLong && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsExpanded(true)
+                }}
+                className="self-start text-[12px] font-bold text-[var(--sky)] hover:text-[var(--navy)] transition-colors cursor-pointer hover:underline mt-1"
+              >
+                ...more
+              </button>
+            )}
+          </div>
+        ) : (
+          <div
+            className="h-[135px] overflow-y-auto review-scroll pr-1.5 flex flex-col"
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+          >
+            <blockquote className="text-[13.5px] sm:text-[14px] text-slate-700 leading-[1.55] font-normal">
+              “{quote}”
+            </blockquote>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsExpanded(false)
+              }}
+              className="self-start text-[11px] font-bold text-slate-400 hover:text-[var(--sky)] transition-colors cursor-pointer underline mt-2 shrink-0 pb-1"
+            >
+              Show less
+            </button>
+          </div>
+        )}
       </div>
 
-      {detail && (
-        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-[var(--sky)] font-semibold">
-          <span>{detail}</span>
-          <span className="text-slate-400 text-[10px]">Google Review</span>
-        </div>
-      )}
+      {/* Footer */}
+      <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-[var(--sky)] font-semibold shrink-0">
+        <span className="truncate max-w-[65%]">{detail || 'Verified Review'}</span>
+        <span className="text-slate-400 text-[10px] shrink-0">Google Review</span>
+      </div>
     </article>
   )
 }

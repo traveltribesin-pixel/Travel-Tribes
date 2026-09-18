@@ -331,7 +331,7 @@ export default function AboutPage() {
               <span>WHAT WE ARE</span>
             </div>
             
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--navy)] leading-tight mb-6 uppercase">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--navy)] leading-tight mb-6 uppercase">
               More Than A Travel Company.
             </h2>
 
@@ -551,7 +551,7 @@ export default function AboutPage() {
                 <span>THE PEOPLE ON GROUND</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 uppercase">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 uppercase">
                 Meet Your Trip Captain.
               </h2>
 
@@ -749,7 +749,7 @@ export default function AboutPage() {
 
         {/* FAQ SECTION */}
         <FaqAccordionSection
-          title="Questions You Might Have"
+          title="Frequently Asked Questions"
           eyebrow="WHY TRAVEL TRIBES"
           subtitle="Everything you need to know about our community trips, solo safety, trip captains, and bookings."
         />

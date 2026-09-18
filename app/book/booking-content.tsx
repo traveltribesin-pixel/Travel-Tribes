@@ -27,6 +27,7 @@ import {
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
 import { calculateBookingPricing, sanitizeGuests, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
+import { getTripPrimaryDate, filterUpcomingDates, isDateUpcoming } from '@/lib/date-utils'
 
 export function BookingContent() {
   const searchParams = useSearchParams()
@@ -38,23 +39,23 @@ export function BookingContent() {
   const initialTrip = trips.find((t) => t.slug === tripParam) || trips[0]
   const [selectedTrip, setSelectedTrip] = useState<Trip>(initialTrip)
 
-  // Dates
+  // Dates - Filtered exclusively for upcoming active departures
   const availableDates = useMemo(() => {
-    const defaultDate = selectedTrip.date || 'Oct 18–22, 2026'
-    const list = [
-      defaultDate,
-      'Nov 14–18, 2026',
-      'Dec 05–09, 2026',
-      'Dec 24–28, 2026 (New Year Special)',
-      'Jan 16–20, 2027',
-      'Feb 12–16, 2027'
-    ]
-    return Array.from(new Set(list))
+    if (selectedTrip.dates && selectedTrip.dates.length > 0) {
+      const filtered = filterUpcomingDates(selectedTrip.dates)
+      if (filtered.length > 0) return filtered
+    }
+    const primary = getTripPrimaryDate(selectedTrip)
+    return [primary]
   }, [selectedTrip])
 
-  const [selectedDate, setSelectedDate] = useState<string>(
-    dateParam ? decodeURIComponent(dateParam) : availableDates[0]
-  )
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    if (dateParam) {
+      const decoded = decodeURIComponent(dateParam)
+      if (isDateUpcoming(decoded)) return decoded
+    }
+    return availableDates[0]
+  })
 
   // Guests - rigorously sanitized
   const [guests, setGuests] = useState<number>(() => sanitizeGuests(guestsParam || 2))
@@ -108,7 +109,8 @@ export function BookingContent() {
     const found = trips.find((t) => t.slug === slug)
     if (found) {
       setSelectedTrip(found)
-      setSelectedDate(found.date || 'Oct 18–22, 2026')
+      const primary = getTripPrimaryDate(found)
+      setSelectedDate(primary)
       setSelectedPackageIndex(0)
     }
   }
@@ -409,14 +411,15 @@ export function BookingContent() {
                       </label>
                       <div className="space-y-2">
                         {selectedTrip.pricingOptions
-                          .filter((opt) => !opt.label.toLowerCase().includes('double sharing'))
-                          .map((opt, idx) => (
+                          .map((opt, idx) => ({ opt, originalIndex: idx }))
+                          .filter(({ opt }) => !opt.label.toLowerCase().startsWith('add-on') && !opt.price.startsWith('+'))
+                          .map(({ opt, originalIndex }) => (
                             <button
                               type="button"
-                              key={idx}
-                              onClick={() => setSelectedPackageIndex(idx)}
+                              key={originalIndex}
+                              onClick={() => setSelectedPackageIndex(originalIndex)}
                               className={`w-full p-3.5 rounded-xl border text-left text-xs sm:text-sm flex items-center justify-between transition-all ${
-                                selectedPackageIndex === idx
+                                selectedPackageIndex === originalIndex
                                   ? 'border-[var(--sky)] bg-gradient-to-r from-sky-50 to-white font-bold text-[var(--navy)] shadow-sm'
                                   : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600'
                               }`}
@@ -424,12 +427,12 @@ export function BookingContent() {
                               <div className="flex items-center gap-2.5">
                                 <div
                                   className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                                    selectedPackageIndex === idx
+                                    selectedPackageIndex === originalIndex
                                       ? 'border-[var(--sky)] bg-[var(--sky)]'
                                       : 'border-slate-300'
                                   }`}
                                 >
-                                  {selectedPackageIndex === idx && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
+                                  {selectedPackageIndex === originalIndex && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
                                 </div>
                                 <span>{opt.label}</span>
                               </div>
@@ -438,24 +441,34 @@ export function BookingContent() {
                           ))}
                       </div>
 
-                      {/* Double Sharing Checkbox Add-on */}
-                      <div className="mt-3 p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-xl flex items-center justify-between cursor-pointer"
-                        onClick={() => setIsDoubleSharing(!isDoubleSharing)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            checked={isDoubleSharing}
-                            onChange={(e) => setIsDoubleSharing(e.target.checked)}
-                            className="w-4 h-4 accent-[var(--sky)] cursor-pointer"
-                          />
-                          <div>
-                            <span className="text-xs font-bold text-amber-950">Add Double Sharing Room</span>
-                            <p className="text-[10px] text-amber-800/80">Private room for 2 persons (+₹1,500/person)</p>
+                      {/* Double Sharing Checkbox Add-on (only if trip has dedicated Add-On option) */}
+                      {(() => {
+                        const dsOpt = selectedTrip.pricingOptions?.find((o) =>
+                          o.label.toLowerCase().includes('double sharing') &&
+                          (o.label.toLowerCase().includes('add-on') || o.price.startsWith('+'))
+                        )
+                        if (!dsOpt) return null
+                        const dsPriceStr = dsOpt.price
+                        return (
+                          <div className="mt-3 p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-xl flex items-center justify-between cursor-pointer"
+                            onClick={() => setIsDoubleSharing(!isDoubleSharing)}
+                          >
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="checkbox"
+                                checked={isDoubleSharing}
+                                onChange={(e) => setIsDoubleSharing(e.target.checked)}
+                                className="w-4 h-4 accent-[var(--sky)] cursor-pointer"
+                              />
+                              <div>
+                                <span className="text-xs font-bold text-amber-950">Add Double Sharing Room</span>
+                                <p className="text-[10px] text-amber-800/80">Private room for 2 persons ({dsPriceStr})</p>
+                              </div>
+                            </div>
+                            <span className="text-xs font-bold text-amber-900">{dsPriceStr.replace('/ person', '').trim()}</span>
                           </div>
-                        </div>
-                        <span className="text-xs font-bold text-amber-900">+₹1,500</span>
-                      </div>
+                        )
+                      })()}
                     </div>
                   )}
 

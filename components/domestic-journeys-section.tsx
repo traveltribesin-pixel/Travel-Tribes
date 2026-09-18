@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { HorizontalRail, SectionHeading } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
 import { trips } from '@/lib/travel-data'
@@ -10,8 +12,6 @@ export function DomesticJourneysSection() {
       <SectionHeading 
         eyebrow="Stay close to home" 
         title="Domestic journeys." 
-        text="Incredible destinations right in our own backyard. Experience the hidden gems and breathtaking landscapes closer to home."
-        href="/domestic-trips" 
         center
       />
       <HorizontalRail label="Domestic trips">
@@ -21,6 +21,17 @@ export function DomesticJourneysSection() {
             <TripCard key={t.slug} trip={t} />
           ))}
       </HorizontalRail>
+
+      {/* Centered Glow Button Below Cards */}
+      <div className="mt-8 sm:mt-10 flex justify-center">
+        <Link
+          href="/domestic-trips"
+          className="glow-btn inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold rounded-full shadow-lg !text-white cursor-pointer"
+        >
+          <span>See all domestic trips</span>
+          <ArrowRight size={15} />
+        </Link>
+      </div>
     </section>
   )
 }

@@ -1,3 +1,5 @@
+import { filterFestiveDates, filterUpcomingDates } from '@/lib/date-utils'
+
 export type TripReview = {
   name: string
   quote: string
@@ -21,6 +23,7 @@ export type Trip = {
   location: string
   region: 'Domestic' | 'International' | 'Weekend' | 'Honeymoon' | 'Xmas & New Year'
   date: string
+  dates?: string[]
   duration: string
   price: string
   image: string
@@ -44,22 +47,1666 @@ const img = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=c
 
 export const trips: Trip[] = [
   {
+    slug: 'hampi-backpacking',
+    title: 'Hampi Backpacking Trip',
+    location: 'Hampi · Hospete · Sanapur Lake · Karnataka',
+    region: 'Domestic',
+    date: 'Oct 01–05, 2026',
+    dates: [
+      'Aug 20–24, 2026',
+      'Aug 27–31, 2026',
+      'Sep 03–07, 2026 (Long Weekend)',
+      'Sep 10–14, 2026 (Long Weekend)',
+      'Sep 17–21, 2026',
+      'Sep 24–28, 2026',
+      'Oct 01–05, 2026 (Long Weekend)',
+      'Oct 08–12, 2026',
+      'Oct 15–19, 2026 (Long Weekend)',
+      'Oct 22–26, 2026',
+      'Oct 29–Nov 02, 2026',
+      'Nov 05–09, 2026 (Long Weekend)',
+      'Nov 12–16, 2026',
+      'Nov 19–23, 2026',
+      'Nov 26–30, 2026',
+      'Dec 03–07, 2026',
+      'Dec 10–14, 2026',
+      'Dec 17–21, 2026',
+      'Dec 23–27, 2026 (Long Weekend)',
+      'Dec 28–Jan 02, 2027 (New Year Special)'
+    ],
+    duration: '4N/5D',
+    price: '₹7,999',
+    image: '/image/Hampi/hampi_img.jpeg',
+    alt: 'Hampi Backpacking Trip — Vijayanagara Ruins & Boulder Sunsets',
+    tag: 'City of Ruins',
+    description: 'Step back in time to the majestic 14th-century Vijayanagara Empire with our Hampi Backpacking Trip from Mumbai & Pune. Discover the UNESCO World Heritage ruins, the iconic Vittala Stone Chariot, the living Virupaksha Temple, thrilling cliff jumping and coracle boating at Sanapur Lake, and a mystical sunrise at Lord Hanuman’s birthplace (Anjaneya Hill). Explore boulder-strewn landscapes, vibrant hippie cafés, and create lifelong bonds with fellow travellers. Come solo or with friends — find your tribe in the City of Ruins.',
+    spots: '6 spots left',
+    gallery: [
+      { image: "/image/Hampi/hampi_img.jpeg", alt: "Hampi Heritage & Boulders — Main Highlight & Scenic View" },
+      { image: "/image/Hampi/20250317_110606_4F68B9.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_125503_435353.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_132240_444826.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_135444_44942A.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_135444_4E9EB3.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_135855_44BD0E.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_141334_4322B4.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_141334_4713A3.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_141334_47F7B1.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_142804_4F7966.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_170628_4BBD42.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_201853_462356.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_202223_4052BA.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_202223_4A8B29.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_202223_4DE3E0.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_202223_4F80B0.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/20250317_202224_4D9955.jpeg", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0316.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0392.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0406.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0421.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0438.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0446.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0484.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0495.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0524.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0533.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0554.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0570.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_0763.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_6658.JPG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9632.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9636.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9650.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9652.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9654.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9657.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9680.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9682.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9684.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9685.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9698.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9705.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9708.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9711.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9718.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9720.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9730.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9741.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9756.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9760.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9770.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9772.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9773.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9779.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9787.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9800.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" },
+      { image: "/image/Hampi/IMG_9804.JPEG", alt: "Hampi Heritage & Boulders Community Trip & Sightseeing" }
+    ],
+    highlights: [
+      "Vijaya Vitthala Temple: Explore the iconic stone chariot and musical pillars in this UNESCO World Heritage Site.",
+      "Virupaksha Temple: Visit the ancient 7th-century temple dedicated to Lord Shiva, which is still in active worship.",
+      "Matanga Hill: Hike up this hill for a breathtaking 360-degree sunset view across the entire Hampi boulder landscape.",
+      "Hemakuta Hill Temples: Explore the cluster of ancient pre-Vijayanagara shrines for panoramic heritage views.",
+      "Achyutaraya Temple: Discover the grandeur of this secluded temple complex and its intricate carvings.",
+      "Royal Enclosure: Wander through the ruins of this once-majestic capital, including the stepped tank (Pushkarni).",
+      "Cliff Jumping: Experience an adrenaline rush by cliff jumping into Sanapur Lake / Tungabhadra waters with safety jackets.",
+      "Coracle Ride: Enjoy a traditional round coracle boat ride on the scenic rocky riverbanks.",
+      "Birthplace of Lord Hanuman: Hike up Anjaneya (Anjandri) Hill for a magical sunrise and visit the sacred temple atop it.",
+      "Hippie Cafe Hopping: Experience Hampi's vibrant chilled café culture, thalis, live music, and bonding sessions."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Mumbai & Pune to Hospete | The Train Journey 🚂',
+        activities: [
+          "Get ready for an epic adventure as we board train 11139 CSMT Express from Mumbai and Pune!",
+          "Boarding stations & timings: CSMT 09:20 PM | Dadar 09:30 PM | Thane 09:50 PM | Kalyan 11:10 PM | Pune 01:05 AM.",
+          "Meet your fellow tribe members on the train, kick off with ice-breaking games, travel chats, and lots of fun.",
+          "Overnight train journey to Hospete.",
+          "Meals: Not Included on the train."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Bella Hanuman Temple & Chintamani Cave Sunset 🌅',
+        activities: [
+          "Arrive at Hospete by afternoon and take internal transport to our accommodation in Hampi.",
+          "Quick check-in, freshen up, and enjoy an authentic local lunch.",
+          "In the evening, head to the mystical Chintamani Cave temples and witness an awe-inspiring sunset from Bella Hanuman Temple.",
+          "The stunning hilltop views make for magical golden-hour photos and Insta-worthy moments!",
+          "As the sun sets, head out for some chilled café hopping and delicious dinner with the Tribe.",
+          "Meals: Lunch Included."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Virupaksha Temple, Stone Chariot, UNESCO Heritage & Matanga Sunset 🛕',
+        activities: [
+          "Start the morning with the iconic Virupaksha Temple, admiring its rich history and intricate Dravidian architecture.",
+          "Walk to the Monolithic Nandi statue carved out of a single gigantic rock.",
+          "Keep your ₹50 note ready to click the classic photo with the world-famous Stone Chariot in the Vittala Temple complex.",
+          "Visit the Lakshmi Narasimha Temple and marvel at the sacred stepped tank (Pushkarni).",
+          "Relish an authentic South Indian thali lunch.",
+          "Climb up Hemakuta Hill for panoramic UNESCO World Heritage vistas.",
+          "Ascend Matanga Hill to witness a breathtaking sunset over the endless boulder landscape, followed by dinner at a local café.",
+          "Meals: Breakfast & Lunch Included."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Hanuman Birthplace Sunrise, Coracle Ride & Cliff Jumping 🛶',
+        activities: [
+          "Rise early for a mystical sunrise hike up Anjaneya (Anjandri) Hill, believed to be the birthplace of Lord Hanuman.",
+          "Head to Sanapur Lake for exhilarating cliff jumping and a traditional round coracle boat ride with safety gear.",
+          "Explore bohemian cafés on the other side of the river for lunch.",
+          "Freshen up, pack your bags, and head to Hospete station.",
+          "Board the return train to Pune and Mumbai, carrying unforgettable memories and lifelong friendships.",
+          "Meals: Breakfast Included."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Back to Pune & Mumbai 🏠',
+        activities: [
+          "Reach Pune by approx 01:00 AM and Mumbai by approx 05:00 AM.",
+          "Bid farewell to your newfound tribe members and cherish the memories of the City of Ruins forever!",
+          "Until the next adventure — Tribe hai to vibe hai! ✨",
+          "Meals: Not Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "Train Travel from Mumbai / Pune and back in Sleeper Non-AC (3AC upgrade available on extra cost)",
+      "2 Nights hotel stay in Hampi on Triple / Quad sharing basis",
+      "4 Meals (2 Breakfasts & 2 Lunches)",
+      "Traditional Coracle Boating experience",
+      "Cliff Jumping at Sanapur Lake with safety assistance",
+      "Internal Transport in Hampi with Bike / Auto / Private vehicle",
+      "All Monument Entry Fees, UNESCO passes and Parking charges",
+      "Experienced Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip"
+    ],
+    exclusions: [
+      "Any food or beverage not included in the package (dinners, alcoholic drinks, packaged mineral water, meals on highway)",
+      "Any extra railway costs and personal train food",
+      "Tatkal ticket charges, if applicable",
+      "Any personal expenses like tips to driver, entry for personal cameras/video cameras, laundry, etc.",
+      "Any cost arising due to natural calamities like landslides, roadblocks, etc. (to be borne directly on the spot)",
+      "Anything not mentioned in the inclusions",
+      "5% GST"
+    ],
+    thingsToCarry: [
+      "Valid Government Photo ID (Aadhaar / Driving License / Passport) — Mandatory",
+      "Comfortable trekking shoes / sneakers with good grip and casual flip-flops",
+      "Light and breathable cotton clothes, swimwear / quick-dry towel",
+      "Small backpack / daypack (15–20L) for day tours and hikes",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and wide cap/hat",
+      "Personal medications, basic first-aid, ORS / Glucose",
+      "Power bank, charging cables, and waterproof phone pouch",
+      "Reusable water bottle",
+      "A crisp ₹50 currency note for the iconic Stone Chariot photo!"
+    ],
+    policies: [
+      "Book your trip at least 25–30 days prior to departure date to secure confirmed train berths.",
+      "Booking Amount: ₹3,000/- advance per person (Non-refundable upon cancellation; transferable to another person or convertible to 3-month Travel Tribes credit).",
+      "Pricing: Ex-Hospete ₹7,999 | Ex-Mumbai/Pune Non-AC ₹8,999 | Ex-Mumbai/Pune 3AC ₹10,999 | Double Sharing Add-on ₹1,000.",
+      "Long Weekend & Festive Batches: Add-on ₹1,000 applicable on LW and New Year dates.",
+      "Room Sharing: Standard package is on Triple/Quad sharing basis. Double sharing available on request.",
+      "Trip Authority: The trip leader has all rights to alter/skip sightseeing in case of emergencies, roadblocks or unfavorable weather.",
+      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
+      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
+      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
+      "Cancellation 3–6 days prior: 90% deduction on remaining balance.",
+      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Hospete (Hospete to Hospete)', price: '₹7,999 / person' },
+      { label: 'Ex-Mumbai & Pune (Non-AC Sleeper Train)', price: '₹8,999 / person' },
+      { label: 'Ex-Mumbai & Pune (AC 3-Tier Train)', price: '₹10,999 / person' },
+      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' },
+      { label: 'Long Weekend / Festive Batch', price: '+₹1,000 / person', note: 'Applicable on LW & NY dates' }
+    ],
+    bookingAmount: '₹3,000 / person',
+    reviews: [
+      {
+        name: 'Siddharth Joshi',
+        role: 'Local Guide',
+        reviewCount: '19 reviews',
+        photoCount: '42 photos',
+        rating: 5,
+        quote: 'Hampi with Travel Tribes was magical! The stone chariot, coracle ride, and the cliff jumping at Sanapur lake were unforgettable. Our trip leader managed everything so smoothly. Had the best solo trip experience with an awesome tribe!'
+      },
+      {
+        name: 'Pranali Sawant',
+        reviewCount: '8 reviews',
+        photoCount: '14 photos',
+        rating: 5,
+        quote: 'The sunrise at Hanuman hill and sunset from Matanga hill was surreal. Everything from train tickets, stays, food to local transport was well organized. Highly recommended for anyone looking to explore Hampi hassle-free!'
+      },
+      {
+        name: 'Tanmay Kulkarni',
+        reviewCount: '11 reviews',
+        photoCount: '25 photos',
+        timeAgo: 'a year ago',
+        rating: 5,
+        quote: 'Hampi had been on my bucket list for so long. Joining Travel Tribes was the best decision. The café vibes, the ancient ruins history, and the crazy fun group games made it a 10/10 trip!'
+      }
+    ]
+  },
+  {
+    slug: 'meghalaya-with-kaziranga',
+    title: 'Meghalaya with Kaziranga Expedition',
+    location: 'Shillong · Cherrapunji · Dawki · Kaziranga · Guwahati',
+    region: 'Domestic',
+    date: 'Oct 02–08, 2026',
+    dates: [
+      'Oct 02–08, 2026',
+      'Oct 10–16, 2026',
+      'Oct 17–23, 2026',
+      'Oct 24–30, 2026',
+      'Oct 31–Nov 06, 2026',
+      'Nov 07–13, 2026',
+      'Nov 14–20, 2026',
+      'Nov 21–27, 2026',
+      'Nov 28–Dec 04, 2026',
+      'Dec 05–11, 2026',
+      'Dec 12–18, 2026',
+      'Dec 19–25, 2026',
+      'Dec 24–31, 2026 (XMAS Special)',
+      'Dec 27–Jan 02, 2027 (New Year Special)',
+      'Jan 02–08, 2027',
+      'Jan 09–15, 2027',
+      'Jan 16–22, 2027',
+      'Jan 23–29, 2027'
+    ],
+    duration: '6N/7D',
+    price: '₹24,500',
+    image: '/image/Meghalaya/meghalaya_img.JPEG',
+    alt: 'Nongriat Double Decker Living Root Bridge and lush rainforest of Meghalaya',
+    tag: 'Abode of Clouds & Safari',
+    description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, camp by the transparent Umngot River in Dawki/Shnongpdeng, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, tigers, and wild elephants in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
+    spots: '5 spots left',
+    gallery: [
+      { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya with Kaziranga — Main Highlight & Scenic View" },
+      { image: "/image/Meghalaya/282de9aa-b476-49c7-bab8-e10867877acb.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/51f20b25-fa3e-423b-a34e-dee77bab399e.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/685219C4-3541-436C-8431-425413D41143.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/d1b25528-4a8c-4c0b-9fbc-3a72c76c13a4.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0789.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0857.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0865.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0884.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0893.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0934.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0974.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_0977.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1008.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1011.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1033.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1034.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1043.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1046.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1047.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1048.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1124.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1139.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1156.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1192.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1193.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1250.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1257.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1266.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1297.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1330.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_1370.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_2093.JPG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_6639.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_6739.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_6837.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_6964.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_7113.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_7117.jpg", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_8325.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_8342.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_8344.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_8436.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" },
+      { image: "/image/Meghalaya/IMG_8524.JPEG", alt: "Meghalaya with Kaziranga Community Trip & Sightseeing" }
+    ],
+    highlights: [
+      "Visit Umiam Lake (Barapani) for scenic hillside views and a tranquil boat ride.",
+      "Witness the stunning Laitlum Canyons, famously known as the “End of the World”.",
+      "Experience the beauty of Krang Suri Waterfalls and vibrant turquoise Phe Phe Falls.",
+      "Stay in riverside camps at Shnongpdeng / Dawki, famous for crystal-clear transparent waters.",
+      "Enjoy a scenic boat ride on the Umngot River at Shnongpdeng / Dawki.",
+      "Visit Mawlynnong Village — celebrated as Asia’s Cleanest Village, with Bamboo Sky Walk.",
+      "Stop by the Indo-Bangladesh Border for a unique international frontier viewpoint.",
+      "Trek through rainforests to the world-famous Nongriat Double Decker Living Root Bridge.",
+      "Discover the surreal natural emerald waters of the Blue Lagoon and take a refreshing swim.",
+      "Discover the mysterious Arwah Caves, Mawsmai Cave and Garden of Caves.",
+      "Marvel at Nohkalikai Falls (India’s tallest plunge waterfall) and Seven Sisters Falls.",
+      "Admire panoramic green canyon views from Mawkdok Dympep Valley viewpoint.",
+      "Embark on an early morning thrilling Jeep Safari in Kaziranga National Park to spot One-horned Rhinos and wildlife.",
+      "Seek blessings at the sacred Maa Kamakhya Temple in Guwahati."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Guwahati | Transfer to Shillong via Umiam Lake 🚗',
+        activities: [
+          "Arrive at Guwahati Airport (GAU) before 11:00 AM. Our Travel Tribes representative will meet and greet you at the airport.",
+          "The group departs for Shillong at 12:00 PM in private tempo traveller / SUV.",
+          "Enjoy a scenic 4-hour uphill drive from Guwahati to Shillong through lush pine hills.",
+          "En route, stop at the beautiful Umiam Lake (Barapani) and capture its mesmerising waters and landscape.",
+          "Arrive in Shillong, check in to your hotel and freshen up.",
+          "In the evening, explore the vibrant cafes, street music, and shopping at Police Bazaar.",
+          "Overnight stay in Shillong. (Meals: Not Included)."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Shillong – Laitlum Canyons – Krang Suri & Phe Phe Falls – Dawki / Shnongpdeng 🏞️',
+        activities: [
+          "Enjoy a delicious breakfast in the morning and check out from your Shillong hotel.",
+          "Proceed towards the breathtaking Laitlum Canyons for 360-degree dramatic cliff and gorge views.",
+          "Drive to Jowai and explore the magical turquoise cascade of Krang Suri Waterfalls and Phe Phe Falls.",
+          "After exploring the stunning waterfalls, proceed towards Dawki / Shnongpdeng.",
+          "Check in to your riverside camps, soak in the tranquil vibe under the stars.",
+          "Enjoy a warm dinner with your tribe by the riverbanks.",
+          "Overnight camping in Dawki / Shnongpdeng. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Dawki – Mawlynnong Village – Cherrapunjee 🛶',
+        activities: [
+          "Wake up to the sounds of nature, have breakfast, and check out from your camp.",
+          "Enjoy a memorable boat ride on the crystal-clear, transparent waters of the Umngot River where boats appear to float on air.",
+          "Visit the Indo-Bangladesh Border outpost.",
+          "Proceed towards Mawlynnong Village, renowned as Asia’s cleanest village.",
+          "Explore the Bamboo Sky Walk viewpoint and the Single Decker Living Root Bridge in Riwai.",
+          "Later, take a scenic drive through the clouds towards Cherrapunjee (Sohra).",
+          "Check in to your hotel and relax with your fellow tribe members.",
+          "Overnight stay in Cherrapunjee. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Trek to Double Decker Living Root Bridge & Blue Lagoon 🌿💧',
+        activities: [
+          "Energizing breakfast and depart for Tyrna Village, the base point of our iconic trek.",
+          "Begin your descent (approx 3,300 steps one way) through dense tropical rainforests and suspension bridges.",
+          "Cross the Single Decker Root Bridge and arrive at the world-renowned Nongriat Double Decker Living Root Bridge — an ancient bio-engineering marvel.",
+          "Continue a short hike to the pristine Blue Lagoon natural pool and take a refreshing swim in crystal emerald waters.",
+          "Trek back up to Tyrna Village (approx 6,600 steps total round trip).",
+          "Return to your Cherrapunjee hotel for a well-deserved hearty dinner and sound sleep.",
+          "Overnight stay in Cherrapunjee. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Cherrapunjee Sightseeing – Mawsmai, Nohkalikai & Arwah Caves – Shillong 🪨🌊',
+        activities: [
+          "Enjoy a wholesome breakfast and check out from Cherrapunjee.",
+          "Explore the limestone formations and fossils inside the famous Mawsmai Cave and Arwah Cave.",
+          "Stop at the breathtaking Mawkdok Dympep Valley viewpoint for dramatic landscape panoramas.",
+          "Visit the enchanting Garden of Caves with its natural rock formations and hidden cascades.",
+          "Witness the awe-inspiring Nohkalikai Falls, India's tallest plunge waterfall (1,115 ft).",
+          "Visit the magnificent Seven Sisters Falls (Nohsngithiang Falls) and Eco Park.",
+          "Drive back to Shillong in the evening, check in to the hotel, and relax.",
+          "Overnight stay in Shillong. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 6,
+        title: 'Shillong to Kaziranga National Park 🦏',
+        activities: [
+          "Enjoy breakfast, check out from Shillong, and depart for Kaziranga in Assam.",
+          "Enjoy a scenic drive transitioning from the misty Khasi hills to the rolling tea gardens of Assam.",
+          "Arrive in Kaziranga by late afternoon / evening and check in to your resort/hotel.",
+          "Spend the evening at leisure exploring local Assamese cultural shows or chilling with tribe mates.",
+          "Overnight stay in Kaziranga. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 7,
+        title: 'Kaziranga Wildlife Jeep Safari – Return to Guwahati Airport 🚙🦏',
+        activities: [
+          "Set out early in the morning for a thrilling open Jeep Safari in Kaziranga National Park.",
+          "Spot the world-famous Great Indian One-horned Rhinoceros, wild water buffaloes, Asian elephants, swamp deer, and rich birdlife in their natural habitat.",
+          "Return to the resort, freshen up, enjoy a hearty breakfast, and check out.",
+          "Scenic return drive to Guwahati Airport (GAU) with a brief stop near Maa Kamakhya Temple if time permits.",
+          "Bid farewell to your tribe members with unforgettable memories and thousands of photographs!",
+          "Note: Please book return flights departing after 06:00 PM from Guwahati (GAU).",
+          "Meals: Breakfast Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "Entire ground travel as per itinerary by Tempo Traveller / SUV / Sedan based on group size",
+      "6 Nights Accommodation (Double / Triple sharing): 2N Shillong Hotel, 1N Dawki/Shnongpdeng Riverside Camping, 2N Cherrapunjee Hotel, 1N Kaziranga Hotel",
+      "6 Breakfasts (Day 2 to Day 7) & 2 Dinners (Day 2 & Day 4)",
+      "Kaziranga National Park Open Jeep Safari included",
+      "Crystal-clear Umngot River Boat Ride at Dawki / Shnongpdeng",
+      "Guided treks to Double Decker Living Root Bridge & Blue Lagoon",
+      "All necessary Inner Line / state permits, toll taxes, driver night charges and parking fees",
+      "Medical kit for basic emergency assistance",
+      "Experienced Travel Tribes Trip Captain to ensure top-notch experience and bonding throughout"
+    ],
+    exclusions: [
+      "Airfare or train fare to and from Guwahati (GAU)",
+      "Lunches and dinners not explicitly mentioned in the itinerary",
+      "Travel insurance",
+      "Entry tickets to monuments, caves, waterfalls, or optional water sports/ziplining",
+      "Personal expenses (tips, laundry, phone calls, camera/drone charges, packaged water)",
+      "Any cost arising due to natural calamities like landslides, roadblocks, etc. (to be borne directly on spot)",
+      "Anything not mentioned in the inclusions",
+      "5% GST"
+    ],
+    policies: [
+      "Book your trip at least 25–30 days prior to departure to secure early bird slots and best flight rates.",
+      "Flight recommendation: Book arrival flight reaching Guwahati (GAU) before 11:00 AM on Day 1, and return flight departing after 06:00 PM on Day 7.",
+      "Booking Advance: ₹5,000/- per person (Non-refundable upon cancellation; transferable or convertible to 3-month Travel Tribes credit).",
+      "Pricing: Regular Triple Sharing ₹24,500 | Regular Double Sharing ₹26,500 | Xmas & New Year Triple Sharing ₹26,500 | Xmas & New Year Double Sharing ₹28,500 (+5% GST).",
+      "Room Sharing: Standard package is on Triple sharing (extra mattress provided). Double sharing room option available on request.",
+      "Trek Fitness: Day 4 trek involves approx 6,600 steps total (Tyrna to Nongriat & return). Moderate fitness is recommended.",
+      "Trip Authority: The trip leader reserves the right to alter or skip sightseeing in case of roadblocks, weather conditions, or local advisories.",
+      "Cancellation 30+ days prior: 10% deduction on total trip cost.",
+      "Cancellation 15–29 days prior: 25% deduction on remaining balance.",
+      "Cancellation 8–14 days prior: 50% deduction on remaining balance.",
+      "Cancellation < 7 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Triple Sharing (Guwahati to Guwahati)', price: '₹24,500 / person' },
+      { label: 'Double Sharing (Guwahati to Guwahati)', price: '₹26,500 / person' },
+      { label: 'Xmas & New Year (Triple Sharing)', price: '₹26,500 / person', note: 'Applicable on Dec 24 & Dec 27 batches' },
+      { label: 'Xmas & New Year (Double Sharing)', price: '₹28,500 / person', note: 'Applicable on Dec 24 & Dec 27 batches' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    reviews: [
+      {
+        name: 'Sayali Mhatre',
+        role: 'Verified Traveller',
+        detail: 'Meghalaya & Kaziranga Expedition',
+        rating: 5,
+        quote: 'Meghalaya with Travel Tribes was a dream come true! The crystal clear water at Dawki, the double decker root bridge trek, and seeing one-horned rhinos in Kaziranga was breathtaking. The tribe vibe was top notch!'
+      },
+      {
+        name: 'Arjun Deshmukh',
+        role: 'Verified Traveller',
+        detail: 'Meghalaya & Kaziranga Expedition',
+        rating: 5,
+        quote: 'Best group trip ever. Everything from the stays, food, waterfall hikes to Kaziranga safari was super well organized. Our trip captain made everyone feel like old friends within the first day.'
+      },
+      {
+        name: 'Priyanka Bose',
+        role: 'Local Guide',
+        reviewCount: '14 reviews',
+        photoCount: '38 photos',
+        detail: 'Meghalaya with Kaziranga',
+        rating: 5,
+        quote: 'Nohkalikai falls, Krang Suri, and swimming in Blue Lagoon were pure magic. If you are travelling solo to Northeast, Travel Tribes is 100% the best choice. Tribe hai to vibe hai!'
+      }
+    ]
+  },
+  {
+    slug: 'sri-lanka-island-escape',
+    title: 'Sri Lanka – The Island Escape',
+    location: 'Colombo · Kandy · Sigiriya · Ella · Mirissa · Sri Lanka',
+    region: 'International',
+    date: 'Oct 17–24, 2026',
+    dates: [
+      'Oct 17–24, 2026',
+      'Nov 07–14, 2026',
+      'Nov 21–28, 2026',
+      'Dec 19–26, 2026 (XMAS Special)',
+      'Dec 27–Jan 03, 2027 (New Year Special)'
+    ],
+    duration: '7N/8D',
+    price: '₹53,000',
+    image: img('photo-1588598198321-9735fd52455b'),
+    alt: 'Sri Lanka iconic Nine Arch Bridge surrounded by lush tea hills in Ella',
+    tag: 'International Island Escape',
+    description: 'Discover the pure magic of Sri Lanka on an 8-day tropical island group escape with Travel Tribes designed for 18–40 year old wanderers. From sun-kissed palm beaches in Mirissa and ocean surfing in Weligama to the misty emerald tea hills of Nuwara Eliya and Ella. Climb the ancient Sigiriya Lion Rock Fortress, explore sacred Dambulla cave temples, feed gentle giants at Pinnawala, and experience the world’s most iconic scenic blue train journey from Nanu Oya to Ella. Stay in premium 4-star hotels, watch whales in the Indian Ocean, and create unforgettable bonds with your tribe.',
+    spots: '6 spots left',
+    gallery: [
+      { image: img('photo-1588598198321-9735fd52455b'), alt: 'Iconic Nine Arch Bridge in Ella Sri Lanka' },
+      { image: img('photo-1546708973-b339540b5162'), alt: 'Sigiriya Lion Rock Fortress UNESCO World Heritage' },
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Mirissa Tropical Beach and Coconut Tree Hill' },
+      { image: img('photo-1544735716-392fe2489ffa'), alt: 'Pinnawala Elephant Orphanage River Bath' },
+      { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Nanu Oya to Ella Scenic Mountain Train Journey' },
+      { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Temple of the Sacred Tooth Relic in Kandy' },
+      { image: img('photo-1528127269322-539801943592'), alt: 'Weligama Beach Surfing and Ocean Sunset' },
+      { image: img('photo-1539635278303-d4002c07eae3'), alt: 'Little Adam’s Peak Hiking Panorama in Ella' }
+    ],
+    highlights: [
+      "Explore the cultural charm of Kandy and the sacred Temple of the Sacred Tooth Relic.",
+      "Visit the famous Pinnawala Elephant Orphanage & Herbal Spice Garden.",
+      "Climb the iconic Sigiriya Lion Rock Fortress — an ancient UNESCO World Heritage wonder.",
+      "Experience an authentic Sri Lankan Rural Village Adventure with traditional bullock cart ride & canoe ride.",
+      "Relish an authentic traditional Sri Lankan lunch prepared with fresh local spices.",
+      "Explore the ancient Dambulla Cave Temple complex featuring 150+ Buddha statues and murals.",
+      "Witness the high-energy Kandy Cultural Dance Show with traditional drummers and fire dancers.",
+      "Explore lush rolling Tea Gardens & historic Tea Factories in Ramboda.",
+      "Experience the world-renowned Nanu Oya to Ella scenic train journey through misty tea plantations.",
+      "Hike to Little Adam’s Peak for breathtaking panoramic valley views.",
+      "Visit the iconic Nine Arch Bridge in Ella and catch the train crossing.",
+      "Fly over lush green valleys on the adrenaline-pumping Rawana Mega Zip Line.",
+      "Relax at Mirissa Beach with soft sands, laid-back beachside cafés and golden sunsets.",
+      "Set out on an exciting Whale & Dolphin Watching ocean safari in Mirissa (seasonal).",
+      "Try surfing, snorkelling, or scuba diving in Weligama / Mirissa ocean waters."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Welcome to Sri Lanka | Arrival in Colombo / Negombo 🌴',
+        activities: [
+          "Arrive at Bandaranaike International Airport (CMB) in Colombo, where our friendly Travel Tribes representative greets you.",
+          "Short 20-minute transfer to our hotel in Negombo / Colombo.",
+          "Check in to your hotel, freshen up and relax after your flight.",
+          "Spend the rest of the day at leisure exploring the golden sands of Negombo beach or relaxing by the pool.",
+          "Overnight stay in Negombo / Colombo. (Meals: Not Included)."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Negombo to Kandy | Pinnawala Elephants & Cultural Dance Show 🐘🛕',
+        activities: [
+          "Breakfast at the hotel, check out and begin your scenic journey towards the cultural capital of Kandy.",
+          "En route, visit the famous Pinnawala Elephant Orphanage and watch gentle giants bathe in the river.",
+          "Visit a traditional Spice & Herbal Garden to learn about Sri Lanka's famous Ayurvedic herbs and spices.",
+          "In Kandy, visit the Gem Museum & Lapidary and the revered Temple of the Sacred Tooth Relic.",
+          "Enjoy a picturesque drive around Kandy Upper Lake viewpoint.",
+          "In the evening, attend the vibrant Kandy Cultural Dance & Fire Walking Show.",
+          "Check in to your 4-star hotel in Kandy, enjoy dinner with the tribe, and relax.",
+          "Overnight stay in Kandy. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kandy – Sigiriya Lion Rock – Rural Village Adventure – Dambulla Caves 🦁🌾',
+        activities: [
+          "Early breakfast and depart at 8:00 AM for a thrilling full-day excursion.",
+          "Climb the majestic Sigiriya Lion Rock Fortress (UNESCO World Heritage Site), marveling at ancient frescoes and panoramic views from the summit.",
+          "Immerse yourself in authentic village life with a Rural Village Adventure including a traditional bullock cart ride and catamaran canoe ride across the lake.",
+          "Savour a delicious traditional Sri Lankan lunch cooked in clay pots.",
+          "Explore the UNESCO-listed Dambulla Cave Temple complex dating back to the 1st century BC, housing over 150 Buddha statues.",
+          "Return to Kandy in the evening to relax.",
+          "Overnight stay in Kandy. (Meals: Breakfast & Lunch Included)."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kandy – Nuwara Eliya – Iconic Scenic Train to Ella 🚂⛰️',
+        activities: [
+          "Enjoy breakfast and check out from Kandy. Depart for Nuwara Eliya (Little England) at 7:30 AM.",
+          "Visit a working Tea Factory and lush Tea Gardens in Ramboda to discover the secret behind Ceylon Tea.",
+          "Stop at the magnificent Ramboda Waterfalls for photos.",
+          "Board the world-famous blue scenic train from Nanu Oya to Ella (approx 3–4 hours).",
+          "Hang by the open doors and soak in jaw-dropping views of misty emerald mountains, roaring waterfalls, and endless tea estates.",
+          "Arrive in the charming hill town of Ella, transfer to your hotel and unwind.",
+          "Overnight stay in Ella. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Ella Exploration & Adventure | Little Adam’s Peak, Nine Arch Bridge & Zipline 🌉✨',
+        activities: [
+          "Delicious breakfast with mountain views at the hotel.",
+          "Begin the morning with an easy hike up Little Adam’s Peak for 360-degree vistas of Ella Gap.",
+          "Visit the architectural wonder of Nine Arch Bridge and watch the train rumble across the arches nestled in green jungle.",
+          "Get your adrenaline rush on the thrilling Rawana Mega Zip Line flying over tea plantations.",
+          "Explore the historic and legendary Rawana Caves.",
+          "Spend the evening cafe hopping in Ella town, listening to live acoustic music and chilling with your tribe.",
+          "Overnight stay in Ella. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 6,
+        title: 'Ella to Mirissa | Rawana Waterfall to Tropical Beachfront 🌊🏖️',
+        activities: [
+          "Breakfast at the hotel, check out and begin a scenic 5–6 hour drive descending from the hills to the southern coastline.",
+          "En route, make a stop at the roaring Rawana Waterfall for epic photos.",
+          "Arrive in tropical Mirissa and check in to your beachfront / boutique resort.",
+          "Spend a relaxing afternoon on soft golden sands with coconut water in hand.",
+          "Watch a mesmerizing Indian Ocean sunset at Mirissa Beach and enjoy fresh seafood and chilled music at beach shacks.",
+          "Overnight stay in Mirissa. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 7,
+        title: 'Mirissa & Weligama | Whale Watching, Surfing & Ocean Adventures 🐋🏄‍♂️',
+        activities: [
+          "Early morning departure for an exhilarating Whale & Dolphin Watching Tour into the deep Indian Ocean to spot Blue Whales and playful spinner dolphins (seasonal Nov–Apr).",
+          "Return to the hotel for breakfast and freshen up.",
+          "Head towards Weligama Bay for beach adventures: try surfing with beginner-friendly lessons and boards.",
+          "Optionally explore snorkelling among colourful coral reefs or certified scuba diving.",
+          "Visit the historic UNESCO World Heritage Galle Fort and its charming Dutch colonial streets.",
+          "Farewell evening dinner and tribe celebrations by the ocean in Mirissa.",
+          "Overnight stay in Mirissa. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 8,
+        title: 'Mirissa to Colombo Airport | Farewell Sri Lanka 🛫🇱🇰',
+        activities: [
+          "Enjoy your final tropical breakfast at the hotel and soak in the ocean breeze.",
+          "Check out and board our comfortable private AC transfer towards Bandaranaike International Airport (CMB) in Colombo.",
+          "Arrive at the airport for your onward flight home.",
+          "Bid farewell to the paradise island of Sri Lanka and your incredible tribe family with memories to last a lifetime!",
+          "Note: Please book return flights departing after 05:00 PM from Colombo (CMB).",
+          "Meals: Breakfast Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "7 Nights Accommodation on Double / Triple sharing in 4-Star / Handpicked Boutique Hotels (1N Negombo/Colombo, 2N Kandy, 2N Ella, 2N Mirissa)",
+      "7 Breakfasts + 1 Authentic Traditional Sri Lankan Village Lunch",
+      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with airport pick-up and drop-off",
+      "World-famous Nanu Oya to Ella Scenic Train Experience (subject to seat availability)",
+      "Sigiriya Lion Rock Fortress Day Excursion & Entry / Guided Tour",
+      "Authentic Rural Village Experience with Bullock Cart & Catamaran Canoe Ride",
+      "Dambulla Cave Temple & Pinnawala Elephant Orphanage visits",
+      "Kandy Cultural Dance Show & Temple of the Tooth Relic visit",
+      "Tea Gardens & Factory Guided Tour in Ramboda",
+      "Little Adam’s Peak hike & Nine Arch Bridge excursion",
+      "Galle Fort exploration & Mirissa beach excursions",
+      "Experienced Travel Tribes Trip Leader & 24/7 on-ground support",
+      "Driver night charges, toll taxes, parking and local state taxes"
+    ],
+    exclusions: [
+      "International flight tickets to and from Colombo (CMB)",
+      "5% GST & 2% TCS as applicable",
+      "Lunches and dinners not explicitly mentioned in the itinerary",
+      "Any alcoholic drinks, packaged mineral water, personal snacks",
+      "Optional activities / tickets: Whale watching safari boat, Surfing lesson/board rental, Scuba diving, Rawana Zipline",
+      "Personal expenses like tips to drivers/guides, laundry, camera/drone permits, telephone bills",
+      "Any cost arising due to natural calamities like roadblocks, landslides, flight delays (to be borne directly on spot)",
+      "Travel & medical insurance",
+      "Anything not mentioned in the inclusions"
+    ],
+    policies: [
+      "Visa Policy: Sri Lanka offers easy Online ETA / Visa (free for Indian passport holders as per current government regulations). Passport must have at least 6 months validity.",
+      "Flight recommendation: Book arrival flight reaching Colombo (CMB) on Day 1 morning/afternoon, and return flight departing after 05:00 PM on Day 8.",
+      "Booking Advance: ₹15,000/- per person to secure your slot (Non-refundable upon cancellation; transferable or convertible to Travel Tribes credit as per policy).",
+      "Pricing: Standard Batches ₹53,000 / person | Xmas & New Year Batches ₹57,000 / person (+5% GST & 2% TCS).",
+      "Payment Policy: Balance payment must be cleared at least 30 days prior to departure date.",
+      "Accommodation: Stays in premium 4-Star hotels (Mirage Colombo / Earl’s City Kandy / Oak Ray Ella / Somerset Blue Mirissa or similar).",
+      "Scenic Train Note: Nanu Oya to Ella train tickets are subject to government railway availability. If train is unavailable, scenic drive through the tea country will be provided.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to credit.",
+      "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
+      "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Standard Batch (Triple / Double Sharing)', price: '₹53,000 / person' },
+      { label: 'Xmas & New Year Special Batch', price: '₹57,000 / person', note: 'Applicable on Dec 19 & Dec 27 departures' }
+    ],
+    bookingAmount: '₹15,000 / person',
+    reviews: [
+      {
+        name: 'Rohan Mehta',
+        role: 'Verified Traveller',
+        detail: 'Sri Lanka Island Escape',
+        rating: 5,
+        quote: 'Sri Lanka with Travel Tribes was beyond words! The scenic train from Nanu Oya to Ella and the Nine Arch Bridge looked straight out of a fairy tale. Stays were super luxurious and the group vibe was unmatched.'
+      },
+      {
+        name: 'Devika Nair',
+        role: 'Verified Traveller',
+        detail: 'Sri Lanka Community Trip',
+        rating: 5,
+        quote: 'My first international group trip and I could not have asked for a better experience. Climbing Sigiriya Rock and surfing at Weligama were highlights of my year. Our trip captain took care of every single detail!'
+      },
+      {
+        name: 'Karan Singhania',
+        role: 'Local Guide',
+        reviewCount: '22 reviews',
+        photoCount: '64 photos',
+        detail: 'Sri Lanka – The Island Escape',
+        rating: 5,
+        quote: 'Whale watching in Mirissa, village lunch in Sigiriya, and cafe hopping in Ella made this trip a 10/10. Travel Tribes knows how to curate the perfect balance of adventure, luxury, and community bonding.'
+      }
+    ]
+  },
+  {
+    slug: 'bali-gili-islands',
+    title: 'Bali w/ Gili T. – Island of Vibe',
+    location: 'Seminyak · Nusa Penida · Gili Trawangan · Ubud · Bali',
+    region: 'International',
+    date: 'Sep 26–Oct 04, 2026',
+    dates: [
+      'Sep 26–Oct 04, 2026',
+      'Oct 17–25, 2026',
+      'Nov 14–22, 2026',
+      'Dec 19–27, 2026 (XMAS Special)',
+      'Dec 27–Jan 04, 2027 (New Year Special)'
+    ],
+    duration: '8N/9D',
+    price: '₹53,000',
+    image: img('photo-1537996194471-e657df975ab4'),
+    alt: 'Bali and Gili Islands — Tropical Beaches, Kelingking Cliff, Mount Batur Jeep Safari and Ubud Culture',
+    tag: 'Island of Vibe',
+    description: 'Get ready for Bali magic — lush jungles, hike majestic volcanoes, dance your heart out at beach clubs, explore tropical beaches, and soak in endless island vibes with your tribe! Curated exclusively for 18–40 year olds, this 8 Nights / 9 Days expedition takes you across Seminyak, Kuta, the dramatic coastal cliffs of Nusa Penida, the turquoise waters of Gili Trawangan, and the cultural highlands of Ubud. From an epic 4x4 Mount Batur Sunrise Jeep Safari and thrilling Jungle ATV adventure to sunset Kecak Fire Dance at Uluwatu, swimming under Tegenungan Waterfall, partying at Omma Day Club, and snorkelling with wild sea turtles in Gili T. Premium 4-star stays, island-to-jungle transfers, and lifelong tribe memories await.',
+    spots: '6 spots left',
+    gallery: [
+      { image: img('photo-1537996194471-e657df975ab4'), alt: 'Bali Uluwatu Cliff Temple & Sunset Panorama' },
+      { image: img('photo-1552733407-5d5c46c3bb3b'), alt: 'Kelingking Beach T-Rex Cliff Nusa Penida' },
+      { image: img('photo-1518548419970-58e3b4079ab2'), alt: 'Gili Trawangan Turquoise Waters & White Sand Beach' },
+      { image: img('photo-1544644181-1484b3fdfc62'), alt: 'Mount Batur Sunrise & Volcanic Black Lava' },
+      { image: img('photo-1537953773345-d172ccf13cf1'), alt: 'Tegalalang Rice Terraces & Jungle Swings Ubud' },
+      { image: img('photo-1512100356356-de1b84283e18'), alt: 'Tropical Waterfalls & Tegenungan Pools' },
+      { image: img('photo-1540555700478-4be289fbecef'), alt: 'Omma Day Club Party & Jungle Lounging' },
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Gili Island Turtle Snorkelling & Sunset Beach Bars' }
+    ],
+    highlights: [
+      "Explore the stunning dramatic cliffs, hidden beaches, and spiritual aura of Uluwatu.",
+      "Experience the iconic sunset Kecak Fire Dance on a cliff edge overlooking the Indian Ocean.",
+      "Full-day Nusa Penida Island tour: Kelingking Beach (T-Rex Cliff), Broken Beach, Angel’s Billabong & Crystal Bay.",
+      "Fast boat cruise to Gili Trawangan and traditional Cidomo (horse cart) island transport.",
+      "Free day to explore Gili T: Snorkel with sea turtles, scuba dive, cafe hop, and chill at sunset beach bars.",
+      "Explore the sacred Ubud Monkey Forest Sanctuary and discover vibrant bohemian art markets.",
+      "Go on a thrilling 1-Hour Tandem Jungle ATV Adventure through riverbeds and rainforest trails.",
+      "Visit scenic Tegenungan Waterfall for breathtaking photos and a refreshing dip in natural pools.",
+      "Chill, lounge, and party at Omma Day Club with infinity pools overlooking jungle waterfalls.",
+      "Epic 4x4 Mount Batur Sunrise Jeep Safari across volcanic ridges and surreal Black Lava fields.",
+      "Visit Bali’s iconic Tegalalang Rice Terraces and admire timeless stepped emerald paddies.",
+      "Stay in handpicked 4-star hotels & luxury Ubud villas with an energetic community of 18–40 year olds."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Welcome to Bali | Arrival in Seminyak 🌴',
+        activities: [
+          "Arrive at Bali Ngurah Rai International Airport (DPS) and meet your friendly Travel Tribes Trip Captain.",
+          "Board your comfortable AC transfer to our 4-star hotel in Seminyak (Paragon Hotel or similar).",
+          "Check in, freshen up, get comfortable, and soak in the tropical Bali vibes.",
+          "Spend the afternoon relaxing by the pool or exploring the nearby streets and boutiques.",
+          "In the evening, head out for a local Balinese food trail — try authentic Nasi Goreng, Satay, or refreshing tropical beverages.",
+          "Overnight stay in Seminyak. (Meals: Not Included)."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Surfing Lesson (Optional) – Uluwatu Cliff Temple – Sunset Kecak Fire Dance 🏄‍♂️🛕🔥',
+        activities: [
+          "Start your day with a delicious breakfast at the hotel.",
+          "Kick off the morning with an optional 2-hour basic surfing session with a professional instructor at the beach.",
+          "Head towards southern Bali and relax at a secluded, beautiful hidden beach under dramatic limestone cliffs.",
+          "Visit the iconic Uluwatu Temple, perched dramatically on a 70-meter cliff overlooking the Indian Ocean.",
+          "Soak in the peaceful spiritual atmosphere and learn about its deep cultural significance.",
+          "In the evening, witness the world-famous Kecak Fire Dance against a breathtaking sunset backdrop.",
+          "Return to Seminyak after an exhilarating day and enjoy the evening at leisure.",
+          "Overnight stay in Seminyak. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Full-Day Nusa Penida Island Tour – Seminyak Nightlife 🚤🏖️🍹',
+        activities: [
+          "Fuel up with an early breakfast and head to the harbour for a full-day fast boat excursion to Nusa Penida Island.",
+          "Explore some of Indonesia’s most breathtaking coastal landscapes and iconic viewpoints.",
+          "Visit famous spots: Angel’s Billabong (natural tidal pool), Broken Beach (scenic geological arch), Kelingking Beach (world-famous T-Rex cliff), and Crystal Bay.",
+          "Take in panoramic ocean views, capture epic Instagram photos, and swim in turquoise waters.",
+          "Return to mainland Bali by fast boat in the evening.",
+          "Later, head into Seminyak to explore its vibrant beach clubs, lively cocktail bars, and buzzing nightlife with your tribe.",
+          "Overnight stay in Seminyak. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Seminyak to Gili Trawangan | Island Vibes ⛵🏝️',
+        activities: [
+          "Enjoy breakfast and check out from your Seminyak hotel.",
+          "Transfer to the harbour and board a scenic fast boat to the paradise island of Gili Trawangan.",
+          "Experience Gili’s unique, eco-friendly transport — the traditional horse cart (Cidomo), as no motorized vehicles are allowed on the island.",
+          "Check in to your island stay (Frii Hotel or similar) and soak in the laid-back island lifestyle.",
+          "Spend the rest of the day cycling around the island, relaxing on white sand beaches, or chilling by the ocean.",
+          "Get ready for exciting island adventures ahead.",
+          "Overnight stay in Gili Islands. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Gili Islands | Turtle Snorkelling, Scuba, Cafe Hopping & Sunset Beach Bars 🐢🤿🌅',
+        activities: [
+          "Wake up to the gentle ocean breeze and enjoy breakfast at your resort.",
+          "Enjoy a free day to explore the island at your own pace.",
+          "Choose from exciting optional activities: island-hopping boat tour to snorkel with sea turtles & reef sharks, certified scuba diving, cafe hopping, or a relaxing Balinese massage.",
+          "In the evening, head to one of Gili’s famous beachfront sunset bars.",
+          "Watch a mesmerizing golden sunset over the water, sip refreshing cocktails, and soak in the laid-back Gili island vibes.",
+          "Overnight stay in Gili Islands. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 6,
+        title: 'Gili Islands to Ubud | Island to Jungle Vibes 🌴🐒🌿',
+        activities: [
+          "Start your day with a delicious breakfast by the beach.",
+          "Enjoy the morning at leisure and depart from Gili to mainland Bali via fast boat around midday.",
+          "Bid farewell to tropical beach vibes and begin your journey towards the lush highlands of Ubud.",
+          "Travel from scenic coastal roads into Bali’s peaceful countryside and emerald rice paddies.",
+          "Visit the famous sacred Ubud Monkey Forest and meet its playful macaque residents among ancient banyan trees.",
+          "Explore Ubud town, artisan markets, and bohemian cafes.",
+          "Check in to your luxury villa (Bumi Linggah Villas or similar) and unwind.",
+          "Overnight stay in Ubud. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 7,
+        title: 'Ubud Jungle ATV Adventure – Tegenungan Waterfall – Omma Day Club 🏎️💦🎉',
+        activities: [
+          "Wholesome breakfast at the villa.",
+          "Get ready for a thrilling 1-hour tandem ATV quad bike adventure through jungle trails, muddy tracks, riverbeds, and lush landscapes.",
+          "Visit the beautiful Tegenungan Waterfall, surrounded by dense tropical greenery.",
+          "Capture stunning pictures and enjoy a refreshing swim in the natural plunge pool.",
+          "Later, head to Omma Day Club to relax, chill on daybeds, swim in infinity pools, and enjoy vibrant Bali party vibes right next to the waterfall.",
+          "Spend the evening at leisure exploring Ubud's dining scene.",
+          "Overnight stay in Ubud. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 8,
+        title: 'Mount Batur 4x4 Jeep Sunrise Safari – Black Lava & Rice Terraces 🌋🚙🌾',
+        activities: [
+          "Begin your day early with a 2:00 AM departure for an unforgettable sunrise expedition.",
+          "Experience an exciting 4x4 Jeep ride up Mount Batur, driving across scenic volcanic ridges.",
+          "Reach the prime viewpoint to witness a breathtaking sunrise over Mount Batur volcano and Lake Batur.",
+          "Enjoy breakfast with stunning panoramic morning views above the clouds.",
+          "Explore the unique Black Lava fields formed by ancient volcanic eruptions around Mount Batur.",
+          "Later, visit Bali’s iconic Tegalalang Rice Terraces and admire their timeless stepped beauty (optional giant Bali Swings).",
+          "Enjoy a special Farewell Tribe Dinner celebrating our unforgettable journey.",
+          "Overnight stay in Ubud. (Meals: Breakfast, Lunch & Welcome/Farewell Dinner Included)."
+        ]
+      },
+      {
+        day: 9,
+        title: 'Ubud to Bali DPS Airport | Departure 🛫✨',
+        activities: [
+          "Enjoy breakfast and complete the check-out process from your villa.",
+          "Gather your belongings and meet your driver for your comfortable private transfer to Bali Ngurah Rai International Airport (DPS).",
+          "Keep your travel documents and passport handy for a smooth journey.",
+          "Bid farewell to Bali, your trip captain, and your fellow tribe travellers, taking home lifetime friendships and unforgettable memories!",
+          "Note: You can book your return flight anytime on Day 9.",
+          "Meals: Breakfast Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "Stay for 8 nights on Double / Triple Sharing in 4-Star Hotels & Luxury Villas (3N Hotel in Seminyak, 2N Hotel in Gili Trawangan, 3N Villa in Ubud)",
+      "10 Meals: 8 Breakfasts, 1 Lunch & Welcome / Farewell Dinner",
+      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with airport pick-up and drop-off",
+      "Return Fast Boat tickets between Bali mainland and Gili Trawangan",
+      "Full-Day Nusa Penida Island Excursion by Fast Boat (Kelingking Beach, Broken Beach, Angel’s Billabong, Crystal Bay)",
+      "Traditional Cidomo (horse cart) transfer on Gili Trawangan",
+      "4x4 Mount Batur Sunrise Jeep Safari across volcanic ridges and Black Lava fields",
+      "Thrilling 1-Hour Tandem Jungle ATV Quad Bike Adventure in Ubud",
+      "Entry tickets: Uluwatu Temple & Sunset Kecak Fire Dance, Ubud Monkey Forest, Tegenungan Waterfall, Tegalalang Rice Terraces",
+      "Omma Day Club visit and entry",
+      "Experienced Travel Tribes Trip Captain & 24/7 on-ground assistance",
+      "Driver night charges, toll taxes, parking fees, and local taxes"
+    ],
+    exclusions: [
+      "5% GST & 2% TCS (applicable at checkout)",
+      "International and domestic flight tickets to and from Bali (DPS)",
+      "Bali Visa on Arrival (approx ₹2,500 / 500,000 IDR for Indian passport holders)",
+      "Any kind of food or beverage not included in the package (alcoholic drinks, packaged mineral water, highway lunches)",
+      "Optional activities: 2-hour surfing lesson with instructor, Scuba diving, Turtle snorkelling gear hire, Bali Swings",
+      "Personal expenses (tips to driver/guides, laundry, telephone bills, personal camera/drone charges)",
+      "Any cost arising due to natural calamities like roadblocks, landslides, sea conditions, flight delays (to be borne directly on spot)",
+      "Travel & medical insurance",
+      "Anything not explicitly mentioned in the inclusions"
+    ],
+    policies: [
+      "Flight guidelines: Flights arriving at Bali DPS Airport in the morning or around noon on Day 1 will be most suitable. You can book your return flight anytime on Day 9.",
+      "Visa & Passport: Visa on arrival is available for Indian passport holders at approx ₹2,500 (500,000 IDR). Ensure your passport has at least 6 months validity from your travel date.",
+      "Booking Advance: ₹15,000/- advance per person to secure your seat. Pay the balance at least 30 days before departure.",
+      "Pricing: Standard Batches ₹53,000 / person | Xmas & New Year Special Batches ₹59,000 / person (+5% GST & 2% TCS).",
+      "Accommodation: 4-Star Stays (Paragon Hotel Seminyak / Frii Hotel Gili T / Bumi Linggah Villas Ubud or similar).",
+      "Weather & Safety: Activities like surfing, scuba diving, snorkelling, and fast boat ferry transfers are subject to sea and weather conditions. The Trip Captain reserves the right to alter the schedule for safety.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit as per policy.",
+      "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
+      "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Standard Batch (Triple / Double Sharing)', price: '₹53,000 / person' },
+      { label: 'Xmas & New Year Special Batch', price: '₹59,000 / person', note: 'Applicable on Dec 19 & Dec 27 departures' }
+    ],
+    bookingAmount: '₹15,000 / person',
+    reviews: [
+      {
+        name: 'Aditya Kashyap',
+        role: 'Verified Traveller',
+        detail: 'Bali w/ Gili T. – Island of Vibe',
+        rating: 5,
+        quote: 'Bali with Travel Tribes was hands down the best trip of my life! The 4x4 Mount Batur sunrise jeep safari and the sunset Kecak dance at Uluwatu cliffs were surreal. Gili Trawangan had such peaceful island vibes — swimming with sea turtles was an unforgettable bucket-list moment. 10/10 management and tribe vibe!'
+      },
+      {
+        name: 'Tanvi Deshmukh',
+        role: 'Verified Traveller',
+        detail: 'Bali Community Trip',
+        rating: 5,
+        quote: 'Joined as a solo female traveller and felt completely safe and at home from Day 1. The Jungle ATV in Ubud, Omma Day Club pool party, and Kelingking beach in Nusa Penida were mind-blowing. Stays at Seminyak and Ubud villas were top class. Tribe hai to vibe hai!'
+      },
+      {
+        name: 'Rohan Varma',
+        role: 'Local Guide',
+        reviewCount: '28 reviews',
+        photoCount: '85 photos',
+        detail: 'Bali w/ Gili T. Island Escape',
+        rating: 5,
+        quote: 'Super well-planned 9-day itinerary covering everything from beaches and beach clubs to waterfalls, volcanoes, and rice terraces. Our trip captain handled all fast boats and transfers seamlessly. Definitely travelling with Travel Tribes again!'
+      }
+    ]
+  },
+  {
+    slug: 'bhutan-backpacking',
+    title: 'Bhutan – Land of the Thunder Dragon',
+    location: 'Phuentsholing · Thimphu · Punakha · Paro · Bhutan',
+    region: 'International',
+    date: 'Oct 10–16, 2026',
+    dates: [
+      'Oct 10–16, 2026',
+      'Nov 07–13, 2026',
+      'Dec 12–18, 2026'
+    ],
+    duration: '6N/7D',
+    price: '₹26,499',
+    image: img('photo-1578637387939-43c525550085'),
+    alt: 'Bhutan Taktsang Tiger’s Nest Monastery, Punakha Dzong and Himalayan Valleys',
+    tag: 'Land of the Thunder Dragon',
+    description: 'Get ready for Bhutan magic — drive through breathtaking Himalayan valleys, explore majestic 17th-century dzongs, hike to the world-famous Tiger’s Nest monastery perched on a cliff, witness panoramic mountain vistas at Dochula Pass, and soak in the peaceful spiritual vibes of the Land of the Thunder Dragon with your tribe! Curated for 18–40 year olds, this 7-day backpacking journey takes you through Phuentsholing, Thimphu, Punakha, and Paro. Experience authentic Bhutanese living culture at Simply Bhutan, traditional archery, a royal Gho & Kira costume photoshoot, thrilling suspension bridges, and unforgettable mountain bonding.',
+    spots: '6 spots left',
+    gallery: [
+      { image: img('photo-1578637387939-43c525550085'), alt: 'Tiger’s Nest Taktsang Monastery Clifftop in Paro' },
+      { image: img('photo-1584810359583-96fc3448beaa'), alt: 'Majestic Punakha Dzong at River Confluence' },
+      { image: img('photo-1561571994-3c39121109be'), alt: 'Buddha Dordenma Bronze Statue in Thimphu' },
+      { image: img('photo-1506744038136-46273834b3fb'), alt: 'Dochula Pass 108 Druk Wangyal Chortens & Himalayas' },
+      { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Punakha Suspension Bridge and Valley River' },
+      { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Simply Bhutan Living Heritage & Traditional Culture' },
+      { image: img('photo-1527631746610-bca00a040d60'), alt: 'Scenic Paro Valley and Mountain Pine Forests' },
+      { image: img('photo-1519671482749-fd09be7ccebf'), alt: 'Travel Tribes Tribe Bonding & Cultural Night' }
+    ],
+    highlights: [
+      "Trek to the iconic Tiger’s Nest Monastery (Taktsang) dramatically perched on a 900m sheer cliff.",
+      "Enjoy breathtaking 360-degree Himalayan views and 108 Druk Wangyal Chortens at Dochula Pass (3,050m).",
+      "Explore the magnificent Punakha Dzong (Palace of Great Happiness) at the confluence of Pho Chhu & Mo Chhu rivers.",
+      "Visit the colossal 169-foot bronze Buddha Dordenma Statue overlooking Thimphu Valley.",
+      "Experience rich Bhutanese traditions, folk music, and archery at Simply Bhutan living museum.",
+      "Dress up in traditional Bhutanese royal outfits (Gho & Kira) for a fun tribe group photoshoot.",
+      "Walk across the thrilling Punakha Suspension Bridge — one of the longest hanging bridges in Bhutan.",
+      "Stop at the scenic Chuzom Bridge where the Paro and Thimphu rivers converge with royal portraits.",
+      "Explore the vibrant local handicraft and night markets of Thimphu and Paro.",
+      "Drive through picturesque Himalayan valleys, pine forests, pristine rivers, and mountain waterfalls.",
+      "Optional serene river rafting on Punakha river and traditional medicinal Hot-Stone Bath.",
+      "Travel with an experienced Travel Tribes Trip Captain, certified English-speaking Bhutanese guide & trek leader."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Bagdogra to Phuentsholing | Gateway to Bhutan 🇧🇹',
+        activities: [
+          "Arrive at Bagdogra Airport (IXB) before 12:00 PM and meet your Travel Tribes Trip Captain and fellow travellers.",
+          "Board our private AC vehicle and embark on a scenic drive through North Bengal tea gardens to Jaigaon, the Indian border town.",
+          "Cross the Indo-Bhutan border gate into Phuentsholing and complete Bhutan immigration, biometric, and entry permit formalities.",
+          "Check in to your hotel (Hotel Meto Pema or similar), relax, and soak in the serene cleanliness and charm of Bhutan.",
+          "Take an evening stroll around the border town and explore local Bhutanese cafes.",
+          "Overnight stay in Phuentsholing. (Meals: Dinner Included)."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Phuentsholing to Thimphu | Scenic Himalayan Drive 🏔️🚗',
+        activities: [
+          "Enjoy a wholesome breakfast and begin your scenic mountain ascent towards Thimphu, the capital of Bhutan.",
+          "Drive through winding mountain roads surrounded by lush pine forests, roadside waterfalls, and charming Bhutanese villages.",
+          "Stop at the scenic Chuzom Bridge, where the Paro and Thimphu Rivers meet, adorned with traditional stupas and royal portraits.",
+          "Optional: Experience a fun and serene river rafting adventure along the valley waters en route.",
+          "Arrive in Thimphu by late afternoon and check in to your hotel (Hotel Park or similar).",
+          "Later, explore the vibrant local markets, Clock Tower square, and handicraft bazaars of the capital city.",
+          "Overnight stay in Thimphu. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Thimphu – Dochula Pass – Punakha Dzong – Thimphu 🛕⛰️🎉',
+        activities: [
+          "Early breakfast and set out for a breathtaking excursion towards Punakha Valley.",
+          "Drive up to the scenic Dochula Pass (3,050 m) and enjoy panoramic 360-degree views of snow-capped Himalayan peaks.",
+          "Visit the beautiful 108 Druk Wangyal Chortens standing gracefully amidst misty mountain air.",
+          "Descend to Punakha Dzong, one of Bhutan’s most magnificent 17th-century architectural landmarks located at the confluence of two rivers.",
+          "Walk across the thrilling Punakha Suspension Bridge hanging high over the Pho Chhu river.",
+          "Return to Thimphu in the evening for a fun game night, karaoke session, and dinner with the group.",
+          "Overnight stay in Thimphu. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Thimphu Cultural Exploration & Transfer to Paro 🏛️🎨🏔️',
+        activities: [
+          "Enjoy breakfast, check out from the hotel, and visit the giant bronze Buddha Dordenma Statue overlooking Thimphu Valley.",
+          "En route, visit Simply Bhutan, an immersive living museum showcasing Bhutanese culture, architecture, traditional music, and archery.",
+          "Continue your scenic drive towards Paro, one of Bhutan’s most picturesque valleys.",
+          "Arrive in Paro and check in to your riverside resort (Riverfront / Ananda Resort or similar).",
+          "In the evening, explore the charming Paro Town Market for souvenirs, prayer wheels, and handicrafts.",
+          "Rest well, hydrate, and get ready for the iconic hike tomorrow.",
+          "Overnight stay in Paro. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Paro – The Iconic Tiger’s Nest (Taktsang) Trek 🥾🐅⛩️',
+        activities: [
+          "Start your day with an early breakfast and gear up for the world-famous Tiger’s Nest Trek.",
+          "Hike through beautiful pine forests and fluttering prayer flags to reach the sacred Taktsang Monastery (approx 2–4 hours depending on pace).",
+          "Explore one of Bhutan’s most revered spiritual landmarks, dramatically perched on a sheer cliff 900 metres above the valley floor.",
+          "Soak in the serene atmosphere, ancient meditation caves, and awe-inspiring Himalayan vistas.",
+          "Trek back down and return to Paro.",
+          "Optional: Relax your tired muscles with a soothing traditional Bhutanese Hot-Stone Bath infused with mountain herbs.",
+          "Overnight stay in Paro. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 6,
+        title: 'Paro to Siliguri via Phuentsholing | Return Journey 📸🚙',
+        activities: [
+          "Enjoy breakfast and check out from your hotel in Paro.",
+          "Dress up in traditional Bhutanese outfits (Gho for men, Kira for women) for a fun tribe group photoshoot.",
+          "Stop at a scenic viewpoint to capture stunning pictures of the iconic Paro International Airport valley.",
+          "Begin your return drive through Bhutan’s beautiful valleys and winding highways.",
+          "Cross Phuentsholing, complete exit formalities, re-enter India, and continue towards Siliguri.",
+          "Arrive in Siliguri by evening, check in to your hotel (Hotel Saffron Crest or similar), and relax after the journey.",
+          "Overnight stay in Siliguri. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 7,
+        title: 'Siliguri to Bagdogra Airport | Departure 🛫✨',
+        activities: [
+          "Enjoy your final breakfast and check out from the hotel.",
+          "Transfer to Bagdogra Airport (IXB) as per your flight timing.",
+          "Bid farewell to your fellow tribe travellers and the incredible Land of the Thunder Dragon.",
+          "Head back home with unforgettable memories, lifelong friendships, and stories for a lifetime!",
+          "Note: You can book your return flight from Bagdogra on Day 7 at any time.",
+          "Meals: Breakfast Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "Stay for 6 Nights on Double Sharing in Handpicked 3-Star Hotels / Resorts (1N Phuentsholing, 2N Thimphu, 2N Paro, 1N Siliguri)",
+      "10 Meals: 6 Breakfasts & 4 Dinners",
+      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with Bagdogra Airport pick-up",
+      "Tiger’s Nest (Taktsang Monastery) guided trek with experienced local guide & trek leader 🥾",
+      "Buddha Dordenma (Buddha Point), Dochula Pass & 108 Druk Wangyal Chortens excursions",
+      "Punakha Dzong & Punakha Suspension Bridge visits",
+      "Simply Bhutan living cultural museum entry & traditional costume photoshoot",
+      "Bhutan entry permit processing & paperwork assistance",
+      "Experienced Travel Tribes Trip Captain & Local English-speaking Bhutanese guide throughout",
+      "Driver night charges, toll taxes, parking fees, and state taxes"
+    ],
+    exclusions: [
+      "5% GST & 2% TCS (applicable at checkout)",
+      "Mandatory Bhutan SDF (Sustainable Development Fee / Visa): ₹1,200 per night per person × 5 nights = ₹6,000 per person",
+      "Domestic & international flight tickets to and from Bagdogra Airport (IXB)",
+      "Monument & Dzong entry tickets (payable on spot)",
+      "Any food or beverage not included in the package (alcoholic drinks, packaged mineral water, highway lunches)",
+      "Optional activities: White water river rafting in Punakha, Traditional Bhutanese Hot-Stone Herbal Bath",
+      "Personal expenses (tips to driver/guide, laundry, telephone bills, personal camera charges)",
+      "Any cost arising due to natural calamities like landslides, roadblocks, weather delays (to be borne directly on spot)",
+      "Travel & medical insurance",
+      "Anything not explicitly mentioned in the inclusions"
+    ],
+    policies: [
+      "Flight guidelines: Please book your arrival flight reaching Bagdogra Airport (IXB) before 12:00 PM on Day 1. You can book your return flight from Bagdogra anytime on Day 7.",
+      "Documents & Permit: Valid Indian Passport (with min 6 months validity) or Original Voter ID Card is mandatory for Bhutan entry permit. Aadhaar Card is NOT accepted for Bhutan permits.",
+      "SDF (Visa) Fee: Mandatory SDF charges of ₹1,200 per night per person (₹6,000 total for 5 nights) are collected as per Royal Government of Bhutan regulations.",
+      "Booking Advance: ₹10,000/- advance per person to secure your seat. Pay the balance at least 15–30 days before departure.",
+      "Pricing: Ex-Bagdogra Package ₹26,499 / person (+5% GST & 2% TCS + ₹6,000 SDF).",
+      "Accommodation: Stays in handpicked 3-Star properties: Hotel Meto Pema Phuentsholing / Hotel Park Thimphu / Riverfront or Ananda Resort Paro / Hotel Saffron Crest Siliguri (or similar).",
+      "Trek Fitness: Tiger’s Nest trek is moderately challenging (approx 4–5 hours round-trip hiking). Comfortable trekking shoes and reasonable fitness are recommended.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit as per policy.",
+      "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
+      "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Bagdogra (Double Sharing Package)', price: '₹26,499 / person', note: 'Excludes mandatory SDF ₹6,000' },
+      { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹32,499 / person', note: 'Includes ₹6,000 Bhutan SDF fee' }
+    ],
+    bookingAmount: '₹10,000 / person',
+    reviews: [
+      {
+        name: 'Soumya Bannerjee',
+        role: 'Verified Traveller',
+        detail: 'Bhutan – Land of the Thunder Dragon',
+        rating: 5,
+        quote: 'Bhutan with Travel Tribes was a spiritual and soul-soothing journey. Hiking up to Tiger’s Nest Monastery was on my bucket list for years, and doing it with such an encouraging group and captain made it so memorable. The scenic drive across Dochula Pass with 108 stupas was breathtaking!'
+      },
+      {
+        name: 'Ritika Sharma',
+        role: 'Verified Traveller',
+        detail: 'Bhutan Backpacking Trip',
+        rating: 5,
+        quote: 'Everything was organized flawlessly from Bagdogra pick-up and immigration permits to the stays and guides. Punakha Dzong looked magnificent by the river, and dressing up in Kira for the traditional photoshoot was super fun. Highly recommend Travel Tribes!'
+      },
+      {
+        name: 'Manish Rawat',
+        role: 'Local Guide',
+        reviewCount: '15 reviews',
+        photoCount: '48 photos',
+        detail: 'Bhutan Group Expedition',
+        rating: 5,
+        quote: 'The cleanliness, warmth of Bhutanese people, and the peaceful vibes are unmatched. Our trip captain and Bhutanese guide took the best care of all of us. Great food, great hotel stays, and top-tier community vibes!'
+      }
+    ]
+  },
+  {
+    slug: 'bhutan-tshechu-festival',
+    title: 'Bhutan Tshechu Festival Special',
+    location: 'Phuentsholing · Thimphu · Punakha · Paro · Bhutan',
+    region: 'International',
+    date: 'Sep 20–26, 2026',
+    dates: [
+      'Sep 20–26, 2026'
+    ],
+    duration: '6N/7D',
+    price: '₹29,499',
+    image: img('photo-1544735716-392fe2489ffa'),
+    alt: 'Bhutan Tshechu Festival Masked Cham Dances, Punakha Dzong and Tiger’s Nest Paro',
+    tag: 'Tshechu Festival Special',
+    description: 'Experience vibrant masked dances, ancient Buddhist traditions, Himalayan magic & unforgettable memories with your tribe! Curated exclusively for 18–40 year olds, this 6 Nights / 7 Days festival expedition takes you to the heart of the sacred Thimphu / Punakha Tshechu Festival. Witness dramatic Cham masked dances, colorful silk costumes, trumpet fanfares, and spiritual blessings. Journey through Phuentsholing, Thimphu, the 108 stupas of Dochula Pass (3,050m), the majestic Punakha Dzong, and hike to the world-famous cliffside Tiger’s Nest Monastery (Paro Taktsang). 3-star handpicked stays, cultural living museum, and traditional photoshoot included.',
+    spots: '4 spots left',
+    gallery: [
+      { image: img('photo-1544735716-392fe2489ffa'), alt: 'Thimphu Tshechu Festival Masked Cham Dances & Sacred Rituals' },
+      { image: img('photo-1578637387939-43c525550085'), alt: 'Tiger’s Nest Taktsang Monastery Clifftop in Paro' },
+      { image: img('photo-1584810359583-96fc3448beaa'), alt: 'Majestic Punakha Dzong at River Confluence' },
+      { image: img('photo-1506744038136-46273834b3fb'), alt: 'Dochula Pass 108 Druk Wangyal Chortens & Himalayas' },
+      { image: img('photo-1561571994-3c39121109be'), alt: 'Buddha Dordenma Bronze Statue in Thimphu' },
+      { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Punakha Suspension Bridge and Valley River' },
+      { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Simply Bhutan Living Heritage & Traditional Outfits' },
+      { image: img('photo-1527631746610-bca00a040d60'), alt: 'Scenic Paro Valley and Mountain Pine Forests' }
+    ],
+    highlights: [
+      "Experience the colourful Thimphu / Punakha Tshechu Festival: Witness sacred Cham masked dances, colourful costumes & authentic rituals.",
+      "Trek to the iconic cliff-hanging Tiger’s Nest Monastery (Taktsang) perched 900m above Paro Valley.",
+      "Enjoy breathtaking 360-degree Himalayan views and 108 Druk Wangyal Chortens at Dochula Pass (3,050m).",
+      "Explore the magnificent 17th-century Punakha Dzong at the confluence of Pho Chhu and Mo Chhu rivers.",
+      "Visit the colossal 169-foot bronze Buddha Dordenma Statue overlooking Thimphu Valley.",
+      "Experience Bhutanese culture, folk music, and archery at Simply Bhutan living museum.",
+      "Dress up in traditional Bhutanese royal outfits (Gho & Kira) for a fun tribe photoshoot.",
+      "Walk across the thrilling Punakha Suspension Bridge — one of Bhutan’s longest hanging bridges.",
+      "Stop at the scenic Chuzom Bridge where the Paro and Thimphu rivers meet with the King & Queen portraits.",
+      "Explore the vibrant local markets and handicraft bazaars of Thimphu and Paro.",
+      "Drive through Bhutan’s picturesque valleys, pine forests, pristine rivers, and mountain waterfalls.",
+      "Optional serene river rafting on Punakha river and traditional herbal Hot-Stone Bath."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Bagdogra – Jaigaon – Phuentsholing | Gateway to Bhutan 🇧🇹',
+        activities: [
+          "Arrive at Bagdogra Airport (IXB) before 12:00 PM and begin your journey towards Bhutan.",
+          "Drive through scenic landscapes and North Bengal tea estates to Jaigaon, the gateway to Bhutan.",
+          "Cross the border gate and enter Phuentsholing.",
+          "Complete Bhutan immigration, biometric, and entry permit formalities.",
+          "Check in to the hotel (Hotel Meto Pema or similar), relax, and get ready for the adventures ahead.",
+          "Overnight stay in Phuentsholing. (Meals: Dinner Included)."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Phuentsholing – Thimphu | Scenic Mountain Journey 🏔️🚗',
+        activities: [
+          "Enjoy breakfast and begin a scenic journey towards Thimphu through beautiful mountains, forests, waterfalls, and villages.",
+          "Optional: Experience a serene and fun river rafting adventure along the river en route.",
+          "Stop at the famous Chuzom Bridge, where the Paro and Thimphu Rivers meet.",
+          "Witness the iconic portrait of the King and Queen welcoming visitors and capture beautiful photos.",
+          "Arrive in Thimphu by evening, check in to your hotel (Hotel Park or similar), and relax.",
+          "Explore the local markets, Clock Tower square, and experience the charm of Bhutan’s capital city.",
+          "Overnight stay in Thimphu. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Thimphu – Dochula Pass – Punakha – Thimphu Tshechu Festival 🎭🛕🎉',
+        activities: [
+          "Explore Thimphu’s famous cultural landmarks and visit the giant Buddha Dordenma Statue.",
+          "Drive to the scenic Dochula Pass (3,050 m) and enjoy breathtaking Himalayan views.",
+          "Visit the beautiful 108 Druk Wangyal Chortens standing gracefully amidst misty mountain air.",
+          "Continue to Punakha Dzong, one of Bhutan’s most magnificent landmarks located at the confluence of two rivers.",
+          "Experience the vibrant Thimphu Tshechu Festival, witnessing traditional masked dances, colourful costumes, sacred rituals, and Bhutanese culture at its finest.",
+          "Check in to your hotel, followed by a fun game night and bonding session with the group.",
+          "Overnight stay in Thimphu. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Thimphu Exploration & Departure to Paro 🏛️🎨🏔️',
+        activities: [
+          "Enjoy breakfast, check out from the hotel, and begin your journey towards Paro.",
+          "En route, visit Simply Bhutan, an immersive living museum showcasing Bhutanese culture, architecture, and traditional lifestyle.",
+          "Continue your scenic drive towards Paro, one of Bhutan’s most beautiful valleys.",
+          "Arrive in Paro and check in to your hotel (Riverfront / Ananda Resort or similar).",
+          "In the evening, explore the local Paro Market and shop for souvenirs, Thangka paintings, and handicrafts.",
+          "Relax and get ready for the exciting adventures ahead.",
+          "Overnight stay in Paro. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Paro – Tiger’s Nest (Taktsang) Trek – Paro 🥾🐅⛩️',
+        activities: [
+          "Start your day with breakfast and get ready for the iconic Tiger’s Nest Trek.",
+          "Hike through beautiful pine forests to reach the sacred Taktsang Monastery (approximately 2–4 hours, depending on your pace).",
+          "Explore one of Bhutan’s most famous and spiritual landmarks, dramatically perched on a cliff 900 metres above the valley.",
+          "Soak in the peaceful atmosphere, prayer flags, stunning views, and spiritual vibes of the monastery.",
+          "Trek back and return to Paro.",
+          "Optional: Relax your tired muscles with a traditional Bhutanese herbal hot-stone bath.",
+          "Overnight stay in Paro. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 6,
+        title: 'Paro – Phuentsholing – Siliguri | Return Journey 📸🚙',
+        activities: [
+          "Enjoy breakfast and check out from your hotel in Paro.",
+          "Before leaving, dress up in a traditional Bhutanese outfit (Gho/Kira) for a fun group photoshoot.",
+          "Stop at a scenic viewpoint to capture beautiful views of the iconic Paro Airport.",
+          "Begin your return journey through Bhutan’s beautiful valleys and landscapes.",
+          "Cross Phuentsholing, re-enter India, and continue towards Siliguri.",
+          "Arrive in Siliguri by evening, check in to the hotel (Hotel Saffron Crest or similar), and relax after the journey.",
+          "Overnight stay in Siliguri. (Meals: Breakfast Included)."
+        ]
+      },
+      {
+        day: 7,
+        title: 'Siliguri – Bagdogra Airport | Departure 🛫✨',
+        activities: [
+          "Enjoy your final breakfast and check out from the hotel.",
+          "Depart for Bagdogra Airport (IXB) as per your flight timing.",
+          "Bid farewell to your fellow travellers and the incredible Bhutan journey.",
+          "Head back home with unforgettable memories, new friendships, and stories for a lifetime!",
+          "Note: You can book your return flight from Bagdogra on Day 7 at any time.",
+          "Meals: Breakfast Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "Stay for 6 Nights on Double Sharing in Handpicked 3-Star Hotels / Resorts (1N Phuentsholing, 2N Thimphu, 2N Paro, 1N Siliguri)",
+      "10 Meals: 6 Breakfasts & 4 Dinners",
+      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with Bagdogra Airport pick-up",
+      "Punakha / Thimphu Tshechu Festival experience & entry assistance 🎭",
+      "Tiger’s Nest (Taktsang Monastery) guided trek with experienced local guide & trek leader 🥾",
+      "Buddha Dordenma (Buddha Point), Dochula Pass & 108 Druk Wangyal Chortens excursions",
+      "Punakha Dzong & Punakha Suspension Bridge visits",
+      "Simply Bhutan living cultural museum entry & traditional costume photoshoot",
+      "Bhutan entry permit processing & paperwork assistance",
+      "Experienced Travel Tribes Trip Captain & Local English-speaking Bhutanese guide throughout",
+      "Driver night charges, toll taxes, parking fees, and state taxes"
+    ],
+    exclusions: [
+      "5% GST & 2% TCS (applicable at checkout)",
+      "Mandatory Bhutan SDF (Sustainable Development Fee / Visa): ₹1,200 per night per person × 5 nights = ₹6,000 per person",
+      "Domestic & international flight tickets to and from Bagdogra Airport (IXB)",
+      "Monument & Dzong entry tickets (payable on spot)",
+      "Any food or beverage not included in the package (alcoholic drinks, packaged mineral water, highway lunches)",
+      "Optional activities: White water river rafting in Punakha, Traditional Bhutanese Hot-Stone Herbal Bath",
+      "Personal expenses (tips to driver/guide, laundry, telephone bills, personal camera charges)",
+      "Any cost arising due to natural calamities like landslides, roadblocks, weather delays (to be borne directly on spot)",
+      "Travel & medical insurance",
+      "Anything not explicitly mentioned in the inclusions"
+    ],
+    policies: [
+      "Flight guidelines: Please book your arrival flight reaching Bagdogra Airport (IXB) before 12:00 PM on Day 1. You can book your return flight from Bagdogra anytime on Day 7.",
+      "Documents & Permit: Valid Indian Passport (with min 6 months validity) or Original Voter ID Card is mandatory for Bhutan entry permit. Aadhaar Card is NOT accepted for Bhutan permits.",
+      "SDF (Visa) Fee: Mandatory SDF charges of ₹1,200 per night per person (₹6,000 total for 5 nights) are collected as per Royal Government of Bhutan regulations.",
+      "Booking Advance: ₹10,000/- advance per person to secure your seat. Pay the balance at least 15–30 days before departure.",
+      "Pricing: Festival Special Ex-Bagdogra Package ₹29,499 / person (+5% GST & 2% TCS + ₹6,000 SDF).",
+      "Accommodation: Stays in handpicked 3-Star properties: Hotel Meto Pema Phuentsholing / Hotel Park Thimphu / Riverfront or Ananda Resort Paro / Hotel Saffron Crest Siliguri (or similar).",
+      "Tshechu Schedule: The Tshechu festival schedule and timings are managed by local authorities and may be subject to changes.",
+      "Trek Fitness: Tiger’s Nest trek is moderately challenging (approx 4–5 hours round-trip hiking). Comfortable trekking shoes and reasonable fitness are recommended.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit as per policy.",
+      "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
+      "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Bagdogra (Festival Special Batch)', price: '₹29,499 / person', note: 'Excludes mandatory SDF ₹6,000' },
+      { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹35,499 / person', note: 'Includes ₹6,000 Bhutan SDF fee' }
+    ],
+    bookingAmount: '₹10,000 / person',
+    reviews: [
+      {
+        name: 'Ananya Sengupta',
+        role: 'Verified Traveller',
+        detail: 'Bhutan Tshechu Festival Special',
+        rating: 5,
+        quote: 'Watching the Thimphu Tshechu masked dances and colourful Cham rituals in person was surreal! The monks, trumpets, and sacred vibe gave me goosebumps. Combine that with Dochula pass and Tiger’s Nest trek, this trip was pure magic.'
+      },
+      {
+        name: 'Kavita Joshi',
+        role: 'Verified Traveller',
+        detail: 'Bhutan Festival Community Trip',
+        rating: 5,
+        quote: 'The best cultural trip ever! Travel Tribes organized everything seamlessly — permits, stays, transfers, and guides. The traditional Kira photoshoot and karaoke night in Thimphu were super fun.'
+      },
+      {
+        name: 'Prateek Mehra',
+        role: 'Local Guide',
+        reviewCount: '19 reviews',
+        photoCount: '52 photos',
+        detail: 'Bhutan Tshechu Festival Expedition',
+        rating: 5,
+        quote: 'Punakha Dzong and Tiger’s nest were breathtaking. Being in Bhutan during Tshechu festival is something everyone should experience at least once in their life. 10/10 management!'
+      }
+    ]
+  },
+  {
+    slug: 'konkan-coastal-roadtrip',
+    title: 'Konkan Coastal Road Trip – Maharashtra',
+    location: 'Ganpatipule · Aare Ware · Ratnagiri · Devghali Beach · Maharashtra',
+    region: 'Domestic',
+    date: 'Sep 24–28, 2026',
+    dates: [
+      'Sep 24–28, 2026',
+      'Oct 01–05, 2026 (Long Weekend)',
+      'Oct 16–20, 2026 (Long Weekend)',
+      'Oct 22–26, 2026',
+      'Oct 29–Nov 02, 2026',
+      'Nov 06–10, 2026 (Long Weekend)',
+      'Nov 12–16, 2026',
+      'Nov 19–23, 2026',
+      'Nov 26–30, 2026',
+      'Dec 03–07, 2026',
+      'Dec 10–14, 2026',
+      'Dec 17–21, 2026',
+      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
+    ],
+    duration: '4N/4D',
+    price: '₹8,499',
+    image: img('photo-1507525428034-b723cf961d3e'),
+    alt: 'Konkan Coastal Road Trip — Ganpatipule Beach, Aare Ware Coastal Road and Ratnadurg Fort',
+    tag: 'Coastal Roadtrip',
+    description: 'Hit the open road along Maharashtra’s most scenic Arabian Sea coastline with Travel Tribes on a 4-Day Konkan Coastal Road Trip from Mumbai & Pune! From the 400-year-old seaside Ganpatipule Ganesha Temple and pristine golden sands to driving along the famous cliffside Aare-Ware coastal road with India’s first sea-facing zipline. Explore the historic Ratnadurg sea fort, seek blessings at Bhagwati Temple, catch panoramic sunset vistas at Table Point and Ratnagiri Lighthouse, and discover the hidden paradise of Devghali (Kasheli) Beach. Curated for 18–40 year old wanderers with AC bus travel, stays, meals, and unforgettable tribe bonding.',
+    spots: '8 spots left',
+    gallery: [
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Ganpatipule Clean Shores and Arabian Sea Beach' },
+      { image: img('photo-1506744038136-46273834b3fb'), alt: 'Aare-Ware Scenic Ocean Highway and Cliff Road' },
+      { image: img('photo-1512100356356-de1b84283e18'), alt: 'Ratnadurg Fort Bastions and Ocean Panorama' },
+      { image: img('photo-1527631746610-bca00a040d60'), alt: 'Sea-Facing Zipline Over Arabian Sea Waves' },
+      { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Ganpatipule 400-Year-Old Seaside Ganesha Temple' },
+      { image: img('photo-1533105079780-92b9be482077'), alt: 'Table Point Golden Sunset and Coastal Vistas' },
+      { image: img('photo-1519671482749-fd09be7ccebf'), alt: 'Tribe Vibe Evening Music, Bonfire & Games' },
+      { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Devghali Kasheli Hidden Monsoon Coastal Gem' }
+    ],
+    highlights: [
+      "Visit the 400-year-old Ganpatipule Temple, a serene seaside shrine of Lord Ganesha.",
+      "Relax at Ganpatipule Beach with its clean shores and calm Arabian Sea waves.",
+      "Drive along the picturesque Aarey-Ware Coastal Road, one of Maharashtra’s most scenic routes.",
+      "Experience the thrill of India’s first sea-facing zipline at Aarey-Ware over the ocean (Optional).",
+      "Explore the historic Ratnadurg Fort with its panoramic 360-degree ocean views.",
+      "Seek blessings at the ancient Bhagwati Temple located inside Ratnadurg Fort.",
+      "Capture stunning views from the Ratnagiri Lighthouse overlooking the Konkan coastline.",
+      "Discover the offbeat charm of Devghali (Kasheli) Beach, a hidden coastal gem.",
+      "Visit Basra Ship Point and witness a breathtaking sunset at Table Point.",
+      "Enjoy fun community games, delicious Konkani thali dinners, music, and tribe bonding."
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Thursday Night – Departure from Mumbai & Pune 🚌💨',
+        activities: [
+          "Board our comfortable AC Bus from Mumbai or Pune and begin your coastal road trip.",
+          "Mumbai Pickups: Borivali (08:30 PM) → Andheri → Bandra → Sion → Chembur → Vashi → Panvel.",
+          "Pune Pickups: 10:00 PM BMCC College, FC Road | 10:30 PM Xion Mall, Hinjewadi.",
+          "Kick off the trip with fun ice-breaking games, travel playlists, and overnight AC journey towards Ratnagiri.",
+          "Meals: Not Included."
+        ]
+      },
+      {
+        day: 2,
+        title: 'Friday – Ganpatipule Beach, Temple & Aare-Ware Coastal Drive 🌊🛕✨',
+        activities: [
+          "Arrive in Ratnagiri in the morning and check in to your stay. Freshen up and relax.",
+          "Visit the famous 400-year-old seaside Ganpatipule Temple and seek blessings of Lord Ganesha.",
+          "Stroll along the clean sands and gentle waves of Ganpatipule Beach.",
+          "Drive along the picturesque Aare-Ware Coastal Road — Maharashtra’s most scenic ocean drive.",
+          "Optional: Experience the adrenaline rush of India’s first sea-facing zipline at Aare-Ware.",
+          "Return to the stay for a delicious dinner and overnight rest.",
+          "Unwind with fun community games, meet fellow travellers, and get to know your tribe.",
+          "Overnight stay in Ratnagiri. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 3,
+        title: 'Saturday – Ratnadurg Fort, Bhagwati Temple & Table Point Sunset 🏰🌅',
+        activities: [
+          "Have a wholesome breakfast at the stay.",
+          "Explore the historic Ratnadurg Fort, surrounded on three sides by the Arabian Sea with majestic views.",
+          "Visit the sacred Bhagwati Temple situated inside the fort ramparts.",
+          "Post-lunch, visit the rugged Basra Ship Point overlooking the waves.",
+          "Head to Table Point to witness a breathtaking golden sunset over the horizon.",
+          "Return to the stay, relax, and have fun with fellow travellers playing community games and singing sessions.",
+          "Overnight stay in Ratnagiri. (Meals: Breakfast & Dinner Included)."
+        ]
+      },
+      {
+        day: 4,
+        title: 'Sunday – Devghali Beach & Return Journey 🏖️🚙',
+        activities: [
+          "Enjoy breakfast and check out from the stay.",
+          "Visit the beautiful and offbeat Devghali Beach in Kasheli, a pristine hidden monsoon and coastal gem.",
+          "Spend time exploring the beach, clicking pictures, and soaking in peaceful coastal views.",
+          "After lunch at a local restaurant, begin your return journey towards Mumbai and Pune.",
+          "Meals: Breakfast Included."
+        ]
+      },
+      {
+        day: 5,
+        title: 'Monday – Early Morning Arrival in Mumbai & Pune 🏠✨',
+        activities: [
+          "Arrive back in Pune (approx 04:00 AM) and Mumbai (approx 06:00 AM).",
+          "Wrap up a perfect short getaway filled with beaches, forts, ocean drives, adventure, and lifelong friendships.",
+          "Until the next road trip — Tribe hai to vibe hai! 🌊",
+          "Meals: Not Included."
+        ]
+      }
+    ],
+    inclusions: [
+      "Mumbai to Mumbai & Pune to Pune travel in comfortable AC Bus",
+      "2-Night Hotel Stay in Ratnagiri on Triple Sharing basis (Double sharing upgrade available)",
+      "5 Meals Included: 3 Breakfasts & 2 Dinners (Local Konkani & Multi-cuisine food)",
+      "All internal transfers and sightseeing as per itinerary",
+      "Experienced Travel Tribes Trip Captain / Local Guide assistance throughout the trip",
+      "All toll taxes, driver night allowances, parking charges, and entry permits"
+    ],
+    exclusions: [
+      "5% GST",
+      "Lunches throughout the trip and highway refreshments during transit",
+      "Aare-Ware Sea-Facing Zipline charges (Optional)",
+      "Any kind of food or beverage not included in package (alcoholic drinks, packaged mineral water)",
+      "Personal expenses (tips to driver, laundry, shopping, camera/video charges)",
+      "Any cost arising due to natural calamities like landslides, roadblocks, weather delays (to be borne on spot)",
+      "Anything not mentioned in the inclusions"
+    ],
+    policies: [
+      "Pickup Points: Mumbai pickups start from Borivali (08:30 PM) via WEH & Navi Mumbai. Pune pickups: BMCC College FC Road (10:00 PM) & Xion Mall Hinjewadi (10:30 PM).",
+      "Booking Advance: ₹4,000/- advance per person to secure your seat (Non-refundable upon cancellation; transferable or convertible to 3-month Travel Tribes credit).",
+      "Pricing: Ex-Mumbai & Pune Triple Sharing ₹8,499 / person | Double Sharing ₹9,499 / person (+₹1,000 for Long Weekend & Festive batches) +5% GST.",
+      "Room Sharing: Standard package is on Triple sharing. Double sharing available at +₹1,000 per person.",
+      "Trip Authority: The trip leader has all rights to alter/skip sightseeing if emergencies, roadblocks, or unfavourable weather occur.",
+      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
+      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
+      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
+      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
+      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹8,499 / person' },
+      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹9,499 / person' },
+      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' },
+      { label: 'Long Weekend / Festive Batch Add-on', price: '+₹1,000 / person', note: 'Applicable on LW & NY dates' }
+    ],
+    bookingAmount: '₹4,000 / person',
+    reviews: [
+      {
+        name: 'Omkar Gokhale',
+        role: 'Verified Traveller',
+        detail: 'Konkan Coastal Road Trip',
+        rating: 5,
+        quote: 'The Aare-Ware coastal drive and the sea-facing zipline were sheer thrill! Ganpatipule temple by the beach and sunset at Table Point in Ratnagiri made this weekend trip super refreshing. Our trip leader was amazing!'
+      },
+      {
+        name: 'Aishwarya Salunke',
+        role: 'Verified Traveller',
+        detail: 'Maharashtra Coastal Roadtrip',
+        rating: 5,
+        quote: 'Travelled solo from Pune and had the best time. The group was lively, stays were clean and cozy, and the authentic Konkani food was delicious. Devghali beach was so peaceful and untouched. Tribe vibes all the way!'
+      },
+      {
+        name: 'Nikhil Rane',
+        role: 'Local Guide',
+        reviewCount: '17 reviews',
+        photoCount: '39 photos',
+        detail: 'Konkan Roadtrip from Mumbai',
+        rating: 5,
+        quote: 'Perfect 4-day escape from Mumbai hustle. AC bus was super comfortable, Ratnadurg fort had breathtaking 360-degree ocean views, and community games at night brought everyone together like family.'
+      }
+    ]
+  },
+  {
     slug: 'gokarna-backpacking',
     title: 'Gokarna Backpacking Trip',
     location: 'Gokarna · Murdeshwar · Honnavar · Yana Caves',
     region: 'Domestic',
     date: 'Oct 18–22, 2026',
+    dates: [
+      'Oct 18–22, 2026',
+      'Nov 14–18, 2026',
+      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
+    ],
     duration: '4N/5D',
     price: '₹8,499',
-    image: img('photo-1593693397690-362cb9666fc2'),
+    image: '/image/Gokarna/gokarna_img.jpeg',
     alt: 'Gokarna Beach and scenic coastline',
     tag: 'Backpacking Trip',
     description: 'Looking for the perfect Gokarna trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This Gokarna group trip combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and plenty of opportunities to meet fellow travellers. Come solo. Meet strangers. Explore Gokarna. Find your tribe.',
     spots: '8 spots left',
     gallery: [
-      { image: img('photo-1593693397690-362cb9666fc2'), alt: 'Gokarna Beach' },
-      { image: img('photo-1528127269322-539801943592'), alt: 'Palm trees and coast' },
-      { image: img('photo-1500534623283-312aade485b7'), alt: 'Sunset at Kudle Beach' }
+      { image: "/image/Gokarna/gokarna_img.jpeg", alt: "Gokarna Beach & Mangroves — Main Highlight & Scenic View" },
+      { image: "/image/Gokarna/024b9b4d-65b4-4ce9-a81e-66d9dc81f318.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/0526adb5-61d3-4b0a-8736-cf466b1a41b3.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000001964.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002342.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002441.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002442.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002444.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002652.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002678.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000002916.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003083.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003164.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003396.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003611.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003636.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003638.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003708.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003712.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003946.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000003965.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004043.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004057.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004087.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004090.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004144.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004173.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004184.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004232.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004350.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004351.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004355.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004357.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004627.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004651.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004663.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000004703.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005038.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005048.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005054.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005065.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005461.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005466.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005469.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005473.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000005495.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000007644.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000007645.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000007651.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000052570.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000055130.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000099269.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1000099288.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/1D67AC41-4688-4AF0-9E47-BD64DD22F16D.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20241118_141641_43F1A4.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20241118_222631_45C628.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20241124_153214_0E1315.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20241125_141452_0A2157.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20241228_233238_63DEC5.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20250302_135913_E47404.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20250302_140718_E122D4.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20250330_173738_476F72.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251003_172300_C71075.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251004_165642_C08958.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251004_165642_C8247E.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251005_093458_C24E9F.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251005_093458_C50D41.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251005_093458_C8A8A2.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251005_094554_C0A56F.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251007_211400_C33FFA.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251007_211400_C7FD33.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251007_211400_CAFA86.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200521_C1545C.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200521_C654D6.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200521_C71B52.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200521_CC9197.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200654_C0F910.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200654_C3F41C.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251009_200654_C82D7A.jpeg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/20251231_100322_Original.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/38e41882-1cd7-451b-9661-4d1116040510.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/407da14d-b6e2-4ac8-b06c-b1940438c15a.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/44b2484e-b62a-4bde-9b9d-04e861294ca0.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/79598eaf-d5aa-4bbe-ac9b-ebaaae215d2c.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/8a1db01a-5fab-4723-bebb-e46317053eb7.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/97f5d33d-9e14-4af0-b356-ee3d2a8f52ca.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/9f083e3a-90cb-408b-ba99-453c3148ebb2.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/B4968D79-7554-44DB-A607-D6C05168BA33.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/c2b1bad2-b30b-43cc-bf6f-4f5fad9bce4e.jpg", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1160.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1193.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1194.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1336.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1371.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1372.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_1633.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_2929.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_2930.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_2931.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_2941.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_2942.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_4170.JPG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_7220.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_7230.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_7264.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_7330.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_8051.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_8244.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_8332.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_8837.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" },
+      { image: "/image/Gokarna/IMG_8908_Original.JPEG", alt: "Gokarna Beach & Mangroves Community Trip & Sightseeing" }
     ],
     highlights: [
       "Visit Murdeshwar Temple & Asia’s second-largest Shiva statue, a spiritual marvel.",
@@ -193,7 +1840,8 @@ export const trips: Trip[] = [
       { label: 'Ex-Gokarna (Gokarna to Gokarna)', price: '₹8,499 / person' },
       { label: 'Ex-Mumbai (Non-AC Sleeper Train)', price: '₹9,499 / person' },
       { label: 'Ex-Mumbai (AC 3-Tier Train)', price: '₹11,499 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' }
+      { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' },
+      { label: 'New Year / Festive Batch Special', price: '₹9,999 / person', note: 'Applicable on Christmas & New Year batches' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -302,17 +1950,77 @@ export const trips: Trip[] = [
     location: 'Coorg · Madikeri · Mandalpatti · Mangalore',
     region: 'Domestic',
     date: 'Nov 14–18, 2026',
+    dates: [
+      'Nov 14–18, 2026',
+      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
+    ],
     duration: '4N/5D',
     price: '₹8,499',
-    image: img('photo-1513836279014-a89f7a76ae86'),
+    image: '/image/Coorg/coorg_img.JPEG',
     alt: 'Misty hills and lush coffee plantations of Coorg',
     tag: 'Scotland of India',
     description: 'Looking for a Coorg trip from Mumbai, a Coorg backpacking trip, or a fun Coorg group trip with strangers? Join Travel Tribes for an unforgettable journey to Coorg, the Scotland of India, and explore misty hills, lush coffee plantations, waterfalls, viewpoints, monasteries and scenic landscapes. From Abbey Falls and Mandalpatti Peak 4x4 Jeep ride to Raja’s Seat, Namdroling Monastery (Golden Temple), Elephant Camp, and coffee tasting. Come solo. Meet strangers. Explore Coorg. Find your tribe.',
     spots: '6 spots left',
     gallery: [
-      { image: img('photo-1513836279014-a89f7a76ae86'), alt: 'Misty hills of Coorg' },
-      { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Coffee estate & valley' },
-      { image: img('photo-1506744038136-46273834b3fb'), alt: 'Abbey Falls waterfalls' }
+      { image: "/image/Coorg/coorg_img.JPEG", alt: "Coorg Scotland of India — Main Highlight & Scenic View" },
+      { image: "/image/Coorg/138baea4-d2d4-4a8b-b67d-ca75cf62e820.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20250102_143730_2E60D7.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260102_195453_146EDF.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260102_221209_1350B4.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_124057_1B1347.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_140021_1C8236.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_180831_15BB1D.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_180831_1680CF.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_181142_13D3AE.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_182458_16D444.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_194731_136C3A.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260103_200007_196F17.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260904_122633_722606.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260904_202301_74B610.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260904_212930_73DB89.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260905_211911_73E594.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260906_162928_7A440F.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/20260906_162928_7F8968.jpeg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/3dbaf629-74d7-402c-84cb-50faea2f72ce.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/4a5642ac-99cc-4cbc-9c44-c0c56ffb2827.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/5bdd6c6b-aa2d-409f-a793-4e8ecd67a61c.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/5cade0a7-ec5e-4ef6-9a8d-938f06132b79.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/5db0ceae-ed17-481c-a3e8-d99bde631140.JPG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/7cfee5be-d496-4521-ad29-c81b1c072f9f.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/8094697e-d5c9-45bb-956a-bd77bb0830bf.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/8e222374-3299-4b0f-9716-c3d4b146b78e.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/9532a3ed-5593-4673-b3c9-98d39eea24d3.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/9f1b3977-ae65-425a-ba00-e9f136604eed.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/dabfbb70-a76d-40f2-9470-f35f3a2aca3f.jpg", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_0060.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_0105.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5327.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5336.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5374.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5455.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5499.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5726.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5769.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5834.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5835.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_5844.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_6851.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_6888.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_6912.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_6938.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_6944.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_6967.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_7410.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_7801.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_7804.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_7871.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_7878.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_7889.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_8960.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_8963.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_9565.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" },
+      { image: "/image/Coorg/IMG_9825.JPEG", alt: "Coorg Scotland of India Community Trip & Sightseeing" }
     ],
     highlights: [
       "Explore the lush green landscapes of Coorg, the Scotland of India.",
@@ -449,7 +2157,8 @@ export const trips: Trip[] = [
       { label: 'Ex-Mangalore (Mangalore to Mangalore)', price: '₹8,499 / person' },
       { label: 'Ex-Mumbai (Non-AC Sleeper Train)', price: '₹9,499 / person' },
       { label: 'Ex-Mumbai (3AC Train Ticket)', price: '₹11,999 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' }
+      { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' },
+      { label: 'New Year / Festive Batch Special', price: '₹9,999 / person', note: 'Applicable on Christmas & New Year batches' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -497,17 +2206,93 @@ export const trips: Trip[] = [
     location: 'Udaipur · Lake Pichola · Fateh Sagar · Bahubali Hills',
     region: 'Domestic',
     date: 'Nov 20–24, 2026',
+    dates: [
+      'Nov 20–24, 2026',
+      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
+    ],
     duration: '4N/5D',
     price: '₹9,999',
-    image: img('photo-1599661046289-e31897846e41'),
+    image: '/image/Udaipur/udaipur_img.JPEG',
     alt: 'Majestic City Palace overlooking Lake Pichola in Udaipur',
     tag: 'City of Lakes',
     description: 'Looking for a Udaipur trip from Mumbai, a Udaipur backpacking trip, or a fun Udaipur group trip with strangers? Join Travel Tribes for a 5-day backpacking adventure to the City of Lakes — Udaipur. Explore magnificent palaces, beautiful lakes, historic ghats, vibrant markets, cultural performances and some of the best viewpoints in the city. From City Palace and Lake Pichola to Sajjangarh Monsoon Palace sunset, Bahubali Hills sunrise, Karni Mata ropeway, Bagore Ki Haveli show and street-food trails. Come solo. Meet strangers. Explore Udaipur. Find your tribe.',
     spots: '7 spots left',
     gallery: [
-      { image: img('photo-1599661046289-e31897846e41'), alt: 'City Palace Udaipur' },
-      { image: img('photo-1585123334904-845d60e97b29'), alt: 'Lake Pichola Ghats' },
-      { image: img('photo-1506744038136-46273834b3fb'), alt: 'Sunset over Udaipur lake' }
+      { image: "/image/Udaipur/udaipur_img.JPEG", alt: "Udaipur City of Lakes — Main Highlight & Scenic View" },
+      { image: "/image/Udaipur/20241201_210230_847B8D.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251004_154020_2174BD.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251004_154020_243CFA.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251004_154059_2897E1.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251005_190539_2B20DD.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251005_190843_256EF0.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251005_190843_269DAE.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251116_005822_D5B67F.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251116_194013_D84D79.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251117_073846_DFCB14.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251117_092723_D9AA17.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251117_092855_D586AB.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251117_115904_D3F3E1.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251117_115904_D4F3BE.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/20251117_115904_D87B5F.jpeg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/F7005D37-51F4-4368-B7E7-4DF7EF9EB13A.jpg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_0424.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_0878.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1015.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1019.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1020.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1067.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1076.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1087.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1111.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1132.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1148.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1152.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1241.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1258.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1288.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1310.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1353.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1507.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_1667.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_2132.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_2165.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_3363.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_3857.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_3859.jpg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_3878.jpg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_3892.jpg", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_4001.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_4003.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_4007.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_4010.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6202.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6206.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6246.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6253.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6257.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6260.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6276.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6291.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6297.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6338.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6348.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_6362.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7273.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7299.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7396.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7418.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7435.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7454.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7484.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7505.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7578.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7591.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_7680.JPG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_8534.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_8901.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_8911.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" },
+      { image: "/image/Udaipur/IMG_8919.JPEG", alt: "Udaipur City of Lakes Community Trip & Sightseeing" }
     ],
     highlights: [
       "City Palace with stunning Lake Pichola views.",
@@ -636,7 +2421,8 @@ export const trips: Trip[] = [
     pricingOptions: [
       { label: 'Mumbai to Mumbai (Non-AC Train)', price: '₹9,999 / person' },
       { label: 'Mumbai to Mumbai (3AC Train)', price: '₹11,999 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' }
+      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' },
+      { label: 'New Year / Festive Batch Special', price: '₹10,999 / person', note: 'Applicable on Christmas & New Year batches' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -692,15 +2478,79 @@ export const trips: Trip[] = [
     date: 'Jun 12–20, 2027',
     duration: '8N/9D',
     price: '₹18,999',
-    image: img('photo-1464822759023-fed622ff2c3b'),
+    image: '/image/Spiti/spiti_img.JPEG',
     alt: 'High-altitude Himalayan desert and snow peaks of Spiti Valley',
     tag: 'Himalayan Expedition',
     description: 'Looking for a Spiti Valley trip from Delhi, a Spiti backpacking trip, or an unforgettable Spiti Valley group trip? Travel Tribes takes you on an epic Himalayan road trip through Shimla, Chitkul, Tabo, Dhankar, Kaza, Langza, Hikkim, Komic, Kibber, Chicham Bridge, Chandrataal and Manali. From remote villages and ancient monasteries to stargazing by Chandrataal Lake and Old Manali cafés. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.',
     spots: '5 spots left',
     gallery: [
-      { image: img('photo-1464822759023-fed622ff2c3b'), alt: 'Himalayan mountains' },
-      { image: img('photo-1500534623283-312aade485b7'), alt: 'Spiti Valley landscape' },
-      { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Chandrataal Lake turquoise waters' }
+      { image: "/image/Spiti/spiti_img.JPEG", alt: "Spiti Valley with Chandrataal — Main Highlight & Scenic View" },
+      { image: "/image/Spiti/20241021_134930_DE4130.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_141105_DE01D1.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_175648_D27479.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_181120_D69BC4.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_192612_DD3A38.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_192612_DE6C40.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_194431_D67541.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_200517_D1A652.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_200540_D98AB8.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_200540_DEADEB.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_201038_D841DB.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_201038_DE8C72.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241023_192435_DF28A8.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241025_115041_D6C91D.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154329_88A2CE.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154342_88BF4D.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154344_8A75EE.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154507_844C81.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154840_88D013.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154841_8079AD.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_155331_8BF02C.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_161203_82E076.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_161645_87218F.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_161941_8E27C2.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162802_823AC0.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162802_88500D.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162908_850E9E.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162911_8FD291.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162922_83C2C6.jpeg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/409510d4-1e8a-43d3-a747-fb0a9ffc09b7.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/41f1d386-870b-46d5-8436-ade3caac5c64.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/61c09245-22ff-44b2-a488-3025b8aeb94b.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/666e3045-652e-4876-8084-cd2111d6c349_Original.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/7038e44b-4591-4892-85d6-789cc11c61db.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/84644681-a30f-4618-b194-216d777bbab0.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/85bce403-7f83-4560-84e8-45ab3fbd43ca.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/d1678a9a-97d1-4239-9d43-02d42413c3ae.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/d825b113-5a4c-4d08-bf4f-7e37e568281c.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_4969.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_4971.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_4993.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5065.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5120.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5129.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5149.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5152.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5271.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5323.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5385.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5430.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5431.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5432.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5444.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5450.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5453_Original.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5483.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5496.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5559.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5565.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5589.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5603.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5645.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5667.jpg", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_7185.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_7217.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_7218.JPEG", alt: "Spiti Valley with Chandrataal Community Trip & Sightseeing" }
     ],
     highlights: [
       "Explore the spectacular high-altitude landscapes of Spiti Valley.",
@@ -883,15 +2733,79 @@ export const trips: Trip[] = [
     date: 'Jan 16–24, 2027',
     duration: '8N/9D',
     price: '₹18,999',
-    image: img('photo-1517824806704-9040b037703b'),
+    image: '/image/Spiti/spiti_img.JPEG',
     alt: 'Snow-covered winter wonderland of Spiti Valley and Key Monastery in white',
     tag: 'Winter Expedition',
     description: 'Snow-covered mountains, frozen landscapes, remote Himalayan villages, ancient monasteries and dramatic mountain roads — welcome to the Spiti Valley Winter Expedition. Travel from Delhi to Spiti Valley with Travel Tribes through Chitkul, Tabo, Kaza, Langza, Hikkim, Komic, Key Monastery, Chicham Bridge, Kibber Village, 500-year-old Gue Mummy, and the stunning snow views of Kalpa with Kinner Kailash peak. Come solo. Meet strangers. Explore Spiti in winter. Leave with a tribe.',
     spots: '4 spots left',
     gallery: [
-      { image: img('photo-1517824806704-9040b037703b'), alt: 'Snow mountain peaks' },
-      { image: img('photo-1548013146-72479768bada'), alt: 'Frozen Spiti winter landscape' },
-      { image: img('photo-1464822759023-fed622ff2c3b'), alt: 'High altitude snow ranges' }
+      { image: "/image/Spiti/spiti_img.JPEG", alt: "Spiti Valley Winter Expedition — Main Highlight & Scenic View" },
+      { image: "/image/Spiti/20241021_134930_DE4130.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_141105_DE01D1.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_175648_D27479.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_181120_D69BC4.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_192612_DD3A38.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_192612_DE6C40.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_194431_D67541.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_200517_D1A652.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_200540_D98AB8.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_200540_DEADEB.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_201038_D841DB.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241021_201038_DE8C72.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241023_192435_DF28A8.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20241025_115041_D6C91D.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154329_88A2CE.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154342_88BF4D.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154344_8A75EE.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154507_844C81.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154840_88D013.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_154841_8079AD.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_155331_8BF02C.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_161203_82E076.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_161645_87218F.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_161941_8E27C2.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162802_823AC0.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162802_88500D.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162908_850E9E.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162911_8FD291.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/20250110_162922_83C2C6.jpeg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/409510d4-1e8a-43d3-a747-fb0a9ffc09b7.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/41f1d386-870b-46d5-8436-ade3caac5c64.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/61c09245-22ff-44b2-a488-3025b8aeb94b.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/666e3045-652e-4876-8084-cd2111d6c349_Original.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/7038e44b-4591-4892-85d6-789cc11c61db.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/84644681-a30f-4618-b194-216d777bbab0.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/85bce403-7f83-4560-84e8-45ab3fbd43ca.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/d1678a9a-97d1-4239-9d43-02d42413c3ae.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/d825b113-5a4c-4d08-bf4f-7e37e568281c.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_4969.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_4971.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_4993.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5065.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5120.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5129.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5149.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5152.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5271.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5323.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5385.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5430.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5431.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5432.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5444.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5450.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5453_Original.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5483.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5496.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5559.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5565.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5589.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5603.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5645.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_5667.jpg", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_7185.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_7217.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" },
+      { image: "/image/Spiti/IMG_7218.JPEG", alt: "Spiti Valley Winter Expedition Community Trip & Sightseeing" }
     ],
     highlights: [
       "Explore Chitkul — the last inhabited village before the Indo-China border in snow.",
@@ -1293,14 +3207,36 @@ export const testimonials: TripReview[] = [
   }
 ]
 
-export const gallery = [
-  { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Kayak on a turquoise lake', title: 'Emerald Lake Serenity', location: 'Honnavar Backwaters' },
-  { image: img('photo-1500534623283-312aade485b7'), alt: 'Mountain landscape at golden hour', title: 'Golden Hour Trails', location: 'Spiti Valley Peaks' },
-  { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Traveller walking through a valley', title: 'Wanderer in Paradise', location: 'Meghalaya Living Roots' },
-  { image: img('photo-1528127269322-539801943592'), alt: 'Tropical beach and palm trees', title: 'Sunset at Kudle Beach', location: 'Gokarna Coastline' },
-  { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Colourful coastal town', title: 'Heritage & Old Town Vibes', location: 'Vietnam & Bali' },
-  { image: img('photo-1533105079780-92b9be482077'), alt: 'Starlit Mountain Camping', title: 'Stargazing with Tribe', location: 'Chandrataal Lake' }
+export interface GalleryItem {
+  image: string
+  alt: string
+  title: string
+  location: string
+  widthClass?: string
+}
+
+export const galleryRow1: GalleryItem[] = [
+  { image: img('photo-1529156069898-49953e39b3ac'), alt: 'Tribe friends on scenic suspension bridge', title: 'Tribe Bond at Valley Bridge', location: 'Manali & Kasol', widthClass: 'w-[300px] sm:w-[360px]' },
+  { image: img('photo-1506461883276-594a12b11cf3'), alt: 'Snow covered hill town nestled in Himalayas', title: 'Winter Wonderland', location: 'Kedarkantha & Spiti', widthClass: 'w-[420px] sm:w-[500px]' },
+  { image: img('photo-1539635278303-d4002c07eae3'), alt: 'Group of backpackers smiling on mountain ridge', title: 'Summit High Fives', location: 'Triund Trek Peaks', widthClass: 'w-[360px] sm:w-[430px]' },
+  { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Crystal turquoise sea and rocky shores', title: 'Paradise Found', location: 'Gokarna Hidden Beach', widthClass: 'w-[280px] sm:w-[330px]' },
+  { image: img('photo-1476514525535-07fb3b4ae5f1'), alt: 'Kayak on a turquoise lake', title: 'Emerald Lake Serenity', location: 'Honnavar Backwaters', widthClass: 'w-[380px] sm:w-[460px]' },
+  { image: img('photo-1516483638261-f4dbaf036963'), alt: 'Colourful coastal town', title: 'Heritage & Old Town Vibes', location: 'Vietnam & Bali', widthClass: 'w-[290px] sm:w-[350px]' },
+  { image: img('photo-1519671482749-fd09be7ccebf'), alt: 'Friends having fun around campfire', title: 'Campfire Stories & Acoustic Jam', location: 'Jibhi Pine Valley', widthClass: 'w-[350px] sm:w-[420px]' },
 ]
+
+export const galleryRow2: GalleryItem[] = [
+  { image: img('photo-1527631746610-bca00a040d60'), alt: 'Friends celebrating at mountain viewpoint rock', title: 'Rock Top Adventures', location: 'Coorg Peaks & Trails', widthClass: 'w-[330px] sm:w-[390px]' },
+  { image: img('photo-1506744038136-46273834b3fb'), alt: 'Dramatic limestone karst peaks in emerald bay', title: 'Karst Peaks & Emerald Waters', location: 'Halong Bay & Krabi', widthClass: 'w-[440px] sm:w-[520px]' },
+  { image: img('photo-1464822759023-fed622ff2c3b'), alt: 'Group posing under towering pine cliffs', title: 'Mountain Tribe Reunion', location: 'Dharamshala Valley', widthClass: 'w-[370px] sm:w-[450px]' },
+  { image: img('photo-1528127269322-539801943592'), alt: 'Tropical beach and palm trees', title: 'Sunset at Kudle Beach', location: 'Gokarna Coastline', widthClass: 'w-[280px] sm:w-[340px]' },
+  { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Traveller walking through a valley', title: 'Wanderer in Paradise', location: 'Meghalaya Living Roots', widthClass: 'w-[310px] sm:w-[370px]' },
+  { image: img('photo-1533105079780-92b9be482077'), alt: 'Starlit Mountain Camping', title: 'Stargazing with Tribe', location: 'Chandrataal Lake', widthClass: 'w-[380px] sm:w-[460px]' },
+  { image: img('photo-1500534623283-312aade485b7'), alt: 'Mountain landscape at golden hour', title: 'Golden Hour Trails', location: 'Spiti Valley Peaks', widthClass: 'w-[340px] sm:w-[410px]' },
+]
+
+export const gallery: GalleryItem[] = [...galleryRow1, ...galleryRow2]
+
 
 export const blogs = [
   { title: 'How to choose your first group trip', category: 'Travel notes', image: img('photo-1527631746610-bca00a040d60') },
@@ -1309,7 +3245,82 @@ export const blogs = [
 ]
 
 export const honeymoonTrips = trips.filter(t => t.region === 'Honeymoon')
-export const xmasNewYearTrips = trips.filter(t => t.region === 'Xmas & New Year' || t.tag?.toLowerCase().includes('new year') || t.date?.toLowerCase().includes('dec 2') || t.date?.toLowerCase().includes('dec 3'))
+
+/**
+ * Transforms a standard trip into its dedicated Xmas & New Year festive presentation:
+ * - Dates strictly filtered to ONLY Xmas & New Year departure dates.
+ * - Price updated to the festive batch price.
+ * - Tag updated to 'New Year Special' or festive tag.
+ */
+export function toFestiveTrip(trip: Trip): Trip | null {
+  const allDates = trip.dates && trip.dates.length > 0 ? trip.dates : [trip.date]
+  const festiveDates = filterFestiveDates(allDates)
+
+  if (
+    festiveDates.length === 0 &&
+    trip.region !== 'Xmas & New Year' &&
+    !trip.tag?.toLowerCase().includes('new year') &&
+    !trip.tag?.toLowerCase().includes('xmas')
+  ) {
+    return null
+  }
+
+  const finalDates = festiveDates.length > 0 ? festiveDates : [trip.date]
+  const upcomingFestive = filterUpcomingDates(finalDates)
+  const primaryFestiveDate = upcomingFestive.length > 0 ? upcomingFestive[0] : finalDates[0]
+
+  // Resolve festive price
+  let festivePrice = trip.price
+  if (trip.pricingOptions && trip.pricingOptions.length > 0) {
+    const festiveOpt = trip.pricingOptions.find(
+      (opt) =>
+        opt.label.toLowerCase().includes('xmas') ||
+        opt.label.toLowerCase().includes('new year') ||
+        opt.label.toLowerCase().includes('festive')
+    )
+    if (festiveOpt) {
+      if (festiveOpt.price.startsWith('+')) {
+        const baseNum = parseInt(trip.price.replace(/[^\d]/g, ''), 10) || 0
+        const addNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 1000
+        festivePrice = `₹${(baseNum + addNum).toLocaleString('en-IN')}`
+      } else {
+        const optNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 0
+        festivePrice = `₹${optNum.toLocaleString('en-IN')}`
+      }
+    }
+  }
+
+  // Prioritize festive options in pricingOptions
+  let festivePricingOptions = trip.pricingOptions
+  if (trip.pricingOptions && trip.pricingOptions.length > 0) {
+    const festiveOpts = trip.pricingOptions.filter(
+      (opt) =>
+        opt.label.toLowerCase().includes('xmas') ||
+        opt.label.toLowerCase().includes('new year') ||
+        opt.label.toLowerCase().includes('festive') ||
+        opt.label.toLowerCase().includes('double sharing') ||
+        opt.label.toLowerCase().includes('package')
+    )
+    if (festiveOpts.length > 0) {
+      festivePricingOptions = festiveOpts
+    }
+  }
+
+  return {
+    ...trip,
+    date: primaryFestiveDate,
+    dates: finalDates,
+    price: festivePrice,
+    pricingOptions: festivePricingOptions,
+    tag: trip.tag?.toLowerCase().includes('new year') || trip.tag?.toLowerCase().includes('xmas')
+      ? trip.tag
+      : 'New Year Special',
+  }
+}
+
+export const xmasNewYearTrips: Trip[] = trips
+  .map(toFestiveTrip)
+  .filter((t): t is Trip => t !== null)
 
 export const categories = [
   { title: 'Domestic', desc: 'Closer than you think.', href: '/domestic-trips', image: img('photo-1506461883276-594a12b11cf3') },

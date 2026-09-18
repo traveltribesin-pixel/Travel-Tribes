@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { HorizontalRail, SectionHeading } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
 import { trips } from '@/lib/travel-data'
@@ -16,8 +18,6 @@ export function UpcomingTripsSection() {
       <SectionHeading
         eyebrow="YOUR NEXT ADVENTURE"
         title="Upcoming Trips."
-        text="Good places. Great people. Zero boring itineraries."
-        href="/upcoming-trips"
         center
       />
       <HorizontalRail label="Upcoming trips">
@@ -25,6 +25,17 @@ export function UpcomingTripsSection() {
           <TripCard key={t.slug} trip={t} featured />
         ))}
       </HorizontalRail>
+
+      {/* Centered Glow Button Below Cards */}
+      <div className="mt-8 sm:mt-10 flex justify-center">
+        <Link
+          href="/upcoming-trips"
+          className="glow-btn inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold rounded-full shadow-lg !text-white cursor-pointer"
+        >
+          <span>See all trips</span>
+          <ArrowRight size={15} />
+        </Link>
+      </div>
     </section>
   )
 }

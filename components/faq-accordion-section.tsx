@@ -16,8 +16,8 @@ interface FaqAccordionSectionProps {
 }
 
 export function FaqAccordionSection({
-  title = 'Why Us & Frequently Asked Questions',
-  eyebrow = 'WHY TRAVEL TRIBES',
+  title = 'Frequently Asked Questions',
+  eyebrow = 'GOT QUESTIONS?',
   subtitle = 'Everything you need to know about our trips, solo travel safety, trip captains, and community vibe.',
   className = '',
   limit,
