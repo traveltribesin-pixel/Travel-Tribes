@@ -17,9 +17,9 @@ import {
 
 export function CommunityBannerSection() {
   return (
-    <section className="py-10 sm:py-12 bg-[#f7fbfd]">
+    <section className="py-6 sm:py-8 bg-[#f7fbfd]">
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-[var(--navy)] text-white p-8 sm:p-12 lg:p-16 border border-slate-700/40 shadow-[0_20px_50px_rgba(11,41,64,0.25)]">
+        <div className="relative rounded-3xl overflow-hidden bg-[var(--navy)] text-white p-6 sm:p-10 lg:p-14 border border-slate-700/40 shadow-[0_20px_50px_rgba(11,41,64,0.25)]">
 
           {/* Background Image with Artistic Overlay */}
           <div className="absolute inset-0 z-0">
@@ -39,13 +39,13 @@ export function CommunityBannerSection() {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
             {/* Left Content Column */}
-            <div className="lg:col-span-8 space-y-5">
+            <div className="lg:col-span-8 space-y-4 sm:space-y-5">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[var(--sky)] text-xs font-extrabold uppercase tracking-wider border border-white/15">
                 <Flame size={14} className="text-[var(--sun)]" />
                 <span>Next Departures Filling Fast</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
                 Come as a Solo Explorer. <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-[var(--sky)] via-sky-300 to-[var(--sun)] bg-clip-text text-transparent">
                   Return with a Lifelong Tribe.

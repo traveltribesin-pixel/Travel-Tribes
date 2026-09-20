@@ -61,9 +61,12 @@ export async function POST(req: NextRequest) {
     const fullName = sanitizeString(body.fullName, 100)
     const email = sanitizeString(body.email, 120).toLowerCase()
     const phone = sanitizeString(body.phone, 30)
+    const ageNum = parseInt(String(body.age || ''), 10)
+    const age = (!isNaN(ageNum) && ageNum >= 1 && ageNum <= 120) ? ageNum : null
     const city = sanitizeString(body.city, 80)
     const specialRequest = sanitizeString(body.specialRequest, 500)
     const date = sanitizeString(body.date, 60)
+    const couponCode = sanitizeString(body.couponCode, 30)
 
     if (!fullName || fullName.length < 2) {
       return NextResponse.json(
@@ -86,6 +89,13 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    if (!age) {
+      return NextResponse.json(
+        { success: false, error: 'Please enter a valid traveller age (1–120).' },
+        { status: 400 }
+      )
+    }
+
     // 2. RECALCULATE PRICING STRICTLY ON THE SERVER
     // Never trust any price, discount, or amount sent by the client
     const pricing = calculateBookingPricing({
@@ -93,7 +103,8 @@ export async function POST(req: NextRequest) {
       packageIndex: Number(body.packageIndex),
       guests: Number(body.guests),
       isDoubleSharing: Boolean(body.isDoubleSharing),
-      paymentType: body.paymentType === 'full' ? 'full' : 'advance'
+      paymentType: body.paymentType === 'full' ? 'full' : 'advance',
+      couponCode
     })
 
     // 3. Generate Secure Booking ID
@@ -115,6 +126,9 @@ export async function POST(req: NextRequest) {
         grandTotal: pricing.grandTotal,
         paymentType: pricing.paymentType,
         fullPaymentDiscount: pricing.fullPaymentDiscount,
+        couponCode: pricing.couponCode,
+        couponDiscount: pricing.couponDiscount,
+        couponDescription: pricing.couponDescription,
         amountToPayToday: pricing.amountToPayToday,
         remainingBalance: pricing.remainingBalance,
         isFullPayment: pricing.isFullPayment,
@@ -124,6 +138,7 @@ export async function POST(req: NextRequest) {
         fullName,
         email,
         phone,
+        age,
         city,
         specialRequest,
         date

@@ -22,11 +22,13 @@ import {
   CreditCard,
   Building2,
   Smartphone,
-  AlertCircle
+  AlertCircle,
+  Tag,
+  X
 } from 'lucide-react'
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
-import { calculateBookingPricing, sanitizeGuests, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
+import { calculateBookingPricing, sanitizeGuests, validateCoupon, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
 import { getTripPrimaryDate, filterUpcomingDates, isDateUpcoming } from '@/lib/date-utils'
 
 export function BookingContent() {
@@ -67,11 +69,18 @@ export function BookingContent() {
   // Payment choice: 'advance' or 'full'
   const [paymentType, setPaymentType] = useState<'advance' | 'full'>('advance')
 
+  // Coupon state
+  const [couponInput, setCouponInput] = useState<string>('')
+  const [appliedCoupon, setAppliedCoupon] = useState<string>('')
+  const [couponError, setCouponError] = useState<string | null>(null)
+  const [couponSuccess, setCouponSuccess] = useState<string | null>(null)
+
   // Traveller Form state
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
+    age: '',
     city: '',
     specialRequest: ''
   })
@@ -89,9 +98,10 @@ export function BookingContent() {
       packageIndex: selectedPackageIndex,
       guests,
       isDoubleSharing,
-      paymentType
+      paymentType,
+      couponCode: appliedCoupon
     })
-  }, [selectedTrip.slug, selectedPackageIndex, guests, isDoubleSharing, paymentType])
+  }, [selectedTrip.slug, selectedPackageIndex, guests, isDoubleSharing, paymentType, appliedCoupon])
 
   const {
     basePricePerPerson,
@@ -100,10 +110,39 @@ export function BookingContent() {
     grandTotal,
     advanceTotal,
     fullPaymentDiscount,
+    couponCode,
+    couponDiscount,
+    couponDescription,
     amountToPayToday,
     remainingBalance,
     isFullPayment
   } = pricing
+
+  const handleApplyCoupon = (e: React.FormEvent) => {
+    e.preventDefault()
+    setCouponError(null)
+    setCouponSuccess(null)
+    const clean = couponInput.trim().toUpperCase()
+    if (!clean) {
+      setCouponError('Please enter a coupon code.')
+      return
+    }
+    const res = validateCoupon(clean)
+    if (res.valid) {
+      setAppliedCoupon(res.cleanCode || clean)
+      setCouponSuccess(`Coupon ${res.cleanCode} applied! ₹${res.discount} discount savings.`)
+      setCouponInput('')
+    } else {
+      setCouponError('Invalid coupon code. Try TRIBE500 or EARLYBIRD')
+    }
+  }
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon('')
+    setCouponInput('')
+    setCouponError(null)
+    setCouponSuccess(null)
+  }
 
   const handleTripChange = (slug: string) => {
     const found = trips.find((t) => t.slug === slug)
@@ -126,9 +165,15 @@ export function BookingContent() {
     const trimmedName = formData.fullName.trim()
     const trimmedEmail = formData.email.trim()
     const trimmedPhone = formData.phone.trim()
+    const ageNum = parseInt(formData.age.trim(), 10)
 
-    if (!trimmedName || !trimmedEmail || !trimmedPhone) {
-      setErrorMessage('Please fill all required fields (Name, Email, WhatsApp Number).')
+    if (!trimmedName || !trimmedEmail || !trimmedPhone || !formData.age.trim()) {
+      setErrorMessage('Please fill all required fields (Name, Email, WhatsApp Number, and Age).')
+      return
+    }
+
+    if (isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
+      setErrorMessage('Please enter a valid traveller age between 1 and 120.')
       return
     }
 
@@ -156,10 +201,12 @@ export function BookingContent() {
           guests,
           isDoubleSharing,
           paymentType,
+          couponCode: appliedCoupon,
           date: selectedDate,
           fullName: trimmedName,
           email: trimmedEmail,
           phone: trimmedPhone,
+          age: ageNum,
           city: formData.city.trim(),
           specialRequest: formData.specialRequest.trim()
         })
@@ -244,7 +291,9 @@ export function BookingContent() {
               </div>
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
                 <span className="text-slate-500">Primary Contact</span>
-                <span className="font-semibold text-slate-800">{formData.fullName} ({formData.phone})</span>
+                <span className="font-semibold text-slate-800">
+                  {formData.fullName} ({formData.phone}) {formData.age ? `• Age: ${formData.age}` : ''}
+                </span>
               </div>
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
                 <span className="text-slate-500">Payment Option</span>
@@ -252,6 +301,12 @@ export function BookingContent() {
                   {isFullPayment ? 'Full Payment (Discount Applied)' : 'Advance Booking'}
                 </span>
               </div>
+              {couponDiscount > 0 && (
+                <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
+                  <span className="flex items-center gap-1.5"><Tag size={14} className="text-emerald-600" /> Promo Code ({couponCode})</span>
+                  <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
               {isFullPayment && (
                 <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
                   <span className="flex items-center gap-1.5"><Sparkles size={14} className="text-emerald-600" /> Full Payment Discount</span>
@@ -279,7 +334,7 @@ export function BookingContent() {
             <div className="space-y-3 pt-2">
               <a
                 href={`https://wa.me/919975822023?text=${encodeURIComponent(
-                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests). My Booking ID is *${bookingId}*. Payment Mode: ${isFullPayment ? `Full Payment (₹${amountToPayToday.toLocaleString('en-IN')} with ₹1,000 discount)` : `Advance Payment (₹${amountToPayToday.toLocaleString('en-IN')})`}. Please share the group chat link and preparation guide!`
+                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests, Lead: ${formData.fullName}, Age: ${formData.age}). My Booking ID is *${bookingId}*. Payment Mode: ${isFullPayment ? `Full Payment (₹{amountToPayToday.toLocaleString('en-IN')})` : `Advance Payment (₹{amountToPayToday.toLocaleString('en-IN')})`}${couponDiscount > 0 ? ` [Coupon ${couponCode}: ₹${couponDiscount} off]` : ''}. Please share the group chat link and preparation guide!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -291,7 +346,7 @@ export function BookingContent() {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => window.print()}
-                  className="py-3 px-4 border border-slate-200 rounded-full font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors flex items-center justify-center gap-1.5"
+                  className="py-3 px-4 border border-slate-200 rounded-full font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Download size={15} /> Save Receipt
                 </button>
@@ -299,45 +354,44 @@ export function BookingContent() {
                   href="/"
                   className="py-3 px-4 bg-[var(--sky-pale)] text-[var(--sky)] rounded-full font-bold text-xs hover:bg-[var(--sky)] hover:text-white transition-colors flex items-center justify-center gap-1.5"
                 >
-                  Explore More Trips <ArrowRight size={15} />
+                  Explore More Trips
                 </Link>
               </div>
             </div>
           </motion.div>
         ) : (
-          /* MAIN TWO-COLUMN CHECKOUT FORM */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-            {/* LEFT COLUMN: Booking Form (7 cols) */}
+            {/* LEFT COLUMN: Booking Config & Traveller Info (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
 
-              {/* Step 1: Trip & Dates Selection */}
+              {/* Step 1: Trip & Departure Selection */}
               <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
                   <span className="w-8 h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-bold text-sm flex items-center justify-center">
                     1
                   </span>
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--navy)]">Select Dates & Travellers</h2>
-                    <p className="text-xs text-slate-400">Confirm your batch and group size</p>
+                    <h2 className="text-lg font-bold text-[var(--navy)]">Trip & Departure Details</h2>
+                    <p className="text-xs text-slate-400">Select your destination, batch date, and party size</p>
                   </div>
                 </div>
 
                 <div className="space-y-5">
-                  {/* Change Trip Selector (if needed) */}
+                  {/* Select Destination */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                      Selected Trip
+                    <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                      Destination Trip
                     </label>
                     <div className="relative">
                       <select
                         value={selectedTrip.slug}
                         onChange={(e) => handleTripChange(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-[var(--navy)] appearance-none cursor-pointer focus:outline-none focus:border-[var(--sky)]"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] font-semibold focus:outline-none focus:border-[var(--sky)] focus:bg-white appearance-none cursor-pointer transition-all"
                       >
                         {trips.map((t) => (
                           <option key={t.slug} value={t.slug}>
-                            {t.title} ({t.duration}) - Starting {t.price}
+                            {t.title} ({t.duration}) — from {t.price}
                           </option>
                         ))}
                       </select>
@@ -345,57 +399,52 @@ export function BookingContent() {
                     </div>
                   </div>
 
-                  {/* Travel Dates */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                      <CalendarDays size={14} className="text-[var(--sky)]" /> Select Departure Date
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {availableDates.map((dateStr, i) => (
-                        <button
-                          type="button"
-                          key={i}
-                          onClick={() => setSelectedDate(dateStr)}
-                          className={`p-3 rounded-xl border text-left text-xs transition-all flex items-center justify-between ${
-                            selectedDate === dateStr
-                              ? 'border-[var(--sky)] bg-[var(--sky-pale)] text-[var(--navy)] font-bold shadow-sm'
-                              : 'border-slate-200 bg-slate-50/60 hover:bg-slate-50 text-slate-600'
-                          }`}
+                  {/* Date & Guests Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Batch Date Dropdown */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        Departure Batch
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-[var(--navy)] font-semibold focus:outline-none focus:border-[var(--sky)] focus:bg-white appearance-none cursor-pointer transition-all"
                         >
-                          <span>{dateStr}</span>
-                          {selectedDate === dateStr && (
-                            <CheckCircle2 size={16} className="text-[var(--sky)] shrink-0 ml-1.5" />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Number of People */}
-                  <div className="pt-2">
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                      <Users size={14} className="text-[var(--sky)]" /> Number of Travellers
-                    </label>
-                    <div className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                      <div>
-                        <span className="font-bold text-[var(--navy)] text-sm">{guests} People</span>
-                        <p className="text-[11px] text-slate-400">Total participants travelling</p>
+                          {availableDates.map((d, i) => (
+                            <option key={i} value={d}>
+                              {d}
+                            </option>
+                          ))}
+                        </select>
+                        <CalendarDays size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                       </div>
-                      <div className="flex items-center gap-3">
+                    </div>
+
+                    {/* Guest Counter */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        Travellers Count
+                      </label>
+                      <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1 justify-between">
                         <button
                           type="button"
                           onClick={() => updateGuests(guests - 1)}
                           disabled={guests <= MIN_GUESTS}
-                          className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-[var(--sky-pale)] hover:text-[var(--sky)] disabled:opacity-40 disabled:pointer-events-none transition-colors font-bold text-base shadow-sm"
+                          className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           -
                         </button>
-                        <span className="w-6 text-center font-bold text-base text-[var(--navy)]">{guests}</span>
+                        <div className="flex items-center gap-1.5 text-sm font-extrabold text-[var(--navy)]">
+                          <Users size={16} className="text-[var(--sky)]" />
+                          <span>{guests} {guests > 1 ? 'Guests' : 'Guest'}</span>
+                        </div>
                         <button
                           type="button"
                           onClick={() => updateGuests(guests + 1)}
                           disabled={guests >= MAX_GUESTS}
-                          className="w-9 h-9 rounded-full bg-[var(--sky)] text-white flex items-center justify-center hover:bg-[var(--navy)] disabled:opacity-40 disabled:pointer-events-none transition-colors font-bold text-base shadow-sm"
+                          className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           +
                         </button>
@@ -403,49 +452,46 @@ export function BookingContent() {
                     </div>
                   </div>
 
-                  {/* Package Option Selector (if trip has pricing options) */}
+                  {/* Package Tier Options (e.g. Sleeper / 3AC / Quad / Triple) */}
                   {selectedTrip.pricingOptions && selectedTrip.pricingOptions.length > 0 && (
                     <div className="pt-2">
-                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                        Choose Travel Package Tier
+                      <label className="block text-xs font-bold text-slate-600 mb-2">
+                        Select Travel / Room Package
                       </label>
-                      <div className="space-y-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {selectedTrip.pricingOptions
-                          .map((opt, idx) => ({ opt, originalIndex: idx }))
-                          .filter(({ opt }) => !opt.label.toLowerCase().startsWith('add-on') && !opt.price.startsWith('+'))
-                          .map(({ opt, originalIndex }) => (
-                            <button
-                              type="button"
-                              key={originalIndex}
-                              onClick={() => setSelectedPackageIndex(originalIndex)}
-                              className={`w-full p-3.5 rounded-xl border text-left text-xs sm:text-sm flex items-center justify-between transition-all ${
-                                selectedPackageIndex === originalIndex
-                                  ? 'border-[var(--sky)] bg-gradient-to-r from-sky-50 to-white font-bold text-[var(--navy)] shadow-sm'
-                                  : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600'
-                              }`}
-                            >
-                              <div className="flex items-center gap-2.5">
-                                <div
-                                  className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                                    selectedPackageIndex === originalIndex
-                                      ? 'border-[var(--sky)] bg-[var(--sky)]'
-                                      : 'border-slate-300'
-                                  }`}
-                                >
-                                  {selectedPackageIndex === originalIndex && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
+                          .filter((opt) => !opt.label.toLowerCase().includes('add-on') && !opt.price.startsWith('+'))
+                          .map((opt, idx) => {
+                            const isSelected = selectedPackageIndex === idx
+                            return (
+                              <div
+                                key={idx}
+                                onClick={() => setSelectedPackageIndex(idx)}
+                                className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
+                                  isSelected
+                                    ? 'border-[var(--sky)] bg-[var(--sky-pale)]/50 shadow-sm'
+                                    : 'border-slate-200 bg-slate-50/70 hover:bg-slate-100/80'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <span className="text-xs font-bold text-[var(--navy)]">{opt.label}</span>
+                                  {isSelected && <CheckCircle2 size={16} className="text-[var(--sky)]" />}
                                 </div>
-                                <span>{opt.label}</span>
+                                <div className="mt-2 flex items-baseline justify-between">
+                                  <span className="text-sm font-extrabold text-[var(--navy)]">{opt.price}</span>
+                                  {opt.note && <span className="text-[10px] text-slate-400 font-medium">{opt.note}</span>}
+                                </div>
                               </div>
-                              <span className="font-bold text-[var(--navy)]">{opt.price}</span>
-                            </button>
-                          ))}
+                            )
+                          })}
                       </div>
 
-                      {/* Double Sharing Checkbox Add-on (only if trip has dedicated Add-On option) */}
+                      {/* Double Sharing Room Addon Checkbox */}
                       {(() => {
-                        const dsOpt = selectedTrip.pricingOptions?.find((o) =>
-                          o.label.toLowerCase().includes('double sharing') &&
-                          (o.label.toLowerCase().includes('add-on') || o.price.startsWith('+'))
+                        const dsOpt = selectedTrip.pricingOptions.find(
+                          (o) =>
+                            o.label.toLowerCase().includes('double sharing') &&
+                            (o.label.toLowerCase().includes('add-on') || o.price.startsWith('+'))
                         )
                         if (!dsOpt) return null
                         const dsPriceStr = dsOpt.price
@@ -533,8 +579,23 @@ export function BookingContent() {
                     </div>
                   </div>
 
-                  {/* City & Special Request */}
+                  {/* Age & City */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        Age <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        required
+                        type="number"
+                        min="1"
+                        max="120"
+                        placeholder="e.g. 24"
+                        value={formData.age}
+                        onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                      />
+                    </div>
                     <div>
                       <label className="block text-xs font-bold text-slate-600 mb-1.5">
                         Departure City / State
@@ -547,18 +608,20 @@ export function BookingContent() {
                         className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
                       />
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                        Special Notes / Dietary
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Pure Veg, travelling solo"
-                        value={formData.specialRequest}
-                        onChange={(e) => setFormData({ ...formData, specialRequest: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                      />
-                    </div>
+                  </div>
+
+                  {/* Special Request */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                      Special Notes / Dietary
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Pure Veg, travelling solo, early check-in"
+                      value={formData.specialRequest}
+                      onChange={(e) => setFormData({ ...formData, specialRequest: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                    />
                   </div>
                 </div>
 
@@ -575,7 +638,7 @@ export function BookingContent() {
                   <button
                     type="submit"
                     disabled={isProcessing}
-                    className="glow-btn w-full py-4 rounded-full font-bold text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+                    className="glow-btn w-full py-4 rounded-full font-bold text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
                   >
                     {isProcessing ? (
                       <span className="inline-flex items-center gap-2">
@@ -634,7 +697,7 @@ export function BookingContent() {
                     <button
                       type="button"
                       onClick={() => setPaymentType('advance')}
-                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between ${
+                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between cursor-pointer ${
                         paymentType === 'advance'
                           ? 'bg-[var(--sky)] text-white shadow-sm'
                           : 'bg-white/70 hover:bg-white text-slate-600 hover:text-[var(--navy)] border border-transparent'
@@ -651,7 +714,7 @@ export function BookingContent() {
                     <button
                       type="button"
                       onClick={() => setPaymentType('full')}
-                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden ${
+                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden cursor-pointer ${
                         paymentType === 'full'
                           ? 'bg-emerald-600 text-white shadow-sm'
                           : 'bg-white/70 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-emerald-200/80'
@@ -680,6 +743,99 @@ export function BookingContent() {
                   </div>
                 </div>
 
+                {/* DISCOUNT COUPON CODE SECTION */}
+                <div className="pt-5 mt-5 border-t border-slate-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-xs font-bold text-[var(--navy)] flex items-center gap-1.5">
+                      <Tag size={13} className="text-[var(--sky)]" />
+                      <span>Have a Discount Coupon?</span>
+                    </label>
+                    <span className="text-[10px] text-slate-400">e.g. TRIBE500</span>
+                  </div>
+
+                  {appliedCoupon ? (
+                    <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between animate-in fade-in duration-200">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-xs">
+                          ✓
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                            <span>{appliedCoupon}</span>
+                            <span className="text-[10px] bg-emerald-200/80 text-emerald-800 px-1.5 py-0.2 rounded font-semibold">
+                              -₹{couponDiscount} OFF
+                            </span>
+                          </div>
+                          {couponDescription && (
+                            <p className="text-[10px] text-emerald-700">{couponDescription}</p>
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleRemoveCoupon}
+                        className="text-xs text-slate-400 hover:text-rose-600 font-bold px-2 py-1 rounded hover:bg-rose-50 transition-colors flex items-center gap-1 cursor-pointer"
+                        title="Remove coupon"
+                      >
+                        <X size={14} /> Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleApplyCoupon} className="space-y-1.5">
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <input
+                            type="text"
+                            placeholder="Enter coupon code"
+                            value={couponInput}
+                            onChange={(e) => {
+                              setCouponInput(e.target.value)
+                              if (couponError) setCouponError(null)
+                            }}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3.5 pr-3 py-2.5 text-xs text-[var(--navy)] font-semibold uppercase placeholder:normal-case placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="px-4 py-2.5 rounded-xl bg-[var(--navy)] hover:bg-[var(--navy)]/90 text-white text-xs font-bold transition-colors cursor-pointer shadow-sm"
+                        >
+                          Apply
+                        </button>
+                      </div>
+
+                      {couponError && (
+                        <p className="text-[11px] text-rose-600 font-medium pl-1">{couponError}</p>
+                      )}
+
+                      <div className="flex items-center gap-1.5 pt-1 pl-1">
+                        <span className="text-[10px] text-slate-400">Available codes:</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCouponInput('TRIBE500')
+                            setAppliedCoupon('TRIBE500')
+                            setCouponSuccess('Coupon TRIBE500 applied! ₹500 discount savings.')
+                          }}
+                          className="text-[10px] font-bold text-[var(--sky)] hover:underline cursor-pointer bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100"
+                        >
+                          TRIBE500
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCouponInput('EARLYBIRD')
+                            setAppliedCoupon('EARLYBIRD')
+                            setCouponSuccess('Coupon EARLYBIRD applied! ₹500 discount savings.')
+                          }}
+                          className="text-[10px] font-bold text-[var(--sky)] hover:underline cursor-pointer bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100"
+                        >
+                          EARLYBIRD
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+
                 {/* Price Breakdown */}
                 <div className="pt-5 space-y-2.5 text-xs text-slate-600 border-t border-slate-100 mt-5">
                   <div className="flex justify-between">
@@ -696,6 +852,13 @@ export function BookingContent() {
                     <span>GST (5%)</span>
                     <span>₹{gstAmount.toLocaleString('en-IN')}</span>
                   </div>
+
+                  {couponDiscount > 0 && (
+                    <div className="flex justify-between text-emerald-700 font-bold bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                      <span className="flex items-center gap-1"><Tag size={12} /> Coupon ({couponCode})</span>
+                      <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
 
                   <div className="flex justify-between pt-1 border-t border-slate-100">
                     <span className="text-slate-600">Total Price</span>
@@ -778,7 +941,7 @@ export function BookingContent() {
                     type="button"
                     onClick={handleFormSubmit}
                     disabled={isProcessing}
-                    className="glow-btn w-full py-4 rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+                    className="glow-btn w-full py-4 rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
                   >
                     {isProcessing ? (
                       <span className="inline-flex items-center gap-2">

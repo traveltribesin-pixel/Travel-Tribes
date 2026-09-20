@@ -17,6 +17,9 @@ export interface PricingBreakdown {
   advanceTotal: number
   paymentType: 'advance' | 'full'
   fullPaymentDiscount: number
+  couponCode?: string
+  couponDiscount: number
+  couponDescription?: string
   amountToPayToday: number
   remainingBalance: number
   isFullPayment: boolean
@@ -28,6 +31,27 @@ export const GST_RATE = 0.05
 export const DOUBLE_SHARING_ADDON_RATE = 1500
 export const MIN_GUESTS = 1
 export const MAX_GUESTS = 50
+
+export const VALID_COUPONS: Record<string, { discount: number; description: string }> = {
+  TRIBE500: { discount: 500, description: '₹500 off for the Tribe' },
+  EARLYBIRD: { discount: 500, description: '₹500 Early Bird Savings' },
+  TRAVEL1000: { discount: 1000, description: '₹1,000 Special Wanderlust savings' },
+  EXPLORE10: { discount: 1000, description: '₹1,000 Explorer promo code' },
+  WANDERLUST: { discount: 750, description: '₹750 Wanderlust discount' },
+}
+
+/**
+ * Validates a coupon code and returns discount amount & description
+ */
+export function validateCoupon(code?: string): { valid: boolean; discount: number; description?: string; cleanCode?: string } {
+  if (!code || typeof code !== 'string') return { valid: false, discount: 0 }
+  const cleanCode = code.trim().toUpperCase()
+  const found = VALID_COUPONS[cleanCode]
+  if (found) {
+    return { valid: true, discount: found.discount, description: found.description, cleanCode }
+  }
+  return { valid: false, discount: 0 }
+}
 
 /**
  * Parses numeric price from any price string (e.g. "₹8,499", "₹ 4,000 / person")
@@ -59,6 +83,7 @@ export function calculateBookingPricing(params: {
   guests?: number
   isDoubleSharing?: boolean
   paymentType?: 'advance' | 'full'
+  couponCode?: string
 }): PricingBreakdown {
   const { tripSlug } = params
   
@@ -100,13 +125,21 @@ export function calculateBookingPricing(params: {
   // 5. Subtotal & GST
   const subtotal = totalPerPerson * guests
   const gstAmount = Math.round(subtotal * GST_RATE)
-  const grandTotal = subtotal + gstAmount
+  let rawGrandTotal = subtotal + gstAmount
 
-  // 6. Advance calculation
+  // 6. Coupon Discount
+  const couponValidation = validateCoupon(params.couponCode)
+  const couponDiscount = couponValidation.valid ? Math.min(couponValidation.discount, rawGrandTotal) : 0
+  const couponCode = couponValidation.valid ? couponValidation.cleanCode : undefined
+  const couponDescription = couponValidation.valid ? couponValidation.description : undefined
+  const grandTotal = Math.max(0, rawGrandTotal - couponDiscount)
+
+  // 7. Advance calculation
   const advancePerPerson = parseNumericPrice(trip.bookingAmount, 4000)
-  const advanceTotal = advancePerPerson * guests
+  const rawAdvanceTotal = advancePerPerson * guests
+  const advanceTotal = Math.min(rawAdvanceTotal, grandTotal)
 
-  // 7. Payment Type & Discount (₹1,000 off strictly for full payment)
+  // 8. Payment Type & Discount (₹1,000 off strictly for full payment)
   const paymentType: 'advance' | 'full' = params.paymentType === 'full' ? 'full' : 'advance'
   const isFullPayment = paymentType === 'full'
 
@@ -134,9 +167,13 @@ export function calculateBookingPricing(params: {
     advanceTotal,
     paymentType,
     fullPaymentDiscount,
+    couponCode,
+    couponDiscount,
+    couponDescription,
     amountToPayToday,
     remainingBalance,
     isFullPayment,
     currency: 'INR'
   })
 }
+

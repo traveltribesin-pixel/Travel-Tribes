@@ -50,18 +50,18 @@ export function GallerySection() {
   }, [selectedPhotoIndex])
 
   return (
-    <section className="w-full py-12 sm:py-16 relative overflow-hidden bg-[var(--background)]">
+    <section className="w-full py-8 sm:py-10 relative overflow-hidden bg-[var(--background)]">
       {/* Header Container */}
-      <div className="w-full max-w-[1280px] px-[5vw] mx-auto mb-8 sm:mb-10">
+      <div className="w-full max-w-[1280px] px-[5vw] mx-auto mb-6 sm:mb-8">
         <div className="flex flex-col items-center text-center">
           <div className="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-widest text-[var(--sky)] mb-2">
             <Camera size={14} />
             <span>A glimpse of the good life</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--navy)] leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] leading-tight">
             Postcards from the Tribe.
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2.5 max-w-xl leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
             Unfiltered memories, epic summit views, campfire jams, and genuine friendships. Hover over any photo to pause and explore.
           </p>
         </div>

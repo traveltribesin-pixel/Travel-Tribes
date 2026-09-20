@@ -33,28 +33,18 @@ export function FaqAccordionSection({
   }
 
   return (
-    <section
-      className={`py-12 sm:py-16 bg-gradient-to-b from-white via-[var(--sky-pale)]/30 to-white relative overflow-hidden ${className}`}
-      style={{
-        paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
-        paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',
-      }}
-    >
-      {/* Background Glows */}
-      <div className="absolute top-1/4 -left-32 w-80 h-80 bg-[var(--sky)]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-[var(--navy)]/5 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-        <div className="inline-flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest bg-[var(--sky-pale)] border border-[var(--sky)]/20 px-3.5 py-1.5 rounded-full mb-2.5 shadow-xs">
+    <section className={`w-full max-w-[1280px] py-8 sm:py-10 px-4 sm:px-6 lg:px-8 mx-auto ${className}`}>
+      {/* Header Container */}
+      <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+        <div className="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-widest text-[var(--sky)] mb-2 bg-[var(--sky-pale)] px-3.5 py-1.5 rounded-full border border-[var(--sky)]/20">
           <HelpCircle size={14} className="text-[var(--sky)]" />
           <span>{eyebrow}</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--navy)] leading-tight tracking-tight">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] leading-tight tracking-tight">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-slate-600 text-xs sm:text-sm lg:text-base mt-2 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm lg:text-base mt-1.5 max-w-2xl mx-auto leading-relaxed">
             {subtitle}
           </p>
         )}

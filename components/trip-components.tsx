@@ -265,8 +265,8 @@ export function SectionHeading({ eyebrow, title, text, href, label = 'See all tr
     <div className={`section-heading ${center ? 'relative w-full !flex !flex-col lg:!flex-row !justify-center !items-center mb-4! lg:mb-6!' : ''}`}>
       <div className={center ? 'flex flex-col items-center text-center w-full max-w-4xl' : ''}>
         <span className="eyebrow">{eyebrow}</span>
-        <h2 className="!text-3xl sm:!text-4xl lg:!text-5xl font-extrabold text-[var(--navy)] leading-tight">{title}</h2>
-        {text && <p className={center ? '!max-w-none w-full mt-2 sm:mt-3 text-xs sm:text-sm' : ''}>{text}</p>}
+        <h2 className="!text-xl sm:!text-2xl md:!text-3xl lg:!text-4xl font-extrabold text-[var(--navy)] leading-tight">{title}</h2>
+        {text && <p className={center ? '!max-w-none w-full mt-1.5 sm:mt-2 text-xs sm:text-sm' : ''}>{text}</p>}
       </div>
       {href && (
         <div className={center ? 'mt-0 self-end lg:mt-0 lg:absolute lg:right-0 lg:bottom-0 lg:self-auto' : ''}>
@@ -308,7 +308,7 @@ export function ReviewCard({
     .toUpperCase()
 
   return (
-    <article className="bg-white rounded-3xl p-5 sm:p-6 border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-full h-[330px] sm:h-[340px]">
+    <article className="bg-white rounded-3xl p-5 sm:p-6 border-2 border-[#72c3e4] hover:border-[var(--sky)] shadow-[0_4px_18px_rgba(67,169,209,0.12)] hover:shadow-[0_14px_32px_rgba(67,169,209,0.22)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between w-full h-[330px] sm:h-[340px]">
       <div className="flex flex-col">
         {/* Header: Avatar, Name & Google/Local Guide Badge */}
         <div className="flex items-center gap-3 mb-3">

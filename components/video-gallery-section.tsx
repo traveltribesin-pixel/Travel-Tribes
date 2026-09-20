@@ -153,23 +153,23 @@ export function VideoGallerySection() {
   }
 
   return (
-    <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
+    <section className="py-8 sm:py-10 bg-white relative overflow-hidden">
       {/* Background Subtle Gradient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--sky-pale)]/50 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] text-xs font-bold uppercase tracking-wider mb-2.5">
               <Video size={14} />
               <span>Real Tribe Moments</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] tracking-tight">
               Watch The Adventures Come Alive
             </h2>
-            <p className="text-slate-500 text-xs sm:text-sm max-w-xl mt-2">
+            <p className="text-slate-500 text-xs sm:text-sm max-w-xl mt-1.5">
               Unfiltered, real video reels shot by our trip captains and travellers across expeditions.
             </p>
           </div>

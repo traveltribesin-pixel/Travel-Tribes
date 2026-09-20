@@ -9,7 +9,7 @@ import { honeymoonTrips } from '@/lib/travel-data'
 export function HoneymoonEscapesSection() {
   return (
     <section 
-      className="py-12 sm:py-16 bg-[var(--sky-pale)]"
+      className="py-8 sm:py-10 bg-[var(--sky-pale)]"
       style={{
         paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
         paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',

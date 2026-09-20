@@ -8,7 +8,7 @@ import { blogs } from '@/lib/travel-data'
 
 export function BlogSection() {
   return (
-    <section className="w-full max-w-[1280px] py-12 sm:py-16 px-[5vw] mx-auto blog-section">
+    <section className="w-full max-w-[1280px] py-8 sm:py-10 px-[5vw] mx-auto blog-section">
       <SectionHeading 
         eyebrow="The travel journal" 
         title="Notes from the road." 

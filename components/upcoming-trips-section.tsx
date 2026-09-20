@@ -9,7 +9,7 @@ import { trips } from '@/lib/travel-data'
 export function UpcomingTripsSection() {
   return (
     <section
-      className="py-12 sm:py-16 bg-white"
+      className="py-8 sm:py-10 bg-white"
       style={{
         paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
         paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',

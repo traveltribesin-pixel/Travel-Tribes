@@ -4,13 +4,14 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, ShieldAlert, Sparkles, Compass, Camera, Images, Maximize2, X } from 'lucide-react'
+import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, ShieldAlert, Sparkles, Compass, Camera, Images, Maximize2, X, FileDown, Download, Check, Loader2, Phone, Mail, User } from 'lucide-react'
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
 import { useSearchParams } from 'next/navigation'
 import { getTripPrimaryDate, filterUpcomingDates, isFestiveDate } from '@/lib/date-utils'
 import { TripCard } from '@/components/trip-card'
 import { ReviewCard } from '@/components/trip-components'
+import { generateItineraryPDF } from '@/lib/generate-itinerary-pdf'
 
 export function TripContent({ trip }: { trip: Trip }) {
   const searchParams = useSearchParams()
@@ -18,6 +19,13 @@ export function TripContent({ trip }: { trip: Trip }) {
   const [activeTab, setActiveTab] = useState('overview')
   const [guests, setGuests] = useState(2)
   const [openDay, setOpenDay] = useState<number | null>(1)
+
+  // PDF Lead Capture Modal State
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false)
+  const [pdfFormData, setPdfFormData] = useState({ fullName: '', phone: '', email: '' })
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
+  const [pdfSuccess, setPdfSuccess] = useState(false)
+  const [pdfError, setPdfError] = useState<string | null>(null)
 
   const primaryDate = useMemo(() => getTripPrimaryDate(trip), [trip])
   const upcomingDates = useMemo(() => {
@@ -46,6 +54,61 @@ export function TripContent({ trip }: { trip: Trip }) {
   useEffect(() => {
     setSelectedDate(initialDate)
   }, [initialDate])
+
+  const handleDownloadPdfSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPdfError(null)
+
+    const name = pdfFormData.fullName.trim()
+    const phone = pdfFormData.phone.trim()
+    const email = pdfFormData.email.trim()
+
+    if (!name || !phone || !email) {
+      setPdfError('Please fill in your Full Name, WhatsApp Number, and Email.')
+      return
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setPdfError('Please enter a valid email address.')
+      return
+    }
+
+    const digits = phone.replace(/[^\d]/g, '')
+    if (digits.length < 10) {
+      setPdfError('Please enter a valid 10-digit phone/WhatsApp number.')
+      return
+    }
+
+    setIsGeneratingPdf(true)
+
+    try {
+      // Record lead in backend
+      fetch('/api/lead-capture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: name,
+          phone,
+          email,
+          tripSlug: trip.slug,
+          tripTitle: trip.title
+        })
+      }).catch((err) => console.error('Lead error:', err))
+
+      // Generate & download PDF
+      await generateItineraryPDF(trip, { fullName: name, phone, email })
+      setPdfSuccess(true)
+      setTimeout(() => {
+        setIsPdfModalOpen(false)
+        setPdfSuccess(false)
+      }, 2000)
+    } catch (err) {
+      console.error(err)
+      setPdfError('Could not generate PDF. Please try again.')
+    } finally {
+      setIsGeneratingPdf(false)
+    }
+  }
 
   // Dynamic price resolving based on selected date (automatically adjusts for New Year / Xmas batches)
   const displayPrice = useMemo(() => {
@@ -148,7 +211,6 @@ export function TripContent({ trip }: { trip: Trip }) {
     const sections = availableTabs.map(t => t.id)
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the first intersecting entry
         const intersectingEntry = entries.find((entry) => entry.isIntersecting)
         if (intersectingEntry) {
           setActiveTab(intersectingEntry.target.id)
@@ -165,7 +227,7 @@ export function TripContent({ trip }: { trip: Trip }) {
     return () => observer.disconnect()
   }, [availableTabs])
 
-  // Force scroll to top on mount (fixes Next.js router scroll issues)
+  // Force scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -242,7 +304,7 @@ export function TripContent({ trip }: { trip: Trip }) {
           <h1 className="text-4xl lg:text-5xl font-extrabold text-[var(--navy)] mb-3 leading-tight">
             {trip.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-4 text-slate-500 font-medium text-sm">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-slate-500 font-medium text-sm">
             <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
               <Clock3 size={16} className="text-[var(--sky)]" /> {trip.duration}
             </span>
@@ -252,6 +314,14 @@ export function TripContent({ trip }: { trip: Trip }) {
             <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
               <Users size={16} className="text-[var(--sky)]" /> {trip.spots}
             </span>
+            <button
+              type="button"
+              onClick={() => setIsPdfModalOpen(true)}
+              className="flex items-center gap-2 bg-[var(--sky-pale)] hover:bg-[var(--sky)] text-[var(--sky)] hover:text-white border border-[var(--sky-pale)] px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shadow-sm cursor-pointer ml-auto sm:ml-0"
+            >
+              <FileDown size={15} />
+              <span>Download Itinerary PDF</span>
+            </button>
           </div>
         </div>
       </section>
@@ -286,143 +356,146 @@ export function TripContent({ trip }: { trip: Trip }) {
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-10">
 
-            {/* 3. Overview */}
-            <section id="overview" className="scroll-mt-40">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4">Overview</h2>
-              <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
-                {trip.description} This carefully curated journey takes you through the heart of {trip.location}, offering a perfect blend of adventure, culture, and relaxation.
+            {/* 1. Overview */}
+            <section id="overview" className="scroll-mt-40 space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)]">About the Trip</h2>
+              <p className="text-slate-600 leading-relaxed text-sm sm:text-base font-normal">
+                {trip.description}
               </p>
 
-              {trip.highlights && trip.highlights.length > 0 && (
-                <div className="bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] mb-8">
-                  <h3 className="text-xl font-bold text-[var(--navy)] mb-4">Trip Highlights</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {trip.highlights.map((highlight, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <Star size={18} className="text-[var(--sun)] mt-0.5 shrink-0" fill="currentColor" />
-                        <span className="text-[14px] text-slate-600 leading-relaxed">{highlight}</span>
-                      </div>
-                    ))}
+              {/* PDF Download Highlight Banner */}
+              <div className="bg-gradient-to-r from-sky-50 via-blue-50/50 to-sky-50 border border-[var(--sky-pale)] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-white text-[var(--sky)] flex items-center justify-center shadow-sm shrink-0 border border-[var(--sky-pale)]">
+                    <FileDown size={22} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-[var(--navy)]">Detailed Trip Brochure & Day-by-Day Plan</h3>
+                    <p className="text-[11px] sm:text-xs text-slate-500">Download complete inclusions, pricing, route & packing list in PDF format.</p>
                   </div>
                 </div>
-              )}
+                <button
+                  type="button"
+                  onClick={() => setIsPdfModalOpen(true)}
+                  className="px-4 py-2.5 rounded-full bg-[var(--sky)] text-white font-bold text-xs hover:bg-[var(--navy)] transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+                >
+                  <Download size={14} /> Get Itinerary PDF
+                </button>
+              </div>
 
-              {trip.pricingOptions && trip.pricingOptions.length > 0 && (
-                <div className="bg-white rounded-3xl p-8 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-                    <h3 className="text-xl font-bold text-[var(--navy)]">Pricing Packages</h3>
-                    {trip.bookingAmount && (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--sky)] bg-[var(--sky-pale)] px-3.5 py-1.5 rounded-full w-fit">
-                        Booking Advance: {trip.bookingAmount}
-                      </span>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {trip.pricingOptions.map((opt, idx) => (
-                      <div key={idx} className="p-4 rounded-2xl bg-slate-50/80 border border-slate-100 flex flex-col justify-between">
-                        <span className="text-xs text-slate-500 font-medium mb-1.5">{opt.label}</span>
-                        <span className="text-lg font-extrabold text-[var(--navy)]">{opt.price}</span>
-                      </div>
+              {/* Highlights */}
+              {trip.highlights && trip.highlights.length > 0 && (
+                <div className="bg-slate-50/80 rounded-3xl p-6 sm:p-8 border border-slate-200">
+                  <h3 className="text-lg font-bold text-[var(--navy)] mb-4 flex items-center gap-2">
+                    <Sparkles className="text-[var(--sun)]" size={20} /> Highlights
+                  </h3>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    {trip.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-600">
+                        <CheckCircle2 size={16} className="text-[var(--sun)] shrink-0 mt-0.5" />
+                        <span className="leading-snug">{highlight}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               )}
             </section>
 
-            {/* 4. Detailed Itinerary (Accordion) */}
+            {/* 2. Itinerary */}
             {trip.itinerary && trip.itinerary.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="itinerary" className="scroll-mt-40">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4">Detailed Itinerary</h2>
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)]">Day Wise Itinerary</h2>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{trip.duration}</span>
+                  </div>
+
                   <div className="space-y-4">
-                    {trip.itinerary.map((day, idx) => {
-                      const isOpen = openDay === day.day
-                      return (
-                        <div key={idx} className={`bg-white rounded-2xl border transition-all duration-300 ${isOpen ? 'border-[var(--sky)] shadow-[0_4px_15px_rgba(67,169,209,0.2)]' : 'border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]'}`}>
-                          <button
-                            onClick={() => setOpenDay(isOpen ? null : day.day)}
-                            className="w-full flex items-center justify-between p-5 text-left"
-                          >
-                            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
-                              <span className={`px-3 py-1.5 leading-none rounded-full text-[12px] font-bold uppercase tracking-wider transition-colors w-fit ${isOpen ? 'bg-[var(--sky)] text-white' : 'bg-[var(--sky-pale)] text-[var(--sky)]'}`}>
-                                Day {day.day}
-                              </span>
-                              <span className={`text-lg sm:text-xl font-bold transition-colors ${isOpen ? 'text-[var(--navy)]' : 'text-slate-700'}`}>
-                                {day.title}
-                              </span>
-                            </div>
-                            <div className="shrink-0 ml-4">
-                              {isOpen ? (
-                                <ChevronUp className="text-[var(--sky)]" />
-                              ) : (
-                                <ChevronDown className="text-slate-400" />
-                              )}
-                            </div>
-                          </button>
-                          <AnimatePresence initial={false}>
-                            {isOpen && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="px-6 pb-6 pt-2 border-t border-slate-100 mt-2">
-                                  <ul className="space-y-3">
-                                    {day.activities.map((activity, actIdx) => (
-                                      <li key={actIdx} className="flex items-start gap-3 text-[15px] text-slate-600">
-                                        <span className="text-[var(--sky)] mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--sky)]" />
-                                        <span>{activity}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      )
-                    })}
+                    {trip.itinerary.map((dayPlan) => (
+                      <div
+                        key={dayPlan.day}
+                        className="bg-white rounded-2xl border border-slate-200 transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.1)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.1)] overflow-hidden"
+                      >
+                        <button
+                          onClick={() => setOpenDay(openDay === dayPlan.day ? null : dayPlan.day)}
+                          className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4"
+                        >
+                          <div className="flex items-center gap-4">
+                            <span className="w-12 h-12 rounded-xl bg-[var(--sky-pale)] text-[var(--sky)] font-extrabold text-sm flex items-center justify-center shrink-0">
+                              D{dayPlan.day}
+                            </span>
+                            <span className="font-bold text-[var(--navy)] text-sm sm:text-base leading-snug">
+                              {dayPlan.title}
+                            </span>
+                          </div>
+                          {openDay === dayPlan.day ? (
+                            <ChevronUp className="text-slate-400 shrink-0" size={20} />
+                          ) : (
+                            <ChevronDown className="text-slate-400 shrink-0" size={20} />
+                          )}
+                        </button>
+
+                        <AnimatePresence>
+                          {openDay === dayPlan.day && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <div className="px-6 pb-6 pt-2 border-t border-slate-100 text-xs sm:text-sm text-slate-600 space-y-3">
+                                {dayPlan.activities.map((act, i) => (
+                                  <div key={i} className="flex items-start gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-[var(--sky)] mt-2 shrink-0" />
+                                    <p className="leading-relaxed">{act}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
                   </div>
                 </section>
               </>
             )}
 
-            {/* 5. Inclusions & Exclusions */}
+            {/* 3. Inclusions & Exclusions */}
             {((trip.inclusions && trip.inclusions.length > 0) || (trip.exclusions && trip.exclusions.length > 0)) && (
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="inclusions" className="scroll-mt-40">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4">Inclusive & Exclusive</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Included */}
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-6">What&apos;s Included & Excluded</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Inclusions */}
                     {trip.inclusions && trip.inclusions.length > 0 && (
-                      <div className="bg-emerald-50/50 rounded-3xl p-8 border border-emerald-100 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
-                        <h3 className="text-lg font-bold text-[var(--navy)] mb-4 flex items-center gap-2">
-                          <CheckCircle2 className="text-emerald-500" size={20} /> What's Included
+                      <div className="bg-emerald-50/50 rounded-3xl p-6 sm:p-7 border border-emerald-100 transition-all duration-300 shadow-[0_4px_10px_rgba(16,185,129,0.15)] hover:shadow-[0_10px_15px_rgba(16,185,129,0.15)]">
+                        <h3 className="font-bold text-emerald-900 mb-4 flex items-center gap-2">
+                          <CheckCircle2 className="text-emerald-600" size={18} /> Inclusions
                         </h3>
-                        <ul className="space-y-4">
+                        <ul className="space-y-3">
                           {trip.inclusions.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-3 text-[14px] text-slate-600">
-                              <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 shrink-0" />
+                            <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-emerald-950/80">
+                              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
                               <span className="leading-relaxed">{item}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
-                    {/* Excluded */}
+
+                    {/* Exclusions */}
                     {trip.exclusions && trip.exclusions.length > 0 && (
-                      <div className="bg-rose-50/50 rounded-3xl p-8 border border-rose-100 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
-                        <h3 className="text-lg font-bold text-[var(--navy)] mb-4 flex items-center gap-2">
-                          <XCircle className="text-rose-400" size={20} /> What's Excluded
+                      <div className="bg-rose-50/50 rounded-3xl p-6 sm:p-7 border border-rose-100 transition-all duration-300 shadow-[0_4px_10px_rgba(244,63,94,0.15)] hover:shadow-[0_10px_15px_rgba(244,63,94,0.15)]">
+                        <h3 className="font-bold text-rose-900 mb-4 flex items-center gap-2">
+                          <XCircle className="text-rose-600" size={18} /> Exclusions
                         </h3>
-                        <ul className="space-y-4">
+                        <ul className="space-y-3">
                           {trip.exclusions.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-3 text-[14px] text-slate-600">
-                              <XCircle size={18} className="text-rose-400 mt-0.5 shrink-0" />
+                            <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-rose-950/80">
+                              <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0" />
                               <span className="leading-relaxed">{item}</span>
                             </li>
                           ))}
@@ -435,7 +508,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             )}
 
 
-            {/* 5. Destination Photo Gallery */}
+            {/* 4. Destination Photo Gallery */}
             {galleryImages.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
@@ -467,11 +540,10 @@ export function TripContent({ trip }: { trip: Trip }) {
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-cover group-hover:scale-110 transition-transform duration-500"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
-                            <span className="text-white text-[11px] font-medium line-clamp-1 flex items-center gap-1.5">
-                              <Maximize2 size={12} className="shrink-0 text-[var(--sun)]" />
-                              {item.alt}
-                            </span>
+                          <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-[var(--navy)] shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+                              <Maximize2 size={18} />
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -495,7 +567,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               </>
             )}
 
-            {/* 6. Policy */}
+            {/* 5. Policy */}
             {trip.policies && trip.policies.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
@@ -585,15 +657,6 @@ export function TripContent({ trip }: { trip: Trip }) {
               {/* Package Pricing Options */}
               {trip.pricingOptions && trip.pricingOptions.length > 0 && (
                 <div className="hidden lg:block bg-slate-50/90 rounded-2xl p-3.5 border border-slate-200/80 mb-5 space-y-1.5">
-                  {/* <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Package Options</div> */}
-                  {/* <div className="space-y-1">
-                    {trip.pricingOptions.map((opt, i) => (
-                      <div key={i} className="flex justify-between items-center text-[11px] py-0.5 border-b border-slate-200/60 last:border-0">
-                        <span className="text-slate-600 font-medium truncate pr-2">{opt.label}</span>
-                        <span className="font-bold text-[var(--navy)] shrink-0">{opt.price}</span>
-                      </div>
-                    ))}
-                  </div> */}
                   {trip.bookingAmount && (
                     <div className="mt-2 pt-2 border-t border-dashed border-slate-300 flex justify-between items-center text-[11px]">
                       <span className="text-[var(--sky)] font-bold">Advance Booking</span>
@@ -612,8 +675,8 @@ export function TripContent({ trip }: { trip: Trip }) {
                 </div>
               )}
 
-              {/* Animated Button */}
-              <div className="w-[160px] lg:w-full">
+              {/* Action Buttons */}
+              <div className="w-[160px] lg:w-full space-y-2.5">
                 <Link
                   href={`/book?trip=${trip.slug}&date=${encodeURIComponent(selectedDate)}&guests=${guests}`}
                   className="block w-full"
@@ -622,7 +685,16 @@ export function TripContent({ trip }: { trip: Trip }) {
                     Book Now <ArrowRight size={16} className="hidden lg:block" />
                   </button>
                 </Link>
-                <p className="hidden lg:block text-center text-[10px] text-slate-400 mt-2.5">
+
+                <button
+                  type="button"
+                  onClick={() => setIsPdfModalOpen(true)}
+                  className="hidden lg:inline-flex w-full items-center justify-center gap-2 py-2.5 rounded-full font-bold text-xs border border-slate-200 hover:border-[var(--sky)] hover:bg-[var(--sky-pale)] text-slate-700 hover:text-[var(--sky)] transition-colors cursor-pointer"
+                >
+                  <FileDown size={15} /> Download Itinerary PDF
+                </button>
+
+                <p className="hidden lg:block text-center text-[10px] text-slate-400 mt-1">
                   Instant confirmation • 100% Safe
                 </p>
               </div>
@@ -631,46 +703,9 @@ export function TripContent({ trip }: { trip: Trip }) {
 
         </div>
 
-        {/* RELATED TRIPS SECTION */}
-        {relatedTrips.length > 0 && (
-          <section className="mt-20 pt-16 border-t border-[var(--border)]">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-              <div>
-                <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
-                  <Compass size={15} className="text-[var(--sky)]" />
-                  <span>More Adventures To Explore</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
-                  Related Trips You Might Love
-                </h2>
-                <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
-                  Discover more unforgettable getaways, scenic trails, and tribe journeys tailored for wanderers like you.
-                </p>
-              </div>
-
-              <Link
-                href="/upcoming-trips"
-                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[var(--sky)] hover:text-[var(--navy)] transition-colors shrink-0"
-              >
-                <span>View All Upcoming Trips</span>
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* 3-Column Responsive Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {relatedTrips.map((relatedTrip) => (
-                <div key={relatedTrip.slug} className="h-full flex flex-col">
-                  <TripCard trip={relatedTrip} />
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* DESTINATION-SPECIFIC REVIEWS SLIDER (AUTO-SCROLL EVERY 3 SECONDS) */}
+        {/* 1. DESTINATION-SPECIFIC REVIEWS SLIDER (COMES FIRST BEFORE RELATED TRIPS) */}
         {trip.reviews && trip.reviews.length > 0 && (
-          <section id="reviews" className="mt-20 pt-16 border-t border-[var(--border)] scroll-mt-32">
+          <section id="reviews" className="mt-16 sm:mt-20 pt-12 sm:pt-16 border-t border-[var(--border)] scroll-mt-32">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
               <div>
                 <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
@@ -754,7 +789,48 @@ export function TripContent({ trip }: { trip: Trip }) {
             </div>
           </section>
         )}
-        {/* FULLSCREEN PHOTO LIGHTBOX MODAL */}
+
+        {/* 2. RELATED TRIPS SECTION (HORIZONTAL SLIDER ON MOBILE, GRID ON DESKTOP) */}
+        {relatedTrips.length > 0 && (
+          <section id="related-trips" className="mt-16 sm:mt-20 pt-12 sm:pt-16 border-t border-[var(--border)]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
+              <div>
+                <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
+                  <Compass size={15} className="text-[var(--sky)]" />
+                  <span>More Adventures To Explore</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
+                  Related Trips You Might Love
+                </h2>
+                <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
+                  Discover more unforgettable getaways, scenic trails, and tribe journeys tailored for wanderers like you.
+                </p>
+              </div>
+
+              <Link
+                href="/upcoming-trips"
+                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[var(--sky)] hover:text-[var(--navy)] transition-colors shrink-0"
+              >
+                <span>View All Upcoming Trips</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Mobile Horizontal Carousel / Desktop 3-Column Grid */}
+            <div className="flex md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 pb-4 md:pb-0">
+              {relatedTrips.map((relatedTrip) => (
+                <div
+                  key={relatedTrip.slug}
+                  className="min-w-[285px] max-w-[320px] w-[82vw] sm:w-auto md:min-w-0 md:max-w-none md:w-auto snap-start h-full flex flex-col shrink-0 md:shrink"
+                >
+                  <TripCard trip={relatedTrip} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* FULLSCREEN PHOTO LIGHTBOX MODAL (CLEAN WITHOUT CAPTION TEXT) */}
         <AnimatePresence>
           {lightboxIndex !== null && (
             <motion.div
@@ -802,7 +878,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 )}
 
                 {/* Photo */}
-                <div className="relative w-full h-[65vh] sm:h-[75vh] max-w-4xl">
+                <div className="relative w-full h-[68vh] sm:h-[80vh] max-w-4xl">
                   <Image
                     src={galleryImages[lightboxIndex].image}
                     alt={galleryImages[lightboxIndex].alt}
@@ -825,18 +901,158 @@ export function TripContent({ trip }: { trip: Trip }) {
                 )}
               </div>
 
-              {/* Bottom Caption */}
+              {/* Clean Bottom Hint */}
               <div
-                className="w-full max-w-xl text-center z-10"
+                className="w-full max-w-xl text-center z-10 pb-2"
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-white/90 text-sm font-medium">
-                  {galleryImages[lightboxIndex].alt}
-                </p>
-                <span className="text-white/50 text-xs mt-1 block">
-                  {trip.title} · Click anywhere to close or use arrow keys
+                <span className="text-white/40 text-xs">
+                  Click anywhere outside or press Esc to close • Use arrow keys to navigate
                 </span>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* LEAD CAPTURE MODAL FOR PDF DOWNLOAD */}
+        <AnimatePresence>
+          {isPdfModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+              onClick={() => setIsPdfModalOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.94, opacity: 0, y: 15 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.94, opacity: 0, y: 15 }}
+                transition={{ duration: 0.25 }}
+                className="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-2xl overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsPdfModalOpen(false)}
+                  className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  <X size={18} />
+                </button>
+
+                {/* Header */}
+                <div className="text-center mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-[var(--sky-pale)] text-[var(--sky)] flex items-center justify-center mx-auto mb-3">
+                    <FileDown size={24} />
+                  </div>
+                  <h3 className="text-xl font-extrabold text-[var(--navy)]">
+                    Download Itinerary PDF
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
+                    Enter your details to instantly get the full {trip.title} day-by-day plan & inclusions.
+                  </p>
+                </div>
+
+                {pdfSuccess ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="py-8 text-center space-y-3"
+                  >
+                    <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+                      <Check size={28} />
+                    </div>
+                    <h4 className="font-bold text-base text-[var(--navy)]">PDF Downloaded Successfully!</h4>
+                    <p className="text-xs text-slate-500">Your itinerary PDF has started downloading. See you on the trip!</p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleDownloadPdfSubmit} className="space-y-4">
+                    {/* Full Name */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        Full Name <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                        <input
+                          required
+                          type="text"
+                          placeholder="e.g. Rahul Sharma"
+                          value={pdfFormData.fullName}
+                          onChange={(e) => setPdfFormData({ ...pdfFormData, fullName: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    {/* WhatsApp Phone */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        WhatsApp / Contact Number <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <Phone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                        <input
+                          required
+                          type="tel"
+                          placeholder="+91 99758 22023"
+                          value={pdfFormData.phone}
+                          onChange={(e) => setPdfFormData({ ...pdfFormData, phone: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        Email Address <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                        <input
+                          required
+                          type="email"
+                          placeholder="rahul@gmail.com"
+                          value={pdfFormData.email}
+                          onChange={(e) => setPdfFormData({ ...pdfFormData, email: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    {pdfError && (
+                      <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-semibold">
+                        {pdfError}
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isGeneratingPdf}
+                      className="glow-btn w-full py-3.5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 mt-2 cursor-pointer"
+                    >
+                      {isGeneratingPdf ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin" />
+                          <span>Generating Itinerary PDF...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download size={16} />
+                          <span>Download PDF Now</span>
+                        </>
+                      )}
+                    </button>
+
+                    <p className="text-center text-[10px] text-slate-400 mt-2">
+                      🔒 Your details are 100% safe with Travel Tribes. No spam.
+                    </p>
+                  </form>
+                )}
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

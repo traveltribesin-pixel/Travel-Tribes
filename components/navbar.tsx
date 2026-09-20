@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { ArrowRight, Menu, X } from 'lucide-react'
+import { ArrowRight, Menu, X, Phone } from 'lucide-react'
 import { navItems } from '@/lib/travel-data'
 
 export function Navbar() {
@@ -25,10 +25,10 @@ export function Navbar() {
       ? 'bg-[#f7fbfd]/95 backdrop-blur-[12px] border-b border-[var(--border)] shadow-sm'
       : 'bg-[#f7fbfd]/80 backdrop-blur-[8px] border-b border-transparent'
       }`}>
-      <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 xl:gap-8 h-[78px] max-[560px]:h-[68px] w-full max-w-[1240px] px-4 sm:px-6 lg:px-8 mx-auto justify-between">
+      <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 xl:gap-8 h-[74px] max-[560px]:h-[62px] w-full max-w-[1240px] px-3 sm:px-6 lg:px-8 mx-auto justify-between">
         <Link
           href="/"
-          className="flex items-center gap-[9px] text-[12px] leading-[0.92] font-bold tracking-[-0.03em] text-[var(--navy)] min-w-[105px] shrink-0"
+          className="flex items-center gap-[9px] text-[12px] leading-[0.92] font-bold tracking-[-0.03em] text-[var(--navy)] shrink-0"
           onClick={() => setOpen(false)}
         >
           {/* Desktop Logo */}
@@ -42,18 +42,30 @@ export function Navbar() {
               priority
             />
           </span>
-          {/* Mobile Logo */}
+          {/* Mobile Logo (Smaller & Sleek) */}
           <span className="hidden max-[920px]:inline-block">
             <Image
               src="/image/Logoblack.png"
               alt="Travel Tribes"
-              width={100}
-              height={40}
-              className="w-auto h-auto max-h-9 object-contain"
+              width={82}
+              height={28}
+              className="w-auto h-auto max-h-[26px] sm:max-h-7 object-contain"
               priority
             />
           </span>
         </Link>
+
+        {/* Mobile Contact Number (In between Logo and 3-line Menu) */}
+        <div className="hidden max-[920px]:flex items-center justify-center flex-1 px-2">
+          <a
+            href="tel:+919975822023"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 border border-slate-200/90 text-[11px] font-bold text-[var(--navy)] hover:text-[var(--sky)] hover:border-[var(--sky)] transition-all shadow-xs active:scale-95"
+            aria-label="Call Travel Tribes"
+          >
+            <Phone size={12} className="text-[var(--sky)] shrink-0" />
+            <span className="tracking-tight whitespace-nowrap font-extrabold">+91 99758 22023</span>
+          </a>
+        </div>
 
         <nav className="flex items-center justify-center flex-1 gap-3.5 lg:gap-4 xl:gap-6 text-[11.5px] lg:text-[12px] xl:text-[12.5px] font-black tracking-[0.04em] uppercase max-[920px]:hidden">
           {navItems.map((item) => {
@@ -88,7 +100,7 @@ export function Navbar() {
         </Link>
 
         <button
-          className="hidden max-[920px]:block ml-auto border-0 bg-transparent text-[var(--navy)] cursor-pointer p-1"
+          className="hidden max-[920px]:block shrink-0 border-0 bg-transparent text-[var(--navy)] cursor-pointer p-1"
           aria-label={open ? 'Close menu' : 'Open menu'}
           onClick={() => setOpen(!open)}
         >

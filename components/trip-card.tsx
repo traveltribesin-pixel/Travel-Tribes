@@ -15,7 +15,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
   const itineraryUrl = `/itinerary/${trip.slug}${isFestive ? '?festive=1' : ''}`
 
   return (
-    <Link href={itineraryUrl} className="group relative bg-white rounded-3xl overflow-hidden border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.2)] transition-all duration-300 hover:-translate-y-1 flex flex-col w-full h-full block">
+    <Link href={itineraryUrl} className="group relative bg-white rounded-3xl overflow-hidden border-2 border-[#72c3e4] hover:border-[var(--sky)] shadow-[0_4px_18px_rgba(67,169,209,0.12)] hover:shadow-[0_14px_32px_rgba(67,169,209,0.22)] transition-all duration-300 hover:-translate-y-1 flex flex-col w-full h-full block">
 
       {/* Image Container with tag overlays */}
       <div className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-50">

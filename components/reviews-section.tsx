@@ -54,23 +54,23 @@ export function ReviewsSection() {
 
   return (
     <section
-      className="py-12 sm:py-16 bg-[var(--sky-pale)] relative overflow-hidden"
+      className="py-8 sm:py-10 bg-[var(--sky-pale)] relative overflow-hidden"
       style={{
         paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
         paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',
       }}
     >
       {/* Header with Title & Stats */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6 sm:mb-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-5 sm:mb-7">
         <div>
-          <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
+          <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-1.5">
             <MessageSquareQuote size={16} className="text-[var(--sky)]" />
             <span>Real Feedback from Real Travellers</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--navy)] leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] leading-tight">
             Loved by 10,000+ Tribe Explorers
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2 max-w-xl leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
             Read real verified reviews from solo travellers, groups, and friends who explored Gokarna, Coorg, and Udaipur with us.
           </p>
         </div>

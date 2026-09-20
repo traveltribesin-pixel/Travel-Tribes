@@ -39,7 +39,7 @@ export function BrandValuesSection() {
 
   return (
     <section
-      className="py-12 sm:py-16 bg-white relative overflow-hidden border-b border-slate-100"
+      className="py-8 sm:py-10 bg-white relative overflow-hidden border-b border-slate-100"
       style={{
         paddingLeft: 'max(5vw, calc((100% - 1160px) / 2))',
         paddingRight: 'max(5vw, calc((100% - 1160px) / 2))',
@@ -50,17 +50,17 @@ export function BrandValuesSection() {
       <div className="absolute top-1/2 -right-40 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-        <div className="inline-flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest bg-[var(--sky-pale)] border border-[var(--sky)]/20 px-4 py-1.5 rounded-full mb-3 shadow-xs">
+      <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+        <div className="inline-flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest bg-[var(--sky-pale)] border border-[var(--sky)]/20 px-4 py-1.5 rounded-full mb-2.5 shadow-xs">
           <Sparkles size={14} className="text-[var(--sky)]" />
           <span>WHY TRAVEL TRIBES</span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--navy)] leading-tight tracking-tight">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[var(--navy)] leading-tight tracking-tight">
           Not Your Usual Travel Company.
         </h2>
 
-        <p className="text-slate-600 text-sm sm:text-base lg:text-lg font-semibold mt-2.5 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-sm lg:text-base font-semibold mt-1.5 sm:mt-2 max-w-2xl mx-auto leading-relaxed">
           Small groups. Like-minded people. Experiences worth leaving home for.
         </p>
       </div>
