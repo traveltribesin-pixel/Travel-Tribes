@@ -43,13 +43,13 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
           <span>{trip.location}</span>
         </div>
 
-        {/* Title */}
-        <h3 className="font-sans font-bold text-[17px] text-slate-800 group-hover:text-[var(--sky)] transition-colors mt-3 mb-2 leading-snug">
+        {/* Title (fixed 2-line height so 1-line and 2-line titles have identical card height) */}
+        <h3 className="font-sans font-bold text-[16px] sm:text-[17px] text-slate-800 group-hover:text-[var(--sky)] transition-colors mt-2.5 mb-2 leading-[1.35] line-clamp-2 min-h-[44px] sm:min-h-[46px]">
           {trip.title}
         </h3>
 
-        {/* Description Snippet */}
-        <p className="text-slate-500 text-xs leading-relaxed line-clamp-2 min-h-[32px] mb-4">
+        {/* Description Snippet (fixed 2-line height) */}
+        <p className="text-slate-500 text-xs leading-relaxed line-clamp-2 min-h-[36px] sm:min-h-[38px] mb-4">
           {trip.description}
         </p>
 

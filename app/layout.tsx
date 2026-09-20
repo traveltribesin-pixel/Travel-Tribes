@@ -14,21 +14,9 @@ export const metadata: Metadata = {
   description: 'Thoughtfully designed group journeys for curious people. Discover domestic, international and weekend trips with Travel Tribes.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/image/Logowithbg.png',
+    shortcut: '/image/Logowithbg.png',
+    apple: '/image/Logowithbg.png',
   },
 }
 

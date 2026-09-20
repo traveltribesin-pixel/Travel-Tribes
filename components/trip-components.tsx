@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useMemo, useRef, useState, useEffect } from 'react'
-import { ArrowLeft, ArrowRight, CalendarDays, Clock3, MapPin, Search, Star, ChevronDown, RotateCcw } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CalendarDays, Clock3, Compass, MapPin, Search, Star, ChevronDown, RotateCcw } from 'lucide-react'
 import { filterUpcomingDates, getTripPrimaryDate } from '@/lib/date-utils'
 import { toFestiveTrip, type Trip } from '@/lib/travel-data'
 
@@ -149,10 +149,10 @@ export function TripExplorer({
   return (
     <div>
       {/* Desktop & Mobile Filter Controls */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-8 gap-4">
-        {/* Custom Category Tabs */}
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-8 gap-3 sm:gap-4">
+        {/* Desktop/Tablet Custom Category Tabs (Hidden on mobile) */}
         <div
-          className="flex items-center bg-[#F9F8FB] p-1.5 rounded-2xl border border-gray-200/90 w-fit gap-1 sm:gap-1.5 overflow-x-auto max-w-full shadow-sm"
+          className="hidden sm:flex items-center bg-[#F9F8FB] p-1.5 rounded-2xl border border-gray-200/90 w-fit gap-1 sm:gap-1.5 overflow-x-auto max-w-full shadow-sm"
           style={{ scrollbarWidth: 'none' }}
         >
           {activeCategories.map((category) => (
@@ -177,58 +177,82 @@ export function TripExplorer({
           ))}
         </div>
 
-        {/* Filter Controls (Month + Search Bar) */}
-        <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
-          {/* Month Dropdown */}
-          <div className="relative min-w-[160px] flex-1 sm:flex-initial">
-            <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
-            <select
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-              className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
-              aria-label="Filter by month"
-            >
-              {monthsList.map((m) => (
-                <option key={m.value} value={m.value}>
-                  {m.label}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+        {/* Filter Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full xl:w-auto">
+          {/* Dropdowns Row (Mobile: Category + Month side by side, Desktop: Month only) */}
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            {/* Mobile-Only Category Dropdown (Matches Month dropdown style) */}
+            <div className="relative flex-1 sm:hidden">
+              <Compass className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
+              <select
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
+                aria-label="Filter by category"
+              >
+                {activeCategories.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
+
+            {/* Month Dropdown */}
+            <div className="relative flex-1 sm:flex-initial sm:min-w-[160px]">
+              <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
+              <select
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+                className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
+                aria-label="Filter by month"
+              >
+                {monthsList.map((m) => (
+                  <option key={m.value} value={m.value}>
+                    {m.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
 
-          {/* Search bar */}
-          <div className="relative min-w-[200px] flex-1 sm:w-64 sm:flex-initial">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search trips..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="pl-9.5 pr-8 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] shadow-sm transition-all"
-            />
-            {query && (
+          {/* Search bar & Reset button Row */}
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            {/* Search bar */}
+            <div className="relative flex-1 sm:w-64 sm:flex-initial">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search trips..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="pl-9.5 pr-8 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] shadow-sm transition-all"
+              />
+              {query && (
+                <button
+                  onClick={() => setQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs transition-colors"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            {/* Reset button */}
+            {hasActiveFilters && (
               <button
-                onClick={() => setQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs transition-colors"
-                aria-label="Clear search"
+                onClick={resetFilters}
+                title="Reset all filters"
+                className="h-11 px-3.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
               >
-                ✕
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Reset</span>
               </button>
             )}
           </div>
-
-          {/* Reset button */}
-          {hasActiveFilters && (
-            <button
-              onClick={resetFilters}
-              title="Reset all filters"
-              className="h-11 px-3.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Reset</span>
-            </button>
-          )}
         </div>
       </div>
 

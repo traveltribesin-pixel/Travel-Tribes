@@ -7,23 +7,26 @@ import Link from 'next/link'
 import { SAMPLE_TRIPS, type Trip } from '@/lib/trips'
 
 const HERO_IMAGES = [
-  'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&h=900&fit=crop', // Mountain road trip
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=900&fit=crop', // Beach sunset
-  'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1600&h=900&fit=crop', // Safari wildlife
-  'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1600&h=900&fit=crop', // Yosemite valley
-  'https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=1600&h=900&fit=crop'  // Mountain climbing
+  '/image/Spiti/spiti_img.JPEG',
+  '/image/Meghalaya/meghalaya_img.JPEG',
+  '/image/Gokarna/gokarna_img.jpeg',
+  '/image/Hampi/hampi_img.jpeg',
+  '/image/Coorg/coorg_img.JPEG',
+  '/image/Udaipur/udaipur_img.JPEG',
 ]
 
 const CLIENT_IMAGES_COL1 = [
-  { name: 'Sarah', loc: 'Kerala', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=400&q=80' },
-  { name: 'Emma', loc: 'Meghalaya', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80' },
-  { name: 'Michael', loc: 'Spiti Valley', img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=80' },
+  { name: 'Gokarna Tribe', loc: 'Gokarna', img: '/image/Gokarna/IMG_4170.JPG' },
+  { name: 'Meghalaya Tribe', loc: 'Meghalaya', img: '/image/Meghalaya/IMG_0857.JPEG' },
+  { name: 'Spiti Tribe', loc: 'Spiti Valley', img: '/image/Spiti/IMG_5483.jpg' },
+  { name: 'Hampi Tribe', loc: 'Hampi', img: '/image/Hampi/IMG_9698.JPEG' },
 ]
 
 const CLIENT_IMAGES_COL2 = [
-  { name: 'David', loc: 'Iceland', img: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=400&q=80' },
-  { name: 'Sophia', loc: 'Patagonia', img: 'https://images.unsplash.com/photo-1537905569824-f89f14cceb68?auto=format&fit=crop&w=400&q=80' },
-  { name: 'James', loc: 'Bali', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
+  { name: 'Coorg Tribe', loc: 'Coorg', img: '/image/Coorg/IMG_5499.JPEG' },
+  { name: 'Udaipur Tribe', loc: 'Udaipur', img: '/image/Udaipur/IMG_4003.JPG' },
+  { name: 'Gokarna Friends', loc: 'Gokarna', img: '/image/Gokarna/IMG_8908_Original.JPEG' },
+  { name: 'Hampi Sunset', loc: 'Hampi', img: '/image/Hampi/IMG_6658.JPG' },
 ]
 
 const ROTATING_WORDS = ['Gokarna', 'Spiti', 'Coorg', 'Udaipur', 'Meghalaya', 'Kerala', 'Rajasthan', 'Ladakh']
@@ -100,7 +103,7 @@ export function Hero() {
   }
 
   return (
-    <section className="min-h-[92vh] sm:min-h-[85vh] md:min-h-[90vh] pt-16 sm:pt-20 md:pt-14 pb-40 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-hidden flex items-center bg-primary">
+    <section className="min-h-[80vh] sm:min-h-[85vh] md:min-h-[90vh] pt-16 sm:pt-20 md:pt-14 pb-40 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-visible flex items-center bg-primary z-20">
       {/* CSS Styles for the Infinite Scrolling client tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -123,8 +126,8 @@ export function Hero() {
         }
       `}} />
 
-      {/* Background Slideshow */}
-      <div className="absolute inset-0 z-0 select-none pointer-events-none">
+      {/* Background Slideshow (Clipped to hero section bounds) */}
+      <div className="absolute inset-0 z-0 select-none pointer-events-none overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentImage}
@@ -141,7 +144,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-primary/20 mix-blend-multiply" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
+      <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Booking Content */}
@@ -154,7 +157,7 @@ export function Hero() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 leading-tight tracking-tight text-white drop-shadow-md">
               Travel with your <br />
               Tribe to{' '}
-              <span className="text-[#0cc0df] inline-block relative overflow-hidden h-[1.15em] align-bottom min-w-[130px] sm:min-w-[180px] md:min-w-[260px]">
+              <span className="text-[#0cc0df] inline-block relative overflow-hidden h-[1.25em] align-bottom min-w-[160px] sm:min-w-[240px] md:min-w-[340px] lg:min-w-[420px] pr-2">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={wordIndex}
@@ -191,7 +194,7 @@ export function Hero() {
             </div>
 
             {/* Search Input Box */}
-            <div ref={searchRef} className="max-w-md w-full relative mb-4 sm:mb-6">
+            <div ref={searchRef} className="max-w-md w-full relative z-40 mb-4 sm:mb-6">
               <form onSubmit={handleSearchSubmit} className="w-full relative">
                 <div className="flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-1.5 border border-white/20">
                   <div className="flex items-center flex-grow pl-3 sm:pl-4 min-w-0">
@@ -222,7 +225,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 right-0 mt-2 z-30 bg-white rounded-2xl border border-gray-100 shadow-2xl overflow-hidden max-h-[300px] overflow-y-auto no-scrollbar"
+                    className="absolute top-full left-0 right-0 mt-2 z-50 bg-white rounded-2xl border border-gray-100 shadow-2xl overflow-hidden max-h-[300px] overflow-y-auto no-scrollbar"
                   >
                     {suggestions.map((trip) => (
                       <Link href={`/itinerary/${trip.id}`} key={trip.id} className="block no-underline">

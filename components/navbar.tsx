@@ -49,21 +49,21 @@ export function Navbar() {
               alt="Travel Tribes"
               width={82}
               height={28}
-              className="w-auto h-auto max-h-[26px] sm:max-h-7 object-contain"
+              className="w-auto h-auto ml-5 max-h-[26px] sm:max-h-7 object-contain"
               priority
             />
           </span>
         </Link>
 
         {/* Mobile Contact Number (In between Logo and 3-line Menu) */}
-        <div className="hidden max-[920px]:flex items-center justify-center flex-1 px-2">
+        <div className="hidden max-[920px]:flex items-end justify-end flex-1 px-2">
           <a
             href="tel:+919975822023"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 border border-slate-200/90 text-[11px] font-bold text-[var(--navy)] hover:text-[var(--sky)] hover:border-[var(--sky)] transition-all shadow-xs active:scale-95"
+            className="inline-flex items-center gap-1.5 px-3 py-3 rounded-xl bg-white/90 border border-slate-200/90 text-[4vw] font-bold text-[var(--navy)] hover:text-[var(--sky)] hover:border-[var(--sky)] transition-all shadow-xs active:scale-95"
             aria-label="Call Travel Tribes"
           >
-            <Phone size={12} className="text-[var(--sky)] shrink-0" />
-            <span className="tracking-tight whitespace-nowrap font-extrabold">+91 99758 22023</span>
+            <Phone size={18} className="text-[var(--sky)] shrink-0" />
+            {/* <span className="tracking-tight whitespace-nowrap font-semibold">+91 99758 22023</span> */}
           </a>
         </div>
 
@@ -75,11 +75,10 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-link-anim transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-1.5 ${
-                  isActive
-                    ? 'active text-[var(--navy)] font-black'
-                    : 'text-[var(--muted-foreground)] hover:text-[var(--navy)]'
-                }`}
+                className={`nav-link-anim transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-1.5 ${isActive
+                  ? 'active text-[var(--navy)] font-black'
+                  : 'text-[var(--muted-foreground)] hover:text-[var(--navy)]'
+                  }`}
               >
                 <span>{item.label}</span>
                 {isXmas && (
@@ -118,13 +117,12 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 px-3 rounded-xl text-[14px] font-bold flex items-center justify-between transition-colors ${
-                    pathname === item.href
-                      ? 'bg-[var(--sky-pale)] text-[var(--sky)]'
-                      : isXmas
-                        ? 'text-amber-700 bg-amber-50/70'
-                        : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                  className={`py-2.5 px-3 rounded-xl text-[14px] font-bold flex items-center justify-between transition-colors ${pathname === item.href
+                    ? 'bg-[var(--sky-pale)] text-[var(--sky)]'
+                    : isXmas
+                      ? 'text-amber-700 bg-amber-50/70'
+                      : 'text-slate-700 hover:bg-slate-100'
+                    }`}
                 >
                   <span>{item.label}</span>
                   {isXmas && (

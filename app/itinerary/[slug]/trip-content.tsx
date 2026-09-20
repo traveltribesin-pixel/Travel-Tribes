@@ -301,10 +301,10 @@ export function TripContent({ trip }: { trip: Trip }) {
             <MapPin size={14} />
             <span>{trip.location}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-[var(--navy)] mb-3 leading-tight">
+          <h1 className="text-2xl lg:text-5xl font-extrabold text-[var(--navy)] mb-3 leading-tight">
             {trip.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-slate-500 font-medium text-sm">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-slate-500 font-medium text-xs md:text-sm">
             <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
               <Clock3 size={16} className="text-[var(--sky)]" /> {trip.duration}
             </span>
@@ -317,7 +317,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             <button
               type="button"
               onClick={() => setIsPdfModalOpen(true)}
-              className="flex items-center gap-2 bg-[var(--sky-pale)] hover:bg-[var(--sky)] text-[var(--sky)] hover:text-white border border-[var(--sky-pale)] px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shadow-sm cursor-pointer ml-auto sm:ml-0"
+              className="flex items-center gap-2 bg-[var(--sky-pale)] hover:bg-[var(--sky)] text-[var(--sky)] hover:text-white border border-sky-200 hover:border-[var(--sky)] px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shadow-sm cursor-pointer"
             >
               <FileDown size={15} />
               <span>Download Itinerary PDF</span>
@@ -350,7 +350,7 @@ export function TripContent({ trip }: { trip: Trip }) {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-[1160px] mx-auto px-6 lg:px-8 py-12">
+      <div className="max-w-[1160px] mx-auto px-5 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
 
           {/* Left Column */}
@@ -364,7 +364,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               </p>
 
               {/* PDF Download Highlight Banner */}
-              <div className="bg-gradient-to-r from-sky-50 via-blue-50/50 to-sky-50 border border-[var(--sky-pale)] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="bg-gradient-to-r from-sky-50 via-blue-50/50 to-sky-50 border border-[var(--sky-pale)] rounded-2xl p-2 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3.5">
                   <div className="w-11 h-11 rounded-2xl bg-white text-[var(--sky)] flex items-center justify-center shadow-sm shrink-0 border border-[var(--sky-pale)]">
                     <FileDown size={22} />
@@ -385,7 +385,7 @@ export function TripContent({ trip }: { trip: Trip }) {
 
               {/* Highlights */}
               {trip.highlights && trip.highlights.length > 0 && (
-                <div className="bg-slate-50/80 rounded-3xl p-6 sm:p-8 border border-slate-200">
+                <div className="bg-slate-50/80 rounded-3xl p-4 sm:p-8 border border-slate-200">
                   <h3 className="text-lg font-bold text-[var(--navy)] mb-4 flex items-center gap-2">
                     <Sparkles className="text-[var(--sun)]" size={20} /> Highlights
                   </h3>
@@ -406,9 +406,9 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="itinerary" className="scroll-mt-40">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)]">Day Wise Itinerary</h2>
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{trip.duration}</span>
+                  <div className="flex items-center justify-center mb-6">
+                    <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)]">Day Wise Itinerary</h2>
+                    {/* <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{trip.duration}</span> */}
                   </div>
 
                   <div className="space-y-4">
@@ -419,11 +419,11 @@ export function TripContent({ trip }: { trip: Trip }) {
                       >
                         <button
                           onClick={() => setOpenDay(openDay === dayPlan.day ? null : dayPlan.day)}
-                          className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4"
+                          className="w-full text-left p-3 sm:p-6 flex items-center justify-between gap-4"
                         >
                           <div className="flex items-center gap-4">
-                            <span className="w-12 h-12 rounded-xl bg-[var(--sky-pale)] text-[var(--sky)] font-extrabold text-sm flex items-center justify-center shrink-0">
-                              D{dayPlan.day}
+                            <span className="px-3 py-2 rounded-md bg-[var(--sky-pale)] text-[var(--sky)] font-extrabold text-sm flex items-center justify-center shrink-0">
+                              Day{dayPlan.day}
                             </span>
                             <span className="font-bold text-[var(--navy)] text-sm sm:text-base leading-snug">
                               {dayPlan.title}
@@ -467,7 +467,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="inclusions" className="scroll-mt-40">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-6">What&apos;s Included & Excluded</h2>
+                  <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] mb-6">What&apos;s Included & Excluded</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Inclusions */}
                     {trip.inclusions && trip.inclusions.length > 0 && (
@@ -515,7 +515,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 <section id="gallery" className="scroll-mt-40">
                   <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
                     <div>
-                      <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] flex items-center gap-3">
+                      <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] flex items-center gap-3">
                         <Camera className="text-[var(--sky)]" size={28} /> Destination Photo Gallery
                       </h2>
                       <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -572,10 +572,10 @@ export function TripContent({ trip }: { trip: Trip }) {
               <>
                 <hr className="border-[var(--border)]" />
                 <section id="policy" className="scroll-mt-40">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4 flex items-center gap-3">
+                  <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4 flex items-center gap-3">
                     <ShieldAlert className="text-slate-400" size={28} /> Policies
                   </h2>
-                  <div className="bg-slate-100/50 rounded-3xl p-8 border border-slate-200 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
+                  <div className="bg-slate-100/50 rounded-3xl p-5 border border-slate-200 transition-all duration-300 shadow-[0_4px_10px_rgba(100,100,100,0.2)] hover:shadow-[0_10px_15px_rgba(100,100,100,0.2)]">
                     <ul className="space-y-4">
                       {trip.policies.map((item, idx) => (
                         <li key={idx} className="flex items-start gap-3 text-[14px] text-slate-600">
@@ -712,7 +712,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                   <Star size={15} className="text-amber-400 fill-amber-400" />
                   <span>Real Feedback from Past {trip.title.replace(' Trip', '')} Batches</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
+                <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
                   Traveller Reviews for {trip.title}
                 </h2>
                 <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
@@ -793,27 +793,17 @@ export function TripContent({ trip }: { trip: Trip }) {
         {/* 2. RELATED TRIPS SECTION (HORIZONTAL SLIDER ON MOBILE, GRID ON DESKTOP) */}
         {relatedTrips.length > 0 && (
           <section id="related-trips" className="mt-16 sm:mt-20 pt-12 sm:pt-16 border-t border-[var(--border)]">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
-              <div>
-                <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
-                  <Compass size={15} className="text-[var(--sky)]" />
-                  <span>More Adventures To Explore</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
-                  Related Trips You Might Love
-                </h2>
-                <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
-                  Discover more unforgettable getaways, scenic trails, and tribe journeys tailored for wanderers like you.
-                </p>
+            <div className="mb-8 sm:mb-10 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">
+                <Compass size={15} className="text-[var(--sky)]" />
+                <span>More Adventures To Explore</span>
               </div>
-
-              <Link
-                href="/upcoming-trips"
-                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[var(--sky)] hover:text-[var(--navy)] transition-colors shrink-0"
-              >
-                <span>View All Upcoming Trips</span>
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
+                Related Trips You Might Love
+              </h2>
+              <p className="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed mx-auto sm:mx-0">
+                Discover more unforgettable getaways, scenic trails, and tribe journeys tailored for wanderers like you.
+              </p>
             </div>
 
             {/* Mobile Horizontal Carousel / Desktop 3-Column Grid */}
@@ -826,6 +816,17 @@ export function TripContent({ trip }: { trip: Trip }) {
                   <TripCard trip={relatedTrip} />
                 </div>
               ))}
+            </div>
+
+            {/* Centered Glow Button Below Cards (Same as Home Page) */}
+            <div className="mt-8 sm:mt-10 flex justify-center">
+              <Link
+                href="/upcoming-trips"
+                className="glow-btn inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold rounded-full shadow-lg !text-white cursor-pointer"
+              >
+                <span>View All Upcoming Trips</span>
+                <ArrowRight size={15} />
+              </Link>
             </div>
           </section>
         )}
