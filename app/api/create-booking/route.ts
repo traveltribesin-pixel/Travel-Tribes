@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { calculateBookingPricing } from '@/lib/pricing-calculator'
+import { sendEmail, getAdminEmails } from '@/lib/mail'
 
 // Simple in-memory rate limiting map for basic DDoS/spam prevention
 const requestCounts = new Map<string, { count: number; timestamp: number }>()
@@ -112,7 +113,56 @@ export async function POST(req: NextRequest) {
     const randomSuffix = Math.floor(1000 + Math.random() * 9000)
     const bookingId = `TT-${year}-${randomSuffix}`
 
-    // 4. Return the verified booking response
+    // 4. Send Confirmation & Admin Notification Emails (Non-blocking)
+    const adminEmails = getAdminEmails()
+    if (adminEmails.length > 0) {
+      sendEmail({
+        to: adminEmails,
+        subject: `🎉 New Booking Alert: ${pricing.tripTitle} (${bookingId})`,
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+            <h2 style="color: #0b2940; margin-bottom: 4px;">🎉 New Trip Booking Received!</h2>
+            <p style="color: #64748b; font-size: 14px;">Booking ID: <strong>${bookingId}</strong></p>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
+            <h3 style="color: #43a9d1; margin-bottom: 8px;">Trip Details</h3>
+            <p><strong>Trip:</strong> ${pricing.tripTitle}</p>
+            <p><strong>Travel Date:</strong> ${date || 'Selected Date'}</p>
+            <p><strong>Package:</strong> ${pricing.packageLabel}</p>
+            <p><strong>Number of Guests:</strong> ${pricing.guests}</p>
+            <p><strong>Total Amount:</strong> ₹${pricing.grandTotal.toLocaleString('en-IN')}</p>
+            <p><strong>Paid Today:</strong> ₹${pricing.amountToPayToday.toLocaleString('en-IN')}</p>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
+            <h3 style="color: #43a9d1; margin-bottom: 8px;">Traveller Details</h3>
+            <p><strong>Name:</strong> ${fullName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>City:</strong> ${city || 'Not provided'}</p>
+            ${specialRequest ? `<p><strong>Special Request:</strong> ${specialRequest}</p>` : ''}
+          </div>
+        `,
+      }).catch((err) => console.error('Booking admin email failed:', err))
+
+      // Send confirmation to Traveller
+      sendEmail({
+        to: email,
+        subject: `✈️ Booking Confirmation: ${pricing.tripTitle} (${bookingId}) - Travel Tribes`,
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+            <h2 style="color: #0b2940; margin-bottom: 4px;">You're Going to ${pricing.tripTitle}! 🎉</h2>
+            <p style="color: #64748b; font-size: 14px;">Hi ${fullName}, your booking has been received. Booking ID: <strong>${bookingId}</strong></p>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
+            <p><strong>Travel Date:</strong> ${date || 'Selected Date'}</p>
+            <p><strong>Guests:</strong> ${pricing.guests}</p>
+            <p><strong>Total Amount:</strong> ₹${pricing.grandTotal.toLocaleString('en-IN')}</p>
+            <p><strong>Amount Paid:</strong> ₹${pricing.amountToPayToday.toLocaleString('en-IN')}</p>
+            <p style="color: #64748b; font-size: 13px; margin-top: 20px;">Our team will reach out to you with all on-ground coordinator and group chat details shortly!</p>
+            <p style="color: #43a9d1; font-weight: bold; margin-top: 16px;">Travel Tribes — Tribe hai to vibe hai! ✨</p>
+          </div>
+        `,
+      }).catch((err) => console.error('Booking traveller email failed:', err))
+    }
+
+    // 5. Return the verified booking response
     return NextResponse.json({
       success: true,
       bookingId,
