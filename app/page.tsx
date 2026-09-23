@@ -71,7 +71,7 @@ export default function Home() {
         {/* 13. Blog & Travel Guides */}
         <BlogSection />
 
-        {/* 14. Community CTA Section */}
+        {/* 14. Community CTA Section  */}
         {/* <HomeCtaSection /> */}
 
         {/* 15. Newsletter */}
