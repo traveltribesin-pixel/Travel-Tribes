@@ -2565,15 +2565,21 @@ export const trips: Trip[] = [
   }
 ]
 
-export const navItems = [
+export const primaryNavItems = [
   { label: 'Upcoming trips', href: '/upcoming-trips' },
   { label: 'Domestic', href: '/domestic-trips' },
   { label: 'International', href: '/international-trips' },
-  { label: 'Weekend getaways', href: '/weekend-getaways' },
-  { label: 'Xmas & New Year', href: '/xmas-new-year-trips' },
   { label: 'Why Us', href: '/why-us' },
   { label: 'About us', href: '/about' }
 ]
+
+export const subNavItems = [
+  { label: 'Weekend Getaways', href: '/weekend-getaways' },
+  { label: 'Xmas & New Year', href: '/xmas-new-year-trips', badge: 'Festive' },
+  { label: 'Corporate Trips', href: '/corporate-trips' }
+]
+
+export const navItems = primaryNavItems
 
 export const testimonials: TripReview[] = [
   // --- GOKARNA REVIEWS (12) ---

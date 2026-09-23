@@ -123,6 +123,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/plan-a-trip" className="text-[#c8dce5] text-sm hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 group">
+                  <span className="hidden lg:block w-1.5 h-1.5 rounded-full bg-[#43a9d1]/40 group-hover:bg-[#43a9d1] transition-colors"></span>
+                  Plan a trip
+                </Link>
+              </li>
+              <li>
                 <Link href="/xmas-new-year-trips" className="text-[#c8dce5] text-sm hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 group">
                   <span className="hidden lg:block w-1.5 h-1.5 rounded-full bg-[#43a9d1]/40 group-hover:bg-[#43a9d1] transition-colors"></span>
                   Xmas & New Year 🎉
