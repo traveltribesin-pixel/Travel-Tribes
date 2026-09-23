@@ -416,7 +416,30 @@ export function ReviewCard({
     </article>
   )
 }
-export function Newsletter() { 
+export function Newsletter() {
+  const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !email.includes('@')) return
+    setLoading(true)
+    try {
+      await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      })
+      setSuccess(true)
+      setEmail('')
+    } catch (err) {
+      console.error('Newsletter error:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section className="newsletter">
       <div className="max-[560px]:text-center max-[560px]:flex max-[560px]:flex-col max-[560px]:items-center">
@@ -426,14 +449,30 @@ export function Newsletter() {
           Get first dibs on new trips, fresh destinations, travel inspiration and limited-seat adventures.
         </p>
       </div>
-      <form onSubmit={e => e.preventDefault()}>
-        <label htmlFor="newsletter-email">Your email address</label>
-        <div>
-          <input id="newsletter-email" type="email" required placeholder="you@example.com" />
-          <button type="submit" aria-label="Subscribe"><ArrowRight /></button>
+      {success ? (
+        <div className="py-3 px-5 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 text-xs font-bold animate-in fade-in">
+          🎉 You&apos;re subscribed! Welcome to the Tribe. Check your inbox for confirmation.
         </div>
-        <small>No spam. Just trips worth taking.</small>
-      </form>
+      ) : (
+        <form onSubmit={handleSubscribe}>
+          <label htmlFor="newsletter-email">Your email address</label>
+          <div>
+            <input
+              id="newsletter-email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+            />
+            <button type="submit" aria-label="Subscribe" disabled={loading} className="cursor-pointer">
+              <ArrowRight className={loading ? 'animate-pulse' : ''} />
+            </button>
+          </div>
+          <small>No spam. Just trips worth taking.</small>
+        </form>
+      )}
     </section>
-  ) 
+  )
 }

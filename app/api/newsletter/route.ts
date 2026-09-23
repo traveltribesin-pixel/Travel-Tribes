@@ -1,0 +1,81 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { sendEmail, getAdminEmails } from '@/lib/mail'
+import { appendToGoogleSheet } from '@/lib/google-sheets'
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json().catch(() => null)
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json({ success: false, error: 'Invalid data' }, { status: 400 })
+    }
+
+    const { email } = body
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
+      return NextResponse.json({ success: false, error: 'Valid email address is required' }, { status: 400 })
+    }
+
+    const cleanEmail = String(email).trim().toLowerCase()
+
+    // 1. Send Alert to Owner/Admin
+    const adminEmails = getAdminEmails()
+    if (adminEmails.length > 0) {
+      sendEmail({
+        to: adminEmails,
+        replyTo: cleanEmail,
+        subject: `📬 New Newsletter Subscriber: ${cleanEmail}`,
+        html: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+            <h2 style="color: #0b2940; margin: 0 0 8px; font-size: 20px;">📬 New Newsletter Subscriber</h2>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
+            <p><strong>Email:</strong> <a href="mailto:${cleanEmail}" style="color: #00b4d8;">${cleanEmail}</a></p>
+            <p><strong>Date:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</p>
+          </div>
+        `,
+      }).catch((err) => console.error('Newsletter admin notification failed:', err))
+    }
+
+    // 2. Send Welcome Email to Subscriber
+    sendEmail({
+      to: cleanEmail,
+      subject: `🎉 Welcome to the Tribe! — Travel Tribes`,
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h1 style="color: #0b2940; font-size: 24px; margin: 0 0 6px;">Travel Tribes</h1>
+            <p style="color: #00b4d8; font-weight: bold; font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Small Groups. Big Adventures.</p>
+          </div>
+          <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; text-align: center;">
+            <h2 style="color: #0b2940; font-size: 18px; margin: 0 0 10px;">You're on the list! 🎉</h2>
+            <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0;">
+              Thank you for subscribing to Travel Tribes. You'll be the first to know about secret trail releases, long weekend trips, early bird discounts, and epic community adventures.
+            </p>
+          </div>
+          <div style="text-align: center; margin: 24px 0;">
+            <a href="https://traveltribes.in/upcoming-trips" style="display: inline-block; background-color: #0b2940; color: #ffffff; padding: 12px 24px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">
+              Explore Upcoming Trips ➔
+            </a>
+          </div>
+          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+          <div style="text-align: center; color: #94a3b8; font-size: 12px;">
+            <p style="margin: 0; font-weight: bold; color: #0b2940;">Travel Tribes — Tribe hai to vibe hai! 🚀</p>
+          </div>
+        </div>
+      `,
+    }).catch((err) => console.error('Newsletter subscriber email failed:', err))
+
+    // 3. Sync Newsletter Subscriber to Google Sheets (Non-blocking)
+    appendToGoogleSheet({
+      type: 'newsletter',
+      email: cleanEmail
+    }).catch((err) => console.error('Newsletter Google Sheets sync failed:', err))
+
+    return NextResponse.json({
+      success: true,
+      message: 'Subscribed successfully',
+      timestamp: new Date().toISOString(),
+    })
+  } catch (error) {
+    console.error('Newsletter API Error:', error)
+    return NextResponse.json({ success: false, error: 'Server error' }, { status: 500 })
+  }
+}

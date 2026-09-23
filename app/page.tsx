@@ -10,6 +10,7 @@ import { InternationalTripsSection } from '@/components/international-trips-sect
 import { HoneymoonEscapesSection } from '@/components/honeymoon-escapes-section'
 import { VideoGallerySection } from '@/components/video-gallery-section'
 import { ReviewsSection } from '@/components/reviews-section'
+import { CustomTripBuilderSection } from '@/components/custom-trip-builder-section'
 import { FaqAccordionSection } from '@/components/faq-accordion-section'
 import { GallerySection } from '@/components/gallery-section'
 import { BlogSection } from '@/components/blog-section'
@@ -47,7 +48,10 @@ export default function Home() {
         {/* 9. Travellers Reviews */}
         <ReviewsSection />
 
-        {/* 10. Frequently Asked Questions Accordion Section */}
+        {/* 10. Can't find your trip? Make your own (Custom Trip Builder) */}
+        <CustomTripBuilderSection />
+
+        {/* 11. Frequently Asked Questions Accordion Section */}
         <FaqAccordionSection
           title="Frequently Asked Questions"
           eyebrow="GOT QUESTIONS?"

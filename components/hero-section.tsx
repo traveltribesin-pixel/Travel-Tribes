@@ -42,7 +42,7 @@ export function Hero() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % HERO_IMAGES.length)
-    }, 8000)
+    }, 3000)
     return () => clearInterval(timer)
   }, [])
 
@@ -134,7 +134,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 2, ease: 'easeInOut' }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${HERO_IMAGES[currentImage]})` }}
           />
@@ -264,10 +264,6 @@ export function Hero() {
 
           {/* Right Column: Sliding Client Travel Images (Dual-Track Infinite Scroll) */}
           <div className="lg:col-span-5 hidden lg:block h-[450px] relative overflow-hidden select-none">
-            {/* Soft gradient fade on top and bottom of tracks */}
-            <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-primary to-transparent z-10 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-primary to-transparent z-10 pointer-events-none" />
-
             <div className="grid grid-cols-2 gap-4 h-full">
 
               {/* Column 1: Upward scrolling */}

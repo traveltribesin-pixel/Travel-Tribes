@@ -12,6 +12,7 @@ import { getTripPrimaryDate, filterUpcomingDates, isFestiveDate } from '@/lib/da
 import { TripCard } from '@/components/trip-card'
 import { ReviewCard } from '@/components/trip-components'
 import { generateItineraryPDF } from '@/lib/generate-itinerary-pdf'
+import { PicturePerfectGallery } from '@/components/picture-perfect-gallery'
 
 export function TripContent({ trip }: { trip: Trip }) {
   const searchParams = useSearchParams()
@@ -201,9 +202,9 @@ export function TripContent({ trip }: { trip: Trip }) {
     { id: 'overview', label: 'Overview' },
     ...(trip.itinerary && trip.itinerary.length > 0 ? [{ id: 'itinerary', label: 'Itinerary' }] : []),
     ...(trip.inclusions && trip.inclusions.length > 0 ? [{ id: 'inclusions', label: 'Inclusive/Exclusive' }] : []),
-    ...(galleryImages.length > 0 ? [{ id: 'gallery', label: `Gallery (${galleryImages.length})` }] : []),
-    ...(trip.reviews && trip.reviews.length > 0 ? [{ id: 'reviews', label: `Reviews (${trip.reviews.length})` }] : []),
-    ...(trip.policies && trip.policies.length > 0 ? [{ id: 'policy', label: 'Policy' }] : [])
+    ...(trip.policies && trip.policies.length > 0 ? [{ id: 'policy', label: 'Policy' }] : []),
+    ...(galleryImages.length > 0 ? [{ id: 'gallery', label: 'Pictures Perfect Moments' }] : []),
+    ...(trip.reviews && trip.reviews.length > 0 ? [{ id: 'reviews', label: `Reviews (${trip.reviews.length})` }] : [])
   ]
 
   // Scrollspy logic
@@ -508,66 +509,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             )}
 
 
-            {/* 4. Destination Photo Gallery */}
-            {galleryImages.length > 0 && (
-              <>
-                <hr className="border-[var(--border)]" />
-                <section id="gallery" className="scroll-mt-40">
-                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
-                    <div>
-                      <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] flex items-center gap-3">
-                        <Camera className="text-[var(--sky)]" size={28} /> Destination Photo Gallery
-                      </h2>
-                      <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                        Authentic glimpses & moments from {trip.title} ({galleryImages.length} photos)
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[var(--sky-pale)] hover:border-[var(--sky)] transition-all duration-300 shadow-[0_4px_10px_rgba(67,169,209,0.2)] hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)]">
-                    {/* Responsive Modern Photo Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-                      {(showAllPhotos ? galleryImages : galleryImages.slice(0, 8)).map((item, idx) => (
-                        <div
-                          key={idx}
-                          onClick={() => setLightboxIndex(idx)}
-                          className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer bg-slate-100 border border-slate-200/60 hover:border-[var(--sky)] transition-all shadow-sm"
-                        >
-                          <Image
-                            src={item.image}
-                            alt={item.alt || `${trip.title} photo ${idx + 1}`}
-                            fill
-                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <div className="w-10 h-10 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-[var(--navy)] shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
-                              <Maximize2 size={18} />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Show More / Show Less Toggle Button */}
-                    {galleryImages.length > 8 && (
-                      <div className="mt-6 text-center">
-                        <button
-                          type="button"
-                          onClick={() => setShowAllPhotos(!showAllPhotos)}
-                          className="px-6 py-2.5 rounded-full border border-[var(--sky)] text-[var(--sky)] hover:bg-[var(--sky)] hover:text-white font-bold text-xs sm:text-sm transition-all duration-300 shadow-sm inline-flex items-center gap-2 cursor-pointer"
-                        >
-                          <Images size={16} />
-                          <span>{showAllPhotos ? 'Show Less Photos' : `View All ${galleryImages.length} Photos`}</span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </section>
-              </>
-            )}
-
-            {/* 5. Policy */}
+            {/* 4. Policy */}
             {trip.policies && trip.policies.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
@@ -702,6 +644,17 @@ export function TripContent({ trip }: { trip: Trip }) {
           </div>
 
         </div>
+
+        {/* PICTURES PERFECT MOMENTS - 3D CURVED PANORAMIC GALLERY SECTION */}
+        {galleryImages.length > 0 && (
+          <div className="mt-16 sm:mt-20 pt-8 sm:pt-12 border-t border-[var(--border)]">
+            <PicturePerfectGallery
+              images={galleryImages}
+              tripTitle={trip.title}
+              location={trip.location}
+            />
+          </div>
+        )}
 
         {/* 1. DESTINATION-SPECIFIC REVIEWS SLIDER (COMES FIRST BEFORE RELATED TRIPS) */}
         {trip.reviews && trip.reviews.length > 0 && (

@@ -133,7 +133,7 @@ export function BookingContent() {
       setCouponSuccess(`Coupon ${res.cleanCode} applied! ₹${res.discount} discount savings.`)
       setCouponInput('')
     } else {
-      setCouponError('Invalid coupon code. Try TRIBE500 or EARLYBIRD')
+      setCouponError('Invalid coupon code. Please check and try again.')
     }
   }
 
@@ -750,7 +750,6 @@ export function BookingContent() {
                       <Tag size={13} className="text-[var(--sky)]" />
                       <span>Have a Discount Coupon?</span>
                     </label>
-                    <span className="text-[10px] text-slate-400">e.g. TRIBE500</span>
                   </div>
 
                   {appliedCoupon ? (
@@ -806,32 +805,6 @@ export function BookingContent() {
                       {couponError && (
                         <p className="text-[11px] text-rose-600 font-medium pl-1">{couponError}</p>
                       )}
-
-                      <div className="flex items-center gap-1.5 pt-1 pl-1">
-                        <span className="text-[10px] text-slate-400">Available codes:</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setCouponInput('TRIBE500')
-                            setAppliedCoupon('TRIBE500')
-                            setCouponSuccess('Coupon TRIBE500 applied! ₹500 discount savings.')
-                          }}
-                          className="text-[10px] font-bold text-[var(--sky)] hover:underline cursor-pointer bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100"
-                        >
-                          TRIBE500
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setCouponInput('EARLYBIRD')
-                            setAppliedCoupon('EARLYBIRD')
-                            setCouponSuccess('Coupon EARLYBIRD applied! ₹500 discount savings.')
-                          }}
-                          className="text-[10px] font-bold text-[var(--sky)] hover:underline cursor-pointer bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100"
-                        >
-                          EARLYBIRD
-                        </button>
-                      </div>
                     </form>
                   )}
                 </div>
