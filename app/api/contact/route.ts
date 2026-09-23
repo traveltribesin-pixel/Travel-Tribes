@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid data' }, { status: 400 })
     }
 
-    const { firstName, email, phone, trip, message } = body
+    const { formSource, firstName, email, phone, trip, message } = body
 
     if (!firstName || !email || !message) {
       return NextResponse.json({ success: false, error: 'Name, email and message are required' }, { status: 400 })
@@ -17,9 +17,10 @@ export async function POST(req: NextRequest) {
 
     const cleanName = String(firstName).trim()
     const cleanEmail = String(email).trim().toLowerCase()
-    const cleanPhone = phone ? String(phone).trim() : null
+    const cleanPhone = phone ? String(phone).trim() : 'Not provided'
     const tripInterest = String(trip || 'General Enquiry').trim()
     const cleanMessage = String(message).trim()
+    const sourceLabel = String(formSource || 'Contact Us Page Form').trim()
 
     // 1. Send Notification Email to Owner/Admin
     const adminEmails = getAdminEmails()
@@ -27,42 +28,54 @@ export async function POST(req: NextRequest) {
       sendEmail({
         to: adminEmails,
         replyTo: cleanEmail,
-        subject: `📩 New Contact Enquiry: ${cleanName} (${tripInterest})`,
+        subject: `📩 [${sourceLabel}] New Enquiry: ${cleanName} (${tripInterest})`,
         html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
             <div style="text-align: center; margin-bottom: 20px;">
-              <h2 style="color: #0b2940; margin: 0; font-size: 22px;">📩 New Contact Form Enquiry</h2>
-              <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Received from traveltribes.in/contact</p>
+              <span style="display: inline-block; background-color: #0b2940; color: #ffffff; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${sourceLabel}
+              </span>
+              <h2 style="color: #0b2940; margin: 10px 0 4px; font-size: 22px;">📩 New Contact Form Enquiry</h2>
+              <p style="color: #64748b; font-size: 13px; margin: 0;">Received from <strong>traveltribes.in/contact</strong></p>
             </div>
             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
             <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
               <tr>
-                <td style="padding: 8px 0; color: #64748b; width: 140px;"><strong>Name:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940; font-weight: bold;">${cleanName}</td>
+                <td style="padding: 7px 0; color: #64748b; width: 150px;"><strong>Form / Source:</strong></td>
+                <td style="padding: 7px 0; color: #00b4d8; font-weight: bold;">${sourceLabel}</td>
               </tr>
               <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Email:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940;"><a href="mailto:${cleanEmail}" style="color: #00b4d8; text-decoration: none;">${cleanEmail}</a></td>
-              </tr>
-              ${cleanPhone ? `
-              <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Phone:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940;"><a href="tel:${cleanPhone}" style="color: #00b4d8; text-decoration: none;">${cleanPhone}</a></td>
-              </tr>` : ''}
-              <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Trip Interest:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940;">${tripInterest}</td>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Name:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940; font-weight: bold;">${cleanName}</td>
               </tr>
               <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Time:</strong></td>
-                <td style="padding: 8px 0; color: #64748b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</td>
+                <td style="padding: 7px 0; color: #64748b;"><strong>WhatsApp / Phone:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940;">
+                  <a href="tel:${cleanPhone}" style="color: #00b4d8; text-decoration: none; font-weight: bold;">${cleanPhone}</a> 
+                  ${cleanPhone !== 'Not provided' ? `(<a href="https://wa.me/${cleanPhone.replace(/[^\d]/g, '')}" style="color: #10b981; text-decoration: none; font-weight: bold;">WhatsApp</a>)` : ''}
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Email:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940;"><a href="mailto:${cleanEmail}" style="color: #00b4d8; text-decoration: none;">${cleanEmail}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Trip Interest:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940; font-weight: bold;">${tripInterest}</td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Timestamp:</strong></td>
+                <td style="padding: 7px 0; color: #64748b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</td>
               </tr>
             </table>
             <div style="margin-top: 16px;">
-              <strong style="color: #0b2940; font-size: 14px;">User's Message:</strong>
-              <div style="background-color: #f8fafc; padding: 14px 18px; border-left: 4px solid #00b4d8; border-radius: 6px; margin-top: 8px; font-size: 14px; color: #334155; line-height: 1.6;">
+              <strong style="color: #0b2940; font-size: 13px; text-transform: uppercase;">Message Content:</strong>
+              <div style="background-color: #f8fafc; padding: 14px 18px; border-left: 4px solid #00b4d8; border-radius: 6px; margin-top: 6px; font-size: 14px; color: #334155; line-height: 1.6;">
                 ${cleanMessage.replace(/\n/g, '<br/>')}
               </div>
+            </div>
+            <div style="margin-top: 24px; padding: 14px; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; font-size: 12px; color: #0369a1;">
+              💡 <strong>Action Required:</strong> Please reply to ${cleanName} via WhatsApp or Email within 24 hours.
             </div>
           </div>
         `,
@@ -72,9 +85,9 @@ export async function POST(req: NextRequest) {
     // 2. Send Friendly Auto-Acknowledgement Email to the User
     sendEmail({
       to: cleanEmail,
-      subject: `👋 We've received your note, ${cleanName}! — Travel Tribes`,
+      subject: `👋 We've received your inquiry via ${sourceLabel}, ${cleanName}! — Travel Tribes`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
           <div style="text-align: center; margin-bottom: 24px;">
             <h1 style="color: #0b2940; font-size: 24px; margin: 0 0 6px;">Travel Tribes</h1>
             <p style="color: #00b4d8; font-weight: bold; font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Small Groups. Big Adventures.</p>
@@ -82,7 +95,7 @@ export async function POST(req: NextRequest) {
           <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
             <h2 style="color: #0b2940; font-size: 18px; margin: 0 0 10px;">Hi ${cleanName}, thank you for reaching out! 🙌</h2>
             <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0;">
-              We have received your enquiry regarding <strong>${tripInterest}</strong>. A dedicated trip captain from our team is reviewing your message and will get back to you shortly within 24 hours.
+              We have received your enquiry submitted through the <strong>${sourceLabel}</strong> regarding <strong>${tripInterest}</strong>. A dedicated trip designer is reviewing your note and will get back to you within 24 hours.
             </p>
           </div>
           <div style="padding: 16px; background-color: #f1f5f9; border-radius: 10px; margin-bottom: 20px;">
@@ -92,8 +105,8 @@ export async function POST(req: NextRequest) {
             </p>
           </div>
           <div style="text-align: center; margin: 24px 0;">
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Need instant answers or customized group planning?</p>
-            <a href="https://wa.me/919975822023" style="display: inline-block; background-color: #10b981; color: #ffffff; padding: 12px 24px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Need instant answers or customized planning?</p>
+            <a href="https://wa.me/919975822023?text=Hi%20Travel%20Tribes,%20I%20sent%20a%20message%20regarding%20${encodeURIComponent(tripInterest)}.%20Please%20connect!" style="display: inline-block; background-color: #10b981; color: #ffffff; padding: 12px 24px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">
               💬 Chat with us directly on WhatsApp (+91 99758 22023)
             </a>
           </div>
@@ -111,8 +124,8 @@ export async function POST(req: NextRequest) {
       type: 'contact',
       firstName: cleanName,
       email: cleanEmail,
-      phone: cleanPhone || '',
-      trip: tripInterest,
+      phone: cleanPhone !== 'Not provided' ? cleanPhone : '',
+      trip: `${sourceLabel}: ${tripInterest}`,
       message: cleanMessage
     }).catch((err) => console.error('Contact Google Sheets sync failed:', err))
 

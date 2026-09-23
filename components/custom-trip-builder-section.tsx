@@ -65,6 +65,7 @@ export function CustomTripBuilderSection() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          formSource: 'Homepage Custom Trip Builder',
           fullName: fullName.trim(),
           phone: phone.trim(),
           email: email.trim(),

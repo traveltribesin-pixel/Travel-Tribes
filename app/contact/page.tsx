@@ -14,8 +14,10 @@ export default function Page() {
 
     const formData = new FormData(e.currentTarget)
     const data = {
+      formSource: 'Contact Us Page Form',
       firstName: formData.get('firstName'),
       email: formData.get('email'),
+      phone: formData.get('phone'),
       trip: formData.get('trip'),
       message: formData.get('message'),
     }
@@ -92,19 +94,25 @@ export default function Page() {
                     <input required name="firstName" placeholder="Your name" />
                   </label>
                   <label>
+                    WhatsApp Number
+                    <input required type="tel" name="phone" placeholder="+91 98765 43210" />
+                  </label>
+                </div>
+                <div className="form-row">
+                  <label>
                     Email address
                     <input required type="email" name="email" placeholder="you@example.com" />
                   </label>
+                  <label>
+                    Trip Type
+                    <select name="trip">
+                      <option>Surprise me</option>
+                      <option>Domestic trip</option>
+                      <option>International trip</option>
+                      <option>Weekend getaway</option>
+                    </select>
+                  </label>
                 </div>
-                <label>
-                  What kind of trip are you looking for?
-                  <select name="trip">
-                    <option>Surprise me</option>
-                    <option>Domestic trip</option>
-                    <option>International trip</option>
-                    <option>Weekend getaway</option>
-                  </select>
-                </label>
                 <label>
                   Tell us a little more
                   <textarea required name="message" rows={5} placeholder="Dates, destinations, who you&apos;re travelling with..."></textarea>

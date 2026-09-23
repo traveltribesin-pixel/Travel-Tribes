@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+import { LeadCaptureModal } from '@/components/lead-capture-modal'
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -34,8 +35,10 @@ export default function RootLayout({
     <html lang="en" className={plusJakarta.variable}>
       <body className="antialiased font-sans">
         {children}
+        <LeadCaptureModal />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
 }
+

@@ -88,6 +88,7 @@ export function TripContent({ trip }: { trip: Trip }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          formSource: 'Itinerary PDF Download Form',
           fullName: name,
           phone,
           email,

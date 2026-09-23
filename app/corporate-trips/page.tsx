@@ -194,6 +194,7 @@ export default function CorporateTripsPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          formSource: 'Corporate Offsite Proposal Form',
           fullName: `${name.trim()} (${companyName.trim()})`,
           phone: phone.trim(),
           email: workEmail.trim(),

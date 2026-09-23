@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid data' }, { status: 400 })
     }
 
-    const { fullName, phone, email, tripSlug, tripTitle } = body
+    const { formSource, fullName, phone, email, tripSlug, tripTitle } = body
 
     if (!fullName || !phone || !email) {
       return NextResponse.json({ success: false, error: 'Name, phone and email are required' }, { status: 400 })
@@ -19,9 +19,10 @@ export async function POST(req: NextRequest) {
     const cleanEmail = String(email).trim().toLowerCase()
     const cleanPhone = String(phone).trim()
     const tripName = String(tripTitle || tripSlug || 'Upcoming Trip').trim()
+    const sourceLabel = String(formSource || 'Itinerary PDF Download Form').trim()
 
     // Log the captured lead for CRM / WhatsApp followups
-    console.log(`[Itinerary Download Lead] Name: ${cleanName}, Phone: ${cleanPhone}, Email: ${cleanEmail}, Trip: ${tripName}, Date: ${new Date().toISOString()}`)
+    console.log(`[Lead Capture] Source: ${sourceLabel}, Name: ${cleanName}, Phone: ${cleanPhone}, Email: ${cleanEmail}, Trip: ${tripName}, Date: ${new Date().toISOString()}`)
 
     // 1. Send Lead Alert Email to Admin/Owner
     const adminEmails = getAdminEmails()
@@ -29,38 +30,48 @@ export async function POST(req: NextRequest) {
       sendEmail({
         to: adminEmails,
         replyTo: cleanEmail,
-        subject: `📥 New Itinerary Download Lead: ${tripName} (${cleanName})`,
+        subject: `📥 [${sourceLabel}] New Lead: ${tripName} (${cleanName})`,
         html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
             <div style="text-align: center; margin-bottom: 20px;">
-              <h2 style="color: #0b2940; margin: 0; font-size: 22px;">📥 New Lead: Itinerary Download</h2>
-              <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">A user has downloaded the itinerary PDF and requested details.</p>
+              <span style="display: inline-block; background-color: #0b2940; color: #ffffff; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${sourceLabel}
+              </span>
+              <h2 style="color: #0b2940; margin: 10px 0 4px; font-size: 22px;">📥 New Lead: Itinerary Download</h2>
+              <p style="color: #64748b; font-size: 13px; margin: 0;">Captured via <strong>${sourceLabel}</strong></p>
             </div>
             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
             <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
               <tr>
-                <td style="padding: 8px 0; color: #64748b; width: 140px;"><strong>Trip Destination:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940; font-weight: bold;">${tripName}</td>
+                <td style="padding: 7px 0; color: #64748b; width: 150px;"><strong>Form / Source:</strong></td>
+                <td style="padding: 7px 0; color: #00b4d8; font-weight: bold;">${sourceLabel}</td>
               </tr>
               <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Full Name:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940;">${cleanName}</td>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Trip Destination:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940; font-weight: bold; font-size: 16px;">${tripName}</td>
               </tr>
               <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>WhatsApp / Phone:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940;"><a href="tel:${cleanPhone}" style="color: #00b4d8; text-decoration: none;">${cleanPhone}</a> (<a href="https://wa.me/${cleanPhone.replace(/[^\d]/g, '')}" style="color: #10b981; text-decoration: none;">WhatsApp</a>)</td>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Full Name:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940; font-weight: bold;">${cleanName}</td>
               </tr>
               <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Email:</strong></td>
-                <td style="padding: 8px 0; color: #0b2940;"><a href="mailto:${cleanEmail}" style="color: #00b4d8; text-decoration: none;">${cleanEmail}</a></td>
+                <td style="padding: 7px 0; color: #64748b;"><strong>WhatsApp / Phone:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940;">
+                  <a href="tel:${cleanPhone}" style="color: #00b4d8; text-decoration: none; font-weight: bold;">${cleanPhone}</a> 
+                  (<a href="https://wa.me/${cleanPhone.replace(/[^\d]/g, '')}" style="color: #10b981; text-decoration: none; font-weight: bold;">Chat on WhatsApp</a>)
+                </td>
               </tr>
               <tr>
-                <td style="padding: 8px 0; color: #64748b;"><strong>Timestamp:</strong></td>
-                <td style="padding: 8px 0; color: #64748b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</td>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Email:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940;"><a href="mailto:${cleanEmail}" style="color: #00b4d8; text-decoration: none;">${cleanEmail}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Timestamp:</strong></td>
+                <td style="padding: 7px 0; color: #64748b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</td>
               </tr>
             </table>
             <div style="margin-top: 24px; padding: 14px; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; font-size: 12px; color: #0369a1;">
-              💡 <strong>Action Suggested:</strong> Follow up with ${cleanName} on WhatsApp or Email regarding upcoming batch dates and seat availability.
+              💡 <strong>Action Suggested:</strong> Follow up with ${cleanName} on WhatsApp (<a href="https://wa.me/${cleanPhone.replace(/[^\d]/g, '')}" style="color: #0284c7; font-weight: bold;">Click to open WhatsApp</a>) or Email regarding upcoming batch dates and seat availability.
             </div>
           </div>
         `,
@@ -72,7 +83,7 @@ export async function POST(req: NextRequest) {
       to: cleanEmail,
       subject: `🎒 Your Itinerary Guide for ${tripName} — Travel Tribes`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
           <div style="text-align: center; margin-bottom: 24px;">
             <h1 style="color: #0b2940; font-size: 24px; margin: 0 0 6px;">Travel Tribes</h1>
             <p style="color: #00b4d8; font-weight: bold; font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Small Groups. Big Adventures.</p>
@@ -80,7 +91,7 @@ export async function POST(req: NextRequest) {
           <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
             <h2 style="color: #0b2940; font-size: 18px; margin: 0 0 10px;">Hi ${cleanName}, thank you for exploring with us! ✨</h2>
             <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0;">
-              Your requested itinerary details for <strong>${tripName}</strong> have been downloaded. We are excited to welcome you into the Tribe!
+              Your requested itinerary details for <strong>${tripName}</strong> have been downloaded via our <strong>${sourceLabel}</strong>. We are excited to welcome you into the Tribe!
             </p>
           </div>
           <div style="padding: 16px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; margin-bottom: 20px;">
@@ -112,7 +123,7 @@ export async function POST(req: NextRequest) {
       fullName: cleanName,
       phone: cleanPhone,
       email: cleanEmail,
-      tripTitle: tripName,
+      tripTitle: `${sourceLabel}: ${tripName}`,
       tripSlug: tripSlug || ''
     }).catch((err) => console.error('Lead Google Sheets sync failed:', err))
 

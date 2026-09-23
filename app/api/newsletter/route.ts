@@ -16,19 +16,39 @@ export async function POST(req: NextRequest) {
 
     const cleanEmail = String(email).trim().toLowerCase()
 
+    const sourceLabel = 'Website Newsletter Subscription Form'
+
     // 1. Send Alert to Owner/Admin
     const adminEmails = getAdminEmails()
     if (adminEmails.length > 0) {
       sendEmail({
         to: adminEmails,
         replyTo: cleanEmail,
-        subject: `📬 New Newsletter Subscriber: ${cleanEmail}`,
+        subject: `📬 [${sourceLabel}] New Subscriber: ${cleanEmail}`,
         html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
-            <h2 style="color: #0b2940; margin: 0 0 8px; font-size: 20px;">📬 New Newsletter Subscriber</h2>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <span style="display: inline-block; background-color: #0b2940; color: #ffffff; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${sourceLabel}
+              </span>
+              <h2 style="color: #0b2940; margin: 10px 0 4px; font-size: 22px;">📬 New Newsletter Subscriber</h2>
+              <p style="color: #64748b; font-size: 13px; margin: 0;">Subscribed from Website Homepage / Footer</p>
+            </div>
             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
-            <p><strong>Email:</strong> <a href="mailto:${cleanEmail}" style="color: #00b4d8;">${cleanEmail}</a></p>
-            <p><strong>Date:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</p>
+            <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 7px 0; color: #64748b; width: 150px;"><strong>Form / Source:</strong></td>
+                <td style="padding: 7px 0; color: #00b4d8; font-weight: bold;">${sourceLabel}</td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Subscriber Email:</strong></td>
+                <td style="padding: 7px 0; color: #0b2940; font-weight: bold;"><a href="mailto:${cleanEmail}" style="color: #00b4d8; text-decoration: none;">${cleanEmail}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b;"><strong>Timestamp:</strong></td>
+                <td style="padding: 7px 0; color: #64748b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</td>
+              </tr>
+            </table>
           </div>
         `,
       }).catch((err) => console.error('Newsletter admin notification failed:', err))
@@ -37,9 +57,9 @@ export async function POST(req: NextRequest) {
     // 2. Send Welcome Email to Subscriber
     sendEmail({
       to: cleanEmail,
-      subject: `🎉 Welcome to the Tribe! — Travel Tribes`,
+      subject: `🎉 Welcome to the Tribe! (${sourceLabel}) — Travel Tribes`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
           <div style="text-align: center; margin-bottom: 24px;">
             <h1 style="color: #0b2940; font-size: 24px; margin: 0 0 6px;">Travel Tribes</h1>
             <p style="color: #00b4d8; font-weight: bold; font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Small Groups. Big Adventures.</p>
@@ -47,7 +67,7 @@ export async function POST(req: NextRequest) {
           <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; text-align: center;">
             <h2 style="color: #0b2940; font-size: 18px; margin: 0 0 10px;">You're on the list! 🎉</h2>
             <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0;">
-              Thank you for subscribing to Travel Tribes. You'll be the first to know about secret trail releases, long weekend trips, early bird discounts, and epic community adventures.
+              Thank you for subscribing via our <strong>${sourceLabel}</strong>. You'll be the first to know about secret trail releases, long weekend trips, early bird discounts, and epic community adventures.
             </p>
           </div>
           <div style="text-align: center; margin: 24px 0;">

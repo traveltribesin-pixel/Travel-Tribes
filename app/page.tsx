@@ -42,6 +42,9 @@ export default function Home() {
         {/* 7. Honeymoon Escapes */}
         <HoneymoonEscapesSection />
 
+        {/* 11. Photo Gallery */}
+        <GallerySection />
+
         {/* 8. Interactive Video Gallery & Tribe Reels */}
         <VideoGallerySection />
 
@@ -51,6 +54,12 @@ export default function Home() {
         {/* 10. Can't find your trip? Make your own (Custom Trip Builder) */}
         <CustomTripBuilderSection />
 
+
+
+
+
+        {/* 12. Featured & Recognition (Auto-sliding brand logos & media) */}
+        <FeaturedRecognitionSection />
         {/* 11. Frequently Asked Questions Accordion Section */}
         <FaqAccordionSection
           title="Frequently Asked Questions"
@@ -59,17 +68,11 @@ export default function Home() {
           showViewAllButton
         />
 
-        {/* 11. Photo Gallery */}
-        <GallerySection />
-
-        {/* 12. Featured & Recognition (Auto-sliding brand logos & media) */}
-        <FeaturedRecognitionSection />
-
         {/* 13. Blog & Travel Guides */}
         <BlogSection />
 
         {/* 14. Community CTA Section */}
-        <HomeCtaSection />
+        {/* <HomeCtaSection /> */}
 
         {/* 15. Newsletter */}
         <Newsletter />

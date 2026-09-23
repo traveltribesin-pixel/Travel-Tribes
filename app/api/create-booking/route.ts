@@ -114,25 +114,34 @@ export async function POST(req: NextRequest) {
     const randomSuffix = Math.floor(1000 + Math.random() * 9000)
     const bookingId = `TT-${year}-${randomSuffix}`
 
+    const sourceLabel = 'Direct Trip Booking Form (/book)'
+
     // 4. Send Confirmation & Admin Notification Emails (Independent & Non-blocking)
     const adminEmails = getAdminEmails()
     if (adminEmails.length > 0) {
       sendEmail({
         to: adminEmails,
         replyTo: email,
-        subject: `🎉 New Booking Alert: ${pricing.tripTitle} (${bookingId}) - ${fullName}`,
+        subject: `🎉 [${sourceLabel}] New Booking: ${pricing.tripTitle} (${bookingId}) - ${fullName}`,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
             <div style="text-align: center; margin-bottom: 20px;">
-              <h2 style="color: #0b2940; margin: 0; font-size: 22px;">🎉 New Booking Confirmed!</h2>
-              <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Booking Reference: <strong style="color: #00b4d8;">${bookingId}</strong></p>
+              <span style="display: inline-block; background-color: #0b2940; color: #ffffff; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${sourceLabel}
+              </span>
+              <h2 style="color: #0b2940; margin: 10px 0 4px; font-size: 22px;">🎉 New Booking Confirmed!</h2>
+              <p style="color: #64748b; font-size: 13px; margin: 0;">Booking Reference: <strong style="color: #00b4d8;">${bookingId}</strong></p>
             </div>
             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
-            <h3 style="color: #00b4d8; font-size: 15px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Trip Details</h3>
+            <h3 style="color: #00b4d8; font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Trip Details</h3>
             <table style="width: 100%; font-size: 14px; border-collapse: collapse; margin-bottom: 16px;">
               <tr>
-                <td style="padding: 6px 0; color: #64748b; width: 140px;"><strong>Trip:</strong></td>
-                <td style="padding: 6px 0; color: #0b2940; font-weight: bold;">${pricing.tripTitle}</td>
+                <td style="padding: 6px 0; color: #64748b; width: 150px;"><strong>Form / Source:</strong></td>
+                <td style="padding: 6px 0; color: #00b4d8; font-weight: bold;">${sourceLabel}</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0; color: #64748b;"><strong>Trip:</strong></td>
+                <td style="padding: 6px 0; color: #0b2940; font-weight: bold; font-size: 16px;">${pricing.tripTitle}</td>
               </tr>
               <tr>
                 <td style="padding: 6px 0; color: #64748b;"><strong>Travel Date:</strong></td>
@@ -165,10 +174,10 @@ export async function POST(req: NextRequest) {
               </tr>
             </table>
             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
-            <h3 style="color: #00b4d8; font-size: 15px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Traveller Information</h3>
+            <h3 style="color: #00b4d8; font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Traveller Information</h3>
             <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
               <tr>
-                <td style="padding: 6px 0; color: #64748b; width: 140px;"><strong>Lead Name:</strong></td>
+                <td style="padding: 6px 0; color: #64748b; width: 150px;"><strong>Lead Name:</strong></td>
                 <td style="padding: 6px 0; color: #0b2940;">${fullName} (Age: ${age})</td>
               </tr>
               <tr>
@@ -177,7 +186,10 @@ export async function POST(req: NextRequest) {
               </tr>
               <tr>
                 <td style="padding: 6px 0; color: #64748b;"><strong>Phone:</strong></td>
-                <td style="padding: 6px 0; color: #0b2940;"><a href="tel:${phone}" style="color: #00b4d8; text-decoration: none;">${phone}</a> (<a href="https://wa.me/${phone.replace(/[^\d]/g, '')}" style="color: #10b981; text-decoration: none;">WhatsApp</a>)</td>
+                <td style="padding: 6px 0; color: #0b2940;">
+                  <a href="tel:${phone}" style="color: #00b4d8; text-decoration: none;">${phone}</a> 
+                  (<a href="https://wa.me/${phone.replace(/[^\d]/g, '')}" style="color: #10b981; text-decoration: none; font-weight: bold;">Chat on WhatsApp</a>)
+                </td>
               </tr>
               <tr>
                 <td style="padding: 6px 0; color: #64748b;"><strong>Departure City:</strong></td>
@@ -188,6 +200,10 @@ export async function POST(req: NextRequest) {
                 <td style="padding: 6px 0; color: #64748b;"><strong>Special Request:</strong></td>
                 <td style="padding: 6px 0; color: #0b2940;">${specialRequest}</td>
               </tr>` : ''}
+              <tr>
+                <td style="padding: 6px 0; color: #64748b;"><strong>Timestamp:</strong></td>
+                <td style="padding: 6px 0; color: #64748b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)</td>
+              </tr>
             </table>
           </div>
         `,
@@ -207,7 +223,7 @@ export async function POST(req: NextRequest) {
           <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 24px;">
             <h2 style="color: #166534; font-size: 20px; margin: 0 0 6px;">Woohoo! You're going on an adventure! 🎉</h2>
             <p style="color: #15803d; font-size: 14px; margin: 0;">
-              Hi <strong>${fullName}</strong>, your booking for <strong>${pricing.tripTitle}</strong> is successfully received.
+              Hi <strong>${fullName}</strong>, your booking for <strong>${pricing.tripTitle}</strong> submitted via <strong>${sourceLabel}</strong> is successfully received.
             </p>
             <div style="margin-top: 12px; display: inline-block; background-color: #ffffff; border: 1px dashed #16a34a; border-radius: 8px; padding: 6px 16px;">
               <span style="color: #64748b; font-size: 12px;">Booking ID: </span>
@@ -215,8 +231,12 @@ export async function POST(req: NextRequest) {
             </div>
           </div>
           
-          <h3 style="color: #0b2940; font-size: 15px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Booking Summary</h3>
+          <h3 style="color: #0b2940; font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Booking Summary</h3>
           <table style="width: 100%; font-size: 14px; border-collapse: collapse; margin-bottom: 20px;">
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b;"><strong>Source / Form:</strong></td>
+              <td style="padding: 10px 0; color: #00b4d8; font-weight: bold; text-align: right;">${sourceLabel}</td>
+            </tr>
             <tr style="border-bottom: 1px solid #f1f5f9;">
               <td style="padding: 10px 0; color: #64748b;"><strong>Trip Name:</strong></td>
               <td style="padding: 10px 0; color: #0b2940; font-weight: bold; text-align: right;">${pricing.tripTitle}</td>
