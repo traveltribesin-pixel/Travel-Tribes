@@ -22,14 +22,18 @@ export async function POST(req: NextRequest) {
     const cleanMessage = String(message).trim()
     const sourceLabel = String(formSource || 'Contact Us Page Form').trim()
 
+    // Prepare Tasks: Admin Email, User Confirmation Email, and Google Sheets Sync
+    const tasks: Promise<any>[] = []
+
     // 1. Send Notification Email to Owner/Admin
     const adminEmails = getAdminEmails()
     if (adminEmails.length > 0) {
-      sendEmail({
-        to: adminEmails,
-        replyTo: cleanEmail,
-        subject: `📩 [${sourceLabel}] New Enquiry: ${cleanName} (${tripInterest})`,
-        html: `
+      tasks.push(
+        sendEmail({
+          to: adminEmails,
+          replyTo: cleanEmail,
+          subject: `📩 [${sourceLabel}] New Enquiry: ${cleanName} (${tripInterest})`,
+          html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
             <div style="text-align: center; margin-bottom: 20px;">
               <span style="display: inline-block; background-color: #0b2940; color: #ffffff; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -79,55 +83,74 @@ export async function POST(req: NextRequest) {
             </div>
           </div>
         `,
-      }).catch((err) => console.error('Contact admin notification failed:', err))
+        }).catch((err) => {
+          console.error('Contact admin notification failed:', err)
+          return { success: false, error: err?.message }
+        })
+      )
     }
 
     // 2. Send Friendly Auto-Acknowledgement Email to the User
-    sendEmail({
-      to: cleanEmail,
-      subject: `👋 We've received your inquiry via ${sourceLabel}, ${cleanName}! — Travel Tribes`,
-      html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <h1 style="color: #0b2940; font-size: 24px; margin: 0 0 6px;">Travel Tribes</h1>
-            <p style="color: #00b4d8; font-weight: bold; font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Small Groups. Big Adventures.</p>
+    if (cleanEmail) {
+      tasks.push(
+        sendEmail({
+          to: cleanEmail,
+          subject: `👋 We've received your inquiry via ${sourceLabel}, ${cleanName}! — Travel Tribes`,
+          html: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+            <div style="text-align: center; margin-bottom: 24px;">
+              <h1 style="color: #0b2940; font-size: 24px; margin: 0 0 6px;">Travel Tribes</h1>
+              <p style="color: #00b4d8; font-weight: bold; font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Small Groups. Big Adventures.</p>
+            </div>
+            <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+              <h2 style="color: #0b2940; font-size: 18px; margin: 0 0 10px;">Hi ${cleanName}, thank you for reaching out! 🙌</h2>
+              <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0;">
+                We have received your enquiry submitted through the <strong>${sourceLabel}</strong> regarding <strong>${tripInterest}</strong>. A dedicated trip designer is reviewing your note and will get back to you within 24 hours.
+              </p>
+            </div>
+            <div style="padding: 16px; background-color: #f1f5f9; border-radius: 10px; margin-bottom: 20px;">
+              <strong style="color: #475569; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Summary of your message:</strong>
+              <p style="color: #1e293b; font-size: 13px; font-style: italic; margin: 8px 0 0; line-height: 1.5;">
+                "${cleanMessage}"
+              </p>
+            </div>
+            <div style="text-align: center; margin: 24px 0;">
+              <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Need instant answers or customized planning?</p>
+              <a href="https://wa.me/919975822023?text=Hi%20Travel%20Tribes,%20I%20sent%20a%20message%20regarding%20${encodeURIComponent(tripInterest)}.%20Please%20connect!" style="display: inline-block; background-color: #10b981; color: #ffffff; padding: 12px 24px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">
+                💬 Chat with us directly on WhatsApp (+91 99758 22023)
+              </a>
+            </div>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+            <div style="text-align: center; color: #94a3b8; font-size: 12px;">
+              <p style="margin: 0 0 4px;">Direct Helpline: <a href="tel:+919975822023" style="color: #00b4d8; text-decoration: none;">+91 99758 22023</a> | Email: <a href="mailto:hello@traveltribes.in" style="color: #00b4d8; text-decoration: none;">hello@traveltribes.in</a></p>
+              <p style="margin: 0; font-weight: bold; color: #0b2940;">Tribe hai to vibe hai! 🌍</p>
+            </div>
           </div>
-          <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-            <h2 style="color: #0b2940; font-size: 18px; margin: 0 0 10px;">Hi ${cleanName}, thank you for reaching out! 🙌</h2>
-            <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0;">
-              We have received your enquiry submitted through the <strong>${sourceLabel}</strong> regarding <strong>${tripInterest}</strong>. A dedicated trip designer is reviewing your note and will get back to you within 24 hours.
-            </p>
-          </div>
-          <div style="padding: 16px; background-color: #f1f5f9; border-radius: 10px; margin-bottom: 20px;">
-            <strong style="color: #475569; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Summary of your message:</strong>
-            <p style="color: #1e293b; font-size: 13px; font-style: italic; margin: 8px 0 0; line-height: 1.5;">
-              "${cleanMessage}"
-            </p>
-          </div>
-          <div style="text-align: center; margin: 24px 0;">
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Need instant answers or customized planning?</p>
-            <a href="https://wa.me/919975822023?text=Hi%20Travel%20Tribes,%20I%20sent%20a%20message%20regarding%20${encodeURIComponent(tripInterest)}.%20Please%20connect!" style="display: inline-block; background-color: #10b981; color: #ffffff; padding: 12px 24px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">
-              💬 Chat with us directly on WhatsApp (+91 99758 22023)
-            </a>
-          </div>
-          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
-          <div style="text-align: center; color: #94a3b8; font-size: 12px;">
-            <p style="margin: 0 0 4px;">Direct Helpline: <a href="tel:+919975822023" style="color: #00b4d8; text-decoration: none;">+91 99758 22023</a> | Email: <a href="mailto:hello@traveltribes.in" style="color: #00b4d8; text-decoration: none;">hello@traveltribes.in</a></p>
-            <p style="margin: 0; font-weight: bold; color: #0b2940;">Tribe hai to vibe hai! 🌍</p>
-          </div>
-        </div>
-      `,
-    }).catch((err) => console.error('Contact user confirmation email failed:', err))
+        `,
+        }).catch((err) => {
+          console.error('Contact user confirmation email failed:', err)
+          return { success: false, error: err?.message }
+        })
+      )
+    }
 
-    // 3. Sync Contact Enquiry to Google Sheets (Non-blocking)
-    appendToGoogleSheet({
-      type: 'contact',
-      firstName: cleanName,
-      email: cleanEmail,
-      phone: cleanPhone !== 'Not provided' ? cleanPhone : '',
-      trip: `${sourceLabel}: ${tripInterest}`,
-      message: cleanMessage
-    }).catch((err) => console.error('Contact Google Sheets sync failed:', err))
+    // 3. Sync Contact Enquiry to Google Sheets
+    tasks.push(
+      appendToGoogleSheet({
+        type: 'contact',
+        firstName: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone !== 'Not provided' ? cleanPhone : '',
+        trip: `${sourceLabel}: ${tripInterest}`,
+        message: cleanMessage
+      }).catch((err) => {
+        console.error('Contact Google Sheets sync failed:', err)
+        return { success: false, error: err?.message }
+      })
+    )
+
+    // Await all notification tasks to complete before responding
+    await Promise.allSettled(tasks)
 
     return NextResponse.json({
       success: true,

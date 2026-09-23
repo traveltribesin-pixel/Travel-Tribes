@@ -8,24 +8,36 @@ interface SendMailOptions {
   replyTo?: string
 }
 
-export function getTransporter() {
-  const user = process.env.SMTP_EMAIL || process.env.GMAIL_USER
-  const pass = process.env.SMTP_PASSWORD || process.env.GMAIL_APP_PASSWORD
+let cachedTransporter: nodemailer.Transporter | null = null
+
+export function getTransporter(): nodemailer.Transporter | null {
+  const user = (process.env.SMTP_EMAIL || process.env.GMAIL_USER || '').trim()
+  const pass = (process.env.SMTP_PASSWORD || process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '')
 
   if (!user || !pass) {
     return null
   }
 
-  return nodemailer.createTransport({
-    service: 'gmail',
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: Number(process.env.SMTP_PORT) || 465,
-    secure: true,
-    auth: {
-      user,
-      pass,
-    },
-  })
+  if (!cachedTransporter) {
+    cachedTransporter = nodemailer.createTransport({
+      service: 'gmail',
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: Number(process.env.SMTP_PORT) || 465,
+      secure: true,
+      auth: {
+        user,
+        pass,
+      },
+      pool: true,
+      maxConnections: 3,
+      maxMessages: 100,
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
+    })
+  }
+
+  return cachedTransporter
 }
 
 /**
@@ -46,12 +58,9 @@ export function getAdminEmails(): string[] {
   }
 
   // 2. Also add the sender SMTP_EMAIL if not already present
-  const smtpEmail = process.env.SMTP_EMAIL || process.env.GMAIL_USER
-  if (smtpEmail) {
-    const trimmed = smtpEmail.trim()
-    if (trimmed && !emails.includes(trimmed)) {
-      emails.push(trimmed)
-    }
+  const smtpEmail = (process.env.SMTP_EMAIL || process.env.GMAIL_USER || '').trim()
+  if (smtpEmail && !emails.includes(smtpEmail)) {
+    emails.push(smtpEmail)
   }
 
   return emails
@@ -61,12 +70,12 @@ export async function sendEmail({ to, subject, html, text, replyTo }: SendMailOp
   try {
     const transporter = getTransporter()
     if (!transporter) {
-      console.warn('⚠️ [Mail Service] SMTP_EMAIL or SMTP_PASSWORD is not set in .env. Email skipped.')
+      console.warn('⚠️ [Mail Service] SMTP_EMAIL or SMTP_PASSWORD is not configured in .env. Email skipped.')
       return { success: false, error: 'Email configuration missing in .env' }
     }
 
-    const fromEmail = process.env.SMTP_EMAIL || process.env.GMAIL_USER
-    const fromName = process.env.SMTP_FROM_NAME || 'Travel Tribes'
+    const fromEmail = (process.env.SMTP_EMAIL || process.env.GMAIL_USER || '').trim()
+    const fromName = (process.env.SMTP_FROM_NAME || 'Travel Tribes').trim()
 
     const info = await transporter.sendMail({
       from: `"${fromName}" <${fromEmail}>`,
@@ -77,10 +86,11 @@ export async function sendEmail({ to, subject, html, text, replyTo }: SendMailOp
       text: text || html.replace(/<[^>]*>?/gm, ''),
     })
 
-    console.log('✅ [Mail Service] Email sent successfully to:', to, 'MessageId:', info.messageId)
+    console.log('✅ [Mail Service] Email sent successfully to:', Array.isArray(to) ? to.join(', ') : to, '| MessageId:', info.messageId)
     return { success: true, messageId: info.messageId }
   } catch (error: any) {
-    console.error('❌ [Mail Service] Error sending email:', error?.message || error)
+    console.error('❌ [Mail Service] Error sending email to:', Array.isArray(to) ? to.join(', ') : to, '| Error:', error?.message || error)
     return { success: false, error: error?.message || 'Failed to send email' }
   }
 }
+
