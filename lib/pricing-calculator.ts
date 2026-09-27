@@ -58,7 +58,9 @@ export function validateCoupon(code?: string): { valid: boolean; discount: numbe
  */
 export function parseNumericPrice(priceStr?: string, fallback: number = 8499): number {
   if (!priceStr || typeof priceStr !== 'string') return fallback
-  const cleaned = priceStr.replace(/[^\d]/g, '')
+  const match = priceStr.match(/(\d[\d,]*)/)
+  if (!match) return fallback
+  const cleaned = match[1].replace(/,/g, '')
   const parsed = parseInt(cleaned, 10)
   return isNaN(parsed) || parsed <= 0 ? fallback : parsed
 }
@@ -104,7 +106,17 @@ export function calculateBookingPricing(params: {
     selectedPackageIndex = Math.max(0, Math.min(availablePricingOptions.length - 1, rawIdx))
     const selectedOption = availablePricingOptions[selectedPackageIndex]
     packageLabel = selectedOption.label
-    basePricePerPerson = parseNumericPrice(selectedOption.price, basePricePerPerson)
+    if (
+      selectedOption.price.startsWith('+') ||
+      selectedOption.label.toLowerCase().includes('add-on') ||
+      selectedOption.label.toLowerCase().includes('upgrade')
+    ) {
+      const tripBase = parseNumericPrice(trip.price, 8499)
+      const addon = parseNumericPrice(selectedOption.price, 0)
+      basePricePerPerson = tripBase + addon
+    } else if (!selectedOption.price.toLowerCase().includes('request')) {
+      basePricePerPerson = parseNumericPrice(selectedOption.price, basePricePerPerson)
+    }
   }
 
   // 4. Double sharing calculation

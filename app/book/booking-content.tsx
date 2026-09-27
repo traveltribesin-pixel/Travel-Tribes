@@ -89,6 +89,7 @@ export function BookingContent() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [isBooked, setIsBooked] = useState(false)
   const [bookingId, setBookingId] = useState('')
+  const [paymentId, setPaymentId] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   // Rigorous Anti-Tamper Pricing Engine Calculation
@@ -158,6 +159,22 @@ export function BookingContent() {
     setGuests(sanitizeGuests(nextVal))
   }
 
+  // Dynamically load Razorpay standard checkout script
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (typeof window !== 'undefined' && (window as any).Razorpay) {
+        resolve(true)
+        return
+      }
+      const script = document.createElement('script')
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+      script.async = true
+      script.onload = () => resolve(true)
+      script.onerror = () => resolve(false)
+      document.body.appendChild(script)
+    })
+  }
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage(null)
@@ -191,8 +208,14 @@ export function BookingContent() {
     setIsProcessing(true)
 
     try {
-      // Call secure server-side booking endpoint which strictly verifies and recalculates prices
-      const response = await fetch('/api/create-booking', {
+      // 1. Ensure Razorpay script is loaded
+      const isScriptLoaded = await loadRazorpayScript()
+      if (!isScriptLoaded) {
+        throw new Error('Could not connect to Razorpay payment gateway. Please check your internet connection.')
+      }
+
+      // 2. Create Razorpay order on server
+      const orderRes = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -212,16 +235,85 @@ export function BookingContent() {
         })
       })
 
-      const result = await response.json()
+      const orderData = await orderRes.json()
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Booking verification failed. Please try again.')
+      if (!orderRes.ok || !orderData.success) {
+        throw new Error(orderData.error || 'Failed to initialize payment. Please check your details.')
       }
 
-      setBookingId(result.bookingId)
-      setIsProcessing(false)
-      setIsBooked(true)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // 3. Configure and Launch Razorpay Checkout Modal
+      const options = {
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency || 'INR',
+        name: 'Travel Tribes',
+        description: `${orderData.pricing.tripTitle} (${orderData.pricing.packageLabel})`,
+        image: '/image/Logowithbg.png',
+        order_id: orderData.orderId,
+        prefill: {
+          name: trimmedName,
+          email: trimmedEmail,
+          contact: trimmedPhone
+        },
+        notes: {
+          bookingId: orderData.bookingId,
+          travelDate: selectedDate
+        },
+        theme: {
+          color: '#0b2940'
+        },
+        handler: async function (paymentResponse: any) {
+          setIsProcessing(true)
+          try {
+            // 4. Verify Payment on Server
+            const verifyRes = await fetch('/api/razorpay/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: paymentResponse.razorpay_order_id,
+                razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                razorpay_signature: paymentResponse.razorpay_signature,
+                bookingId: orderData.bookingId,
+                bookingConfig: orderData.bookingConfig,
+                pricing: orderData.pricing,
+                traveller: orderData.traveller
+              })
+            })
+
+            const verifyData = await verifyRes.json()
+
+            if (!verifyRes.ok || !verifyData.success) {
+              throw new Error(verifyData.error || 'Payment verification encountered an issue.')
+            }
+
+            setBookingId(orderData.bookingId)
+            setPaymentId(paymentResponse.razorpay_payment_id)
+            setIsProcessing(false)
+            setIsBooked(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          } catch (verifyErr: any) {
+            console.error('Verification error:', verifyErr)
+            setErrorMessage(verifyErr?.message || 'Payment received but verification encountered an issue. Our team has been notified.')
+            setIsProcessing(false)
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setIsProcessing(false)
+            setErrorMessage('Payment window was closed. You can complete your booking whenever ready.')
+          }
+        }
+      }
+
+      const rzp = new (window as any).Razorpay(options)
+      rzp.on('payment.failed', function (response: any) {
+        setIsProcessing(false)
+        setErrorMessage(
+          `Payment Failed: ${response.error?.description || response.error?.reason || 'Payment could not be processed'}`
+        )
+      })
+      rzp.open()
+
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Payment connection failed. Please retry.'
       setErrorMessage(msg)
@@ -264,14 +356,22 @@ export function BookingContent() {
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                 <CheckCircle2 size={36} />
               </div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--sky)] bg-[var(--sky-pale)] px-3 py-1 rounded-full">
-                Booking ID: {bookingId}
-              </span>
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--sky)] bg-[var(--sky-pale)] px-3 py-1 rounded-full">
+                  Booking ID: {bookingId}
+                </span>
+                {paymentId && (
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1">
+                    <CheckCircle2 size={13} className="text-emerald-600" />
+                    Payment ID: {paymentId}
+                  </span>
+                )}
+              </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mt-3">
                 Pack Your Bags, {formData.fullName.split(' ')[0]}!
               </h2>
               <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
-                Your slot is officially confirmed. A booking summary and receipt has been generated.
+                Your payment is verified and your slot is officially confirmed. A receipt has been emailed to you.
               </p>
             </div>
 
@@ -301,6 +401,12 @@ export function BookingContent() {
                   {isFullPayment ? 'Full Payment (Discount Applied)' : 'Advance Booking'}
                 </span>
               </div>
+              {paymentId && (
+                <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                  <span className="text-slate-500">Razorpay Ref</span>
+                  <span className="font-mono text-xs font-bold text-slate-700">{paymentId}</span>
+                </div>
+              )}
               {couponDiscount > 0 && (
                 <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
                   <span className="flex items-center gap-1.5"><Tag size={14} className="text-emerald-600" /> Promo Code ({couponCode})</span>
@@ -334,7 +440,7 @@ export function BookingContent() {
             <div className="space-y-3 pt-2">
               <a
                 href={`https://wa.me/919975822023?text=${encodeURIComponent(
-                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests, Lead: ${formData.fullName}, Age: ${formData.age}). My Booking ID is *${bookingId}*. Payment Mode: ${isFullPayment ? `Full Payment (₹{amountToPayToday.toLocaleString('en-IN')})` : `Advance Payment (₹{amountToPayToday.toLocaleString('en-IN')})`}${couponDiscount > 0 ? ` [Coupon ${couponCode}: ₹${couponDiscount} off]` : ''}. Please share the group chat link and preparation guide!`
+                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests, Lead: ${formData.fullName}, Age: ${formData.age}). My Booking ID is *${bookingId}*${paymentId ? ` (Payment ID: ${paymentId})` : ''}. Payment Mode: ${isFullPayment ? `Full Payment (₹${amountToPayToday.toLocaleString('en-IN')})` : `Advance Payment (₹${amountToPayToday.toLocaleString('en-IN')})`}${couponDiscount > 0 ? ` [Coupon ${couponCode}: ₹${couponDiscount} off]` : ''}. Please share the group chat link and preparation guide!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

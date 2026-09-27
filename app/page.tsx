@@ -40,7 +40,7 @@ export default function Home() {
         <CommunityBannerSection />
 
         {/* 7. Honeymoon Escapes */}
-        <HoneymoonEscapesSection />
+        {/* <HoneymoonEscapesSection /> */}
 
         {/* 11. Photo Gallery */}
         <GallerySection />

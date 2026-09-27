@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer'
+import nodemailer, { type Transporter } from 'nodemailer'
 
 interface SendMailOptions {
   to: string | string[]
@@ -8,9 +8,9 @@ interface SendMailOptions {
   replyTo?: string
 }
 
-let cachedTransporter: nodemailer.Transporter | null = null
+let cachedTransporter: Transporter | null = null
 
-export function getTransporter(): nodemailer.Transporter | null {
+export function getTransporter(): Transporter | null {
   const user = (process.env.SMTP_EMAIL || process.env.GMAIL_USER || '').trim()
   const pass = (process.env.SMTP_PASSWORD || process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '')
 

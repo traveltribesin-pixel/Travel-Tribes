@@ -123,12 +123,19 @@ export function TripContent({ trip }: { trip: Trip }) {
       )
       if (festiveOpt) {
         if (festiveOpt.price.startsWith('+')) {
-          const baseNum = parseInt(trip.price.replace(/[^\d]/g, ''), 10) || 0
-          const addNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 1000
-          return `₹${(baseNum + addNum).toLocaleString('en-IN')}`
-        } else {
-          const optNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 0
-          return `₹${optNum.toLocaleString('en-IN')}`
+          const baseMatch = trip.price.match(/(\d[\d,]*)/)
+          const baseNum = baseMatch ? parseInt(baseMatch[1].replace(/,/g, ''), 10) : 0
+          const addMatch = festiveOpt.price.match(/(\d[\d,]*)/)
+          const addNum = addMatch ? parseInt(addMatch[1].replace(/,/g, ''), 10) : 1000
+          if (baseNum > 0) {
+            return `₹${(baseNum + addNum).toLocaleString('en-IN')}`
+          }
+        } else if (!festiveOpt.price.toLowerCase().includes('request')) {
+          const optMatch = festiveOpt.price.match(/(\d[\d,]*)/)
+          const optNum = optMatch ? parseInt(optMatch[1].replace(/,/g, ''), 10) : 0
+          if (optNum > 0) {
+            return `₹${optNum.toLocaleString('en-IN')}`
+          }
         }
       }
     }

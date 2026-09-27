@@ -188,30 +188,35 @@ export function isTripUpcoming(
 export function isFestiveDate(dateStr?: string): boolean {
   if (!dateStr || typeof dateStr !== 'string') return false
   const lower = dateStr.toLowerCase()
-  return (
+  if (
     lower.includes('new year') ||
     lower.includes('xmas') ||
     lower.includes('christmas') ||
-    lower.includes('dec 19') ||
-    lower.includes('dec 20') ||
-    lower.includes('dec 21') ||
-    lower.includes('dec 22') ||
-    lower.includes('dec 23') ||
-    lower.includes('dec 24') ||
-    lower.includes('dec 25') ||
-    lower.includes('dec 26') ||
-    lower.includes('dec 27') ||
-    lower.includes('dec 28') ||
-    lower.includes('dec 29') ||
-    lower.includes('dec 30') ||
-    lower.includes('dec 31') ||
-    lower.includes('jan 01') ||
-    lower.includes('jan 02') ||
-    lower.includes('jan 03') ||
-    lower.includes('jan 04') ||
-    lower.includes('jan 05') ||
-    lower.includes('festive')
-  )
+    lower.includes('festive') ||
+    lower.includes('31st')
+  ) {
+    return true
+  }
+
+  const parsed = parseTripDate(dateStr)
+  if (!parsed) return false
+
+  const s = parsed.startDate
+  const e = parsed.endDate
+
+  const sMonth = s.getMonth() // 0 = Jan, 11 = Dec
+  const sDay = s.getDate()
+  const eMonth = e.getMonth()
+  const eDay = e.getDate()
+
+  // Starts in Dec on or after 23rd
+  if (sMonth === 11 && sDay >= 23) return true
+  // Spans across Dec -> Jan
+  if (sMonth === 11 && eMonth === 0) return true
+  // Starts on Dec 20 or later and covers Dec 25
+  if (sMonth === 11 && sDay >= 20 && eDay >= 25) return true
+
+  return false
 }
 
 /**

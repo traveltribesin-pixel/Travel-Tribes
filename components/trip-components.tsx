@@ -66,7 +66,6 @@ const defaultCategories = [
   { value: 'All', title: 'All' },
   { value: 'Domestic', title: 'Domestic' },
   { value: 'International', title: 'International' },
-  { value: 'Weekend', title: 'Weekend' },
   { value: 'Xmas & New Year', title: 'Xmas & New Year' },
 ];
 
@@ -149,112 +148,118 @@ export function TripExplorer({
   return (
     <div>
       {/* Desktop & Mobile Filter Controls */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-8 gap-3 sm:gap-4">
-        {/* Desktop/Tablet Custom Category Tabs (Hidden on mobile) */}
-        <div
-          className="hidden sm:flex items-center bg-[#F9F8FB] p-1.5 rounded-2xl border border-gray-200/90 w-fit gap-1 sm:gap-1.5 overflow-x-auto max-w-full shadow-sm"
-          style={{ scrollbarWidth: 'none' }}
-        >
-          {activeCategories.map((category) => (
-            <button
-              key={category.value}
-              onClick={() => setFilter(category.value)}
-              className={`
-                relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap
-                ${filter === category.value
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'bg-transparent text-gray-500 hover:text-gray-900'
-                }
-              `}
+      {trips.length > 0 && (
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-8 gap-3 sm:gap-4">
+          {/* Desktop/Tablet Custom Category Tabs (Hidden on mobile) */}
+          {activeCategories.length > 0 && (
+            <div
+              className="hidden sm:flex items-center bg-[#F9F8FB] p-1.5 rounded-2xl border border-gray-200/90 w-fit gap-1 sm:gap-1.5 overflow-x-auto max-w-full shadow-sm"
+              style={{ scrollbarWidth: 'none' }}
             >
-              <div
-                className={`h-2 w-2 rounded-full transition-colors ${
-                  filter === category.value ? 'bg-[#43a9d1]' : 'bg-gray-300'
-                }`}
-              />
-              {category.title}
-            </button>
-          ))}
-        </div>
-
-        {/* Filter Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full xl:w-auto">
-          {/* Dropdowns Row (Mobile: Category + Month side by side, Desktop: Month only) */}
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            {/* Mobile-Only Category Dropdown (Matches Month dropdown style) */}
-            <div className="relative flex-1 sm:hidden">
-              <Compass className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
-                aria-label="Filter by category"
-              >
-                {activeCategories.map((c) => (
-                  <option key={c.value} value={c.value}>
-                    {c.title}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            </div>
-
-            {/* Month Dropdown */}
-            <div className="relative flex-1 sm:flex-initial sm:min-w-[160px]">
-              <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
-              <select
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(e.target.value)}
-                className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
-                aria-label="Filter by month"
-              >
-                {monthsList.map((m) => (
-                  <option key={m.value} value={m.value}>
-                    {m.label}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            </div>
-          </div>
-
-          {/* Search bar & Reset button Row */}
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            {/* Search bar */}
-            <div className="relative flex-1 sm:w-64 sm:flex-initial">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Search trips..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="pl-9.5 pr-8 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] shadow-sm transition-all"
-              />
-              {query && (
+              {activeCategories.map((category) => (
                 <button
-                  onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs transition-colors"
-                  aria-label="Clear search"
+                  key={category.value}
+                  onClick={() => setFilter(category.value)}
+                  className={`
+                    relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap
+                    ${filter === category.value
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'bg-transparent text-gray-500 hover:text-gray-900'
+                    }
+                  `}
                 >
-                  ✕
+                  <div
+                    className={`h-2 w-2 rounded-full transition-colors ${
+                      filter === category.value ? 'bg-[#43a9d1]' : 'bg-gray-300'
+                    }`}
+                  />
+                  {category.title}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Filter Controls */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full xl:w-auto">
+            {/* Dropdowns Row (Mobile: Category + Month side by side, Desktop: Month only) */}
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              {/* Mobile-Only Category Dropdown (Matches Month dropdown style) */}
+              {activeCategories.length > 0 && (
+                <div className="relative flex-1 sm:hidden">
+                  <Compass className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
+                  <select
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
+                    aria-label="Filter by category"
+                  >
+                    {activeCategories.map((c) => (
+                      <option key={c.value} value={c.value}>
+                        {c.title}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                </div>
+              )}
+
+              {/* Month Dropdown */}
+              <div className="relative flex-1 sm:flex-initial sm:min-w-[160px]">
+                <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#43a9d1] pointer-events-none" />
+                <select
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  className="w-full pl-9.5 pr-8 h-11 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] cursor-pointer appearance-none shadow-sm transition-all"
+                  aria-label="Filter by month"
+                >
+                  {monthsList.map((m) => (
+                    <option key={m.value} value={m.value}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Search bar & Reset button Row */}
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              {/* Search bar */}
+              <div className="relative flex-1 sm:w-64 sm:flex-initial">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search trips..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="pl-9.5 pr-8 w-full border border-gray-200 h-11 bg-white rounded-xl text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#43a9d1]/20 focus:border-[#43a9d1] shadow-sm transition-all"
+                />
+                {query && (
+                  <button
+                    onClick={() => setQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs transition-colors"
+                    aria-label="Clear search"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              {/* Reset button */}
+              {hasActiveFilters && (
+                <button
+                  onClick={resetFilters}
+                  title="Reset all filters"
+                  className="h-11 px-3.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Reset</span>
                 </button>
               )}
             </div>
-
-            {/* Reset button */}
-            {hasActiveFilters && (
-              <button
-                onClick={resetFilters}
-                title="Reset all filters"
-                className="h-11 px-3.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Reset</span>
-              </button>
-            )}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Grid or Empty State */}
       {filtered.length ? (
@@ -262,6 +267,22 @@ export function TripExplorer({
           {filtered.map((trip) => (
             <TripCard key={trip.slug} trip={trip} />
           ))}
+        </div>
+      ) : trips.length === 0 ? (
+        <div className="empty-state py-16 px-6 text-center bg-white rounded-3xl border border-gray-200/80 shadow-sm my-8 flex flex-col items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-[#43a9d1]/10 flex items-center justify-center text-[#43a9d1] mb-4">
+            <Compass className="w-7 h-7" />
+          </div>
+          <h3 className="font-sans font-bold text-xl text-slate-800 mb-2">Weekend getaways dropping soon!</h3>
+          <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
+            We are curating exciting new weekend escapes and short getaways. Stay tuned or explore our upcoming domestic and international trips!
+          </p>
+          <a
+            href="/domestic-trips"
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#43a9d1] text-white rounded-xl text-sm font-semibold hover:bg-[#3592b5] transition-all shadow-md shadow-[#43a9d1]/20 hover:scale-[1.02]"
+          >
+            Explore domestic trips →
+          </a>
         </div>
       ) : (
         <div className="empty-state py-16 px-6 text-center bg-white rounded-3xl border border-gray-200/80 shadow-sm my-8 flex flex-col items-center justify-center">

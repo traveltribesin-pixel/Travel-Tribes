@@ -18,6 +18,7 @@ export type TripPricingOption = {
 }
 
 export type Trip = {
+  id: string
   slug: string
   title: string
   location: string
@@ -33,7 +34,7 @@ export type Trip = {
   spots: string
   gallery?: { image: string; alt: string }[]
   highlights?: string[]
-  itinerary?: { day: number; title: string; activities: string[] }[]
+  itinerary?: { id?: string; day: number; title: string; activities: string[] }[]
   inclusions?: string[]
   exclusions?: string[]
   thingsToCarry?: string[]
@@ -47,6 +48,7 @@ const img = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=c
 
 export const trips: Trip[] = [
   {
+    id: 'hampi-backpacking',
     slug: 'hampi-backpacking',
     title: 'Hampi Backpacking Trip',
     location: 'Hampi · Hospete · Sanapur Lake · Karnataka',
@@ -107,6 +109,7 @@ export const trips: Trip[] = [
     ],
     itinerary: [
       {
+        id: 'hampi-day-1',
         day: 1,
         title: 'Mumbai & Pune to Hospete | The Train Journey 🚂',
         activities: [
@@ -118,6 +121,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'hampi-day-2',
         day: 2,
         title: 'Bella Hanuman Temple & Chintamani Cave Sunset 🌅',
         activities: [
@@ -130,6 +134,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'hampi-day-3',
         day: 3,
         title: 'Virupaksha Temple, Stone Chariot, UNESCO Heritage & Matanga Sunset 🛕',
         activities: [
@@ -144,6 +149,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'hampi-day-4',
         day: 4,
         title: 'Hanuman Birthplace Sunrise, Coracle Ride & Cliff Jumping 🛶',
         activities: [
@@ -156,6 +162,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'hampi-day-5',
         day: 5,
         title: 'Back to Pune & Mumbai 🏠',
         activities: [
@@ -245,9 +252,451 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'coorg-mysore-new-year',
+    slug: 'coorg-mysore-new-year',
+    title: 'Coorg with Mysore — New Year Special',
+    location: 'Mumbai · Mangalore · Coorg · Mysore · Mumbai',
+    region: 'Domestic',
+    date: 'Dec 28–Jan 02, 2027 (New Year Special)',
+    dates: [
+      'Dec 28–Jan 02, 2027 (New Year Special)'
+    ],
+    duration: '5N/6D',
+    price: '₹14,499',
+    image: '/Card Image/coorg.jpg',
+    alt: 'Coorg and Mysore New Year Special — Coffee Plantations, Abbey Falls and Mysore Palace Fireworks',
+    tag: 'New Year Special',
+    description: 'Looking for the perfect New Year trip from Mumbai? Join Travel Tribes for a 5N/6D Coorg & Mysore New Year Special packed with lush coffee plantations, misty hills, Abbey Falls, Mandalpatti, elephant encounters and the beautiful Namdroling Monastery. End the year with a one-of-a-kind New Year celebration at Mysore Palace, featuring fireworks and a royal show. Come solo. Meet strangers. Explore Coorg. Celebrate like royalty. Find your tribe.',
+    spots: '6 spots left',
+    gallery: [
+      { image: '/image/Coorg/coorg_img.JPEG', alt: 'Coorg Lush Coffee Estate and Western Ghats' },
+      { image: '/image/Coorg/IMG_7410.JPEG', alt: 'Mandalpatti Peak Jeep Safari & Misty Sunrise' },
+      { image: '/image/Coorg/IMG_5499.JPEG', alt: 'Abbey Falls Cascading Water' },
+      { image: '/image/Coorg/IMG_5769.JPEG', alt: 'Namdroling Golden Temple Monastery' },
+      { image: '/image/Coorg/IMG_5844.JPEG', alt: 'Dubare Elephant Camp Experience' },
+      { image: '/image/Coorg/IMG_6888.JPEG', alt: 'Raja’s Seat Panoramic Sunset Viewpoint' },
+      { image: '/image/Coorg/IMG_7878.JPEG', alt: 'Mysore Palace Grand Illuminations & NY Celebration' },
+      { image: '/image/Coorg/IMG_8960.JPEG', alt: 'Travel Tribes Coorg Tribe Bonding & Memories' }
+    ],
+    highlights: [
+      "Explore the lush green hills and misty valleys of Coorg.",
+      "Walk through scenic coffee and spice plantations.",
+      "Experience a live coffee-tasting session.",
+      "Visit the beautiful Abbey Falls.",
+      "Get up close with elephants at the Elephant Camp.",
+      "Explore the peaceful Namdroling Monastery – Golden Temple.",
+      "Enjoy sunset views from Raja's Seat.",
+      "Experience an exciting off-road Jeep ride to Mandalpatti Peak.",
+      "Explore the magnificent Mysore Palace.",
+      "Discover Mysore's local markets, food and culture.",
+      "Celebrate New Year's Eve near Mysore Palace with your Travel Tribes community."
+    ],
+    itinerary: [
+      {
+        id: 'coorg-mysore-day-1',
+        day: 1,
+        title: 'Day 1: Mumbai → Mangalore | Train Journey & Ice-Breaking 🚂',
+        activities: [
+          "Meet your fellow Coorg travellers at the designated railway stations and begin your journey towards Mangalore by train.",
+          "Enjoy the journey with fellow travellers and take part in ice-breaking games and group activities.",
+          "Connect with your tribe, make new friends and get ready for the adventure ahead.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'coorg-mysore-day-2',
+        day: 2,
+        title: 'Day 2: Mangalore → Coorg | Coffee & Spice Plantation ☕🌿',
+        activities: [
+          "Arrive in Mangalore early morning around 6:00 AM and proceed towards Coorg's charming town of Madikeri.",
+          "Enjoy breakfast during the journey before reaching Coorg and checking in to your stay.",
+          "Explore Coorg's famous Coffee & Spice Plantations with a guided plantation tour.",
+          "Experience a live coffee-tasting session and discover the region's coffee heritage.",
+          "If time permits, visit Raja's Seat and enjoy panoramic views of the surrounding hills.",
+          "Later, explore the local markets, cafés and streets of Madikeri at your own pace.",
+          "Meals: Breakfast & Dinner."
+        ]
+      },
+      {
+        id: 'coorg-mysore-day-3',
+        day: 3,
+        title: 'Day 3: Namdroling Monastery → Elephant Camp → Chiklihole Dam 🛕🐘🌊',
+        activities: [
+          "Enjoy breakfast and get ready for another day of exploring Coorg.",
+          "Visit Namdroling Buddhist Monastery, also known as the Golden Temple, one of the largest Tibetan settlements in India.",
+          "Head to the Elephant Camp and experience the opportunity to see elephants up close, including bathing and rides as mentioned in the itinerary.",
+          "Later, visit Chiklihole Dam, a scenic man-made reservoir surrounded by lush greenery.",
+          "Return to the stay, enjoy dinner and relax after a day of exploration.",
+          "Meals: Breakfast & Dinner."
+        ]
+      },
+      {
+        id: 'coorg-mysore-day-4',
+        day: 4,
+        title: 'Day 4: Mandalpatti → Abbey Falls → Mysore | New Year Celebration 🚙💦🎆',
+        activities: [
+          "Start the day early with an exciting Jeep ride to Mandalpatti Peak.",
+          "Reach the viewpoint and enjoy the beautiful sunrise and panoramic views of Coorg's misty valleys.",
+          "Later, visit the spectacular Abbey Falls.",
+          "Visit the historic Omkareshwar Temple before leaving Coorg.",
+          "Proceed towards Mysore and check in to your stay.",
+          "In the evening, celebrate New Year's Eve near the magnificent Mysore Palace and welcome the New Year with your tribe.",
+          "Meals: Breakfast & Dinner."
+        ]
+      },
+      {
+        id: 'coorg-mysore-day-5',
+        day: 5,
+        title: 'Day 5: Mysore Exploration → Mangalore → Mumbai 🏰🛍️🚂',
+        activities: [
+          "Start the New Year by visiting the magnificent Mysore Palace and experiencing its royal architecture.",
+          "Explore Mysore's local sights, markets and food scene.",
+          "Later, proceed towards Mangalore Junction for your return train journey.",
+          "Board your train back towards Mumbai and spend the journey relaxing with your fellow travellers.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'coorg-mysore-day-6',
+        day: 6,
+        title: 'Day 6: Arrival in Mumbai 🏠✨',
+        activities: [
+          "Arrive back in Mumbai and conclude your Coorg–Mysore New Year adventure.",
+          "Expected arrival of approximately 2:50 PM at Panvel or 3:45 PM at Thane.",
+          "Return home with new friendships, photographs and memories from the trip."
+        ]
+      }
+    ],
+    inclusions: [
+      "3 nights accommodation on triple/quad sharing basis.",
+      "Train travel from Mumbai and back (Sleeper Non-AC tickets on Confirmed/RAC basis; 3AC upgrade available).",
+      "Jeep ride to Mandalpatti Peak.",
+      "Internal transportation by private vehicle.",
+      "4 breakfasts and 3 dinners — 7 meals in total.",
+      "Coffee & Spice Plantation Tour.",
+      "Abbey Falls visit, Elephant Camp visit, Namdroling Monastery visit.",
+      "Mysore Palace and local market exploration.",
+      "NY Celebration at Mysore Palace.",
+      "Trip Captain throughout the trip.",
+      "Entry fees and parking charges.",
+      "Coffee plantation tour entry charges."
+    ],
+    exclusions: [
+      "Train meals are not included.",
+      "Lunch throughout the trip is not included.",
+      "Driver tips, monument entry charges, camera/video charges, laundry, telephone bills and other personal expenses.",
+      "Any extra railway costs and train food.",
+      "Tatkal train ticket charges, if applicable.",
+      "Animal feeding charges at the Elephant Camp and Nisargadhama.",
+      "Any additional expenses not specifically mentioned under inclusions.",
+      "5% GST."
+    ],
+    thingsToCarry: [
+      "Valid Government Photo ID (Aadhaar / Driving License / Passport) — Same as used during booking (Mandatory)",
+      "Comfortable trekking shoes / sneakers with good grip and casual footwear",
+      "Light cotton clothes, comfortable travel wear, and a light jacket / sweater for cool Coorg mornings",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and cap",
+      "Personal medical kit (Band-aids, motion sickness tablets, ORS / Glucose)",
+      "Power bank, camera, and charging cables",
+      "Reusable water bottle"
+    ],
+    policies: [
+      "The trip includes train travel from Mumbai to Mangalore and back, so travellers should carry the same government-issued ID used during booking.",
+      "Train tickets are booked in advance by the Travel Tribes team, subject to availability.",
+      "Confirmed/RAC status is subject to railway availability at the time of booking. Specific berth preferences cannot be guaranteed.",
+      "Group members may not always be seated together as final seat allocation is handled by Indian Railways.",
+      "If tickets are in waiting status, Tatkal booking may be used, and additional Tatkal charges will be payable by the traveller.",
+      "If a confirmed Tatkal ticket cannot be secured, alternate train or transport may be arranged depending on availability, and any fare difference will apply.",
+      "Book at least 30 days before departure to improve the chances of getting confirmed train tickets.",
+      "Train delays, rescheduling or cancellations by Indian Railways are outside Travel Tribes' control.",
+      "The Trip Leader has the right to modify, skip or alter sightseeing/itinerary in case of an emergency, force majeure or inappropriate participant behaviour.",
+      "In triple-sharing rooms, an extra mattress is provided and should not be considered an extra bed.",
+      "Delays caused by participants at sightseeing locations may result in the cancellation or skipping of subsequent sightseeing.",
+      "Participants are expected to coordinate, maintain discipline and cooperate as a team.",
+      "No refund will be provided in case of a no-show on the day of the trip.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the respective hotel's rules.",
+      "A valid photo ID is mandatory for all members staying at the hotel.",
+      "The itinerary may change slightly during public holidays or festivals.",
+      "Vehicles are provided strictly as per the itinerary on a point-to-point basis and are not available for personal use.",
+      "Travellers are responsible for their own luggage and belongings.",
+      "Travel Tribes is not liable if sightseeing is closed due to a special occasion, public holiday, long weekend or festival.",
+      "Travel Tribes does not provide insurance covering illness, accidents, theft or other losses.",
+      "Water and electricity availability may be limited in some areas, and hotels may have fixed schedules for hot and cold water.",
+      "Transportation and logistics may vary depending on the final group size.",
+      "Travel Tribes strictly stands against any form of harassment, and physical contact should always respect another person's comfort.",
+      "Participants undertake the risks associated with road travel, vehicles and nature-based activities.",
+      "AC may not be available in vehicles such as Tempo Travellers, Innovas, Xylos, Scorpios or similar vehicles in hilly regions.",
+      "Third-party buses may experience breakdowns, and arranging a replacement vehicle may take some time.",
+      "Bus/vehicle halts for meals are predefined by the transport vendor and cannot be changed for individual convenience.",
+      "Refunds will be provided only in case the trip is cancelled or postponed by the company/organisers, subject to the applicable policy.",
+      "Participants consent to Travel Tribes using photos/videos taken during the trip for social media and marketing purposes.",
+      "Booking Amount: ₹5,000 per person to confirm your seat.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit.",
+      "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
+      "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Mangalore (Triple / Quad Sharing)', price: '₹12,999 / person + 5% GST' },
+      { label: 'Mumbai to Mumbai (Non-AC Sleeper Train)', price: '₹14,499 / person + 5% GST' },
+      { label: 'Mumbai to Mumbai (3-Tier AC Train)', price: '₹16,499 / person + 5% GST' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    reviews: [
+      {
+        name: 'Gaurav Shinde',
+        role: 'Verified Traveller',
+        detail: 'Coorg & Mysore NY Special',
+        rating: 5,
+        quote: 'Celebrating New Year’s Eve near Mysore Palace was one of the most magical experiences ever! The sunrise at Mandalpatti Peak and the coffee tasting in Coorg were highlights of the trip. The team took care of everything seamlessly.'
+      },
+      {
+        name: 'Sneha Kulkarni',
+        role: 'Verified Traveller',
+        detail: 'Coorg New Year Group Trip',
+        rating: 5,
+        quote: 'Travelled solo from Mumbai and made friends for life. The train journey, games, Abbey Falls, and the Golden Temple were all super well coordinated. Perfect way to ring in the New Year!'
+      },
+      {
+        name: 'Ketan Patel',
+        role: 'Local Guide',
+        reviewCount: '19 reviews',
+        photoCount: '52 photos',
+        detail: 'Coorg with Mysore Celebration',
+        rating: 5,
+        quote: 'Great management, comfortable stays, delicious meals, and the best crowd of travellers. Mysore Palace fireworks and the Mandalpatti off-road jeep ride made this trip unforgettable.'
+      }
+    ]
+  },
+  {
+    id: 'meghalaya-backpacking',
+    slug: 'meghalaya-backpacking',
+    title: 'Meghalaya Backpacking Trip',
+    location: 'Shillong · Cherrapunjee · Dawki · Mawlynnong · Guwahati',
+    region: 'Domestic',
+    date: 'Oct 02–07, 2026',
+    dates: [
+      'Oct 02–07, 2026',
+      'Oct 10–15, 2026',
+      'Oct 17–22, 2026',
+      'Oct 24–29, 2026',
+      'Oct 31–Nov 05, 2026',
+      'Nov 07–12, 2026',
+      'Nov 14–19, 2026',
+      'Nov 21–26, 2026',
+      'Nov 28–Dec 03, 2026',
+      'Dec 05–10, 2026',
+      'Dec 12–17, 2026',
+      'Dec 19–24, 2026',
+      'Dec 24–29, 2026 (XMAS Special)',
+      'Dec 27–Jan 01, 2027 (New Year Special)',
+      'Jan 02–07, 2027',
+      'Jan 09–14, 2027',
+      'Jan 16–21, 2027',
+      'Jan 23–28, 2027'
+    ],
+    duration: '5N/6D',
+    price: '₹20,999',
+    image: '/Card Image/meghalaya_6_days.jpg',
+    alt: 'Nongriat Double Decker Living Root Bridge and lush rainforest of Meghalaya',
+    tag: 'Abode of Clouds',
+    description: 'Immerse yourself in the mystical beauty of Northeast India with our 6-day Meghalaya Backpacking group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, camp by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Explore Meghalaya with fellow curious wanderers and find your tribe.',
+    spots: '5 spots left',
+    gallery: [
+      { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_0857.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_0934.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_1033.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_1124.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_1250.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_1370.JPEG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_2093.JPG", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_6639.jpg", alt: "Meghalaya" },
+      { image: "/image/Meghalaya/IMG_7113.jpg", alt: "Meghalaya" }
+    ],
+    highlights: [
+      "Experience the scenic beauty of Umiam Lake and the panoramic views from Laitlum Canyons.",
+      "Discover the turquoise waters and natural beauty of Krang Suri and Phe Phe Falls.",
+      "Spend a memorable evening at Dawki/Shnongpdeng and experience the charm of Meghalaya's riverside landscapes.",
+      "Explore Mawlynnong Village, along with its Bamboo Sky Walk and Living Root Bridge.",
+      "Visit the Indo-Bangladesh Border and experience one of Meghalaya's unique geographical landmarks.",
+      "Trek through the lush forests to the famous Double Decker Living Root Bridge.",
+      "Take a refreshing swim in the crystal-clear natural pool at Blue Lagoon.",
+      "Explore Mawsmai Cave, Arwah Cave and Garden of Caves in Cherrapunjee.",
+      "Witness the spectacular Nohkalikai Falls and Seven Sisters Falls.",
+      "Travel with a community of like-minded people and create unforgettable memories together."
+    ],
+    itinerary: [
+      {
+        id: 'meghalaya-day-1',
+        day: 1,
+        title: 'Day 1: Guwahati → Shillong 🚗',
+        activities: [
+          "Arrive at Guwahati Airport before 11:00 AM, where our representative will meet and greet you.",
+          "The group will depart for Shillong at 12:00 PM and enjoy a scenic drive through the beautiful landscapes of Meghalaya.",
+          "En route, stop at Umiam Lake (Barapani) to enjoy the views and capture some beautiful photographs.",
+          "On arrival in Shillong, check in to the hotel and take some time to relax.",
+          "In the evening, head out to explore the lively Police Bazaar and experience the local atmosphere.",
+          "Return to the hotel for an overnight stay in Shillong.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'meghalaya-day-2',
+        day: 2,
+        title: 'Day 2: Shillong → Laitlum Canyons → Krang Suri → Phe Phe Falls → Dawki 🏞️',
+        activities: [
+          "Enjoy breakfast at the Campsite before checking out and starting the journey towards Dawki/Shnongpdeng.",
+          "Visit the breathtaking Laitlum Canyons, known for its dramatic landscapes and panoramic valley views.",
+          "Continue the journey and explore the beautiful Krang Suri Waterfall, surrounded by lush greenery.",
+          "Later, visit the scenic Phe Phe Falls and enjoy the natural beauty of the waterfall.",
+          "Continue towards Dawki/Shnongpdeng and check in to your campsite or homestay.",
+          "Spend the evening at leisure, relaxing by the riverside and enjoying the peaceful surroundings.",
+          "Overnight stay in Dawki/Shnongpdeng.",
+          "Meals: Breakfast & Dinner."
+        ]
+      },
+      {
+        id: 'meghalaya-day-3',
+        day: 3,
+        title: 'Day 3: Dawki → Mawlynnong → Cherrapunjee 🛶',
+        activities: [
+          "Enjoy an exciting morning at Dawki River with boating, kayaking and cliff jumping.",
+          "After the river activities, proceed towards Mawlynnong Village, known as one of Asia’s cleanest villages.",
+          "Explore the famous Bamboo Sky Walk and Single Decker Living Root Bridge.",
+          "Visit the Indo-Bangladesh Border and take in the unique views of the region.",
+          "Later, proceed towards Cherrapunjee and check in to your stay.",
+          "Spend the evening relaxing and enjoying the peaceful surroundings.",
+          "Overnight stay: Cherrapunjee",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'meghalaya-day-4',
+        day: 4,
+        title: 'Day 4: Cherrapunjee → Double Decker Living Root Bridge → Blue Lagoon 🌿💧',
+        activities: [
+          "After breakfast, depart for Tyrna Village, the starting point of your famous root bridge trek.",
+          "Begin the trek towards the Single Decker Living Root Bridge and continue further through the lush forests.",
+          "Reach the iconic Double Decker Living Root Bridge, one of Meghalaya's most unique natural attractions.",
+          "Continue towards the beautiful Blue Lagoon Waterfall, where you can enjoy a refreshing swim in its crystal-clear natural pool.",
+          "After spending time at the Blue Lagoon, trek back to Tyrna Village. The trek involves approximately 3,300 steps one way and around 6,600 steps in total.",
+          "After completing the trek, drive back to Cherrapunjee for an overnight stay.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'meghalaya-day-5',
+        day: 5,
+        title: 'Day 5: Cherrapunjee Sightseeing → Shillong 🪨🌊',
+        activities: [
+          "Enjoy breakfast and check out from your stay before beginning your Cherrapunjee sightseeing.",
+          "Visit the famous Mawsmai Cave and explore the fascinating Arwah Cave.",
+          "Continue to the beautiful Garden of Caves, surrounded by Meghalaya's natural landscapes.",
+          "Witness the spectacular Nohkalikai Falls and Seven Sisters Falls, two of the region's iconic waterfalls.",
+          "Later, proceed back to Shillong and check in to your hotel.",
+          "Spend the evening at leisure and enjoy an overnight stay in Shillong.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'meghalaya-day-6',
+        day: 6,
+        title: 'Day 6: Shillong → Guwahati Airport | Departure 🛫',
+        activities: [
+          "Enjoy breakfast and check out from the hotel.",
+          "Depart for Guwahati Airport around 9:00 AM for your return journey.",
+          "The drive to the airport takes approximately 4–5 hours, with an expected arrival around 3:00 PM.",
+          "We recommend booking your return flight after 5:00 PM to allow sufficient time for the journey.",
+          "Bid farewell to your fellow travellers and take home unforgettable memories from your Meghalaya adventure.",
+          "Meals: Breakfast."
+        ]
+      }
+    ],
+    inclusions: [
+      "Pickup & drop as per fixed timings.",
+      "Transportation throughout the itinerary by Tempo Traveller/SUV/Sedan depending on group size.",
+      "5 nights accommodation: 2 nights Shillong, 2 nights Cherrapunjee, 1 night Dawki/Shnongpdeng.",
+      "5 breakfasts + 1 dinner at Dawki.",
+      "Guide for the Nongriat Double Decker Root Bridge trek.",
+      "30-minute complimentary Dawki River boating — 4 people per boat.",
+      "Toll, parking, fuel and driver allowances.",
+      "24×7 on-call support.",
+      "Trip Leader throughout the trip."
+    ],
+    exclusions: [
+      "Lunches and meals not mentioned.",
+      "Flights/airfare and rail fare.",
+      "Travel insurance.",
+      "Additional activities not mentioned in the itinerary.",
+      "Entry fees/tickets to attractions.",
+      "Personal expenses, tips, laundry, telephone bills, camera/video charges, etc.",
+      "Costs arising from landslides, roadblocks or natural calamities.",
+      "5% GST is extra."
+    ],
+    thingsToCarry: [
+      "Valid Government Photo ID (Aadhaar / Passport / Driving License) — Mandatory",
+      "Comfortable trekking / walking shoes with good grip + extra pair of socks",
+      "Quick-dry t-shirts, comfortable trek pants, and swimwear for Blue Lagoon / waterfalls",
+      "Light rain jacket / poncho / umbrella (Cherrapunjee weather can be unpredictable)",
+      "Light sweater or jacket for cooler Shillong evenings",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and wide-brim cap",
+      "Personal medical kit (Band-aids, crepe bandage, pain relief spray, ORS / Glucose)",
+      "Power bank, camera, and waterproof phone pouch",
+      "Reusable water bottle",
+      "Sufficient cash for local bazaar shopping (handicrafts, honey) and street food"
+    ],
+    policies: [
+      "Book your trip at least 25–30 days prior to departure to secure early bird slots and best flight rates.",
+      "Flight recommendation: Book arrival flight reaching Guwahati (GAU) before 11:00 AM on Day 1, and return flight departing after 5:00 PM on Day 6.",
+      "Booking Amount: ₹5,000 per person to confirm your seat, with the remaining balance payable as per the payment policy.",
+      "Trip Leader Authority: The trip leader reserves the right to alter or skip sightseeing in case of roadblocks, weather conditions, or local advisories.",
+      "Trek Fitness: Day 4 trek involves approx 3,300 steps one way and 6,600 steps round trip. Moderate fitness is recommended.",
+      "Room Sharing: Standard package is on Triple sharing (extra mattress provided). Double sharing room option available on request.",
+      "Cancellation 30+ days prior: 10% deduction on total trip cost.",
+      "Cancellation 15–29 days prior: 25% deduction on remaining balance.",
+      "Cancellation 8–14 days prior: 50% deduction on remaining balance.",
+      "Cancellation < 7 days / No-Show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
+    ],
+    pricingOptions: [
+      { label: 'Triple Sharing (Guwahati to Guwahati)', price: '₹20,999 / person + 5% GST' },
+      { label: 'Double Sharing (Guwahati to Guwahati)', price: '₹22,999 / person + 5% GST' },
+      { label: 'Xmas & New Year (Triple Sharing)', price: '₹22,999 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' },
+      { label: 'Xmas & New Year (Double Sharing)', price: '₹24,499 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    reviews: [
+      {
+        name: 'Sayali Mhatre',
+        role: 'Verified Traveller',
+        detail: 'Meghalaya Backpacking Trip',
+        rating: 5,
+        quote: 'Meghalaya with Travel Tribes was a dream come true! The crystal clear water at Dawki, the double decker root bridge trek, and swimming in Blue Lagoon was breathtaking. The tribe vibe was top notch!'
+      },
+      {
+        name: 'Arjun Deshmukh',
+        role: 'Verified Traveller',
+        detail: 'Meghalaya Backpacking Trip',
+        rating: 5,
+        quote: 'Best group trip ever. Everything from the stays, food, waterfall hikes to root bridge trek was super well organized. Our trip captain made everyone feel like old friends within the first day.'
+      },
+      {
+        name: 'Priyanka Bose',
+        role: 'Local Guide',
+        reviewCount: '14 reviews',
+        photoCount: '38 photos',
+        detail: 'Meghalaya Backpacking Trip',
+        rating: 5,
+        quote: 'Nohkalikai falls, Krang Suri, and swimming in Blue Lagoon were pure magic. If you are travelling solo to Northeast, Travel Tribes is 100% the best choice. Tribe hai to vibe hai!'
+      }
+    ]
+  },
+  {
+    id: 'meghalaya-with-kaziranga',
     slug: 'meghalaya-with-kaziranga',
-    title: 'Meghalaya with Kaziranga Expedition',
-    location: 'Shillong · Cherrapunji · Dawki · Kaziranga · Guwahati',
+    title: 'Meghalaya with Kaziranga — 6N/7D',
+    location: 'Shillong · Cherrapunjee · Dawki · Kaziranga · Guwahati',
     region: 'Domestic',
     date: 'Oct 02–08, 2026',
     dates: [
@@ -271,11 +720,11 @@ export const trips: Trip[] = [
       'Jan 23–29, 2027'
     ],
     duration: '6N/7D',
-    price: '₹24,500',
-    image: '/image/Meghalaya/meghalaya_img.JPEG',
-    alt: 'Nongriat Double Decker Living Root Bridge and lush rainforest of Meghalaya',
+    price: '₹23,999',
+    image: '/Card Image/meghalaya_with_Kaziranga.png',
+    alt: 'Nongriat Double Decker Living Root Bridge and Kaziranga wildlife safari in Meghalaya & Assam',
     tag: 'Abode of Clouds & Safari',
-    description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, camp by the transparent Umngot River in Dawki/Shnongpdeng, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, tigers, and wild elephants in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
+    description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, camp by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife jeep safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, wild elephants, and rich wildlife in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
     spots: '5 spots left',
     gallery: [
       { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya" },
@@ -290,168 +739,184 @@ export const trips: Trip[] = [
       { image: "/image/Meghalaya/IMG_7113.jpg", alt: "Meghalaya" }
     ],
     highlights: [
-      "Visit Umiam Lake (Barapani) for scenic hillside views and a tranquil boat ride.",
-      "Witness the stunning Laitlum Canyons, famously known as the “End of the World”.",
-      "Experience the beauty of Krang Suri Waterfalls and vibrant turquoise Phe Phe Falls.",
-      "Stay in riverside camps at Shnongpdeng / Dawki, famous for crystal-clear transparent waters.",
-      "Enjoy a scenic boat ride on the Umngot River at Shnongpdeng / Dawki.",
-      "Visit Mawlynnong Village — celebrated as Asia’s Cleanest Village, with Bamboo Sky Walk.",
-      "Stop by the Indo-Bangladesh Border for a unique international frontier viewpoint.",
-      "Trek through rainforests to the world-famous Nongriat Double Decker Living Root Bridge.",
-      "Discover the surreal natural emerald waters of the Blue Lagoon and take a refreshing swim.",
-      "Discover the mysterious Arwah Caves, Mawsmai Cave and Garden of Caves.",
-      "Marvel at Nohkalikai Falls (India’s tallest plunge waterfall) and Seven Sisters Falls.",
-      "Admire panoramic green canyon views from Mawkdok Dympep Valley viewpoint.",
-      "Embark on an early morning thrilling Jeep Safari in Kaziranga National Park to spot One-horned Rhinos and wildlife.",
-      "Seek blessings at the sacred Maa Kamakhya Temple in Guwahati."
+      "Experience the scenic beauty of Umiam Lake and the panoramic landscapes of Laitlum Canyons.",
+      "Explore the turquoise waters and natural beauty of Krang Suri and Phe Phe Falls.",
+      "Stay in Dawki/Shnongpdeng and experience the charm of Meghalaya's riverside landscapes.",
+      "Visit Mawlynnong Village, along with the Bamboo Sky Walk and Living Root Bridge.",
+      "Enjoy the beautiful Dawki/Umngot River and experience the unique Indo-Bangladesh Border.",
+      "Trek through the lush forests to the famous Double Decker Living Root Bridge.",
+      "Take a refreshing swim in the crystal-clear waters of the Blue Lagoon.",
+      "Explore Mawsmai Cave, Arwah Cave, Garden of Caves and Mawkdok Valley.",
+      "Witness the spectacular Nohkalikai Falls and Seven Sisters Falls.",
+      "Experience an exciting Jeep Safari at Kaziranga National Park and explore its rich wildlife."
     ],
     itinerary: [
       {
+        id: 'meghalaya-kaziranga-day-1',
         day: 1,
-        title: 'Arrival in Guwahati | Transfer to Shillong via Umiam Lake 🚗',
+        title: 'Day 1: Guwahati → Shillong 🚗',
         activities: [
-          "Arrive at Guwahati Airport (GAU) before 11:00 AM. Our Travel Tribes representative will meet and greet you at the airport.",
-          "The group departs for Shillong at 12:00 PM in private tempo traveller / SUV.",
-          "Enjoy a scenic 4-hour uphill drive from Guwahati to Shillong through lush pine hills.",
-          "En route, stop at the beautiful Umiam Lake (Barapani) and capture its mesmerising waters and landscape.",
-          "Arrive in Shillong, check in to your hotel and freshen up.",
-          "In the evening, explore the vibrant cafes, street music, and shopping at Police Bazaar.",
-          "Overnight stay in Shillong. (Meals: Not Included)."
+          "Arrive at Guwahati Airport before 11:00 AM, where our representative will meet and greet you.",
+          "The group will depart for Shillong at 12:00 PM and enjoy a scenic drive through the beautiful landscapes of Assam and Meghalaya.",
+          "En route, stop at Umiam Lake (Barapani) to enjoy its mesmerising views and capture some beautiful photographs.",
+          "Arrive in Shillong and check in to the hotel.",
+          "In the evening, explore the lively Police Bazaar and experience the local atmosphere.",
+          "Return to the hotel for an overnight stay in Shillong.",
+          "Meals: Not included."
         ]
       },
       {
+        id: 'meghalaya-kaziranga-day-2',
         day: 2,
-        title: 'Shillong – Laitlum Canyons – Krang Suri & Phe Phe Falls – Dawki / Shnongpdeng 🏞️',
+        title: 'Day 2: Shillong → Laitlum → Krang Suri → Phe Phe → Dawki 🏞️',
         activities: [
-          "Enjoy a delicious breakfast in the morning and check out from your Shillong hotel.",
-          "Proceed towards the breathtaking Laitlum Canyons for 360-degree dramatic cliff and gorge views.",
-          "Drive to Jowai and explore the magical turquoise cascade of Krang Suri Waterfalls and Phe Phe Falls.",
-          "After exploring the stunning waterfalls, proceed towards Dawki / Shnongpdeng.",
-          "Check in to your riverside camps, soak in the tranquil vibe under the stars.",
-          "Enjoy a warm dinner with your tribe by the riverbanks.",
-          "Overnight camping in Dawki / Shnongpdeng. (Meals: Breakfast & Dinner Included)."
+          "Enjoy breakfast at the hotel before checking out and proceeding towards Dawki/Shnongpdeng.",
+          "Visit the breathtaking Laitlum Canyons and enjoy panoramic views of the surrounding valleys.",
+          "Continue towards Krang Suri Waterfalls and Phe Phe Falls, exploring the natural beauty of Meghalaya.",
+          "After exploring the waterfalls, continue your journey towards Dawki/Shnongpdeng.",
+          "Check in to your stay and relax after the day's exploration.",
+          "Overnight stay in Dawki/Shnongpdeng.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'meghalaya-kaziranga-day-3',
         day: 3,
-        title: 'Dawki – Mawlynnong Village – Cherrapunjee 🛶',
+        title: 'Day 3: Dawki → Mawlynnong → Cherrapunjee 🛶',
         activities: [
-          "Wake up to the sounds of nature, have breakfast, and check out from your camp.",
-          "Enjoy a memorable boat ride on the crystal-clear, transparent waters of the Umngot River where boats appear to float on air.",
-          "Visit the Indo-Bangladesh Border outpost.",
-          "Proceed towards Mawlynnong Village, renowned as Asia’s cleanest village.",
-          "Explore the Bamboo Sky Walk viewpoint and the Single Decker Living Root Bridge in Riwai.",
-          "Later, take a scenic drive through the clouds towards Cherrapunjee (Sohra).",
-          "Check in to your hotel and relax with your fellow tribe members.",
-          "Overnight stay in Cherrapunjee. (Meals: Breakfast Included)."
+          "Enjoy an exciting morning at Dawki River with boating, kayaking and cliff jumping.",
+          "After the river activities, proceed towards Mawlynnong Village, known as one of Asia’s cleanest villages.",
+          "Explore the famous Bamboo Sky Walk and Single Decker Living Root Bridge.",
+          "Visit the Indo-Bangladesh Border and take in the unique views of the region.",
+          "Later, proceed towards Cherrapunjee and check in to your stay.",
+          "Spend the evening relaxing and enjoying the peaceful surroundings.",
+          "Overnight stay: Cherrapunjee",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'meghalaya-kaziranga-day-4',
         day: 4,
-        title: 'Trek to Double Decker Living Root Bridge & Blue Lagoon 🌿💧',
+        title: 'Day 4: Cherrapunjee → Double Decker Root Bridge → Blue Lagoon 🌿💧',
         activities: [
-          "Energizing breakfast and depart for Tyrna Village, the base point of our iconic trek.",
-          "Begin your descent (approx 3,300 steps one way) through dense tropical rainforests and suspension bridges.",
-          "Cross the Single Decker Root Bridge and arrive at the world-renowned Nongriat Double Decker Living Root Bridge — an ancient bio-engineering marvel.",
-          "Continue a short hike to the pristine Blue Lagoon natural pool and take a refreshing swim in crystal emerald waters.",
-          "Trek back up to Tyrna Village (approx 6,600 steps total round trip).",
-          "Return to your Cherrapunjee hotel for a well-deserved hearty dinner and sound sleep.",
-          "Overnight stay in Cherrapunjee. (Meals: Breakfast & Dinner Included)."
+          "Enjoy breakfast and depart for Tyrna Village, the starting point of the day's trek.",
+          "Begin the trek towards the Single Decker Living Root Bridge and continue further to the famous Double Decker Living Root Bridge.",
+          "Continue through the lush surroundings to reach the beautiful Blue Lagoon Waterfall.",
+          "Enjoy a refreshing swim in the crystal-clear natural pool at the Blue Lagoon.",
+          "Trek back to Tyrna Village. The trek involves approximately 3,300 steps one way and around 6,600 steps in total.",
+          "After completing the trek, return to Cherrapunjee for an overnight stay.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'meghalaya-kaziranga-day-5',
         day: 5,
-        title: 'Cherrapunjee Sightseeing – Mawsmai, Nohkalikai & Arwah Caves – Shillong 🪨🌊',
+        title: 'Day 5: Cherrapunjee Sightseeing → Shillong 🪨🌊',
         activities: [
-          "Enjoy a wholesome breakfast and check out from Cherrapunjee.",
-          "Explore the limestone formations and fossils inside the famous Mawsmai Cave and Arwah Cave.",
-          "Stop at the breathtaking Mawkdok Dympep Valley viewpoint for dramatic landscape panoramas.",
-          "Visit the enchanting Garden of Caves with its natural rock formations and hidden cascades.",
-          "Witness the awe-inspiring Nohkalikai Falls, India's tallest plunge waterfall (1,115 ft).",
-          "Visit the magnificent Seven Sisters Falls (Nohsngithiang Falls) and Eco Park.",
-          "Drive back to Shillong in the evening, check in to the hotel, and relax.",
-          "Overnight stay in Shillong. (Meals: Breakfast Included)."
+          "Enjoy breakfast and check out from your stay.",
+          "Visit the famous Mawsmai Cave and stop at Mawkdok Valley to enjoy its breathtaking views.",
+          "Explore the fascinating Arwah Cave and the beautiful Garden of Caves.",
+          "Witness the majestic Nohkalikai Falls, followed by Seven Sisters Falls and Eco Park.",
+          "Later, proceed back to Shillong and check in to your stay.",
+          "Spend the evening at leisure and relax at the hotel.",
+          "Overnight stay in Shillong.",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'meghalaya-kaziranga-day-6',
         day: 6,
-        title: 'Shillong to Kaziranga National Park 🦏',
+        title: 'Day 6: Shillong → Kaziranga 🦏',
         activities: [
-          "Enjoy breakfast, check out from Shillong, and depart for Kaziranga in Assam.",
-          "Enjoy a scenic drive transitioning from the misty Khasi hills to the rolling tea gardens of Assam.",
-          "Arrive in Kaziranga by late afternoon / evening and check in to your resort/hotel.",
-          "Spend the evening at leisure exploring local Assamese cultural shows or chilling with tribe mates.",
-          "Overnight stay in Kaziranga. (Meals: Breakfast Included)."
+          "Enjoy breakfast and check out from the hotel.",
+          "Depart for Kaziranga and enjoy a scenic drive through the beautiful landscapes of Assam.",
+          "Arrive in Kaziranga by evening and check in to your hotel.",
+          "Spend the evening at leisure, relaxing after the journey.",
+          "Overnight stay in Kaziranga.",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'meghalaya-kaziranga-day-7',
         day: 7,
-        title: 'Kaziranga Wildlife Jeep Safari – Return to Guwahati Airport 🚙🦏',
+        title: 'Day 7: Kaziranga Safari → Guwahati 🚙🦏',
         activities: [
-          "Set out early in the morning for a thrilling open Jeep Safari in Kaziranga National Park.",
-          "Spot the world-famous Great Indian One-horned Rhinoceros, wild water buffaloes, Asian elephants, swamp deer, and rich birdlife in their natural habitat.",
-          "Return to the resort, freshen up, enjoy a hearty breakfast, and check out.",
-          "Scenic return drive to Guwahati Airport (GAU) with a brief stop near Maa Kamakhya Temple if time permits.",
-          "Bid farewell to your tribe members with unforgettable memories and thousands of photographs!",
-          "Note: Please book return flights departing after 06:00 PM from Guwahati (GAU).",
-          "Meals: Breakfast Included."
+          "Start your morning with an exciting Jeep Safari in Kaziranga National Park.",
+          "Explore the national park and look out for wildlife including one-horned rhinoceros, elephants, water buffaloes, swamp deer and other species.",
+          "After the safari, drive back towards Guwahati for your return journey.",
+          "We recommend booking your return flight after 6:00 PM for a comfortable departure.",
+          "End the trip with unforgettable memories and photographs from your Meghalaya and Kaziranga adventure.",
+          "Meals: Breakfast."
         ]
       }
     ],
     inclusions: [
-      "Entire ground travel as per itinerary by Tempo Traveller / SUV / Sedan based on group size",
-      "6 Nights Accommodation (Double / Triple sharing): 2N Shillong Hotel, 1N Dawki/Shnongpdeng Riverside Camping, 2N Cherrapunjee Hotel, 1N Kaziranga Hotel",
-      "6 Breakfasts (Day 2 to Day 7) & 2 Dinners (Day 2 & Day 4)",
-      "Kaziranga National Park Open Jeep Safari included",
-      "Crystal-clear Umngot River Boat Ride at Dawki / Shnongpdeng",
-      "Guided treks to Double Decker Living Root Bridge & Blue Lagoon",
-      "All necessary Inner Line / state permits, toll taxes, driver night charges and parking fees",
-      "Medical kit for basic emergency assistance",
-      "Experienced Travel Tribes Trip Captain to ensure top-notch experience and bonding throughout"
+      "Transportation throughout the itinerary by Tempo Traveller, SUV or Sedan, depending on group size.",
+      "Accommodation on a double/triple sharing basis: 2 nights in Shillong, 1 night camping at Shnongpdeng/Dawki, 2 nights in Cherrapunjee and 1 night in Kaziranga.",
+      "6 breakfasts from Day 2 to Day 7.",
+      "1 dinner on Day 2.",
+      "Kaziranga National Park Jeep Safari.",
+      "Guided trek to various points of interest.",
+      "Boat ride in the crystal-clear Umngot River at Dawki.",
+      "Driver night charges, toll fees and parking charges.",
+      "All necessary permits required for the trip.",
+      "Trip Leader throughout the trip."
     ],
     exclusions: [
-      "Airfare or train fare to and from Guwahati (GAU)",
-      "Lunches and dinners not explicitly mentioned in the itinerary",
-      "Travel insurance",
-      "Entry tickets to monuments, caves, waterfalls, or optional water sports/ziplining",
-      "Personal expenses (tips, laundry, phone calls, camera/drone charges, packaged water)",
-      "Any cost arising due to natural calamities like landslides, roadblocks, etc. (to be borne directly on spot)",
-      "Anything not mentioned in the inclusions",
-      "5% GST"
+      "Lunches and any meals not specifically mentioned in the itinerary.",
+      "Flights and airfare are not included.",
+      "Travel insurance.",
+      "Charges for additional activities not specified in the itinerary.",
+      "Entry fees or tickets to attractions.",
+      "Airfare or rail fare.",
+      "Personal expenses such as driver tips, monument entry fees, camera/video charges, laundry, telephone bills, etc.",
+      "Any additional costs arising due to landslides, roadblocks or natural calamities.",
+      "5% GST."
+    ],
+    thingsToCarry: [
+      "Valid Government Photo ID (Aadhaar / Passport / Driving License) — Mandatory",
+      "Comfortable trekking / walking shoes with good grip + extra pair of socks",
+      "Quick-dry t-shirts, comfortable trek pants, and swimwear for Blue Lagoon / waterfalls",
+      "Light rain jacket / poncho / umbrella (Cherrapunjee weather can be unpredictable)",
+      "Light sweater or jacket for cooler Shillong evenings",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and wide-brim cap",
+      "Personal medical kit (Band-aids, crepe bandage, pain relief spray, ORS / Glucose)",
+      "Power bank, camera, and waterproof phone pouch",
+      "Reusable water bottle",
+      "Sufficient cash for local bazaar shopping and street food"
     ],
     policies: [
       "Book your trip at least 25–30 days prior to departure to secure early bird slots and best flight rates.",
-      "Flight recommendation: Book arrival flight reaching Guwahati (GAU) before 11:00 AM on Day 1, and return flight departing after 06:00 PM on Day 7.",
-      "Booking Advance: ₹5,000/- per person (Non-refundable upon cancellation; transferable or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Regular Triple Sharing ₹24,500 | Regular Double Sharing ₹26,500 | Xmas & New Year Triple Sharing ₹26,500 | Xmas & New Year Double Sharing ₹28,500 (+5% GST).",
+      "Flight recommendation: Book arrival flight reaching Guwahati (GAU) before 11:00 AM on Day 1, and return flight departing after 6:00 PM on Day 7.",
+      "Booking Amount: ₹5,000 per person to confirm your seat. The remaining balance is payable as per the payment policy.",
+      "Trip Leader Authority: The trip leader reserves the right to alter or skip sightseeing in case of roadblocks, weather conditions, or local advisories.",
+      "Trek Fitness: Day 4 trek involves approx 3,300 steps one way and around 6,600 steps in total. Moderate fitness is recommended.",
       "Room Sharing: Standard package is on Triple sharing (extra mattress provided). Double sharing room option available on request.",
-      "Trek Fitness: Day 4 trek involves approx 6,600 steps total (Tyrna to Nongriat & return). Moderate fitness is recommended.",
-      "Trip Authority: The trip leader reserves the right to alter or skip sightseeing in case of roadblocks, weather conditions, or local advisories.",
       "Cancellation 30+ days prior: 10% deduction on total trip cost.",
       "Cancellation 15–29 days prior: 25% deduction on remaining balance.",
       "Cancellation 8–14 days prior: 50% deduction on remaining balance.",
       "Cancellation < 7 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
     pricingOptions: [
-      { label: 'Triple Sharing (Guwahati to Guwahati)', price: '₹24,500 / person' },
-      { label: 'Double Sharing (Guwahati to Guwahati)', price: '₹26,500 / person' },
-      { label: 'Xmas & New Year (Triple Sharing)', price: '₹26,500 / person', note: 'Applicable on Dec 24 & Dec 27 batches' },
-      { label: 'Xmas & New Year (Double Sharing)', price: '₹28,500 / person', note: 'Applicable on Dec 24 & Dec 27 batches' }
+      { label: 'Triple Sharing (Guwahati to Guwahati)', price: '₹23,999 / person + 5% GST' },
+      { label: 'Double Sharing (Guwahati to Guwahati)', price: '₹25,999 / person + 5% GST' },
+      { label: 'Xmas & New Year (Triple Sharing)', price: '₹26,499 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' },
+      { label: 'Xmas & New Year (Double Sharing)', price: '₹28,499 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' }
     ],
     bookingAmount: '₹5,000 / person',
     reviews: [
       {
         name: 'Sayali Mhatre',
         role: 'Verified Traveller',
-        detail: 'Meghalaya & Kaziranga Expedition',
+        detail: 'Meghalaya with Kaziranga Expedition',
         rating: 5,
         quote: 'Meghalaya with Travel Tribes was a dream come true! The crystal clear water at Dawki, the double decker root bridge trek, and seeing one-horned rhinos in Kaziranga was breathtaking. The tribe vibe was top notch!'
       },
       {
         name: 'Arjun Deshmukh',
         role: 'Verified Traveller',
-        detail: 'Meghalaya & Kaziranga Expedition',
+        detail: 'Meghalaya with Kaziranga Expedition',
         rating: 5,
         quote: 'Best group trip ever. Everything from the stays, food, waterfall hikes to Kaziranga safari was super well organized. Our trip captain made everyone feel like old friends within the first day.'
       },
@@ -462,13 +927,14 @@ export const trips: Trip[] = [
         photoCount: '38 photos',
         detail: 'Meghalaya with Kaziranga',
         rating: 5,
-        quote: 'Nohkalikai falls, Krang Suri, and swimming in Blue Lagoon were pure magic. If you are travelling solo to Northeast, Travel Tribes is 100% the best choice. Tribe hai to vibe hai!'
+        quote: 'Nohkalikai falls, Krang Suri, and seeing one-horned rhinos in Kaziranga were pure magic. If you are travelling solo to Northeast, Travel Tribes is 100% the best choice. Tribe hai to vibe hai!'
       }
     ]
   },
   {
+    id: 'sri-lanka-island-escape',
     slug: 'sri-lanka-island-escape',
-    title: 'Sri Lanka – The Island Escape',
+    title: 'Sri Lanka — The Island Escape',
     location: 'Colombo · Kandy · Sigiriya · Ella · Mirissa · Sri Lanka',
     region: 'International',
     date: 'Oct 17–24, 2026',
@@ -476,12 +942,12 @@ export const trips: Trip[] = [
       'Oct 17–24, 2026',
       'Nov 07–14, 2026',
       'Nov 21–28, 2026',
-      'Dec 19–26, 2026 (XMAS Special)',
+      'Dec 19–26, 2026 (Christmas Special)',
       'Dec 27–Jan 03, 2027 (New Year Special)'
     ],
     duration: '7N/8D',
-    price: '₹53,000',
-    image: img('photo-1588598198321-9735fd52455b'),
+    price: '₹52,999',
+    image: '/Card Image/srilanka.png',
     alt: 'Sri Lanka iconic Nine Arch Bridge surrounded by lush tea hills in Ella',
     tag: 'International Island Escape',
     description: 'Discover the pure magic of Sri Lanka on an 8-day tropical island group escape with Travel Tribes designed for 18–40 year old wanderers. From sun-kissed palm beaches in Mirissa and ocean surfing in Weligama to the misty emerald tea hills of Nuwara Eliya and Ella. Climb the ancient Sigiriya Lion Rock Fortress, explore sacred Dambulla cave temples, feed gentle giants at Pinnawala, and experience the world’s most iconic scenic blue train journey from Nanu Oya to Ella. Stay in premium 4-star hotels, watch whales in the Indian Ocean, and create unforgettable bonds with your tribe.',
@@ -497,167 +963,186 @@ export const trips: Trip[] = [
       { image: img('photo-1539635278303-d4002c07eae3'), alt: 'Little Adam’s Peak Hiking Panorama in Ella' }
     ],
     highlights: [
-      "Explore the cultural charm of Kandy and the sacred Temple of the Sacred Tooth Relic.",
-      "Visit the famous Pinnawala Elephant Orphanage & Herbal Spice Garden.",
-      "Climb the iconic Sigiriya Lion Rock Fortress — an ancient UNESCO World Heritage wonder.",
-      "Experience an authentic Sri Lankan Rural Village Adventure with traditional bullock cart ride & canoe ride.",
-      "Relish an authentic traditional Sri Lankan lunch prepared with fresh local spices.",
-      "Explore the ancient Dambulla Cave Temple complex featuring 150+ Buddha statues and murals.",
-      "Witness the high-energy Kandy Cultural Dance Show with traditional drummers and fire dancers.",
-      "Explore lush rolling Tea Gardens & historic Tea Factories in Ramboda.",
-      "Experience the world-renowned Nanu Oya to Ella scenic train journey through misty tea plantations.",
-      "Hike to Little Adam’s Peak for breathtaking panoramic valley views.",
-      "Visit the iconic Nine Arch Bridge in Ella and catch the train crossing.",
-      "Fly over lush green valleys on the adrenaline-pumping Rawana Mega Zip Line.",
-      "Relax at Mirissa Beach with soft sands, laid-back beachside cafés and golden sunsets.",
-      "Set out on an exciting Whale & Dolphin Watching ocean safari in Mirissa (seasonal).",
-      "Try surfing, snorkelling, or scuba diving in Weligama / Mirissa ocean waters."
+      "Explore the cultural charm and heritage of Kandy.",
+      "Visit the famous Pinnawala Elephant Orphanage and Spice & Herbal Garden.",
+      "Climb the iconic Sigiriya Lion Rock Fortress.",
+      "Experience an authentic Sri Lankan Village Adventure with a bullock cart and canoe ride.",
+      "Explore the ancient Dambulla Cave Temple.",
+      "Witness the vibrant Kandy Cultural Dance Show.",
+      "Discover Sri Lanka’s lush Tea Gardens & Tea Factories.",
+      "Experience the scenic Nanu Oya to Ella train journey.",
+      "Hike to Little Adam’s Peak and visit the iconic Nine Arch Bridge.",
+      "Experience the thrilling Rawana Mega Zip Line and explore Rawana Caves.",
+      "Relax on the beaches of Mirissa and enjoy the coastal vibes.",
+      "Experience Whale & Dolphin Watching, surfing, snorkelling and optional scuba diving."
     ],
     itinerary: [
       {
+        id: 'sri-lanka-day-1',
         day: 1,
-        title: 'Welcome to Sri Lanka | Arrival in Colombo / Negombo 🌴',
+        title: 'Day 1: Arrival in Sri Lanka → Negombo 🌴',
         activities: [
-          "Arrive at Bandaranaike International Airport (CMB) in Colombo, where our friendly Travel Tribes representative greets you.",
-          "Short 20-minute transfer to our hotel in Negombo / Colombo.",
-          "Check in to your hotel, freshen up and relax after your flight.",
-          "Spend the rest of the day at leisure exploring the golden sands of Negombo beach or relaxing by the pool.",
-          "Overnight stay in Negombo / Colombo. (Meals: Not Included)."
+          "Arrive at Bandaranaike International Airport, where our local representative will welcome you.",
+          "Transfer to Negombo, located approximately 20 minutes from the airport.",
+          "Check in to your hotel, freshen up and relax after your journey.",
+          "Spend the rest of the day at leisure and enjoy your first glimpse of Sri Lanka.",
+          "Overnight stay: Negombo / Colombo."
         ]
       },
       {
+        id: 'sri-lanka-day-2',
         day: 2,
-        title: 'Negombo to Kandy | Pinnawala Elephants & Cultural Dance Show 🐘🛕',
+        title: 'Day 2: Negombo → Kandy | Elephants & Scenic Views 🐘🛕',
         activities: [
-          "Breakfast at the hotel, check out and begin your scenic journey towards the cultural capital of Kandy.",
-          "En route, visit the famous Pinnawala Elephant Orphanage and watch gentle giants bathe in the river.",
-          "Visit a traditional Spice & Herbal Garden to learn about Sri Lanka's famous Ayurvedic herbs and spices.",
-          "In Kandy, visit the Gem Museum & Lapidary and the revered Temple of the Sacred Tooth Relic.",
-          "Enjoy a picturesque drive around Kandy Upper Lake viewpoint.",
-          "In the evening, attend the vibrant Kandy Cultural Dance & Fire Walking Show.",
-          "Check in to your 4-star hotel in Kandy, enjoy dinner with the tribe, and relax.",
-          "Overnight stay in Kandy. (Meals: Breakfast Included)."
+          "Enjoy breakfast and check out from the hotel before proceeding towards Kandy.",
+          "En route, visit the Pinnawala Elephant Orphanage and explore a Spice & Herbal Garden.",
+          "Continue towards Kandy and visit the Gem Museum & Lapidary.",
+          "Explore the Temple of the Sacred Tooth Relic, one of Sri Lanka’s most revered Buddhist sites.",
+          "Enjoy a scenic drive around Kandy Upper Lake and stop at a viewpoint for panoramic views.",
+          "In the evening, experience the vibrant Kandy Cultural Dance Show.",
+          "Check in to the hotel, enjoy dinner and relax for the night.",
+          "Overnight stay: Kandy."
         ]
       },
       {
+        id: 'sri-lanka-day-3',
         day: 3,
-        title: 'Kandy – Sigiriya Lion Rock – Rural Village Adventure – Dambulla Caves 🦁🌾',
+        title: 'Day 3: Kandy → Sigiriya → Dambulla → Kandy 🦁🌾',
         activities: [
-          "Early breakfast and depart at 8:00 AM for a thrilling full-day excursion.",
-          "Climb the majestic Sigiriya Lion Rock Fortress (UNESCO World Heritage Site), marveling at ancient frescoes and panoramic views from the summit.",
-          "Immerse yourself in authentic village life with a Rural Village Adventure including a traditional bullock cart ride and catamaran canoe ride across the lake.",
-          "Savour a delicious traditional Sri Lankan lunch cooked in clay pots.",
-          "Explore the UNESCO-listed Dambulla Cave Temple complex dating back to the 1st century BC, housing over 150 Buddha statues.",
-          "Return to Kandy in the evening to relax.",
-          "Overnight stay in Kandy. (Meals: Breakfast & Lunch Included)."
+          "Start the day with an early breakfast and depart from the hotel at 8:00 AM.",
+          "Climb the iconic Sigiriya Lion Rock Fortress, a UNESCO World Heritage Site, and enjoy spectacular views from the top.",
+          "Experience authentic Sri Lankan village life with a traditional bullock cart ride and canoe ride.",
+          "Enjoy a traditional Sri Lankan lunch during the village experience.",
+          "Visit the ancient Dambulla Cave Temple, home to more than 150 Buddha statues and historic cave paintings.",
+          "After a full day of sightseeing and experiences, return to Kandy.",
+          "Overnight stay: Kandy."
         ]
       },
       {
+        id: 'sri-lanka-day-4',
         day: 4,
-        title: 'Kandy – Nuwara Eliya – Iconic Scenic Train to Ella 🚂⛰️',
+        title: 'Day 4: Kandy → Nuwara Eliya → Ella 🚂⛰️',
         activities: [
-          "Enjoy breakfast and check out from Kandy. Depart for Nuwara Eliya (Little England) at 7:30 AM.",
-          "Visit a working Tea Factory and lush Tea Gardens in Ramboda to discover the secret behind Ceylon Tea.",
-          "Stop at the magnificent Ramboda Waterfalls for photos.",
-          "Board the world-famous blue scenic train from Nanu Oya to Ella (approx 3–4 hours).",
-          "Hang by the open doors and soak in jaw-dropping views of misty emerald mountains, roaring waterfalls, and endless tea estates.",
-          "Arrive in the charming hill town of Ella, transfer to your hotel and unwind.",
-          "Overnight stay in Ella. (Meals: Breakfast Included)."
+          "Enjoy breakfast and check out from the hotel before departing for Nuwara Eliya at 7:30 AM.",
+          "Visit a Tea Factory & Tea Gardens in Ramboda and learn about Sri Lanka’s famous tea production.",
+          "Stop at the beautiful Ramboda Waterfalls for photographs and scenic views.",
+          "Board the famous scenic train from Nanu Oya to Ella.",
+          "Enjoy approximately 3–4 hours of scenic train travel through tea plantations, mountains and valleys.",
+          "Arrive in Ella, transfer to your hotel and relax.",
+          "Overnight stay: Ella."
         ]
       },
       {
+        id: 'sri-lanka-day-5',
         day: 5,
-        title: 'Ella Exploration & Adventure | Little Adam’s Peak, Nine Arch Bridge & Zipline 🌉✨',
+        title: 'Day 5: Ella Exploration & Adventure 🌉✨',
         activities: [
-          "Delicious breakfast with mountain views at the hotel.",
-          "Begin the morning with an easy hike up Little Adam’s Peak for 360-degree vistas of Ella Gap.",
-          "Visit the architectural wonder of Nine Arch Bridge and watch the train rumble across the arches nestled in green jungle.",
-          "Get your adrenaline rush on the thrilling Rawana Mega Zip Line flying over tea plantations.",
+          "Start your day with breakfast at the hotel.",
+          "Take an easy hike to Little Adam’s Peak and enjoy breathtaking views of Ella’s green landscapes.",
+          "Visit the iconic Nine Arch Bridge, one of Sri Lanka’s most picturesque landmarks.",
+          "If you're lucky, watch a train pass across the bridge for a memorable photo opportunity.",
+          "Experience the thrilling Rawana Mega Zip Line and fly over Ella’s beautiful surroundings.",
           "Explore the historic and legendary Rawana Caves.",
-          "Spend the evening cafe hopping in Ella town, listening to live acoustic music and chilling with your tribe.",
-          "Overnight stay in Ella. (Meals: Breakfast Included)."
+          "Spend the evening at leisure exploring the charming town of Ella.",
+          "Overnight stay: Ella."
         ]
       },
       {
+        id: 'sri-lanka-day-6',
         day: 6,
-        title: 'Ella to Mirissa | Rawana Waterfall to Tropical Beachfront 🌊🏖️',
+        title: 'Day 6: Ella → Mirissa | Waterfalls to Beach 🌊🏖️',
         activities: [
-          "Breakfast at the hotel, check out and begin a scenic 5–6 hour drive descending from the hills to the southern coastline.",
-          "En route, make a stop at the roaring Rawana Waterfall for epic photos.",
-          "Arrive in tropical Mirissa and check in to your beachfront / boutique resort.",
-          "Spend a relaxing afternoon on soft golden sands with coconut water in hand.",
-          "Watch a mesmerizing Indian Ocean sunset at Mirissa Beach and enjoy fresh seafood and chilled music at beach shacks.",
-          "Overnight stay in Mirissa. (Meals: Breakfast Included)."
+          "Enjoy breakfast and check out before beginning your scenic 5–6 hour journey towards Mirissa.",
+          "Stop at the beautiful Rawana Waterfall en route and capture some photographs.",
+          "Continue through Sri Lanka’s scenic landscapes towards the coast.",
+          "Arrive in Mirissa and check in to your beachfront hotel.",
+          "Relax and enjoy the ocean views before spending the evening at Mirissa Beach.",
+          "Take a leisurely beach walk or simply relax on the sand and enjoy the coastal atmosphere.",
+          "Overnight stay: Mirissa."
         ]
       },
       {
+        id: 'sri-lanka-day-7',
         day: 7,
-        title: 'Mirissa & Weligama | Whale Watching, Surfing & Ocean Adventures 🐋🏄‍♂️',
+        title: 'Day 7: Mirissa → Weligama | Ocean Adventures & Leisure 🐋🏄‍♂️',
         activities: [
-          "Early morning departure for an exhilarating Whale & Dolphin Watching Tour into the deep Indian Ocean to spot Blue Whales and playful spinner dolphins (seasonal Nov–Apr).",
+          "Start the day early with an exciting Whale & Dolphin Watching Tour. Sightings are subject to weather and season.",
           "Return to the hotel for breakfast and freshen up.",
-          "Head towards Weligama Bay for beach adventures: try surfing with beginner-friendly lessons and boards.",
-          "Optionally explore snorkelling among colourful coral reefs or certified scuba diving.",
-          "Visit the historic UNESCO World Heritage Galle Fort and its charming Dutch colonial streets.",
-          "Farewell evening dinner and tribe celebrations by the ocean in Mirissa.",
-          "Overnight stay in Mirissa. (Meals: Breakfast Included)."
+          "Head towards Weligama/Mirissa for a day of beach adventures.",
+          "Try surfing, suitable for both beginners and experienced surfers.",
+          "Explore the underwater world through snorkelling and discover colourful marine life.",
+          "For adventure enthusiasts, scuba diving is also available with certified diving centres.",
+          "Spend the afternoon at leisure, relaxing by the beach, café hopping and enjoying local flavours.",
+          "Return to your stay and relax for the evening.",
+          "Overnight stay: Mirissa."
         ]
       },
       {
+        id: 'sri-lanka-day-8',
         day: 8,
-        title: 'Mirissa to Colombo Airport | Farewell Sri Lanka 🛫🇱🇰',
+        title: 'Day 8: Mirissa → Departure 🛫🇱🇰',
         activities: [
-          "Enjoy your final tropical breakfast at the hotel and soak in the ocean breeze.",
-          "Check out and board our comfortable private AC transfer towards Bandaranaike International Airport (CMB) in Colombo.",
-          "Arrive at the airport for your onward flight home.",
-          "Bid farewell to the paradise island of Sri Lanka and your incredible tribe family with memories to last a lifetime!",
-          "Note: Please book return flights departing after 05:00 PM from Colombo (CMB).",
-          "Meals: Breakfast Included."
+          "Enjoy breakfast at the hotel and check out.",
+          "Begin your journey towards Bandaranaike International Airport.",
+          "Sit back and enjoy a comfortable transfer to the airport.",
+          "Arrive at the airport and proceed for your onward journey.",
+          "Bid farewell to Sri Lanka with unforgettable memories from your island adventure."
         ]
       }
     ],
     inclusions: [
-      "7 Nights Accommodation on Double / Triple sharing in 4-Star / Handpicked Boutique Hotels (1N Negombo/Colombo, 2N Kandy, 2N Ella, 2N Mirissa)",
-      "7 Breakfasts + 1 Authentic Traditional Sri Lankan Village Lunch",
-      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with airport pick-up and drop-off",
-      "World-famous Nanu Oya to Ella Scenic Train Experience (subject to seat availability)",
-      "Sigiriya Lion Rock Fortress Day Excursion & Entry / Guided Tour",
-      "Authentic Rural Village Experience with Bullock Cart & Catamaran Canoe Ride",
-      "Dambulla Cave Temple & Pinnawala Elephant Orphanage visits",
-      "Kandy Cultural Dance Show & Temple of the Tooth Relic visit",
-      "Tea Gardens & Factory Guided Tour in Ramboda",
-      "Little Adam’s Peak hike & Nine Arch Bridge excursion",
-      "Galle Fort exploration & Mirissa beach excursions",
-      "Experienced Travel Tribes Trip Leader & 24/7 on-ground support",
-      "Driver night charges, toll taxes, parking and local state taxes"
+      "7 nights accommodation on double/triple sharing basis: 1 night in Negombo, 2 nights in Kandy, 2 nights in Ella, 2 nights in Mirissa.",
+      "All local and intercity transfers as per the itinerary in comfortable van or coach transportation throughout the trip with airport pickup and drop-off.",
+      "Activities & Sightseeing: Kandy Cultural Dance Show, Sigiriya Lion Rock Day Trip, Gem Museum visit, Tea Gardens & Tea Factory visit, Little Adam’s Peak, Nine Arch Bridge, Galle Fort.",
+      "Meals: 7 breakfasts + 1 lunch.",
+      "Experienced Trip Leader and local support throughout the trip.",
+      "Driver night charges, toll taxes and parking charges."
     ],
     exclusions: [
-      "International flight tickets to and from Colombo (CMB)",
-      "5% GST & 2% TCS as applicable",
-      "Lunches and dinners not explicitly mentioned in the itinerary",
-      "Any alcoholic drinks, packaged mineral water, personal snacks",
-      "Optional activities / tickets: Whale watching safari boat, Surfing lesson/board rental, Scuba diving, Rawana Zipline",
-      "Personal expenses like tips to drivers/guides, laundry, camera/drone permits, telephone bills",
-      "Any cost arising due to natural calamities like roadblocks, landslides, flight delays (to be borne directly on spot)",
-      "Travel & medical insurance",
-      "Anything not mentioned in the inclusions"
+      "International and domestic flight tickets.",
+      "Any food or beverages not included in the package, including alcoholic drinks, mineral water, highway meals, refreshments and additional lunches.",
+      "Personal expenses such as driver tips, monument entry fees, camera/video charges, laundry and telephone bills.",
+      "Costs arising from natural calamities such as landslides or roadblocks, which will be borne by the traveller.",
+      "5% GST + 2% TCS.",
+      "Anything not specifically mentioned under the inclusions."
+    ],
+    thingsToCarry: [
+      "Valid Passport (with minimum 6 months validity) and online ETA / Visa",
+      "Light, breathable cotton clothes, beachwear and swimwear",
+      "Modest attire covering shoulders and knees for temple visits (Temple of Tooth, Dambulla)",
+      "Comfortable trekking shoes for Sigiriya and Little Adam's Peak",
+      "Sunscreen (SPF 50+), UV polarized sunglasses, and sun hat",
+      "Personal medications, basic first aid, and insect repellent",
+      "Universal adapter, power bank, and waterproof camera/phone case",
+      "Reusable water bottle"
     ],
     policies: [
-      "Visa Policy: Sri Lanka offers easy Online ETA / Visa (free for Indian passport holders as per current government regulations). Passport must have at least 6 months validity.",
-      "Flight recommendation: Book arrival flight reaching Colombo (CMB) on Day 1 morning/afternoon, and return flight departing after 05:00 PM on Day 8.",
-      "Booking Advance: ₹15,000/- per person to secure your slot (Non-refundable upon cancellation; transferable or convertible to Travel Tribes credit as per policy).",
-      "Pricing: Standard Batches ₹53,000 / person | Xmas & New Year Batches ₹57,000 / person (+5% GST & 2% TCS).",
-      "Payment Policy: Balance payment must be cleared at least 30 days prior to departure date.",
-      "Accommodation: Stays in premium 4-Star hotels (Mirage Colombo / Earl’s City Kandy / Oak Ray Ella / Somerset Blue Mirissa or similar).",
-      "Scenic Train Note: Nanu Oya to Ella train tickets are subject to government railway availability. If train is unavailable, scenic drive through the tea country will be provided.",
+      "Flights arriving at Bandaranaike International Airport in the morning or afternoon on Day 1 are suitable for this trip.",
+      "Please book your return flight on Day 8 after 5:00 PM.",
+      "Visa is free for Indian passport holders as mentioned in the itinerary. Please carry a valid passport, visa and all required travel documents.",
+      "The Nanu Oya–Ella scenic train journey is subject to ticket availability.",
+      "Whale & Dolphin Watching is seasonal (November to April), and sightings are subject to weather conditions.",
+      "The Trip Leader has the right to skip, modify or alter sightseeing or the itinerary in case of emergencies, acts of God or inappropriate participant behaviour.",
+      "In triple-sharing rooms, an extra mattress will be provided and should not be considered an extra bed.",
+      "Delays at any sightseeing location may result in the cancellation or skipping of subsequent sightseeing.",
+      "Participants are expected to coordinate, maintain discipline and cooperate as a team throughout the trip.",
+      "No refund will be provided for no-shows on the day of the trip.",
+      "Alcohol consumption in hotels or rooms is subject to the respective hotel's rules and regulations.",
+      "Participants must carry a valid photo ID, as required for hotel check-in.",
+      "Transportation will be provided strictly as per the itinerary on a point-to-point basis and cannot be used for personal purposes.",
+      "Travellers are responsible for their own luggage and personal belongings.",
+      "Travel Tribes does not provide insurance covering illness, accidents, theft or loss; travellers should arrange appropriate insurance separately.",
+      "Travel Tribes strictly stands against harassment.",
+      "AC may not be available in vehicles in hilly regions.",
+      "Booking Amount: ₹15,000 per person to confirm your seat. The remaining balance must be paid 30 days before departure.",
       "Cancellation 30+ days prior: Advance amount retained / converted to credit.",
       "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
     pricingOptions: [
-      { label: 'Standard Batch (Triple / Double Sharing)', price: '₹53,000 / person' },
-      { label: 'Xmas & New Year Special Batch', price: '₹57,000 / person', note: 'Applicable on Dec 19 & Dec 27 departures' }
+      { label: 'Normal Batch (Double / Triple Sharing)', price: '₹52,999 / person + 5% GST & 2% TCS' },
+      { label: 'Christmas & New Year Special Batch', price: '₹56,999 / person + 5% GST & 2% TCS', note: 'Applicable on Dec 19 & Dec 27 departures' }
     ],
     bookingAmount: '₹15,000 / person',
     reviews: [
@@ -687,24 +1172,25 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'bali-gili-islands',
     slug: 'bali-gili-islands',
-    title: 'Bali w/ Gili T. – Island of Vibe',
-    location: 'Seminyak · Nusa Penida · Gili Trawangan · Ubud · Bali',
+    title: 'Bali with Gili — 8 Nights / 9 Days',
+    location: 'Seminyak · Kuta · Nusa Penida · Gili · Ubud · Bali',
     region: 'International',
     date: 'Sep 26–Oct 04, 2026',
     dates: [
-      'Sep 26–Oct 04, 2026',
-      'Oct 17–25, 2026',
-      'Nov 14–22, 2026',
-      'Dec 19–27, 2026 (XMAS Special)',
-      'Dec 27–Jan 04, 2027 (New Year Special)'
+      '26 September – 4 October 2026',
+      '17–25 October 2026',
+      '14–22 November 2026',
+      '19–27 December 2026 (Christmas Special)',
+      '27 December 2026 – 4 January 2027 (New Year Special)'
     ],
     duration: '8N/9D',
-    price: '₹53,000',
-    image: img('photo-1537996194471-e657df975ab4'),
+    price: '₹52,999',
+    image: '/Card Image/bali_with_gili.png',
     alt: 'Bali and Gili Islands — Tropical Beaches, Kelingking Cliff, Mount Batur Jeep Safari and Ubud Culture',
     tag: 'Island of Vibe',
-    description: 'Get ready for Bali magic — lush jungles, hike majestic volcanoes, dance your heart out at beach clubs, explore tropical beaches, and soak in endless island vibes with your tribe! Curated exclusively for 18–40 year olds, this 8 Nights / 9 Days expedition takes you across Seminyak, Kuta, the dramatic coastal cliffs of Nusa Penida, the turquoise waters of Gili Trawangan, and the cultural highlands of Ubud. From an epic 4x4 Mount Batur Sunrise Jeep Safari and thrilling Jungle ATV adventure to sunset Kecak Fire Dance at Uluwatu, swimming under Tegenungan Waterfall, partying at Omma Day Club, and snorkelling with wild sea turtles in Gili T. Premium 4-star stays, island-to-jungle transfers, and lifelong tribe memories await.',
+    description: 'Get ready for Bali magic — lush jungles, hike majestic volcanoes, dance your heart out at beach clubs, explore tropical beaches, and soak in endless island vibes with your tribe! Curated exclusively for 18–40 year olds, this 8 Nights / 9 Days expedition takes you across Seminyak, Kuta, the dramatic coastal cliffs of Nusa Penida, the turquoise waters of Gili Trawangan, and the cultural highlands of Ubud. From an epic 4x4 Mount Batur Sunrise Jeep Safari and thrilling Jungle ATV adventure to sunset Kecak Fire Dance at Uluwatu, swimming under Tegenungan Waterfall, partying at Omma Day Club, and snorkelling with wild sea turtles in Gili T. Premium stays, island-to-jungle transfers, and lifelong tribe memories await.',
     spots: '6 spots left',
     gallery: [
       { image: img('photo-1537996194471-e657df975ab4'), alt: 'Bali Uluwatu Cliff Temple & Sunset Panorama' },
@@ -717,178 +1203,207 @@ export const trips: Trip[] = [
       { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Gili Island Turtle Snorkelling & Sunset Beach Bars' }
     ],
     highlights: [
-      "Explore the stunning dramatic cliffs, hidden beaches, and spiritual aura of Uluwatu.",
-      "Experience the iconic sunset Kecak Fire Dance on a cliff edge overlooking the Indian Ocean.",
-      "Full-day Nusa Penida Island tour: Kelingking Beach (T-Rex Cliff), Broken Beach, Angel’s Billabong & Crystal Bay.",
-      "Fast boat cruise to Gili Trawangan and traditional Cidomo (horse cart) island transport.",
-      "Free day to explore Gili T: Snorkel with sea turtles, scuba dive, cafe hop, and chill at sunset beach bars.",
-      "Explore the sacred Ubud Monkey Forest Sanctuary and discover vibrant bohemian art markets.",
-      "Go on a thrilling 1-Hour Tandem Jungle ATV Adventure through riverbeds and rainforest trails.",
-      "Visit scenic Tegenungan Waterfall for breathtaking photos and a refreshing dip in natural pools.",
-      "Chill, lounge, and party at Omma Day Club with infinity pools overlooking jungle waterfalls.",
-      "Epic 4x4 Mount Batur Sunrise Jeep Safari across volcanic ridges and surreal Black Lava fields.",
-      "Visit Bali’s iconic Tegalalang Rice Terraces and admire timeless stepped emerald paddies.",
-      "Stay in handpicked 4-star hotels & luxury Ubud villas with an energetic community of 18–40 year olds."
+      "Explore the stunning cliffs and beaches of Uluwatu.",
+      "Experience the iconic Kecak Fire Dance against a beautiful sunset.",
+      "Discover the breathtaking landscapes of Nusa Penida, including Kelingking Beach, Broken Beach and Angel’s Billabong.",
+      "Enjoy the relaxed island atmosphere, beautiful sunsets and beach bars of Gili.",
+      "Explore the famous Ubud Monkey Forest.",
+      "Experience a thrilling Jungle ATV Adventure through Bali’s lush landscapes.",
+      "Relax and enjoy the vibrant atmosphere at Omma Day Club.",
+      "Experience an epic 4x4 Jeep ride to Mount Batur and watch the sunrise.",
+      "Explore Bali’s iconic rice terraces.",
+      "Experience the perfect mix of adventure, nature, beaches and nightlife while travelling with your tribe."
     ],
     itinerary: [
       {
+        id: 'bali-day-1',
         day: 1,
-        title: 'Welcome to Bali | Arrival in Seminyak 🌴',
+        title: 'Day 1: Welcome to Bali – Seminyak 🌴',
         activities: [
-          "Arrive at Bali Ngurah Rai International Airport (DPS) and meet your friendly Travel Tribes Trip Captain.",
-          "Board your comfortable AC transfer to our 4-star hotel in Seminyak (Paragon Hotel or similar).",
-          "Check in, freshen up, get comfortable, and soak in the tropical Bali vibes.",
-          "Spend the afternoon relaxing by the pool or exploring the nearby streets and boutiques.",
-          "In the evening, head out for a local Balinese food trail — try authentic Nasi Goreng, Satay, or refreshing tropical beverages.",
-          "Overnight stay in Seminyak. (Meals: Not Included)."
+          "Arrive at Bali DPS Airport and meet your Trip Captain, who will accompany you throughout the journey.",
+          "Transfer to your stay in Seminyak, get comfortable and settle into the tropical Bali vibes.",
+          "Spend some time relaxing after your arrival.",
+          "In the evening, explore the local food scene and enjoy delicious Balinese cuisine or refreshing local beverages.",
+          "Overnight stay: Seminyak."
         ]
       },
       {
+        id: 'bali-day-2',
         day: 2,
-        title: 'Surfing Lesson (Optional) – Uluwatu Cliff Temple – Sunset Kecak Fire Dance 🏄‍♂️🛕🔥',
+        title: 'Day 2: Surfing → Uluwatu → Kecak Fire Dance 🏄‍♂️🛕🔥',
         activities: [
-          "Start your day with a delicious breakfast at the hotel.",
-          "Kick off the morning with an optional 2-hour basic surfing session with a professional instructor at the beach.",
-          "Head towards southern Bali and relax at a secluded, beautiful hidden beach under dramatic limestone cliffs.",
-          "Visit the iconic Uluwatu Temple, perched dramatically on a 70-meter cliff overlooking the Indian Ocean.",
-          "Soak in the peaceful spiritual atmosphere and learn about its deep cultural significance.",
-          "In the evening, witness the world-famous Kecak Fire Dance against a breathtaking sunset backdrop.",
-          "Return to Seminyak after an exhilarating day and enjoy the evening at leisure.",
-          "Overnight stay in Seminyak. (Meals: Breakfast Included)."
+          "Enjoy breakfast and get ready for an exciting day of exploration.",
+          "Start with an optional 2-hour basic surfing session with a professional instructor.",
+          "Head towards Uluwatu and relax at a beautiful hidden beach.",
+          "Visit the iconic Uluwatu Temple, perched dramatically above the Indian Ocean.",
+          "Explore the temple and learn about its cultural significance.",
+          "In the evening, witness the famous Kecak Fire Dance against a beautiful sunset backdrop.",
+          "Return to your stay and relax after an adventurous day.",
+          "Overnight stay: Seminyak."
         ]
       },
       {
+        id: 'bali-day-3',
         day: 3,
-        title: 'Full-Day Nusa Penida Island Tour – Seminyak Nightlife 🚤🏖️🍹',
+        title: 'Day 3: Nusa Penida Island → Seminyak Nightlife 🚤🏖️🍹',
         activities: [
-          "Fuel up with an early breakfast and head to the harbour for a full-day fast boat excursion to Nusa Penida Island.",
-          "Explore some of Indonesia’s most breathtaking coastal landscapes and iconic viewpoints.",
-          "Visit famous spots: Angel’s Billabong (natural tidal pool), Broken Beach (scenic geological arch), Kelingking Beach (world-famous T-Rex cliff), and Crystal Bay.",
-          "Take in panoramic ocean views, capture epic Instagram photos, and swim in turquoise waters.",
-          "Return to mainland Bali by fast boat in the evening.",
-          "Later, head into Seminyak to explore its vibrant beach clubs, lively cocktail bars, and buzzing nightlife with your tribe.",
-          "Overnight stay in Seminyak. (Meals: Breakfast Included)."
+          "Enjoy breakfast before heading out for a full-day trip to the stunning Nusa Penida Island.",
+          "Explore some of the island’s most breathtaking landscapes and iconic viewpoints.",
+          "Visit Angel’s Billabong, Broken Beach, Kelingking Beach and Crystal Bay.",
+          "Take in the turquoise waters, enjoy the views and capture memorable photographs.",
+          "Return to Bali in the evening.",
+          "Later, head to Seminyak and explore its vibrant beach clubs and nightlife.",
+          "Overnight stay: Seminyak."
         ]
       },
       {
+        id: 'bali-day-4',
         day: 4,
-        title: 'Seminyak to Gili Trawangan | Island Vibes ⛵🏝️',
+        title: 'Day 4: Bali → Gili Islands | Island Vibes ⛵🏝️',
         activities: [
-          "Enjoy breakfast and check out from your Seminyak hotel.",
-          "Transfer to the harbour and board a scenic fast boat to the paradise island of Gili Trawangan.",
-          "Experience Gili’s unique, eco-friendly transport — the traditional horse cart (Cidomo), as no motorized vehicles are allowed on the island.",
-          "Check in to your island stay (Frii Hotel or similar) and soak in the laid-back island lifestyle.",
-          "Spend the rest of the day cycling around the island, relaxing on white sand beaches, or chilling by the ocean.",
-          "Get ready for exciting island adventures ahead.",
-          "Overnight stay in Gili Islands. (Meals: Breakfast Included)."
+          "Enjoy breakfast before catching a fast boat to the beautiful Gili Islands.",
+          "Experience the island’s traditional and eco-friendly mode of transport, the Cidomo horse cart.",
+          "Check in to your stay and settle into the relaxed island atmosphere.",
+          "Spend the rest of the day exploring the island, relaxing by the beach or enjoying the peaceful surroundings.",
+          "Overnight stay: Gili Islands."
         ]
       },
       {
+        id: 'bali-day-5',
         day: 5,
-        title: 'Gili Islands | Turtle Snorkelling, Scuba, Cafe Hopping & Sunset Beach Bars 🐢🤿🌅',
+        title: 'Day 5: Gili Islands | Explore & Unwind 🐢🤿🌅',
         activities: [
-          "Wake up to the gentle ocean breeze and enjoy breakfast at your resort.",
-          "Enjoy a free day to explore the island at your own pace.",
-          "Choose from exciting optional activities: island-hopping boat tour to snorkel with sea turtles & reef sharks, certified scuba diving, cafe hopping, or a relaxing Balinese massage.",
-          "In the evening, head to one of Gili’s famous beachfront sunset bars.",
-          "Watch a mesmerizing golden sunset over the water, sip refreshing cocktails, and soak in the laid-back Gili island vibes.",
-          "Overnight stay in Gili Islands. (Meals: Breakfast Included)."
+          "Enjoy a free day to explore the beautiful Gili Islands at your own pace.",
+          "Choose from optional experiences such as scuba diving with turtles, snorkelling with reef sharks, café hopping or a relaxing massage.",
+          "Spend the evening at one of the island’s beach bars.",
+          "Watch the sunset, enjoy a refreshing cocktail and soak in the laid-back Gili island vibes.",
+          "Overnight stay: Gili Islands."
         ]
       },
       {
+        id: 'bali-day-6',
         day: 6,
-        title: 'Gili Islands to Ubud | Island to Jungle Vibes 🌴🐒🌿',
+        title: 'Day 6: Gili → Bali → Ubud | Island to Jungle 🌴🐒🌿',
         activities: [
-          "Start your day with a delicious breakfast by the beach.",
-          "Enjoy the morning at leisure and depart from Gili to mainland Bali via fast boat around midday.",
-          "Bid farewell to tropical beach vibes and begin your journey towards the lush highlands of Ubud.",
-          "Travel from scenic coastal roads into Bali’s peaceful countryside and emerald rice paddies.",
-          "Visit the famous sacred Ubud Monkey Forest and meet its playful macaque residents among ancient banyan trees.",
-          "Explore Ubud town, artisan markets, and bohemian cafes.",
-          "Check in to your luxury villa (Bumi Linggah Villas or similar) and unwind.",
-          "Overnight stay in Ubud. (Meals: Breakfast Included)."
+          "Enjoy breakfast and spend the morning at leisure before departing Gili for Bali around midday.",
+          "Continue your journey towards Ubud, travelling from the tropical beaches to Bali’s scenic countryside and rice paddies.",
+          "Visit the famous Ubud Monkey Forest and explore its beautiful surroundings.",
+          "Spend some time exploring Ubud and experiencing its blend of culture, nature and laid-back atmosphere.",
+          "Overnight stay: Ubud."
         ]
       },
       {
+        id: 'bali-day-7',
         day: 7,
-        title: 'Ubud Jungle ATV Adventure – Tegenungan Waterfall – Omma Day Club 🏎️💦🎉',
+        title: 'Day 7: Ubud Adventure → Waterfall → Day Club 🏎️💦🎉',
         activities: [
-          "Wholesome breakfast at the villa.",
-          "Get ready for a thrilling 1-hour tandem ATV quad bike adventure through jungle trails, muddy tracks, riverbeds, and lush landscapes.",
-          "Visit the beautiful Tegenungan Waterfall, surrounded by dense tropical greenery.",
-          "Capture stunning pictures and enjoy a refreshing swim in the natural plunge pool.",
-          "Later, head to Omma Day Club to relax, chill on daybeds, swim in infinity pools, and enjoy vibrant Bali party vibes right next to the waterfall.",
-          "Spend the evening at leisure exploring Ubud's dining scene.",
-          "Overnight stay in Ubud. (Meals: Breakfast Included)."
+          "Get ready for a thrilling 1-hour tandem ATV adventure through jungle trails and lush landscapes.",
+          "Visit the beautiful Tegenungan Waterfall, surrounded by tropical greenery.",
+          "Capture photographs and enjoy a refreshing swim in the natural pool.",
+          "Later, head to Omma Day Club to relax, chill and enjoy Bali’s vibrant atmosphere.",
+          "Spend the evening at leisure before returning to your stay.",
+          "Overnight stay: Ubud."
         ]
       },
       {
+        id: 'bali-day-8',
         day: 8,
-        title: 'Mount Batur 4x4 Jeep Sunrise Safari – Black Lava & Rice Terraces 🌋🚙🌾',
+        title: 'Day 8: Mount Batur Jeep Ride → Sunrise → Rice Terraces 🌋🚙🌾',
         activities: [
-          "Begin your day early with a 2:00 AM departure for an unforgettable sunrise expedition.",
-          "Experience an exciting 4x4 Jeep ride up Mount Batur, driving across scenic volcanic ridges.",
-          "Reach the prime viewpoint to witness a breathtaking sunrise over Mount Batur volcano and Lake Batur.",
-          "Enjoy breakfast with stunning panoramic morning views above the clouds.",
-          "Explore the unique Black Lava fields formed by ancient volcanic eruptions around Mount Batur.",
-          "Later, visit Bali’s iconic Tegalalang Rice Terraces and admire their timeless stepped beauty (optional giant Bali Swings).",
-          "Enjoy a special Farewell Tribe Dinner celebrating our unforgettable journey.",
-          "Overnight stay in Ubud. (Meals: Breakfast, Lunch & Welcome/Farewell Dinner Included)."
+          "Begin the day early with a 2:00 AM departure for an unforgettable adventure.",
+          "Experience an exciting 4x4 Jeep ride to Mount Batur through scenic volcanic landscapes.",
+          "Reach a viewpoint to witness the breathtaking sunrise over Mount Batur.",
+          "Enjoy breakfast while taking in panoramic morning views.",
+          "Explore the unique Black Lava fields around Mount Batur.",
+          "Later, visit Bali’s iconic rice terraces and admire the surrounding landscapes.",
+          "Return to Ubud after a memorable day of adventure.",
+          "Overnight stay: Ubud."
         ]
       },
       {
+        id: 'bali-day-9',
         day: 9,
-        title: 'Ubud to Bali DPS Airport | Departure 🛫✨',
+        title: 'Day 9: Bali → Departure 🛫✨',
         activities: [
-          "Enjoy breakfast and complete the check-out process from your villa.",
-          "Gather your belongings and meet your driver for your comfortable private transfer to Bali Ngurah Rai International Airport (DPS).",
-          "Keep your travel documents and passport handy for a smooth journey.",
-          "Bid farewell to Bali, your trip captain, and your fellow tribe travellers, taking home lifetime friendships and unforgettable memories!",
-          "Note: You can book your return flight anytime on Day 9.",
-          "Meals: Breakfast Included."
+          "Enjoy breakfast and complete the hotel check-out process.",
+          "Gather your belongings and get ready for your airport transfer.",
+          "Meet your driver and proceed towards Bali DPS Airport.",
+          "Keep your travel documents and essentials handy for a smooth journey.",
+          "Bid farewell to Bali and your fellow travellers with unforgettable memories."
         ]
       }
     ],
     inclusions: [
-      "Stay for 8 nights on Double / Triple Sharing in 4-Star Hotels & Luxury Villas (3N Hotel in Seminyak, 2N Hotel in Gili Trawangan, 3N Villa in Ubud)",
-      "10 Meals: 8 Breakfasts, 1 Lunch & Welcome / Farewell Dinner",
-      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with airport pick-up and drop-off",
-      "Return Fast Boat tickets between Bali mainland and Gili Trawangan",
-      "Full-Day Nusa Penida Island Excursion by Fast Boat (Kelingking Beach, Broken Beach, Angel’s Billabong, Crystal Bay)",
-      "Traditional Cidomo (horse cart) transfer on Gili Trawangan",
-      "4x4 Mount Batur Sunrise Jeep Safari across volcanic ridges and Black Lava fields",
-      "Thrilling 1-Hour Tandem Jungle ATV Quad Bike Adventure in Ubud",
-      "Entry tickets: Uluwatu Temple & Sunset Kecak Fire Dance, Ubud Monkey Forest, Tegenungan Waterfall, Tegalalang Rice Terraces",
-      "Omma Day Club visit and entry",
-      "Experienced Travel Tribes Trip Captain & 24/7 on-ground assistance",
-      "Driver night charges, toll taxes, parking fees, and local taxes"
+      "8 nights accommodation on double/triple sharing basis: 3 nights in Seminyak, 2 nights in Gili T, 3 nights in Ubud. (Hotels/villas will be provided as per the listed properties or similar options)",
+      "All local and intercity transfers as per the itinerary in comfortable van or coach transportation throughout the trip with airport pickup and drop-off.",
+      "Fast boat transfer to the Gili Islands.",
+      "Uluwatu Temple & Kecak Fire Dance, Nusa Penida day trip.",
+      "Tegenungan Waterfall, Jungle ATV Ride.",
+      "Tegalalang Rice Terraces.",
+      "8 breakfasts, 1 lunch and 1 welcome dinner.",
+      "Experienced trip leader and local support throughout the trip.",
+      "Driver night charges, toll taxes and parking charges."
     ],
     exclusions: [
-      "5% GST & 2% TCS (applicable at checkout)",
-      "International and domestic flight tickets to and from Bali (DPS)",
-      "Bali Visa on Arrival (approx ₹2,500 / 500,000 IDR for Indian passport holders)",
-      "Any kind of food or beverage not included in the package (alcoholic drinks, packaged mineral water, highway lunches)",
-      "Optional activities: 2-hour surfing lesson with instructor, Scuba diving, Turtle snorkelling gear hire, Bali Swings",
-      "Personal expenses (tips to driver/guides, laundry, telephone bills, personal camera/drone charges)",
-      "Any cost arising due to natural calamities like roadblocks, landslides, sea conditions, flight delays (to be borne directly on spot)",
-      "Travel & medical insurance",
-      "Anything not explicitly mentioned in the inclusions"
+      "International and domestic flight tickets.",
+      "Visa on Arrival for Indians, approximately ₹2,500 as mentioned in the PDF.",
+      "Food and beverages not included in the package, including alcoholic drinks, mineral water, meals, refreshments and highway lunches.",
+      "Personal expenses such as driver tips, monument entry fees, camera/video charges, laundry and telephone bills.",
+      "Any costs arising due to natural calamities such as landslides or roadblocks.",
+      "5% GST + 2% TCS.",
+      "Anything not specifically mentioned under the inclusions."
+    ],
+    thingsToCarry: [
+      "Valid Passport (with minimum 6 months validity) and online ETA / Visa",
+      "Light, breathable cotton clothes, beachwear and swimwear",
+      "Modest attire covering shoulders and knees for temple visits (Uluwatu)",
+      "Comfortable shoes for ATV, waterfalls, and walking",
+      "Sunscreen (SPF 50+), UV sunglasses, and sun hat",
+      "Personal medications, basic first aid, and insect repellent",
+      "Universal adapter, power bank, and waterproof pouch for phone/camera",
+      "Reusable water bottle"
     ],
     policies: [
-      "Flight guidelines: Flights arriving at Bali DPS Airport in the morning or around noon on Day 1 will be most suitable. You can book your return flight anytime on Day 9.",
-      "Visa & Passport: Visa on arrival is available for Indian passport holders at approx ₹2,500 (500,000 IDR). Ensure your passport has at least 6 months validity from your travel date.",
-      "Booking Advance: ₹15,000/- advance per person to secure your seat. Pay the balance at least 30 days before departure.",
-      "Pricing: Standard Batches ₹53,000 / person | Xmas & New Year Special Batches ₹59,000 / person (+5% GST & 2% TCS).",
-      "Accommodation: 4-Star Stays (Paragon Hotel Seminyak / Frii Hotel Gili T / Bumi Linggah Villas Ubud or similar).",
-      "Weather & Safety: Activities like surfing, scuba diving, snorkelling, and fast boat ferry transfers are subject to sea and weather conditions. The Trip Captain reserves the right to alter the schedule for safety.",
-      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit as per policy.",
+      "Flights arriving at Bali DPS Airport in the morning or around noon on Day 1 are suitable for this trip.",
+      "You can book your return flight anytime on Day 9.",
+      "Visa on Arrival is available for Indians at approximately ₹2,500, as mentioned in the PDF.",
+      "Your passport should be valid for at least 6 months from your date of travel.",
+      "Activities such as surfing, scuba diving and snorkelling are subject to weather conditions and availability.",
+      "Fast boat transfers to and from the Gili Islands are subject to sea and weather conditions.",
+      "The itinerary may change due to weather, traffic, operational requirements or unforeseen circumstances.",
+      "Comfortable footwear is recommended for sightseeing and adventure activities.",
+      "Participants should follow the instructions of the Trip Captain and local guides throughout the trip.",
+      "Personal expenses and activities not mentioned under inclusions will be at the traveller's own cost.",
+      "Come prepared for a community travel experience and be ready to make new friends and memories with the Travel Tribes community.",
+      "The Trip Leader has the right to skip, modify or alter sightseeing or the itinerary in case of an emergency, act of God or inappropriate participant behaviour.",
+      "In triple-sharing rooms, an extra mattress will be provided and should not be considered an extra bed.",
+      "Delays caused by participants at a sightseeing location may result in the cancellation or skipping of subsequent sightseeing.",
+      "Participants are expected to coordinate, maintain discipline and cooperate as a team throughout the trip.",
+      "No refund will be provided in case of a no-show on the day of the trip.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the rules and regulations of the respective hotel.",
+      "A valid government photo ID is mandatory for all members staying at the hotel.",
+      "The itinerary may change slightly during public holidays or festivals.",
+      "Vehicles are provided strictly as per the itinerary on a point-to-point basis and are not available for personal use.",
+      "Travellers are responsible for their own luggage and personal belongings.",
+      "If any sightseeing location is closed due to a special occasion, public holiday, long weekend or festival, Travel Tribes will not be liable.",
+      "Travel Tribes does not provide insurance covering illness, accidents, theft or loss.",
+      "Transportation and logistics may vary depending on the final group size.",
+      "Physical contact such as handshakes or hugs should always respect the comfort of others. Travel Tribes strictly stands against harassment.",
+      "Participants undertake the risks associated with road travel, vehicles and nature-based activities.",
+      "AC may not be available in vehicles such as Tempo Travellers, Innovas, Xylos, Scorpios or similar vehicles in hilly regions.",
+      "Third-party vehicles may experience breakdowns, and arranging a replacement vehicle may take some time.",
+      "Bus/vehicle halts for meals are predefined by the vendor and cannot be changed for individual convenience.",
+      "Refunds will be provided only in cases where the trip is cancelled or postponed by Travel Tribes/organisers, subject to the applicable cancellation policy.",
+      "Participants consent to Travel Tribes using photos and videos taken during the trip for social media, marketing and other promotional purposes.",
+      "Booking Amount: ₹15,000 per person to confirm your seat. The remaining balance must be paid 30 days before departure. EMI and credit card payment options are available.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit.",
       "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
     pricingOptions: [
-      { label: 'Standard Batch (Triple / Double Sharing)', price: '₹53,000 / person' },
-      { label: 'Xmas & New Year Special Batch', price: '₹59,000 / person', note: 'Applicable on Dec 19 & Dec 27 departures' }
+      { label: 'Normal Batch (Double / Triple Sharing)', price: '₹52,999 / person + 5% GST & 2% TCS' },
+      { label: 'Christmas & New Year Batch', price: '₹58,999 / person + 5% GST & 2% TCS', note: 'Applicable on Dec 19 & Dec 27 departures' }
     ],
     bookingAmount: '₹15,000 / person',
     reviews: [
@@ -918,19 +1433,20 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'bhutan-backpacking',
     slug: 'bhutan-backpacking',
-    title: 'Bhutan – Land of the Thunder Dragon',
+    title: 'Bhutan — Land of the Thunder Dragon',
     location: 'Phuentsholing · Thimphu · Punakha · Paro · Bhutan',
     region: 'International',
     date: 'Oct 10–16, 2026',
     dates: [
-      'Oct 10–16, 2026',
-      'Nov 07–13, 2026',
-      'Dec 12–18, 2026'
+      '10–16 October 2026',
+      '7–13 November 2026',
+      '12–18 December 2026'
     ],
     duration: '6N/7D',
     price: '₹26,499',
-    image: img('photo-1578637387939-43c525550085'),
+    image: '/Card Image/Bhutan.png',
     alt: 'Bhutan Taktsang Tiger’s Nest Monastery, Punakha Dzong and Himalayan Valleys',
     tag: 'Land of the Thunder Dragon',
     description: 'Get ready for Bhutan magic — drive through breathtaking Himalayan valleys, explore majestic 17th-century dzongs, hike to the world-famous Tiger’s Nest monastery perched on a cliff, witness panoramic mountain vistas at Dochula Pass, and soak in the peaceful spiritual vibes of the Land of the Thunder Dragon with your tribe! Curated for 18–40 year olds, this 7-day backpacking journey takes you through Phuentsholing, Thimphu, Punakha, and Paro. Experience authentic Bhutanese living culture at Simply Bhutan, traditional archery, a royal Gho & Kira costume photoshoot, thrilling suspension bridges, and unforgettable mountain bonding.',
@@ -946,150 +1462,188 @@ export const trips: Trip[] = [
       { image: img('photo-1519671482749-fd09be7ccebf'), alt: 'Travel Tribes Tribe Bonding & Cultural Night' }
     ],
     highlights: [
-      "Trek to the iconic Tiger’s Nest Monastery (Taktsang) dramatically perched on a 900m sheer cliff.",
-      "Enjoy breathtaking 360-degree Himalayan views and 108 Druk Wangyal Chortens at Dochula Pass (3,050m).",
-      "Explore the magnificent Punakha Dzong (Palace of Great Happiness) at the confluence of Pho Chhu & Mo Chhu rivers.",
-      "Visit the colossal 169-foot bronze Buddha Dordenma Statue overlooking Thimphu Valley.",
-      "Experience rich Bhutanese traditions, folk music, and archery at Simply Bhutan living museum.",
-      "Dress up in traditional Bhutanese royal outfits (Gho & Kira) for a fun tribe group photoshoot.",
-      "Walk across the thrilling Punakha Suspension Bridge — one of the longest hanging bridges in Bhutan.",
-      "Stop at the scenic Chuzom Bridge where the Paro and Thimphu rivers converge with royal portraits.",
-      "Explore the vibrant local handicraft and night markets of Thimphu and Paro.",
-      "Drive through picturesque Himalayan valleys, pine forests, pristine rivers, and mountain waterfalls.",
-      "Optional serene river rafting on Punakha river and traditional medicinal Hot-Stone Bath.",
-      "Travel with an experienced Travel Tribes Trip Captain, certified English-speaking Bhutanese guide & trek leader."
+      "Experience the colourful Punakha Tshechu Festival.",
+      "Trek to the iconic Tiger’s Nest / Taktsang Monastery.",
+      "Enjoy stunning Himalayan views from Dochula Pass.",
+      "Visit the magnificent Punakha Dzong.",
+      "Drive through Bhutan’s beautiful valleys, forests and waterfalls.",
+      "Experience Bhutanese culture at Simply Bhutan.",
+      "Explore the local markets of Thimphu and Paro.",
+      "Dress up in traditional Bhutanese outfits for a group photoshoot.",
+      "Stop at the scenic Chuzom Bridge.",
+      "Visit the giant Buddha Dordenma Statue.",
+      "Enjoy Bhutan’s peaceful spiritual atmosphere while travelling with your tribe."
     ],
     itinerary: [
       {
+        id: 'bhutan-day-1',
         day: 1,
-        title: 'Bagdogra to Phuentsholing | Gateway to Bhutan 🇧🇹',
+        title: 'Day 1: Bagdogra → Jaigaon → Phuentsholing 🇧🇹',
         activities: [
-          "Arrive at Bagdogra Airport (IXB) before 12:00 PM and meet your Travel Tribes Trip Captain and fellow travellers.",
-          "Board our private AC vehicle and embark on a scenic drive through North Bengal tea gardens to Jaigaon, the Indian border town.",
-          "Cross the Indo-Bhutan border gate into Phuentsholing and complete Bhutan immigration, biometric, and entry permit formalities.",
-          "Check in to your hotel (Hotel Meto Pema or similar), relax, and soak in the serene cleanliness and charm of Bhutan.",
-          "Take an evening stroll around the border town and explore local Bhutanese cafes.",
-          "Overnight stay in Phuentsholing. (Meals: Dinner Included)."
+          "Arrive at Bagdogra Airport and begin your journey towards Bhutan.",
+          "Drive through scenic landscapes towards Jaigaon, the gateway to Bhutan.",
+          "Cross the India–Bhutan border and enter Phuentsholing.",
+          "Complete the Bhutan immigration and entry formalities.",
+          "Check in to your hotel, relax and get ready for the adventure ahead.",
+          "Overnight stay: Phuentsholing."
         ]
       },
       {
+        id: 'bhutan-day-2',
         day: 2,
-        title: 'Phuentsholing to Thimphu | Scenic Himalayan Drive 🏔️🚗',
+        title: 'Day 2: Phuentsholing → Thimphu | Scenic Road Journey 🏔️🚗',
         activities: [
-          "Enjoy a wholesome breakfast and begin your scenic mountain ascent towards Thimphu, the capital of Bhutan.",
-          "Drive through winding mountain roads surrounded by lush pine forests, roadside waterfalls, and charming Bhutanese villages.",
-          "Stop at the scenic Chuzom Bridge, where the Paro and Thimphu Rivers meet, adorned with traditional stupas and royal portraits.",
-          "Optional: Experience a fun and serene river rafting adventure along the valley waters en route.",
-          "Arrive in Thimphu by late afternoon and check in to your hotel (Hotel Park or similar).",
-          "Later, explore the vibrant local markets, Clock Tower square, and handicraft bazaars of the capital city.",
-          "Overnight stay in Thimphu. (Meals: Breakfast & Dinner Included)."
+          "Enjoy breakfast and begin your journey towards Thimphu.",
+          "Drive through winding mountain roads surrounded by lush forests, waterfalls and beautiful Bhutanese villages.",
+          "Optional: Experience a fun river rafting adventure en route.",
+          "Stop at the scenic Chuzom Bridge, where the Paro and Thimphu rivers meet.",
+          "Capture photographs with the iconic portraits of the King and Queen.",
+          "Arrive in Thimphu by evening and check in to your hotel.",
+          "Later, explore the vibrant local markets of Thimphu.",
+          "Overnight stay: Thimphu."
         ]
       },
       {
+        id: 'bhutan-day-3',
         day: 3,
-        title: 'Thimphu – Dochula Pass – Punakha Dzong – Thimphu 🛕⛰️🎉',
+        title: 'Day 3: Thimphu → Dochula Pass → Punakha → Thimphu 🛕⛰️🎉',
         activities: [
-          "Early breakfast and set out for a breathtaking excursion towards Punakha Valley.",
-          "Drive up to the scenic Dochula Pass (3,050 m) and enjoy panoramic 360-degree views of snow-capped Himalayan peaks.",
-          "Visit the beautiful 108 Druk Wangyal Chortens standing gracefully amidst misty mountain air.",
-          "Descend to Punakha Dzong, one of Bhutan’s most magnificent 17th-century architectural landmarks located at the confluence of two rivers.",
-          "Walk across the thrilling Punakha Suspension Bridge hanging high over the Pho Chhu river.",
-          "Return to Thimphu in the evening for a fun game night, karaoke session, and dinner with the group.",
-          "Overnight stay in Thimphu. (Meals: Breakfast & Dinner Included)."
+          "Explore Thimphu’s famous cultural landmarks and visit the Buddha Dordenma Statue.",
+          "Drive to Dochula Pass at 3,050 metres and enjoy breathtaking Himalayan views.",
+          "Visit the beautiful 108 Druk Wangyal Chortens.",
+          "Continue towards Punakha Dzong, one of Bhutan’s most magnificent landmarks.",
+          "Return to Thimphu and enjoy a fun game night and karaoke evening with the group.",
+          "Overnight stay: Thimphu."
         ]
       },
       {
+        id: 'bhutan-day-4',
         day: 4,
-        title: 'Thimphu Cultural Exploration & Transfer to Paro 🏛️🎨🏔️',
+        title: 'Day 4: Thimphu → Paro | Cultural Exploration 🏛️🎨🏔️',
         activities: [
-          "Enjoy breakfast, check out from the hotel, and visit the giant bronze Buddha Dordenma Statue overlooking Thimphu Valley.",
-          "En route, visit Simply Bhutan, an immersive living museum showcasing Bhutanese culture, architecture, traditional music, and archery.",
-          "Continue your scenic drive towards Paro, one of Bhutan’s most picturesque valleys.",
-          "Arrive in Paro and check in to your riverside resort (Riverfront / Ananda Resort or similar).",
-          "In the evening, explore the charming Paro Town Market for souvenirs, prayer wheels, and handicrafts.",
-          "Rest well, hydrate, and get ready for the iconic hike tomorrow.",
-          "Overnight stay in Paro. (Meals: Breakfast & Dinner Included)."
+          "Enjoy breakfast and check out before beginning your journey towards Paro.",
+          "Visit Simply Bhutan, an immersive museum showcasing Bhutanese culture, architecture and traditional lifestyle.",
+          "Continue the scenic drive towards Paro Valley.",
+          "Check in to your hotel and relax.",
+          "In the evening, explore Paro Market and shop for local souvenirs.",
+          "Overnight stay: Paro."
         ]
       },
       {
+        id: 'bhutan-day-5',
         day: 5,
-        title: 'Paro – The Iconic Tiger’s Nest (Taktsang) Trek 🥾🐅⛩️',
+        title: 'Day 5: Paro → Tiger’s Nest Trek → Paro 🥾🐅⛩️',
         activities: [
-          "Start your day with an early breakfast and gear up for the world-famous Tiger’s Nest Trek.",
-          "Hike through beautiful pine forests and fluttering prayer flags to reach the sacred Taktsang Monastery (approx 2–4 hours depending on pace).",
-          "Explore one of Bhutan’s most revered spiritual landmarks, dramatically perched on a sheer cliff 900 metres above the valley floor.",
-          "Soak in the serene atmosphere, ancient meditation caves, and awe-inspiring Himalayan vistas.",
-          "Trek back down and return to Paro.",
-          "Optional: Relax your tired muscles with a soothing traditional Bhutanese Hot-Stone Bath infused with mountain herbs.",
-          "Overnight stay in Paro. (Meals: Breakfast & Dinner Included)."
+          "Enjoy breakfast and get ready for the iconic Tiger’s Nest Trek.",
+          "Hike through beautiful pine forests to reach the sacred Taktsang Monastery.",
+          "The trek takes approximately 2–4 hours, depending on your pace.",
+          "Explore the monastery, perched dramatically around 900 metres above the valley.",
+          "Enjoy the peaceful surroundings, prayer flags and spectacular mountain views.",
+          "Trek back and return to Paro.",
+          "Optional: Relax with a traditional Bhutanese hot-stone bath.",
+          "Overnight stay: Paro."
         ]
       },
       {
+        id: 'bhutan-day-6',
         day: 6,
-        title: 'Paro to Siliguri via Phuentsholing | Return Journey 📸🚙',
+        title: 'Day 6: Paro → Phuentsholing → Siliguri 📸🚙',
         activities: [
           "Enjoy breakfast and check out from your hotel in Paro.",
-          "Dress up in traditional Bhutanese outfits (Gho for men, Kira for women) for a fun tribe group photoshoot.",
-          "Stop at a scenic viewpoint to capture stunning pictures of the iconic Paro International Airport valley.",
-          "Begin your return drive through Bhutan’s beautiful valleys and winding highways.",
-          "Cross Phuentsholing, complete exit formalities, re-enter India, and continue towards Siliguri.",
-          "Arrive in Siliguri by evening, check in to your hotel (Hotel Saffron Crest or similar), and relax after the journey.",
-          "Overnight stay in Siliguri. (Meals: Breakfast Included)."
+          "Dress up in a traditional Bhutanese outfit for a fun group photoshoot.",
+          "Stop at a scenic viewpoint to capture views of the iconic Paro Airport.",
+          "Begin your return journey through Bhutan’s beautiful valleys and landscapes.",
+          "Cross Phuentsholing, re-enter India and continue towards Siliguri.",
+          "Arrive in Siliguri by evening, check in and relax.",
+          "Overnight stay: Siliguri."
         ]
       },
       {
+        id: 'bhutan-day-7',
         day: 7,
-        title: 'Siliguri to Bagdogra Airport | Departure 🛫✨',
+        title: 'Day 7: Siliguri → Bagdogra Airport | Departure 🛫✨',
         activities: [
           "Enjoy your final breakfast and check out from the hotel.",
-          "Transfer to Bagdogra Airport (IXB) as per your flight timing.",
-          "Bid farewell to your fellow tribe travellers and the incredible Land of the Thunder Dragon.",
-          "Head back home with unforgettable memories, lifelong friendships, and stories for a lifetime!",
-          "Note: You can book your return flight from Bagdogra on Day 7 at any time.",
-          "Meals: Breakfast Included."
+          "Arrange your own transportation to Bagdogra Airport according to your flight timing.",
+          "Depart for the airport and begin your journey back home.",
+          "Bid farewell to your fellow travellers and take home unforgettable memories and new friendships."
         ]
       }
     ],
     inclusions: [
-      "Stay for 6 Nights on Double Sharing in Handpicked 3-Star Hotels / Resorts (1N Phuentsholing, 2N Thimphu, 2N Paro, 1N Siliguri)",
-      "10 Meals: 6 Breakfasts & 4 Dinners",
-      "All local and intercity transfers as per itinerary in comfortable AC Van / Coach with Bagdogra Airport pick-up",
-      "Tiger’s Nest (Taktsang Monastery) guided trek with experienced local guide & trek leader 🥾",
-      "Buddha Dordenma (Buddha Point), Dochula Pass & 108 Druk Wangyal Chortens excursions",
-      "Punakha Dzong & Punakha Suspension Bridge visits",
-      "Simply Bhutan living cultural museum entry & traditional costume photoshoot",
-      "Bhutan entry permit processing & paperwork assistance",
-      "Experienced Travel Tribes Trip Captain & Local English-speaking Bhutanese guide throughout",
-      "Driver night charges, toll taxes, parking fees, and state taxes"
+      "6 nights accommodation on double sharing basis: 1 night in Phuentsholing, 1 night in Thimphu, 1 night in Punakha, 2 nights in Paro, 1 night in Siliguri.",
+      "All local and intercity transfers as per the itinerary in comfortable van or coach transportation.",
+      "Airport pickup as mentioned in the itinerary.",
+      "Experienced Trip Leader and local support throughout the trip.",
+      "Local English-speaking guide and expert trek leadership.",
+      "Guided Tiger’s Nest (Taktsang Monastery) trek.",
+      "Local sightseeing as mentioned in the itinerary: Visit to Buddha Dordenma Statue, Visit to Dochula Pass & 108 Druk Wangyal Chortens, Visit to Punakha Dzong.",
+      "Meals: 6 breakfasts and 4 dinners.",
+      "Driver night charges, toll taxes and parking charges are included."
     ],
     exclusions: [
-      "5% GST & 2% TCS (applicable at checkout)",
-      "Mandatory Bhutan SDF (Sustainable Development Fee / Visa): ₹1,200 per night per person × 5 nights = ₹6,000 per person",
-      "Domestic & international flight tickets to and from Bagdogra Airport (IXB)",
-      "Monument & Dzong entry tickets (payable on spot)",
-      "Any food or beverage not included in the package (alcoholic drinks, packaged mineral water, highway lunches)",
-      "Optional activities: White water river rafting in Punakha, Traditional Bhutanese Hot-Stone Herbal Bath",
-      "Personal expenses (tips to driver/guide, laundry, telephone bills, personal camera charges)",
-      "Any cost arising due to natural calamities like landslides, roadblocks, weather delays (to be borne directly on spot)",
-      "Travel & medical insurance",
-      "Anything not explicitly mentioned in the inclusions"
+      "International and domestic flight tickets.",
+      "SDF charges: ₹1,200 per night per person × 5 nights = ₹6,000 per person.",
+      "Food and beverages not included in the package, including alcoholic drinks, mineral water, meals, refreshments and highway lunches.",
+      "Personal expenses such as driver tips, monument entry fees, camera/video charges, laundry and telephone bills.",
+      "Monument entry tickets.",
+      "Any additional costs arising due to landslides, roadblocks or natural calamities.",
+      "5% GST + 2% TCS.",
+      "Anything not specifically mentioned under the inclusions."
+    ],
+    thingsToCarry: [
+      "Valid Indian Passport (min 6 months validity) or Original Voter ID card",
+      "Warm layers, fleece jacket, windcheater / rain jacket, and thermal innerwear",
+      "Comfortable hiking / trekking shoes with good grip and extra woollen socks",
+      "Modest full-sleeve clothes covering shoulders and knees for Dzongs and temples",
+      "Sunscreen (SPF 50+), UV sunglasses, lip balm, and cold cream",
+      "Personal medications, basic first aid, and motion sickness medicine for mountain roads",
+      "Power bank, camera, and extra batteries (cold drains batteries faster)",
+      "Reusable water bottle"
     ],
     policies: [
-      "Flight guidelines: Please book your arrival flight reaching Bagdogra Airport (IXB) before 12:00 PM on Day 1. You can book your return flight from Bagdogra anytime on Day 7.",
-      "Documents & Permit: Valid Indian Passport (with min 6 months validity) or Original Voter ID Card is mandatory for Bhutan entry permit. Aadhaar Card is NOT accepted for Bhutan permits.",
-      "SDF (Visa) Fee: Mandatory SDF charges of ₹1,200 per night per person (₹6,000 total for 5 nights) are collected as per Royal Government of Bhutan regulations.",
-      "Booking Advance: ₹10,000/- advance per person to secure your seat. Pay the balance at least 15–30 days before departure.",
-      "Pricing: Ex-Bagdogra Package ₹26,499 / person (+5% GST & 2% TCS + ₹6,000 SDF).",
-      "Accommodation: Stays in handpicked 3-Star properties: Hotel Meto Pema Phuentsholing / Hotel Park Thimphu / Riverfront or Ananda Resort Paro / Hotel Saffron Crest Siliguri (or similar).",
-      "Trek Fitness: Tiger’s Nest trek is moderately challenging (approx 4–5 hours round-trip hiking). Comfortable trekking shoes and reasonable fitness are recommended.",
-      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit as per policy.",
+      "Please book your arrival flight to Bagdogra Airport before 12:00 PM on Day 1.",
+      "You can book your return flight from Bagdogra anytime on Day 7.",
+      "SDF charges of ₹1,200 per night per person are mandatory for all travellers, totalling ₹6,000 for 5 nights.",
+      "Carry a valid government-issued ID and passport as required for Bhutan entry and permit formalities. Passport/ID details submitted for permits must be correct and match your travel documents.",
+      "The Punakha Tshechu Festival schedule and timings are managed by local authorities and may change.",
+      "The Tiger’s Nest Trek is moderately challenging, so comfortable trekking shoes and a reasonable fitness level are recommended.",
+      "Bhutan’s mountain weather can change quickly, so carry warm layers, a rain jacket and comfortable clothing.",
+      "Road conditions, weather, landslides and other unforeseen circumstances may require changes to the itinerary.",
+      "Optional activities such as river rafting and hot-stone baths are subject to availability and weather conditions.",
+      "Follow the instructions of the Trip Leader and local guide throughout the trip.",
+      "Mobile network and internet connectivity may be limited in some remote areas.",
+      "Come prepared for a community travel experience and enjoy Bhutanese culture with your Travel Tribes community.",
+      "The Trip Leader may skip, modify or alter sightseeing or the itinerary in case of emergencies, acts of God or inappropriate participant behaviour.",
+      "In triple-sharing rooms, an extra mattress is provided and should not be considered an extra bed.",
+      "Delays at a sightseeing location may result in the cancellation or skipping of subsequent sightseeing.",
+      "Participants are expected to coordinate, maintain discipline and cooperate as a team throughout the trip.",
+      "No refund will be provided in case of a no-show on the day of the trip.",
+      "Alcohol consumption in hotels/rooms is subject to the rules of the respective hotel.",
+      "A valid photo ID is mandatory for hotel stays.",
+      "The itinerary may change slightly during public holidays or festivals.",
+      "Vehicles are provided strictly as per the itinerary on a point-to-point basis and are not available for personal use.",
+      "Travellers are responsible for their own luggage and belongings.",
+      "Travel Tribes is not liable if sightseeing is closed due to a special occasion, public holiday, long weekend or festival.",
+      "Travel Tribes does not provide insurance covering sickness, accidents, theft or other losses.",
+      "Water and electricity availability may be limited in some hilly areas, and hotels may have fixed schedules for hot and cold water.",
+      "Transportation and logistics may vary depending on the final group size.",
+      "Participants are expected to respect personal boundaries and comfort; Travel Tribes strictly stands against harassment.",
+      "Participants undertake the risks associated with road travel, vehicles and nature-related activities.",
+      "AC may not be available in vehicles such as Tempo Travellers, Innovas, Xylos, Scorpios or similar vehicles in hilly regions.",
+      "Third-party vehicles may experience breakdowns, and arranging a replacement vehicle may take some time.",
+      "Meal halts are predefined by the transport vendor and cannot be changed for individual convenience.",
+      "Refunds are provided only in cases where the trip is cancelled or postponed by Travel Tribes/organisers, subject to the applicable policy.",
+      "Participants give consent to Travel Tribes to use photos/videos taken during the trip for social media, marketing and other promotional purposes.",
+      "Booking Amount: ₹10,000 per person to confirm your seat.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit.",
       "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
     pricingOptions: [
-      { label: 'Ex-Bagdogra (Double Sharing Package)', price: '₹26,499 / person', note: 'Excludes mandatory SDF ₹6,000' },
-      { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹32,499 / person', note: 'Includes ₹6,000 Bhutan SDF fee' }
+      { label: 'Ex-Bagdogra (Double Sharing Package)', price: '₹26,499 / person + 5% GST & 2% TCS', note: 'Excludes mandatory SDF ₹6,000' },
+      { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹32,499 / person + 5% GST & 2% TCS', note: 'Includes ₹6,000 Bhutan SDF fee' }
     ],
     bookingAmount: '₹10,000 / person',
     reviews: [
@@ -1119,6 +1673,7 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'bhutan-tshechu-festival',
     slug: 'bhutan-tshechu-festival',
     title: 'Bhutan Tshechu Festival Special',
     location: 'Phuentsholing · Thimphu · Punakha · Paro · Bhutan',
@@ -1129,7 +1684,7 @@ export const trips: Trip[] = [
     ],
     duration: '6N/7D',
     price: '₹29,499',
-    image: img('photo-1544735716-392fe2489ffa'),
+    image: '/Card Image/Bhutan.png',
     alt: 'Bhutan Tshechu Festival Masked Cham Dances, Punakha Dzong and Tiger’s Nest Paro',
     tag: 'Tshechu Festival Special',
     description: 'Experience vibrant masked dances, ancient Buddhist traditions, Himalayan magic & unforgettable memories with your tribe! Curated exclusively for 18–40 year olds, this 6 Nights / 7 Days festival expedition takes you to the heart of the sacred Thimphu / Punakha Tshechu Festival. Witness dramatic Cham masked dances, colorful silk costumes, trumpet fanfares, and spiritual blessings. Journey through Phuentsholing, Thimphu, the 108 stupas of Dochula Pass (3,050m), the majestic Punakha Dzong, and hike to the world-famous cliffside Tiger’s Nest Monastery (Paro Taktsang). 3-star handpicked stays, cultural living museum, and traditional photoshoot included.',
@@ -1160,6 +1715,7 @@ export const trips: Trip[] = [
     ],
     itinerary: [
       {
+        id: 'bhutan-tshechu-day-1',
         day: 1,
         title: 'Bagdogra – Jaigaon – Phuentsholing | Gateway to Bhutan 🇧🇹',
         activities: [
@@ -1172,6 +1728,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'bhutan-tshechu-day-2',
         day: 2,
         title: 'Phuentsholing – Thimphu | Scenic Mountain Journey 🏔️🚗',
         activities: [
@@ -1185,6 +1742,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'bhutan-tshechu-day-3',
         day: 3,
         title: 'Thimphu – Dochula Pass – Punakha – Thimphu Tshechu Festival 🎭🛕🎉',
         activities: [
@@ -1198,6 +1756,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'bhutan-tshechu-day-4',
         day: 4,
         title: 'Thimphu Exploration & Departure to Paro 🏛️🎨🏔️',
         activities: [
@@ -1211,6 +1770,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'bhutan-tshechu-day-5',
         day: 5,
         title: 'Paro – Tiger’s Nest (Taktsang) Trek – Paro 🥾🐅⛩️',
         activities: [
@@ -1224,6 +1784,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'bhutan-tshechu-day-6',
         day: 6,
         title: 'Paro – Phuentsholing – Siliguri | Return Journey 📸🚙',
         activities: [
@@ -1237,6 +1798,7 @@ export const trips: Trip[] = [
         ]
       },
       {
+        id: 'bhutan-tshechu-day-7',
         day: 7,
         title: 'Siliguri – Bagdogra Airport | Departure 🛫✨',
         activities: [
@@ -1320,9 +1882,788 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'vietnam-phu-quoc',
+    slug: 'vietnam-phu-quoc',
+    title: 'Vietnam with Phu Quoc',
+    location: 'Phu Quoc · Da Nang · Hoi An · Ba Na Hills · Hanoi · Halong Bay · Vietnam',
+    region: 'International',
+    date: '16 Oct – 23 Oct 2026',
+    dates: [
+      '16 Oct – 23 Oct 2026',
+      '23 Oct – 30 Oct 2026',
+      '30 Oct – 06 Nov 2026',
+      '06 Nov – 13 Nov 2026',
+      '13 Nov – 20 Nov 2026',
+      '20 Nov – 27 Nov 2026',
+      '27 Nov – 04 Dec 2026',
+      '04 Dec – 11 Dec 2026',
+      '11 Dec – 18 Dec 2026',
+      'Dec 24–31, 2026 (Christmas Special - On Request)',
+      'Dec 28–Jan 04, 2027 (New Year Special - On Request)'
+    ],
+    duration: '7N/8D',
+    price: '₹74,999',
+    image: '/Card Image/vietnam.png',
+    alt: 'Golden Bridge Ba Na Hills and Halong Bay Limestone Karsts in Vietnam',
+    tag: 'Tropical Island & Heritage',
+    description: 'Experience Vietnam in 8 days with an unforgettable group trip covering Phu Quoc, Da Nang, Hoi An, Hanoi and Halong Bay. Explore tropical islands, ride Vietnam’s famous cable car, discover Grand World, enjoy a basket boat ride in Hoi An, walk across the iconic Golden Bridge at Ba Na Hills, explore Hanoi’s Old Quarter and Train Street, and cruise through the breathtaking landscapes of Halong Bay. This Vietnam group trip from India combines adventure, culture, nightlife, scenic experiences and community travel into one exciting journey. Join solo, meet fellow travellers and explore Vietnam with your tribe.',
+    spots: '6 spots left',
+    gallery: [
+      { image: img('photo-1528127269322-539801943592'), alt: 'Golden Bridge Held by Giant Hands at Ba Na Hills' },
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Phu Quoc Tropical Islands & Cable Car' },
+      { image: img('photo-1559592413-7cec4d0cae2b'), alt: 'Halong Bay Emerald Waters & Limestone Cliffs' },
+      { image: img('photo-1583417319070-4a69db38a482'), alt: 'Hoi An Lantern Street & Ancient Town' },
+      { image: img('photo-1526778548025-fa2f459cd5c1'), alt: 'Coconut Forest Traditional Basket Boat Ride' },
+      { image: img('photo-1509042239860-f550ce710b93'), alt: 'Hanoi Famous Train Street & Egg Coffee' },
+      { image: img('photo-1569154941061-e231b4725ef1'), alt: 'Grand World Phu Quoc Venice Canals' },
+      { image: img('photo-1512100356356-de1b84283e18'), alt: 'Halong Bay Ti Top Island & Kayaking' }
+    ],
+    highlights: [
+      "Grand World Phu Quoc walking tour & Venice Canal exploration.",
+      "Tinh Hoa Viet Nam live cultural show showcasing Vietnamese heritage.",
+      "Four Island Tour in Phu Quoc with snorkelling & beach time.",
+      "Scenic Phu Quoc Cable Car ride with panoramic ocean views.",
+      "Aquatopia Water Park thrilling rides & entertainment.",
+      "VinPearl Safari & VinWonders themed zones & live shows.",
+      "Hoi An Ancient Town UNESCO heritage & old Phung Hung houses.",
+      "Traditional Coconut Forest Basket Boat Ride in Hoi An.",
+      "Colourful Hoi An Lantern Street night walk.",
+      "Full-day Ba Na Hills tour & walk across the iconic Golden Bridge (Giant Hands).",
+      "French Village, Fantasy Park & Lunar Castle at Ba Na Hills.",
+      "Hanoi Old Quarter walking tour, Mural Street & famous Train Street.",
+      "Famous Vietnamese traditional egg coffee tasting experience.",
+      "Full-day scenic Halong Bay Cruise with lunch.",
+      "Explore Surprising Cave (Sung Sot) & hike Ti Top Island viewpoint.",
+      "Kayaking and bamboo boating through Luon Cave."
+    ],
+    itinerary: [
+      {
+        id: 'vietnam-day-1',
+        day: 1,
+        title: 'Day 1: Arrive in Phu Quoc | Grand World & Cultural Show 🌴✨',
+        activities: [
+          "Arrive at Phu Quoc Airport and meet the local Travel Tribes team.",
+          "Transfer to the hotel, check in and relax after your journey.",
+          "In the evening, head to Grand World Phu Quoc for a walking tour.",
+          "Explore the Venice Canal, shopping streets, cafés and entertainment zones.",
+          "Experience Tinh Hoa Viet Nam, a spectacular live cultural show showcasing Vietnamese history, art and traditions.",
+          "Overnight stay in Phu Quoc.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'vietnam-day-2',
+        day: 2,
+        title: 'Day 2: 4-Island Tour | Cable Car | Aquatopia Water Park 🏝️🚡🌊',
+        activities: [
+          "After breakfast, head out for an exhilarating Four Island Tour.",
+          "Explore tropical islands including Hon May Rut and Hon Thom.",
+          "Enjoy a scenic cable car ride with panoramic ocean views across the archipelago.",
+          "Experience snorkelling, beach time and tropical island exploration.",
+          "Enjoy a delicious lunch during the tour.",
+          "Visit Aquatopia Water Park for world-class water rides and entertainment.",
+          "Return to the hotel and overnight stay in Phu Quoc.",
+          "Meals: Breakfast & Lunch."
+        ]
+      },
+      {
+        id: 'vietnam-day-3',
+        day: 3,
+        title: 'Day 3: VinPearl Safari | VinWonders | Flight to Da Nang 🦁🎢✈️',
+        activities: [
+          "After breakfast, visit VinPearl Safari, Vietnam’s premier wildlife conservation park.",
+          "See exotic animals roaming in open and natural habitats.",
+          "Continue to VinWonders Phu Quoc for thrilling rides, themed adventure zones, live shows and entertainment.",
+          "In the evening, transfer to the airport and board your internal flight to Da Nang.",
+          "Arrive in Da Nang, check in to your hotel and unwind.",
+          "Overnight stay in Da Nang.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-day-4',
+        day: 4,
+        title: 'Day 4: Da Nang | Hoi An | Basket Boat | Lantern Street 🏖️🛶🏮',
+        activities: [
+          "Enjoy a relaxed morning at My Khe Beach, known for its pristine sands and blue waters.",
+          "In the afternoon, experience an exciting Basket Boat Ride at the Coconut Village.",
+          "Explore the historic UNESCO World Heritage streets of Hoi An Ancient Town.",
+          "Visit the ancient Phung Hung houses, Japanese Covered Bridge, and historic trading port.",
+          "Walk through the magically illuminated Lantern Street.",
+          "Enjoy free time to explore local cafés and boutiques in Hoi An before returning to the hotel.",
+          "Overnight stay in Da Nang.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-day-5',
+        day: 5,
+        title: 'Day 5: Ba Na Hills | Golden Bridge | French Village 🚡🌉🏰',
+        activities: [
+          "Depart for Ba Na Hills around 7:30 AM.",
+          "Take the world-record cable car from Suoi Mo Station to Marseille Station.",
+          "Walk across the world-famous iconic Golden Bridge held by colossal stone hands.",
+          "Explore the Lunar Castle and continue towards the picturesque French Village.",
+          "Enjoy Fantasy Park indoor theme park and visit King Peak for panoramic mountain vistas.",
+          "Return to Da Nang for an overnight stay.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-day-6',
+        day: 6,
+        title: 'Day 6: Da Nang to Hanoi | Old Quarter | Train Street ✈️☕🚂',
+        activities: [
+          "Early morning transfer to Da Nang Airport and fly to Hanoi, Vietnam's historic capital.",
+          "Meet the guide and transfer to your centrally located hotel.",
+          "Around 5:00 PM, begin an atmospheric walking tour of Hanoi Old Quarter.",
+          "Explore Phung Hung Mural Street and the world-famous Hanoi Train Street.",
+          "Stop at local cafés and experience authentic Vietnamese egg coffee (Ca Phe Trung).",
+          "Enjoy leisure time strolling around Hoan Kiem Lake.",
+          "Overnight stay in Hanoi.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-day-7',
+        day: 7,
+        title: 'Day 7: Halong Bay Day Cruise | Surprising Cave & Kayaking 🚢⛰️🛶',
+        activities: [
+          "Transfer to Halong Bay in the morning through scenic countryside.",
+          "Board your cruise at Tuan Chau Harbor for an unforgettable 5–6 hour cruise among thousands of limestone karsts.",
+          "Enjoy a freshly prepared seafood/multi-cuisine lunch on board.",
+          "Visit the impressive Sung Sot (Surprising Cave) with massive stalactites.",
+          "Explore Ti Top Island, relax on the white beach and hike up for 360-degree bay views.",
+          "Experience kayaking or bamboo boating through the tunnel of Luon Cave.",
+          "Enjoy sunset tea and wine while cruising back to Tuan Chau Harbor.",
+          "Return to Hanoi and overnight stay.",
+          "Meals: Breakfast & Lunch."
+        ]
+      },
+      {
+        id: 'vietnam-day-8',
+        day: 8,
+        title: 'Day 8: Departure from Hanoi 🛫✨',
+        activities: [
+          "Enjoy breakfast and some leisure time for last-minute souvenir shopping.",
+          "Complete check-out and transfer to Hanoi Noi Bai Airport (HAN) for your flight back home.",
+          "We recommend booking return flights departing after 5:30 PM Vietnam time.",
+          "Bid farewell to Vietnam with incredible memories and lifelong friendships made with your tribe!",
+          "Meals: Breakfast."
+        ]
+      }
+    ],
+    inclusions: [
+      "7 nights hotel accommodation on double-sharing basis in handpicked 4-star hotels.",
+      "2 Internal Flights included: Phu Quoc → Da Nang and Da Nang → Hanoi.",
+      "Meals: 7 breakfasts + 2 lunches (Halong Bay Cruise lunch & 4-Island Tour lunch).",
+      "Grand World Phu Quoc walking tour & Tinh Hoa Viet Nam live cultural show tickets.",
+      "Four Island Tour in Phu Quoc with Cable Car, snorkelling gear & Aquatopia Water Park entry.",
+      "VinPearl Safari & VinWonders full-day access & tickets.",
+      "Hoi An Ancient Town guided tour & Coconut Forest Basket Boat ride.",
+      "Full-day Ba Na Hills tour with roundtrip Cable Car, Golden Bridge, French Village & Fantasy Park.",
+      "Hanoi Old Quarter walking tour, Mural Street & Train Street egg coffee experience.",
+      "Full-day Halong Bay Day Cruise with kayaking/bamboo boating, Surprising Cave & Ti Top Island.",
+      "Qualified local English-speaking guides during all tours.",
+      "Airport pick-up and drop-off as per group timings in comfortable AC transfers.",
+      "International travel insurance included."
+    ],
+    exclusions: [
+      "International flights from India to Vietnam and Vietnam to India.",
+      "Vietnam E-Visa (approx ₹2,800, 7-day online processing).",
+      "Lunch and dinner except meals specifically mentioned in inclusions.",
+      "Extra meals, beverages, alcoholic drinks, and packaged mineral water.",
+      "Selected optional Ba Na Hills activities (Wax Museum, Debay Wine Cellar, Alpine Coaster).",
+      "Personal expenses, tips/gratuities for guides & drivers, laundry, telephone expenses.",
+      "5% GST + 5% TCS.",
+      "Expenses caused by flight cancellations, weather, or natural calamities.",
+      "Anything not specifically mentioned under inclusions."
+    ],
+    thingsToCarry: [
+      "Valid Passport (with minimum 6 months validity from entry date) & Vietnam E-Visa",
+      "Light, breathable summer clothes, beachwear and swimwear",
+      "Comfortable walking / trekking shoes for Ba Na Hills & cave exploration",
+      "Light jacket / shrug for cooler evenings in Hanoi / Ba Na Hills",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and sun hat",
+      "Universal travel adapter, power bank, and waterproof phone pouch",
+      "Personal medications and basic first aid kit",
+      "Reusable water bottle"
+    ],
+    policies: [
+      "Flight guidelines: Return flights from Hanoi (HAN) on Day 8 should be booked after 5:30 PM Vietnam time.",
+      "Airport transfers operate at fixed group timings. Early or late transfers may attract additional charges.",
+      "Group departure age bracket: 18–42 years; customised private trips are available beyond this age bracket.",
+      "Passport must be valid for at least 6 months after the date of entry into Vietnam.",
+      "Vietnam E-Visa is required for Indian passport holders (costs approx ₹2,800 with 7-day processing).",
+      "Room Sharing: Standard package is on Double Sharing basis with same-gender travellers for solo travellers.",
+      "Booking Advance: ₹20,000 per person advance to confirm your seat. The remaining balance is due 30 days before departure.",
+      "Cancellation Policy: The initial booking amount is non-refundable. Cancellation up to 75 days before departure: 0% cancellation fee on total trip cost | 74–45 days: 50% cancellation fee | 44–30 days: 50% cancellation fee | Less than 30 days / No-Show: 100% cancellation fee.",
+      "Booking transfers are not permitted; only the names confirmed at booking can travel.",
+      "The operator reserves the right to modify the itinerary in the interest of safety and traveller comfort in case of weather or unforeseen circumstances."
+    ],
+    pricingOptions: [
+      { label: 'Regular Package (With 2 Internal Flights)', price: '₹74,999 / person + 5% GST & 5% TCS' },
+      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 5% TCS', note: 'Available on request for late Dec batches' }
+    ],
+    bookingAmount: '₹20,000 / person',
+    reviews: [
+      {
+        name: 'Meera Iyer',
+        role: 'Verified Traveller',
+        detail: 'Vietnam with Phu Quoc',
+        rating: 5,
+        quote: 'Vietnam with Travel Tribes was breathtaking from start to finish! The Golden Bridge in Ba Na Hills was straight out of a dream, and cruising through Halong Bay on a kayak was unforgettable. Phu Quoc beaches and Hoi An lantern street made this the trip of a lifetime!'
+      },
+      {
+        name: 'Kabir Oberoi',
+        role: 'Verified Traveller',
+        detail: 'Vietnam Community Trip',
+        rating: 5,
+        quote: 'Travelling solo to Vietnam was the best decision ever. The group bonding, egg coffee at Hanoi train street, and the basket boat ride in Hoi An were so much fun. Everything including internal flights and transfers was super smooth.'
+      },
+      {
+        name: 'Aakash Verma',
+        role: 'Local Guide',
+        reviewCount: '24 reviews',
+        photoCount: '78 photos',
+        detail: 'Vietnam & Phu Quoc Expedition',
+        rating: 5,
+        quote: 'Flawless 8-day itinerary covering the best of North, Central, and Southern Vietnam. Stays were top-notch, guides were super knowledgeable, and the tribe energy was unmatched. Highly recommended!'
+      }
+    ]
+  },
+  {
+    id: 'vietnam-classic',
+    slug: 'vietnam-classic',
+    title: 'Vietnam — 7N/8D',
+    location: 'Ho Chi Minh · Da Nang · Hoi An · Hanoi · Halong Bay · Ninh Binh · Vietnam',
+    region: 'International',
+    date: '02 Oct – 09 Oct 2026',
+    dates: [
+      '02 Oct – 09 Oct 2026',
+      '10 Oct – 17 Oct 2026',
+      '17 Oct – 24 Oct 2026',
+      '24 Oct – 31 Oct 2026',
+      '31 Oct – 07 Nov 2026',
+      '07 Nov – 14 Nov 2026',
+      '14 Nov – 21 Nov 2026',
+      '21 Nov – 28 Nov 2026',
+      '28 Nov – 05 Dec 2026',
+      '05 Dec – 12 Dec 2026',
+      '19 Dec – 26 Dec 2026',
+      'Dec 24–31, 2026 (Christmas Special - On Request)',
+      'Dec 28–Jan 04, 2027 (New Year Special - On Request)'
+    ],
+    duration: '7N/8D',
+    price: '₹59,999',
+    image: '/Card Image/vietnam.png',
+    alt: 'Vietnam 7N 8D Halong Bay, Golden Bridge Ba Na Hills, Cu Chi Tunnels and Hoi An',
+    tag: 'Classic Vietnam Circuit',
+    description: 'Explore Vietnam in 8 days with a complete group trip covering Ho Chi Minh City, Da Nang, Hoi An, Hanoi, Halong Bay and Ninh Binh. Discover the historic Cu Chi Tunnels, experience a traditional basket boat ride in Hoi An, walk across the iconic Golden Bridge at Ba Na Hills, explore Hanoi’s Old Quarter and Train Street, cruise through Halong Bay and enjoy the scenic Trang An boat ride in Ninh Binh. This Vietnam group tour from India combines culture, adventure, iconic sightseeing and unique local experiences into one action-packed 7N/8D Vietnam itinerary. Join solo or with friends, meet fellow travellers and experience Vietnam with your tribe.',
+    spots: '6 spots left',
+    gallery: [
+      { image: img('photo-1559592413-7cec4d0cae2b'), alt: 'Halong Bay Emerald Waters & Limestone Cliffs' },
+      { image: img('photo-1528127269322-539801943592'), alt: 'Golden Bridge Held by Giant Hands at Ba Na Hills' },
+      { image: img('photo-1583417319070-4a69db38a482'), alt: 'Hoi An Lantern Street & Ancient Town' },
+      { image: img('photo-1526778548025-fa2f459cd5c1'), alt: 'Coconut Forest Traditional Basket Boat Ride' },
+      { image: img('photo-1509042239860-f550ce710b93'), alt: 'Hanoi Famous Train Street & Egg Coffee' },
+      { image: img('photo-1569154941061-e231b4725ef1'), alt: 'Ho Chi Minh City Saigon Post Office & Bui Vien Street' },
+      { image: img('photo-1512100356356-de1b84283e18'), alt: 'Ninh Binh Trang An Eco-Tourism Boat Ride & Caves' },
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Mua Cave Viewpoint Climb & Limestone Valleys' }
+    ],
+    highlights: [
+      "Ho Chi Minh City walking tour & historic Saigon Central Post Office.",
+      "Vibrant Bui Vien Walking Street & Saigon nightlife.",
+      "Historic Cu Chi Tunnels tour with wartime underground system experience.",
+      "Optional real shooting experience (AK-47 / M4) at Cu Chi.",
+      "Hoi An Ancient Town UNESCO heritage & old Phung Hung houses.",
+      "Traditional Coconut Forest Basket Boat Ride in Hoi An.",
+      "Colourful Hoi An Lantern Street night walk.",
+      "Full-day Ba Na Hills tour with 2-way cable car & iconic Golden Bridge (Hands of the Gods).",
+      "French Village, Fantasy Park & Lunar Castle at Ba Na Hills.",
+      "Hanoi Old Quarter walking tour & Mural Street.",
+      "World-famous Hanoi Train Street & authentic Vietnamese egg coffee.",
+      "Full-day scenic Halong Bay Cruise with Vietnamese lunch.",
+      "Explore Surprising Cave (Sung Sot) & hike Ti Top Island viewpoint.",
+      "Kayaking/Bamboo Boat at Luon Cave in Halong Bay.",
+      "Ninh Binh & Trang An Eco-Tourism boat ride through limestone caves.",
+      "Mua Cave & 500-step climb for panoramic karst valley views."
+    ],
+    itinerary: [
+      {
+        id: 'vietnam-classic-day-1',
+        day: 1,
+        title: 'Day 1: Ho Chi Minh City Arrival | Saigon City Walk | Bui Vien 🏛️🍹',
+        activities: [
+          "Arrive at Ho Chi Minh City (HCMC) Airport and meet your guide.",
+          "Transfer to your centrally located hotel and check in.",
+          "In the evening, explore the vibrant heart of Saigon on a guided walking tour.",
+          "Visit Saigon Central Post Office and see Saigon Cathedral.",
+          "Explore HCMC Town Hall and experience local Vietnamese food at the food court near the War Museum.",
+          "Later at night, head to Bui Vien Walking Street for the city’s famous nightlife and street energy.",
+          "Overnight stay in Ho Chi Minh City.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-2',
+        day: 2,
+        title: 'Day 2: Cu Chi Tunnels | Fly to Da Nang 🕳️✈️🏖️',
+        activities: [
+          "After breakfast, depart for the historic Cu Chi Tunnels.",
+          "Stop at the Egg Shell Gallery en route.",
+          "Learn about the tunnel system through an introductory presentation and video.",
+          "Explore the tunnels, living quarters, kitchens, weapons areas, factories and field hospitals.",
+          "Taste complimentary wartime tea and boiled cassava root.",
+          "Optional AK-47 and M4 shooting experience is available at an additional cost.",
+          "In the evening, transfer to the airport and fly to Da Nang.",
+          "Check in and overnight stay in Da Nang.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-3',
+        day: 3,
+        title: 'Day 3: Da Nang | Hoi An | Basket Boat | Lantern Street 🏖️🛶🏮',
+        activities: [
+          "Enjoy a relaxed morning at the beach in Da Nang.",
+          "Experience a traditional Basket Boat Ride at the Coconut Forest.",
+          "Explore UNESCO World Heritage Hoi An Ancient Town.",
+          "Visit the old streets, Phung Hung houses, local market and ancient port.",
+          "Experience the colourful, magical Lantern Street.",
+          "Enjoy free time to explore local cafés and boutiques in Hoi An before returning to the hotel.",
+          "Overnight stay in Da Nang.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-4',
+        day: 4,
+        title: 'Day 4: Ba Na Hills | Golden Bridge | French Village 🚡🌉🏰',
+        activities: [
+          "Depart for Ba Na Hills around 7–8 AM.",
+          "Take the cable car from Suoi Mo Station to Marseille Station.",
+          "Visit the iconic Golden Bridge held by the giant 'Hands of the Gods'.",
+          "Explore the majestic Lunar Castle.",
+          "Take the funicular train to the French Village.",
+          "Enjoy games, rides and entertainment at Fantasy Park.",
+          "Visit King Peak for panoramic mountain views.",
+          "Return to Da Nang for an overnight stay.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-5',
+        day: 5,
+        title: 'Day 5: Da Nang to Hanoi | Old Quarter | Train Street ✈️☕🚂',
+        activities: [
+          "Early morning transfer to the airport and fly to Hanoi.",
+          "Meet your guide and transfer to the hotel.",
+          "Enjoy breakfast and freshen up.",
+          "Around 5 PM, begin a walking tour of Hanoi Old Quarter.",
+          "Explore Mural Street and cafés around the world-famous Train Street.",
+          "Try the famous authentic Vietnamese egg coffee.",
+          "Overnight stay in Hanoi.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-6',
+        day: 6,
+        title: 'Day 6: Halong Bay Cruise | Surprising Cave | Ti Top Island 🚢⛰️🛶',
+        activities: [
+          "Transfer from Hanoi to Halong Bay.",
+          "Board the cruise at Tuan Chau Harbour.",
+          "Enjoy a scenic 5–6 hour cruise with refreshments and a delicious Vietnamese lunch.",
+          "Visit the impressive Surprising Cave (Sung Sot Cave).",
+          "Explore Ti Top Island, including the beach and scenic viewpoint hike.",
+          "Experience kayaking or bamboo boating at Luon Cave.",
+          "Return to Hanoi after the cruise.",
+          "Overnight stay in Hanoi.",
+          "Meals: Breakfast & Lunch."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-7',
+        day: 7,
+        title: 'Day 7: Ninh Binh | Trang An Boat Ride | Mua Cave 🚣‍♂️🏞️🪜',
+        activities: [
+          "After breakfast, head to Ninh Binh.",
+          "Visit Mua Cave and climb approximately 500 stone steps for breathtaking karst panorama.",
+          "Explore the Trang An Eco-Tourism Area by boat through serene riverways and limestone caves.",
+          "Return to Hanoi for an overnight stay.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-classic-day-8',
+        day: 8,
+        title: 'Day 8: Departure from Hanoi 🛫✨',
+        activities: [
+          "Enjoy breakfast and some leisure time before check-out.",
+          "Transfer to Hanoi International Airport for your return flight home.",
+          "Please ensure return flights from Hanoi are booked after 5:30 PM Vietnam time.",
+          "Bid farewell to Vietnam with unforgettable memories and newfound lifelong friends from your tribe!",
+          "Meals: Breakfast."
+        ]
+      }
+    ],
+    inclusions: [
+      "Domestic flights: Ho Chi Minh → Da Nang & Da Nang → Hanoi.",
+      "7 nights hotel accommodation on double/triple sharing (1N Ho Chi Minh City, 3N Da Nang, 3N Hanoi).",
+      "8 Meals: 7 breakfasts at hotels + 1 Vietnamese lunch during Halong Bay Cruise.",
+      "All surface transfers and airport pick-up & drop-off on SIC basis.",
+      "Boat trips and cruise mentioned in the itinerary.",
+      "Half-day Hanoi Old Quarter & Train Street walking tour with egg coffee.",
+      "Halong Bay Day Cruise with Vietnamese lunch, kayaking / bamboo boating.",
+      "Ninh Binh, Trang An Eco-Tourism boat tour & Mua Cave entry.",
+      "Full-day Ba Na Hills tour with two-way cable car, Golden Bridge, French Village & Fantasy Park entry.",
+      "Traditional Coconut Forest Basket Boat Ride in Hoi An.",
+      "Hoi An Ancient Town guided walking tour.",
+      "Cu Chi Tunnels guided tour with entry tickets and wartime tea/cassava tasting.",
+      "English-speaking local Vietnamese tour guides for all guided tours.",
+      "Visa assistance.",
+      "International travel insurance."
+    ],
+    exclusions: [
+      "International flights between India and Vietnam.",
+      "Vietnam E-Visa (approx. ₹2,800).",
+      "5% GST + 5% TCS extra on the package price.",
+      "Early check-in or late check-out charges.",
+      "Lunch and dinner except the included Halong Bay cruise lunch.",
+      "Extra meals, snacks, bottled mineral water, and alcoholic/non-alcoholic beverages.",
+      "Optional Ba Na Hills activities (Wax Museum, Debay Wine Cellar, Alpine Coaster).",
+      "Optional AK-47 / M4 Machine Gun shooting at Cu Chi Tunnels.",
+      "Additional sightseeing, optional tours, or extra vehicle usage.",
+      "Transfers not mentioned in the itinerary.",
+      "Activities or monument entrance fees not specifically mentioned.",
+      "Gratuities and tips for guides and drivers.",
+      "Expenses due to flight cancellations, weather delays, medical evacuation, strikes or force majeure."
+    ],
+    policies: [
+      "Regular Price: ₹59,999/- per person + 5% GST & 5% TCS (Includes Land Package + 2 Internal Domestic Flights).",
+      "Booking Amount: ₹20,000/- per person advance to confirm your seat. Remaining payment is payable 30 days before departure.",
+      "Christmas & New Year batches: Dates available on request.",
+      "Airport transfers operate at fixed group timings. Early or late transfers may incur additional charges.",
+      "Group departure age limit is 18–42 years; customised trips can be arranged beyond this age bracket.",
+      "Passport must be valid for at least 6 months from the date of entry into Vietnam.",
+      "Vietnam E-Visa is required (approx. ₹2,800, processing time ~7 days). Visa assistance is provided by the team.",
+      "Return flights from Hanoi should be booked after 5:30 PM Vietnam time on Day 8.",
+      "Solo travellers will share rooms with same-gender travellers on double/triple sharing basis.",
+      "Guides are not available during airport transfers or leisure time.",
+      "Advance booking amount is non-refundable. Full payment must be completed before the trip.",
+      "Valid government ID / Passport is mandatory for travel.",
+      "Booking transfers are not permitted. Only the name mentioned during confirmation can travel.",
+      "No refund is provided for inclusions that are not used.",
+      "Travellers are responsible for their own luggage and belongings.",
+      "Departure timings are fixed; report at the pickup point 30 minutes before departure.",
+      "AC may be switched off in hilly areas or when required by the driver for safety.",
+      "Drinking and smoking are prohibited during group transport journeys.",
+      "Misconduct or indiscipline will not be tolerated.",
+      "Weather, road conditions, accidents, breakdowns, landslides and other unforeseen circumstances may result in itinerary changes.",
+      "The operator reserves the right to modify the schedule for safety, comfort and operational reasons.",
+      "Cancellation Policy: Cancellation 75+ days before departure: 0% cancellation fee on total trip cost (advance retained/credited) | 74–45 days before departure: 50% cancellation fee | 44–30 days before departure: 50% cancellation fee | Less than 30 days before departure: 100% cancellation fee."
+    ],
+    pricingOptions: [
+      { label: 'Land Package + 2 Domestic Flights (Double/Triple Sharing)', price: '₹59,999 / person' },
+      { label: 'Booking Advance', price: '₹20,000 / person' },
+      { label: 'Christmas & New Year Special Batch', price: 'On Request', note: 'Dates available on request' },
+      { label: 'Taxes (5% GST + 5% TCS)', price: 'As Applicable', note: '5% GST + 5% TCS extra' }
+    ],
+    bookingAmount: '₹20,000 / person',
+    reviews: [
+      {
+        name: 'Ananya Sen',
+        role: 'Verified Traveller',
+        detail: 'Vietnam Classic 7N/8D',
+        rating: 5,
+        quote: 'Covering Ho Chi Minh, Da Nang, Hoi An, Ba Na Hills, Hanoi, Halong Bay and Ninh Binh in 8 days was the most fulfilling trip! The domestic flights saved so much time. Golden Bridge and Halong Bay kayaking were highlight moments!'
+      },
+      {
+        name: 'Rohan Deshmukh',
+        role: 'Verified Traveller',
+        detail: 'Vietnam Backpacking Community',
+        rating: 5,
+        quote: 'Joined solo and made friends for life. The Cu Chi Tunnels and Hanoi Train Street egg coffee were iconic experiences. Everything from hotels, internal flights to daily tours was impeccably organised.'
+      },
+      {
+        name: 'Pooja Nair',
+        role: 'Local Guide',
+        reviewCount: '19 reviews',
+        photoCount: '54 photos',
+        detail: 'Vietnam Group Tour',
+        rating: 5,
+        quote: 'Trang An boat ride in Ninh Binh and the Mua Cave view were surreal. Travel Tribes gave us the best itinerary with comfortable stays and amazing English-speaking local guides. Tribe vibes all the way!'
+      }
+    ]
+  },
+  {
+    id: 'vietnam-sapa',
+    slug: 'vietnam-sapa',
+    title: 'Vietnam with Sapa — 8N/9D',
+    location: 'Ho Chi Minh City · Da Nang · Hoi An · Hanoi · Halong Bay · Sapa · Vietnam',
+    region: 'International',
+    date: '03 Oct – 11 Oct 2026',
+    dates: [
+      '03 Oct – 11 Oct 2026',
+      '10 Oct – 18 Oct 2026',
+      '17 Oct – 25 Oct 2026',
+      '24 Oct – 01 Nov 2026',
+      '31 Oct – 08 Nov 2026',
+      '07 Nov – 15 Nov 2026',
+      '14 Nov – 22 Nov 2026',
+      '21 Nov – 29 Nov 2026',
+      '28 Nov – 06 Dec 2026',
+      '05 Dec – 13 Dec 2026',
+      '12 Dec – 20 Dec 2026',
+      'Dec 24–Jan 01, 2027 (Christmas & New Year Special - On Request)'
+    ],
+    duration: '8N/9D',
+    price: '₹69,999',
+    image: '/Card Image/vietnam.png',
+    alt: 'Vietnam with Sapa Fansipan Peak, Golden Bridge Ba Na Hills and Halong Bay',
+    tag: 'Highlands & Indochina Peak',
+    description: "Experience Vietnam in 8 nights and 9 days with a group trip covering Ho Chi Minh City, Da Nang, Hoi An, Hanoi, Halong Bay and Sapa. Explore the historic Cu Chi Tunnels, enjoy a traditional basket boat ride in Hoi An, discover the iconic Golden Bridge at Ba Na Hills, walk through Hanoi's Old Quarter and Train Street, cruise through the limestone landscapes of Halong Bay and ride the cable car to Fansipan, the Roof of Indochina. This Vietnam group trip from India combines culture, adventure, scenic landscapes and authentic local experiences across some of Vietnam's most popular destinations.",
+    spots: '6 spots left',
+    gallery: [
+      { image: img('photo-1528127269322-539801943592'), alt: 'Fansipan Mountain Roof of Indochina Peak and Clouds' },
+      { image: img('photo-1559592413-7cec4d0cae2b'), alt: 'Halong Bay Emerald Waters & Limestone Cliffs' },
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Golden Bridge Held by Giant Hands at Ba Na Hills' },
+      { image: img('photo-1544644181-1484b3fdfc62'), alt: 'Sapa Misty Mountain Valleys and Terraced Rice Fields' },
+      { image: img('photo-1583417319070-4a69db38a482'), alt: 'Hoi An Lantern Street & Ancient Town' },
+      { image: img('photo-1509042239860-f550ce710b93'), alt: 'Hanoi Famous Train Street & Egg Coffee' },
+      { image: img('photo-1526778548025-fa2f459cd5c1'), alt: 'Coconut Forest Traditional Basket Boat Ride' },
+      { image: img('photo-1569154941061-e231b4725ef1'), alt: 'Ho Chi Minh City Saigon Nguyen Hue Avenue' }
+    ],
+    highlights: [
+      "Explore the vibrant streets of Ho Chi Minh City & Nguyen Hue Avenue.",
+      "Experience the historic Cu Chi Tunnels network and wartime tea/cassava tasting.",
+      "Enjoy a traditional Basket Boat Ride in the Coconut Forest.",
+      "Explore the lantern-lit streets and UNESCO heritage of Hoi An Ancient Town.",
+      "Visit the iconic Golden Bridge (Hands of the Gods) at Ba Na Hills.",
+      "Explore Le Jardin D’Amour themed gardens & Linh Ung Pagoda.",
+      "Experience Fantasy Park rides, games & King Peak panoramic vistas.",
+      "Discover Hanoi Old Quarter on a walking tour.",
+      "Visit the famous Hanoi Train Street and try traditional Vietnamese egg coffee.",
+      "Cruise through the spectacular emerald waters of Halong Bay with lunch onboard.",
+      "Explore Surprising Cave (Sung Sot) & hike Ti Top Island viewpoint.",
+      "Kayak or bamboo boat through Luon Cave in Halong Bay.",
+      "Travel to the misty mountain highland town of Sapa by luxury bus.",
+      "Ride the world-class Fansipan Cable Car to the 'Roof of Indochina' (3,143m).",
+      "Visit the spiritual Fansipan Peak Pagoda Complex amidst the clouds."
+    ],
+    itinerary: [
+      {
+        id: 'vietnam-sapa-day-1',
+        day: 1,
+        title: 'Day 1: Ho Chi Minh City Arrival | Saigon Walking Tour 🏛️🌆',
+        activities: [
+          "Arrive at Ho Chi Minh City Airport and meet your guide and driver.",
+          "Transfer to the city centre and check in to the hotel after 2 PM.",
+          "In the evening, explore Saigon on a guided walking tour.",
+          "Discover local markets and experience the vibrant mix of modern and traditional Vietnamese life.",
+          "Visit Nguyen Hue Avenue and explore the bustling city after sunset.",
+          "Optional: Enjoy a panoramic sunset view from Bitexco Tower (ticket not included).",
+          "Overnight stay in Ho Chi Minh City.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-2',
+        day: 2,
+        title: 'Day 2: Cu Chi Tunnels | Fly to Da Nang 🕳️✈️🏖️',
+        activities: [
+          "After breakfast, check out and depart for the historic Cu Chi Tunnels.",
+          "Explore the historic tunnel network, including living areas, kitchens, weapons factories, field hospitals and command centres.",
+          "Enjoy traditional wartime tea and boiled cassava root.",
+          "Free time for relaxation or optional real shooting experience (AK-47 / M4).",
+          "Return to the hotel, collect luggage and transfer to the airport.",
+          "Fly to Da Nang in the evening.",
+          "Check in and overnight stay in Da Nang.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-3',
+        day: 3,
+        title: 'Day 3: Leisure Day | Basket Boat | Hoi An Ancient Town 🛶🏮✨',
+        activities: [
+          "Enjoy a relaxed morning at leisure along the Da Nang beaches.",
+          "In the evening, experience a traditional Basket Boat Ride at the Coconut Forest.",
+          "Explore Hoi An Ancient Town on your own.",
+          "Visit the Japanese Pagoda Bridge, Chinese assembly halls, old Phung Hung houses, Hoi An Market and the ancient trading port.",
+          "Enjoy free time to explore the lantern-lit streets, boutique cafés and riverside night markets of Hoi An.",
+          "Return to Da Nang by around 10 PM.",
+          "Overnight stay in Da Nang.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-4',
+        day: 4,
+        title: 'Day 4: Ba Na Hills | Golden Bridge | French Village 🚡🌉🏰',
+        activities: [
+          "Depart from Da Nang around 7:45–8:00 AM for Ba Na Hills.",
+          "Take the scenic cable car from Suoi Mo Station to Marseille Station.",
+          "Visit the iconic Golden Bridge held by the giant Hands of the Gods.",
+          "Explore Le Jardin D’Amour, featuring nine romantic themed gardens.",
+          "Visit the serene Linh Ung Pagoda.",
+          "Spend the afternoon enjoying rides, arcade games and entertainment at Fantasy Park and explore King Peak.",
+          "Return to Da Nang for an overnight stay.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-5',
+        day: 5,
+        title: 'Day 5: Da Nang to Hanoi | Hanoi Old Quarter | Train Street ✈️☕🚂',
+        activities: [
+          "After breakfast, transfer to Da Nang Airport for your flight to Hanoi (scheduled between ~6:30–8:30 AM).",
+          "Meet your guide and driver at Noi Bai Airport.",
+          "Check in to the hotel after 2 PM.",
+          "Explore Hanoi Old Quarter on a guided walking tour.",
+          "Visit Ngoc Son Temple at Hoan Kiem Lake (ticket not included).",
+          "Visit famous Train Street and savor authentic Vietnamese egg coffee.",
+          "Overnight stay in Hanoi.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-6',
+        day: 6,
+        title: 'Day 6: Hanoi | Halong Bay Cruise | Hanoi 🚢⛰️🛶',
+        activities: [
+          "Depart Hanoi around 8:15–8:30 AM for Halong Bay.",
+          "Arrive at Tuan Chau Harbour and board the cruise.",
+          "Enjoy a scenic 5–6 hour Halong Bay cruise with a delicious Vietnamese lunch onboard.",
+          "Visit the massive and magnificent Surprising Cave (Sung Sot Cave).",
+          "Explore Ti Top Island and hike up to the 360-degree viewpoint over the bay.",
+          "Experience kayaking or bamboo boating through Luon Cave.",
+          "Enjoy sunset, tea, cakes and music on the sundeck of the cruise.",
+          "Return to Hanoi via the expressway.",
+          "Overnight stay in Hanoi.",
+          "Meals: Breakfast & Lunch."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-7',
+        day: 7,
+        title: 'Day 7: Hanoi to Sapa | Mountain Valley Exploration 🚌⛰️🌿',
+        activities: [
+          "Transfer from Hanoi to the mountain town of Sapa by luxury bus (approx. 6 hours).",
+          "Arrive in Sapa, check in and enjoy free time in the cool mountain breeze.",
+          "Explore Sapa town centre, stone church, local ethnic tribal markets and cafés.",
+          "Overnight stay in Sapa.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-8',
+        day: 8,
+        title: 'Day 8: Fansipan Mountain | Roof of Indochina 🚡🏔️🛕',
+        activities: [
+          "After breakfast, take the world-record Fansipan Cable Car to the “Roof of Indochina” (3,143 meters).",
+          "Enjoy breathtaking panoramic mountain views and sea of clouds across the Hoang Lien Son range.",
+          "Visit the spiritual Fansipan Peak Pagoda Complex and giant Buddha statues.",
+          "Return to Sapa town, relax and explore local night market delicacies.",
+          "Overnight stay in Sapa.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'vietnam-sapa-day-9',
+        day: 9,
+        title: 'Day 9: Sapa to Hanoi | Departure 🚌🛫✨',
+        activities: [
+          "After breakfast, check out and transfer back to Hanoi / Noi Bai International Airport by bus.",
+          "Transfer to the airport according to your onward flight schedule (departure flights recommended after 2:00 PM / evening).",
+          "Conclude your epic 9-day Vietnam and Sapa adventure with unforgettable memories and lifelong tribe friendships!",
+          "Meals: Breakfast."
+        ]
+      }
+    ],
+    inclusions: [
+      "Hotel accommodation at all destinations on double-sharing basis.",
+      "8 breakfasts + 1 Vietnamese lunch onboard Halong Bay Cruise.",
+      "Internal domestic flights with 20 kg luggage allowance (HCMC → Da Nang & Da Nang → Hanoi).",
+      "Shared expressway transfer between Hanoi – Halong – Hanoi.",
+      "Luxury bus transfer between Hanoi – Sapa – Hanoi.",
+      "Entry fees for all mentioned sightseeing locations.",
+      "Halong Bay 5–6 hour cruise with lunch, kayaking / bamboo boating.",
+      "Ba Na Hills two-way cable car and sightseeing.",
+      "Fansipan Cable Car ticket to the Roof of Indochina.",
+      "Traditional Coconut Forest Basket Boat Ride.",
+      "Cu Chi Tunnels experience and entry tickets.",
+      "Qualified local tour guides throughout the trip (except during specified leisure periods)."
+    ],
+    exclusions: [
+      "International flights between India and Vietnam & airport taxes.",
+      "Vietnam E-Visa service.",
+      "5% GST + 5% TCS extra on the package price.",
+      "Meals not mentioned in the itinerary (lunches and dinners).",
+      "Single-room supplement.",
+      "Early check-in and late check-out.",
+      "Hotel / room upgrades.",
+      "Drinks, packaged water and personal expenses.",
+      "Services not specifically mentioned in the itinerary.",
+      "Travel insurance.",
+      "Wax Museum, Cotton Animal Game and Carnival Skills at Fantasy Park.",
+      "Optional machine gun shooting at Cu Chi Tunnels."
+    ],
+    policies: [
+      "Regular Price: ₹69,999/- per person + 5% GST & 5% TCS (Includes Land Package + 2 Internal Domestic Flights + Sapa Express Transfers).",
+      "Booking Amount: ₹20,000/- per person advance to confirm your seat. Remaining payment is payable 30 days before departure.",
+      "Recommended luggage: One medium bag up to approx. 65 cm + one handbag per person.",
+      "Standard hotel check-in is 2:00 PM; check-out is 11:00 AM.",
+      "Airport transfers operate at fixed group timings based on the majority schedule. Individual transfers outside group timings may incur additional charges.",
+      "Return flights from Hanoi on Day 9 should be booked for 2:00 PM or later.",
+      "Valid government ID / Passport (min 6 months validity) is required for travel.",
+      "Booking transfers are not permitted. Only the registered traveller can travel.",
+      "No refund is provided for unused inclusions or cancelled tours due to weather/force majeure.",
+      "Travellers are responsible for their own luggage and personal belongings.",
+      "Travellers should report at pickup points 30 minutes before scheduled departure.",
+      "Drinking and smoking are prohibited during group journeys.",
+      "Misconduct or indiscipline may result in removal from the trip without refund.",
+      "Cancellation Policy: Initial booking amount is non-refundable. Cancellation 30+ days before departure: 50% trip cost charged as cancellation fee | 15–30 days before departure: 75% cancellation fee | 0–15 days before departure: 100% cancellation fee."
+    ],
+    pricingOptions: [
+      { label: 'Land Package + 2 Domestic Flights + Sapa (Double Sharing)', price: '₹69,999 / person' },
+      { label: 'Booking Advance', price: '₹20,000 / person' },
+      { label: 'Christmas & New Year Special Batch', price: 'On Request', note: 'Dates available on request' },
+      { label: 'Taxes (5% GST + 5% TCS)', price: 'As Applicable', note: '5% GST + 5% TCS extra' }
+    ],
+    bookingAmount: '₹20,000 / person',
+    reviews: [
+      {
+        name: 'Tanvi Kulkarni',
+        role: 'Verified Traveller',
+        detail: 'Vietnam with Sapa 8N/9D',
+        rating: 5,
+        quote: 'Fansipan peak in Sapa was literally above the clouds! The cable car ride was mind-blowing, and Halong Bay plus Ba Na Hills made this the most complete Vietnam trip ever. Excellent hotels and internal flight coordination!'
+      },
+      {
+        name: 'Varun Singhania',
+        role: 'Verified Traveller',
+        detail: 'Vietnam & Sapa Backpacking',
+        rating: 5,
+        quote: 'From the bustling night streets of Saigon to the peaceful mountains of Sapa, every day had something extraordinary. Egg coffee in Hanoi and the basket boat in Hoi An were unforgettable. Tribe vibes all the way!'
+      },
+      {
+        name: 'Kavita Menon',
+        role: 'Local Guide',
+        reviewCount: '22 reviews',
+        photoCount: '63 photos',
+        detail: 'Vietnam Indochina Expedition',
+        rating: 5,
+        quote: 'The luxury bus to Sapa was super comfortable and the Fansipan pagoda complex was breathtaking. Perfect mix of culture, nature, and adventure with great group energy. Highly recommended!'
+      }
+    ]
+  },
+  {
+    id: 'konkan-coastal-roadtrip',
     slug: 'konkan-coastal-roadtrip',
-    title: 'Konkan Coastal Road Trip – Maharashtra',
-    location: 'Ganpatipule · Aare Ware · Ratnagiri · Devghali Beach · Maharashtra',
+    title: 'Coastal Maharashtra Road Trip',
+    location: 'Mumbai · Ratnagiri · Ganpatipule · Kasheli · Maharashtra',
     region: 'Domestic',
     date: 'Sep 24–28, 2026',
     dates: [
@@ -1341,12 +2682,12 @@ export const trips: Trip[] = [
       'Dec 23–27, 2026 (Christmas Weekend)',
       'Dec 29–Jan 02, 2027 (New Year Special)'
     ],
-    duration: '4N/4D',
+    duration: '4N/5D',
     price: '₹8,499',
-    image: img('photo-1507525428034-b723cf961d3e'),
-    alt: 'Konkan Coastal Road Trip — Ganpatipule Beach, Aare Ware Coastal Road and Ratnadurg Fort',
+    image: '/Card Image/kokan.png',
+    alt: 'Coastal Maharashtra Road Trip — Ganpatipule Beach, Aare Ware Coastal Road and Ratnadurg Fort',
     tag: 'Coastal Roadtrip',
-    description: 'Hit the open road along Maharashtra’s most scenic Arabian Sea coastline with Travel Tribes on a 4-Day Konkan Coastal Road Trip from Mumbai & Pune! From the 400-year-old seaside Ganpatipule Ganesha Temple and pristine golden sands to driving along the famous cliffside Aare-Ware coastal road with India’s first sea-facing zipline. Explore the historic Ratnadurg sea fort, seek blessings at Bhagwati Temple, catch panoramic sunset vistas at Table Point and Ratnagiri Lighthouse, and discover the hidden paradise of Devghali (Kasheli) Beach. Curated for 18–40 year old wanderers with AC bus travel, stays, meals, and unforgettable tribe bonding.',
+    description: 'Hit the open road along Maharashtra’s most scenic Arabian Sea coastline with Travel Tribes on a 4N/5D Coastal Maharashtra Road Trip from Mumbai & Pune! From the 400-year-old seaside Ganpatipule Ganesha Temple and pristine golden sands to driving along the famous cliffside Aare-Ware coastal road with India’s first sea-facing zipline. Explore the historic Ratnadurg sea fort, seek blessings at Bhagwati Temple, catch panoramic sunset vistas at Table Point and Ratnagiri Lighthouse, and discover the hidden paradise of Devghali (Kasheli) Beach. Curated for 18–40 year old wanderers with AC bus travel, stays, meals, and unforgettable tribe bonding.',
     spots: '8 spots left',
     gallery: [
       { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Ganpatipule Clean Shores and Arabian Sea Beach' },
@@ -1359,111 +2700,134 @@ export const trips: Trip[] = [
       { image: img('photo-1500530855697-b586d89ba3ee'), alt: 'Devghali Kasheli Hidden Monsoon Coastal Gem' }
     ],
     highlights: [
-      "Visit the 400-year-old Ganpatipule Temple, a serene seaside shrine of Lord Ganesha.",
-      "Relax at Ganpatipule Beach with its clean shores and calm Arabian Sea waves.",
-      "Drive along the picturesque Aarey-Ware Coastal Road, one of Maharashtra’s most scenic routes.",
-      "Experience the thrill of India’s first sea-facing zipline at Aarey-Ware over the ocean (Optional).",
-      "Explore the historic Ratnadurg Fort with its panoramic 360-degree ocean views.",
-      "Seek blessings at the ancient Bhagwati Temple located inside Ratnadurg Fort.",
-      "Capture stunning views from the Ratnagiri Lighthouse overlooking the Konkan coastline.",
-      "Discover the offbeat charm of Devghali (Kasheli) Beach, a hidden coastal gem.",
-      "Visit Basra Ship Point and witness a breathtaking sunset at Table Point.",
-      "Enjoy fun community games, delicious Konkani thali dinners, music, and tribe bonding."
+      "Visit the 400-year-old Ganpatipule Temple overlooking the Arabian Sea.",
+      "Relax at the beautiful Ganpatipule Beach.",
+      "Drive along the scenic Aare-Ware Coastal Road, one of Maharashtra's picturesque coastal routes.",
+      "Experience India's first sea-facing zipline at Aare-Ware.",
+      "Explore the historic Ratnadurg Fort and Bhagwati Temple.",
+      "Capture panoramic coastal views from Ratnagiri Lighthouse.",
+      "Discover the offbeat Devghali (Kasheli) Beach.",
+      "Enjoy the beautiful Dhareshwar Waterfall during the monsoon season.",
+      "Watch a beautiful sunset at Table Point.",
+      "Travel with a group of like-minded people and enjoy community games and new friendships."
     ],
     itinerary: [
       {
+        id: 'konkan-day-1',
         day: 1,
-        title: 'Thursday Night – Departure from Mumbai & Pune 🚌💨',
+        title: 'Day 1: Thursday Night — Mumbai/Pune → Ratnagiri 🚌💨',
         activities: [
-          "Board our comfortable AC Bus from Mumbai or Pune and begin your coastal road trip.",
-          "Mumbai Pickups: Borivali (08:30 PM) → Andheri → Bandra → Sion → Chembur → Vashi → Panvel.",
-          "Pune Pickups: 10:00 PM BMCC College, FC Road | 10:30 PM Xion Mall, Hinjewadi.",
-          "Kick off the trip with fun ice-breaking games, travel playlists, and overnight AC journey towards Ratnagiri.",
-          "Meals: Not Included."
+          "Begin your journey from Mumbai with pickups from Borivali, Andheri, Bandra, Sion, Chembur, Vashi and Panvel.",
+          "Pune pickups are available from BMCC College, FC Road at 10:00 PM and Xion Mall, Hinjewadi at 10:30 PM.",
+          "Meet your fellow travellers and begin the overnight journey towards Ratnagiri.",
+          "Meals: Not included."
         ]
       },
       {
+        id: 'konkan-day-2',
         day: 2,
-        title: 'Friday – Ganpatipule Beach, Temple & Aare-Ware Coastal Drive 🌊🛕✨',
+        title: 'Day 2: Ganpatipule & Coastal Thrills 🌊🛕✨',
         activities: [
-          "Arrive in Ratnagiri in the morning and check in to your stay. Freshen up and relax.",
-          "Visit the famous 400-year-old seaside Ganpatipule Temple and seek blessings of Lord Ganesha.",
-          "Stroll along the clean sands and gentle waves of Ganpatipule Beach.",
-          "Drive along the picturesque Aare-Ware Coastal Road — Maharashtra’s most scenic ocean drive.",
-          "Optional: Experience the adrenaline rush of India’s first sea-facing zipline at Aare-Ware.",
-          "Return to the stay for a delicious dinner and overnight rest.",
-          "Unwind with fun community games, meet fellow travellers, and get to know your tribe.",
-          "Overnight stay in Ratnagiri. (Meals: Breakfast & Dinner Included)."
+          "Arrive in Ratnagiri, check in to your stay and take some time to freshen up and relax.",
+          "Visit the historic Ganpatipule Temple, a serene seaside shrine dedicated to Lord Ganesha.",
+          "Spend some time relaxing at Ganpatipule Beach and enjoy the coastal surroundings.",
+          "Drive along the scenic Aare-Ware Coastal Road & Beach.",
+          "Optional: Experience the thrilling Aare-Ware Sea-Facing Zipline at an additional cost.",
+          "Return to the stay for dinner and an overnight stay.",
+          "Enjoy community games, meet fellow travellers and get to know your tribe.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'konkan-day-3',
         day: 3,
-        title: 'Saturday – Ratnadurg Fort, Bhagwati Temple & Table Point Sunset 🏰🌅',
+        title: 'Day 3: Ratnagiri Exploration 🏰🌅',
         activities: [
-          "Have a wholesome breakfast at the stay.",
-          "Explore the historic Ratnadurg Fort, surrounded on three sides by the Arabian Sea with majestic views.",
-          "Visit the sacred Bhagwati Temple situated inside the fort ramparts.",
-          "Post-lunch, visit the rugged Basra Ship Point overlooking the waves.",
-          "Head to Table Point to witness a breathtaking golden sunset over the horizon.",
-          "Return to the stay, relax, and have fun with fellow travellers playing community games and singing sessions.",
-          "Overnight stay in Ratnagiri. (Meals: Breakfast & Dinner Included)."
+          "Enjoy breakfast at the stay before heading out for a day of exploration.",
+          "Visit the historic Ratnadurg Fort and seek blessings at the Bhagwati Temple.",
+          "After lunch, visit Basra Ship Point and enjoy the coastal views.",
+          "Witness a beautiful sunset at Table Point.",
+          "Return to the stay, relax and spend the evening enjoying community games with fellow travellers.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'konkan-day-4',
         day: 4,
-        title: 'Sunday – Devghali Beach & Return Journey 🏖️🚙',
+        title: 'Day 4: Devghali Beach → Mumbai 🏖️🚙',
         activities: [
           "Enjoy breakfast and check out from the stay.",
-          "Visit the beautiful and offbeat Devghali Beach in Kasheli, a pristine hidden monsoon and coastal gem.",
-          "Spend time exploring the beach, clicking pictures, and soaking in peaceful coastal views.",
-          "After lunch at a local restaurant, begin your return journey towards Mumbai and Pune.",
-          "Meals: Breakfast Included."
+          "Visit the beautiful Devghali Beach in Kasheli and spend some time exploring the beach and enjoying the coastal views.",
+          "After lunch, begin your return journey towards Mumbai and Pune.",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'konkan-day-5',
         day: 5,
-        title: 'Monday – Early Morning Arrival in Mumbai & Pune 🏠✨',
+        title: 'Day 5: Arrival in Mumbai & Pune 🏠✨',
         activities: [
-          "Arrive back in Pune (approx 04:00 AM) and Mumbai (approx 06:00 AM).",
-          "Wrap up a perfect short getaway filled with beaches, forts, ocean drives, adventure, and lifelong friendships.",
-          "Until the next road trip — Tribe hai to vibe hai! 🌊",
-          "Meals: Not Included."
+          "Arrive back in Mumbai and Pune in the early morning.",
+          "End the journey with memories of beaches, forts, adventure, scenic coastal roads and a fun community experience.",
+          "Meals: Not included."
         ]
       }
     ],
     inclusions: [
-      "Mumbai to Mumbai & Pune to Pune travel in comfortable AC Bus",
-      "2-Night Hotel Stay in Ratnagiri on Triple Sharing basis (Double sharing upgrade available)",
-      "5 Meals Included: 3 Breakfasts & 2 Dinners (Local Konkani & Multi-cuisine food)",
-      "All internal transfers and sightseeing as per itinerary",
-      "Experienced Travel Tribes Trip Captain / Local Guide assistance throughout the trip",
-      "All toll taxes, driver night allowances, parking charges, and entry permits"
+      "Mumbai to Mumbai & Pune to Pune travel by comfortable AC bus.",
+      "2-night accommodation on triple sharing basis (Double sharing upgrade available).",
+      "5 meals: 3 breakfasts and 2 dinners.",
+      "All internal transfers and sightseeing as per the itinerary.",
+      "Trip Captain/local guide assistance throughout the trip.",
+      "All applicable permits, parking charges, driver allowances and entry fees."
     ],
     exclusions: [
-      "5% GST",
-      "Lunches throughout the trip and highway refreshments during transit",
-      "Aare-Ware Sea-Facing Zipline charges (Optional)",
-      "Any kind of food or beverage not included in package (alcoholic drinks, packaged mineral water)",
-      "Personal expenses (tips to driver, laundry, shopping, camera/video charges)",
-      "Any cost arising due to natural calamities like landslides, roadblocks, weather delays (to be borne on spot)",
-      "Anything not mentioned in the inclusions"
+      "5% GST.",
+      "Food and beverages not included in the package, including alcoholic drinks, mineral water, refreshments and highway meals.",
+      "Lunches throughout the trip.",
+      "Aare-Ware Zipline charges (Optional).",
+      "Any additional cost arising due to natural calamities, landslides or roadblocks, payable directly by the customer.",
+      "Anything not specifically mentioned in the itinerary or inclusions."
     ],
     policies: [
-      "Pickup Points: Mumbai pickups start from Borivali (08:30 PM) via WEH & Navi Mumbai. Pune pickups: BMCC College FC Road (10:00 PM) & Xion Mall Hinjewadi (10:30 PM).",
-      "Booking Advance: ₹4,000/- advance per person to secure your seat (Non-refundable upon cancellation; transferable or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Ex-Mumbai & Pune Triple Sharing ₹8,499 / person | Double Sharing ₹9,499 / person (+₹1,000 for Long Weekend & Festive batches) +5% GST.",
-      "Room Sharing: Standard package is on Triple sharing. Double sharing available at +₹1,000 per person.",
-      "Trip Authority: The trip leader has all rights to alter/skip sightseeing if emergencies, roadblocks, or unfavourable weather occur.",
+      "Pickup points are available across Mumbai and Pune as mentioned in the itinerary.",
+      "The trip is operated as a Mumbai-to-Mumbai road trip by AC bus.",
+      "The package includes triple-sharing accommodation; double sharing is available at an additional ₹1,000 per person.",
+      "The Aare-Ware Zipline is optional and its cost is not included.",
+      "Lunches are not included during the trip.",
+      "Booking Amount: ₹4,000 per person to confirm your seat (Advance is non-refundable; transferable or convertible to 3-month Travel Tribes credit).",
+      "Booking confirmation is sent after the advance payment, and travellers are added to the WhatsApp group 5 days before departure.",
+      "Pending balance payments must be cleared before the trip.",
+      "The trip leader may modify, skip or alter sightseeing in case of an emergency, force majeure or inappropriate participant behaviour.",
+      "In triple-sharing rooms, an extra mattress is provided and should not be considered an extra bed.",
+      "Delays caused by participants at sightseeing locations may result in the cancellation or skipping of subsequent sightseeing.",
+      "Participants are expected to coordinate, maintain discipline and cooperate as a team.",
+      "No refund will be provided in case of a no-show on the day of the trip.",
+      "Alcohol consumption in hotels/rooms is subject to the respective hotel's rules.",
+      "A valid photo ID is mandatory for hotel stays.",
+      "The itinerary may change slightly during public holidays or festivals.",
+      "Vehicles are provided strictly on a point-to-point basis as per the itinerary and are not available for personal use.",
+      "Travellers are responsible for their own luggage and belongings.",
+      "Travel Tribes is not liable if any sightseeing location is closed due to a special occasion, public holiday, long weekend or festival.",
+      "Travel insurance is not provided for illness, accidents, theft or loss.",
+      "Water and electricity availability may be limited in certain areas, and hotels may have fixed hot/cold water timings.",
+      "Luxury facilities should not be expected on this community road trip.",
+      "Transportation and logistics may vary depending on the final group size.",
+      "Travel Tribes strictly stands against any form of harassment, and physical contact should always respect another person's comfort.",
+      "Participants undertake the risks associated with road travel, vehicles and nature-based activities.",
+      "AC may not be available in certain vehicles when operating in hilly regions.",
+      "Third-party buses may experience breakdowns, and arranging a replacement vehicle may take some time.",
+      "Meal halts are predefined by the transport vendor and cannot be changed for individual convenience.",
+      "Refunds will be provided only when the trip is cancelled or postponed by the company/organisers, subject to the applicable policy.",
       "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
       "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
       "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
-      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services)."
     ],
     pricingOptions: [
       { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹8,499 / person' },
       { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹9,499 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' },
+      { label: 'Double Sharing Upgrade', price: '+₹1,000 / person' },
       { label: 'Long Weekend / Festive Batch Add-on', price: '+₹1,000 / person', note: 'Applicable on LW & NY dates' }
     ],
     bookingAmount: '₹4,000 / person',
@@ -1494,6 +2858,7 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'gokarna-backpacking',
     slug: 'gokarna-backpacking',
     title: 'Gokarna Backpacking Trip',
     location: 'Gokarna · Murdeshwar · Honnavar · Yana Caves',
@@ -1507,10 +2872,10 @@ export const trips: Trip[] = [
     ],
     duration: '4N/5D',
     price: '₹8,499',
-    image: '/image/Gokarna/gokarna_img.jpeg',
+    image: '/Card Image/Gokarna.jpg',
     alt: 'Gokarna Beach and scenic coastline',
     tag: 'Backpacking Trip',
-    description: 'Looking for the perfect Gokarna trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This Gokarna group trip combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and plenty of opportunities to meet fellow travellers. Come solo. Meet strangers. Explore Gokarna. Find your tribe.',
+    description: 'Looking for the perfect Gokarna trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This Gokarna group trip combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and plenty of opportunities to meet fellow travellers. From the Gokarna beach trek covering Belekan, Paradise, Half Moon and Om Beach to the iconic Murdeshwar Shiva Statue, Honnavar backwaters and Yana Caves — this is a backpacking trip from Mumbai designed around experiences, exploration and the Travel Tribes community. Come solo. Meet strangers. Explore Gokarna. Find your tribe.',
     spots: '8 spots left',
     gallery: [
       { image: "/image/Gokarna/gokarna_img.jpeg", alt: "Gokarna" },
@@ -1530,7 +2895,7 @@ export const trips: Trip[] = [
       "Enjoy a Gokarna beach trek from Belekan to Om Beach with cliffside views and bonding moments.",
       "Explore Belekan Beach, Paradise Beach, Half Moon Beach and Om Beach.",
       "Experience water sports at Om Beach, from surfing to parasailing.",
-      "Explore the vibrant Hippie Market / Flea Market and shop for local crafts and souvenirs.",
+      "Explore the vibrant Hippie Market/Flea Market and shop for local crafts and souvenirs.",
       "Experience breathtaking sunsets at Kudle Hilltop and Gokarna beaches.",
       "Trek to Yana Caves and discover the Bhairaveshwara & Jaganmohini peaks.",
       "Visit Vibhooti Falls, a hidden paradise for nature lovers.",
@@ -1541,87 +2906,93 @@ export const trips: Trip[] = [
     ],
     itinerary: [
       {
+        id: 'gokarna-day-1',
         day: 1,
-        title: 'Mumbai to Gokarna | The Train Journey 🚂',
+        title: 'DAY 1 — Mumbai to Gokarna | The Train Journey 🚂',
         activities: [
-          "Hello fellow Gokarna backpackers! We're all meeting on the train.",
+          "Hello! fellow Gokarna backpackers! We're all meeting on the train.",
           "Let's have a fantastic journey with ice-breaking games and lots of fun! Let the Journey Begin!!!",
-          "Train Details: 12619 Matsyagandha Exp / 22629 LTT Ten Exp / 12133 Mangaluru Exp (Depends on availability. Check train timing with us before booking).",
-          "Meals: Not included on the train."
+          "Train Details: 12619 Matsyagandha Exp / 22629 LTT Ten Exp / 12133 Mangaluru Exp (Depends on the Availability). Check the train timing with us before booking.",
+          "Meals: Not included."
         ]
       },
       {
+        id: 'gokarna-day-2',
         day: 2,
-        title: 'Murdeshwar, Honnavar & Gokarna 🛕🌴',
+        title: 'DAY 2 — Murdeshwar, Honnavar & Gokarna 🛕🌴',
         activities: [
-          "Reach Murudeshwar station in the morning. Temporary rooms will be provided to freshen up.",
+          "Reach Murudeshwar station at morning. Take your time to freshen up. Temporary rooms will be provided for freshen up.",
           "Visit Murudeshwar Temple, Asia's second tallest Shiva statue, followed by breakfast.",
           "Experience the most amazing mangrove forest backwaters boating in Honnavar.",
-          "After boating in Honnavar, have lunch enroute and leave for Gokarna immediately to check in to your resort.",
-          "Take a rest, freshen up and experience the most amazing sunset at Kudle hilltop.",
-          "Later let's explore some beach side cafés and shacks for beachside dinner.",
-          "Back to our stay for the Tribe Vibe session — get to know each other, listen to lots of stories, dance and music, and have a great sleep.",
-          "Those who are joining from other cities can directly reach Murdeshwar by 7:00 AM and meet our crew.",
-          "Meals: Breakfast & Lunch included."
+          "After boating in Honnavar have lunch enroute to Leave for Gokarna immediately and check in to your resort.",
+          "Take a rest, freshen up and Experience the most Amazing Sunset at Kudle hilltop.",
+          "Later let’s explore some beach side cafe and shacks for Beachside dinner.",
+          "Back to our Stay for the Tribe Vibe session and get to know each other, listen to lots of stories, dance and music have a great sleep.",
+          "Those who are joining from other cities can directly reach Murdeshwar by 7 AM and meet our crew.",
+          "Meals: Breakfast & Lunch."
         ]
       },
       {
+        id: 'gokarna-day-3',
         day: 3,
-        title: 'Gokarna Beach Trek | Café Hopping & Hippie Market 🏖️',
+        title: 'DAY 3 — Gokarna Beach Trek | Cafe Hopping & Hippie Market 🏖️',
         activities: [
           "Wake up and have breakfast.",
-          "Walk through a combination of scenic cliff treks and serene beaches.",
-          "Visit Belekan Beach, Paradise Beach, Half Moon Beach, Om Beach & Kudle Beach.",
-          "Enjoy thrilling water sports at Om Beach / Kudle Beach.",
-          "Sit back & relax till you experience yet another breathtaking sunset that Gokarna's beautiful coast has to offer.",
-          "Explore the vibrant flea market / Hippie Market of Gokarna for bohemian crafts & souvenirs.",
-          "Visit the ancient Mahabaleshwar Temple at your own pace.",
+          "Walk to the combination of treks and beaches.",
+          "Visit Belecan Beach, Paradise Beach, Half Moon Beach, and Om Beach & Kudle Beach.",
+          "Enjoy water sports at Om Beach/Kudle Beach.",
+          "Sit back & relax till you experience yet another Sunset which Gokarna’s Beautiful Beach has to offer.",
+          "Explore the flea market of Gokarna.",
+          "Visit Mahabaleshwar Temple at your own.",
           "Return to your stay and rest. Enjoy free time with games, dancing, stories, and more.",
-          "Meals: Breakfast & Dinner included."
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'gokarna-day-4',
         day: 4,
-        title: 'Yana Caves, Vibhooti Falls & Board the Train 🌿',
+        title: 'DAY 4 — Yana Caves, Vibhooti Falls & Board the Train 🌿',
         activities: [
           "After breakfast, check out and prepare for an excursion to Yana Caves.",
-          "Visit the sacred cave temple dedicated to Lord Shiva amidst towering rock formations.",
-          "Visit Vibhooti Falls (subject to time permitting).",
+          "Visit the cave temple dedicated to Lord Shiva.",
+          "Visit Vibhooti Falls (only if time permits).",
           "Freshen up and have lunch en route.",
-          "Head to Railway Station to board the train at 5:00 PM / 8:00 PM and proceed towards Mumbai.",
-          "Meals: Breakfast included."
+          "Head to Railway Station to board the Train.",
+          "Board the train at 5:00 PM / 8:00 PM and proceed towards Mumbai.",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'gokarna-day-5',
         day: 5,
-        title: 'Back to Mumbai with Cherished Memories 🏠',
+        title: 'DAY 5 — Back to Mumbai 🏠',
         activities: [
-          "Returning home with cherished memories and countless pictures to look back at.",
-          "Joy from all the fun experiences and newfound friendships on this incredible trip.",
+          "Returning home with cherished memories.",
+          "Countless pictures to look back at.",
+          "Joy from all the fun experiences on this incredible trip.",
           "Promise to stay in touch and plan more adventures together.",
-          "Return timings: 08:27 AM — Panvel | 10:00 AM — Thane / 10:30 AM — CSMT (OR 12:30 PM — Panvel | 01:30 PM — Kalyan)."
+          "Return timings: 08:27 AM — Panvel | 10:00 AM — Thane / 10:30 AM — CSMT OR 12:30 PM — Panvel | 01:30 PM — Kalyan."
         ]
       }
     ],
     inclusions: [
       "Train travel from Mumbai and back Sleeper Non-AC / 3AC (Confirm or RAC)",
       "2N AC stay on Hotel triple/quad sharing basis",
-      "5 meals: 3 Breakfasts, 1 Lunch on Day 2, 1 Dinner on Day 3",
-      "Honnavar Backwaters Boating experience",
+      "5 meals: 3 Breakfast, 1 Lunch on Day 2, 1 Dinner on Day 3",
+      "Honnavar Backwaters Boating",
       "Transfers for Honnavar, Yana Caves & Murdeshwar by private bus/vehicle",
       "Entry fee and parking charges",
       "Guided Gokarna Beach Trek",
-      "Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip"
+      "Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip."
     ],
     exclusions: [
-      "Train meals are not included",
-      "Personal expenses and shopping",
-      "Any extra railway cost and train food",
-      "Tatkal ticket charges, if applicable",
-      "Any personal expense like tips to driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
-      "Water sports charges at Om Beach",
-      "Any cost arising due to natural calamities like landslides, roadblocks, etc. to be borne directly by the customer on the spot",
-      "GST 5%"
+      "Train meals are not included.",
+      "Personal expenses.",
+      "Any extra railway cost and train food.",
+      "Tatkal ticket charges, if applicable.",
+      "Any personal expense like a tip to the driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
+      "Any cost arising due to natural calamities like landslides, roadblocks, etc. to be borne directly by the customer on the spot.",
+      "GST 5%."
     ],
     thingsToCarry: [
       "Valid photo ID for all members (Aadhaar / Driving License / Passport) — Mandatory",
@@ -1635,28 +3006,40 @@ export const trips: Trip[] = [
       "Sufficient cash for local flea market shopping and personal café orders"
     ],
     policies: [
-      "Book your trip at least 30 days prior to the departure date to get confirmed train tickets.",
-      "Booking Amount: ₹4,000/- advance per person (Non-refundable upon cancellation; transferable to another person or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Ex-Gokarna ₹8,499 | Ex-Mumbai Non-AC ₹9,499 | Ex-Mumbai AC ₹11,499 | Add-on Double Sharing ₹1,500.",
-      "Room Sharing: In triple/quad-sharing rooms, an extra mattress is provided (not to be confused with a separate bed frame).",
-      "Trip Authority: The trip leader has all rights to alter/skip sightseeing if emergencies, acts of God, or unfavorable weather occur.",
-      "Discipline & Alignment: Participants should coordinate, be disciplined, and align together as a team during the trip.",
-      "Punctuality: Any delay at particular sightseeing spots by participants may result in the cancellation of further sightseeing.",
-      "Safety: Safety is a top priority; however, organizers are not liable for individual severe injuries or fatal events.",
-      "Harassment: Travel Tribes strictly stands against any form of harassment.",
-      "Vehicle & Hill Driving: AC may not be operated in hilly regions. Point-to-point vehicle usage only.",
-      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
-      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
-      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
-      "Cancellation 3–6 days prior: 90% deduction on remaining balance.",
-      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Book your trip before 30 days prior to the departure date to get the confirmed train tickets.",
+      "The trip leader has all the rights to discard, skip or alter sightseeing/itinerary if an emergency occurs, act of God or due to unfavorable behavior of participants.",
+      "In triple-sharing rooms, an extra mattress is provided, but it should not be confused with an extra bed.",
+      "Any delay in time at particular sightseeing by participants will result in cancellation of further sightseeing.",
+      "Participants should coordinate, be disciplined and align together as a team during the trip.",
+      "No refund will be provided if the participant doesn’t show up on the day of the event.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the rules and regulations of the respective hotels.",
+      "Though safety is a top priority, event organizers are not responsible for severe injuries or fatal events.",
+      "A valid photo ID for all members staying at the hotel is mandatory.",
+      "Itineraries might change slightly on public holidays/festivals.",
+      "The vehicle provided will be used exclusively as per the itinerary on a point-to-point basis and will not be available for personal use.",
+      "Travellers must take care of their luggage and belongings. Management shall not be accountable for missing items.",
+      "If sightseeing is closed due to special occasions, public holidays, long weekends or festivals, Travel Tribes is not liable.",
+      "Travel Tribes does not provide an insurance policy covering sickness, accidents, theft or other losses.",
+      "Water and electricity scarcity may occur in hilly areas; some hotels have fixed schedules for hot and cold water.",
+      "Please do not expect luxury facilities and appreciate being cooperative with fellow participants.",
+      "Transportation and logistics may vary depending on group size.",
+      "Travel Tribes strictly stands against any form of harassment.",
+      "Individuals enrolling in the plan must accept road, vehicle and nature-related risks.",
+      "AC may not be available in vehicles such as Tempo Traveller/Innova/Xylo/Scorpio or similar categories in hilly regions.",
+      "Third-party buses may experience breakdowns, and replacement arrangements may take some time.",
+      "Bus halts for lunch/dinner are predefined by the vendor and cannot be changed for convenience.",
+      "Refund will be done only in case of cancellation of the plan by the company/organizers or if the plan is postponed.",
+      "By joining the trip, you give consent and authority to Travel Tribes to use clicked pictures/videos for social media, marketing or other media purposes.",
+      "Cancellation & Refund Policy: The booking amount is non-refundable if the traveller cancels the trip. If the traveller cancels, the booking amount can be transferred to another person or used as Travel Tribes credit within 3 months.",
+      "Any additional amount paid beyond the booking amount will be refunded as per the applicable cancellation timeline: 10–30 days before departure: 25% deduction | 8–10 days before departure: 50% deduction | 6–8 days before departure: 70% deduction | 3–6 days before departure: 90% deduction | Less than 2 days before departure: 100% deduction | No-show / partial attendance: No refund for unused services.",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable. Rescheduling or travel credit may also be offered. Eligible refunds will be processed within 4–7 business days.",
+      "Booking Transfer: Bookings can be transferred to another person, subject to applicable terms and eligibility."
     ],
     pricingOptions: [
       { label: 'Ex-Gokarna (Gokarna to Gokarna)', price: '₹8,499 / person' },
-      { label: 'Ex-Mumbai (Non-AC Sleeper Train)', price: '₹9,499 / person' },
-      { label: 'Ex-Mumbai (AC 3-Tier Train)', price: '₹11,499 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' },
+      { label: 'Ex-Mumbai — Non-AC Train', price: '₹9,499 / person' },
+      { label: 'Ex-Mumbai — AC Train', price: '₹11,499 / person' },
+      { label: 'Add-On — Double Sharing', price: '+₹1,500 / person' },
       { label: 'New Year / Festive Batch Special', price: '₹9,999 / person', note: 'Applicable on Christmas & New Year batches' }
     ],
     bookingAmount: '₹4,000 / person',
@@ -1761,6 +3144,226 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'gokarna-xmas-new-year',
+    slug: 'gokarna-xmas-new-year',
+    title: 'Gokarna — X-Mas & New Year Special',
+    location: 'Murdeshwar · Honnavar · Gokarna · Karnataka',
+    region: 'Domestic',
+    date: 'Dec 24–28, 2026 (XMAS Special)',
+    dates: [
+      'Dec 24–28, 2026 (XMAS Special)',
+      'Dec 29, 2026–Jan 02, 2027 (New Year Special)'
+    ],
+    duration: '4N/5D',
+    price: '₹11,999',
+    image: '/Card Image/gokarna_newyear.png',
+    alt: 'Gokarna Christmas and New Year Special Beach Party and Fireworks',
+    tag: 'Xmas & New Year Special',
+    description: 'Looking for the perfect Gokarna New Year Trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This New Year Special combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and an unforgettable New Year celebration by the beach with fireworks and a beach party. Come solo. Meet strangers. Explore Gokarna. Celebrate the New Year. Find your tribe.',
+    spots: '6 spots left',
+    gallery: [
+      { image: "/image/Gokarna/gokarna_img.jpeg", alt: "Gokarna Coastal Sunset" },
+      { image: "/image/Gokarna/1000002342.jpeg", alt: "Murdeshwar Shiva Statue & Temple" },
+      { image: "/image/Gokarna/1000003396.jpg", alt: "Honnavar Mangrove Backwaters Boating" },
+      { image: "/image/Gokarna/1000004087.jpg", alt: "Kudle Beach & Sunset Vibe" },
+      { image: "/image/Gokarna/1000005461.jpeg", alt: "Belekan to Om Beach Trekking Trail" },
+      { image: "/image/Gokarna/1000052570.jpg", alt: "Paradise Beach Hidden Shoreline" },
+      { image: "/image/Gokarna/20251231_100322_Original.JPEG", alt: "New Year Beach Celebration & Fireworks" },
+      { image: "/image/Gokarna/IMG_4170.JPG", alt: "Yana Caves Majestic Natural Limestone Peaks" },
+      { image: "/image/Gokarna/IMG_7330.JPEG", alt: "Vibhooti Falls Natural Cascades" },
+      { image: "/image/Gokarna/IMG_8908_Original.JPEG", alt: "Travel Tribes Community Bonding & Music" }
+    ],
+    highlights: [
+      "Visit Murdeshwar Temple and see its iconic Shiva Statue.",
+      "Experience scenic Honnavar Backwaters boating through mangrove forests.",
+      "Trek along the beautiful coastline from Belekan Beach to Om Beach.",
+      "Explore Paradise Beach and Half Moon Beach during the coastal trek.",
+      "Enjoy water sports at Kudle Beach.",
+      "Watch a beautiful sunset from Kudle Hilltop and Kudle Beach.",
+      "Explore Gokarna's famous hippie and flea market.",
+      "Enjoy local café hopping and experience Gokarna's laid-back beach culture.",
+      "Explore the dramatic rock formations of Yana Caves.",
+      "Visit Vibhooti Falls if time permits.",
+      "Celebrate New Year with your Travel Tribes community through music, dance and stories."
+    ],
+    itinerary: [
+      {
+        id: 'gokarna-ny-day-1',
+        day: 1,
+        title: 'Day 1: Mumbai → Murdeshwar | Train Journey & Ice-Breaking 🚂',
+        activities: [
+          "Meet your fellow Gokarna travellers at the designated railway stations and board the Matsyagandha Express (12619) towards Murdeshwar.",
+          "Connect with your fellow travellers during the journey and participate in fun ice-breaking games and group activities.",
+          "Get to know your tribe, make new friends and enjoy the journey together.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'gokarna-ny-day-2',
+        day: 2,
+        title: 'Day 2: Murdeshwar → Honnavar → Gokarna 🛕🌴',
+        activities: [
+          "Reach Murdeshwar Railway Station around 5:30 AM and freshen up in the temporary rooms provided by the team.",
+          "Visit the famous Murdeshwar Temple and admire its iconic Shiva statue, Asia's second-tallest Shiva statue.",
+          "Enjoy breakfast before heading towards Honnavar.",
+          "Experience a scenic backwater boat ride through the mangrove forests of Honnavar.",
+          "Have lunch en route and continue towards Gokarna.",
+          "Check in to your resort, relax and freshen up.",
+          "In the evening, enjoy the beautiful sunset from Kudle Hilltop and capture some memorable photographs.",
+          "Later, return to the resort for dinner, music and a relaxed evening.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'gokarna-ny-day-3',
+        day: 3,
+        title: 'Day 3: Gokarna Beach Trek → Water Sports → Hippie Market → New Year Celebration 🏖️🎆',
+        activities: [
+          "Enjoy breakfast and get ready for an exciting day combining beach trekking and coastal exploration.",
+          "Begin the trek from Belekan Beach and continue towards Paradise Beach, Half Moon Beach and Om Beach.",
+          "Enjoy water sports at Kudle Beach and spend some time by the sea.",
+          "Witness the sunset at Kudle Beach before exploring Gokarna's famous flea and hippie market.",
+          "Visit Mahabaleshwar Temple at your own cost.",
+          "Return to your stay, relax and get ready for the New Year celebration.",
+          "Spend the evening dancing, sharing stories and celebrating with your Travel Tribes community.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'gokarna-ny-day-4',
+        day: 4,
+        title: 'Day 4: Yana Caves → Vibhooti Falls → Return Train 🌿🚂',
+        activities: [
+          "Enjoy breakfast and check out from your stay.",
+          "Head towards the spectacular Yana Caves, known for their dramatic rock formations, including Bhairaveshwara and Jaganmohini Shikhara.",
+          "Explore the cave temple dedicated to Lord Shiva and enjoy the surrounding natural landscape.",
+          "If time permits, visit Vibhooti Falls and spend some time exploring the area.",
+          "Freshen up and have lunch en route before proceeding towards Kumta Railway Station.",
+          "Board the CSMT Express (12134) for your return journey to Mumbai.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'gokarna-ny-day-5',
+        day: 5,
+        title: 'Day 5: Back to Mumbai 🏠✨',
+        activities: [
+          "Arrive back in Mumbai after your overnight train journey.",
+          "End the trip with photographs, new friendships and memories from your Gokarna adventure.",
+          "Meals: Not included."
+        ]
+      }
+    ],
+    inclusions: [
+      "2 nights accommodation on triple/quad sharing basis.",
+      "Train travel from Mumbai to Murdeshwar and back (Sleeper Non-AC / 3AC options on Confirmed or RAC basis).",
+      "Internal transfers between Gokarna, Honnavar, Yana Caves and Murdeshwar by private bus/vehicle.",
+      "Honnavar Backwaters boating.",
+      "Belekan to Om Beach trek.",
+      "Hippie Market exploration.",
+      "Yana Caves trek.",
+      "Café hopping.",
+      "3 breakfasts.",
+      "Trip Captain throughout the trip.",
+      "Trip Leader and support.",
+      "Entry fees and parking charges."
+    ],
+    exclusions: [
+      "Train meals are not included.",
+      "Lunch throughout the trip is not included.",
+      "Water bottles are not included.",
+      "Driver tips, monument entry fees, camera/video charges, laundry, telephone bills and other personal expenses.",
+      "Any additional railway costs and train food.",
+      "Tatkal ticket charges, if applicable.",
+      "5% GST.",
+      "Any costs arising due to natural calamities such as landslides or roadblocks will be borne directly by the customer.",
+      "Anything not specifically mentioned under the inclusions."
+    ],
+    thingsToCarry: [
+      "Valid Government Photo ID (Aadhaar / Driving License / Passport) — Same as used during booking (Mandatory)",
+      "Comfortable trekking shoes / sneakers with good grip and casual flip-flops",
+      "Light and breathable cotton clothes, swimwear / beachwear, and quick-dry towel",
+      "Small backpack / daypack (20–30L) for day tours and beach trek",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and wide cap/hat",
+      "Personal medications, basic first-aid, ORS / Glucose",
+      "Power bank, charging cables, and waterproof phone pouch",
+      "Reusable water bottle"
+    ],
+    policies: [
+      "The trip involves overnight train journeys, so travellers should carry comfortable travel essentials.",
+      "Train tickets are booked in advance by the Travel Tribes team, subject to availability.",
+      "Travellers must carry the same government-issued ID submitted during booking.",
+      "Berth preferences such as lower berth or window seat cannot be guaranteed.",
+      "Group members may not always be seated together as final allocation is handled by Indian Railways.",
+      "If tickets are on the waiting list, Tatkal booking may be used, and additional charges will be added to the trip cost.",
+      "If a confirmed Tatkal ticket cannot be secured, an alternate train or transport may be arranged based on availability, and any fare difference will apply.",
+      "Travellers should check their ticket details, PNR status and validity on official railway platforms.",
+      "Train delays, cancellations or rescheduling by Indian Railways are outside Travel Tribes' control.",
+      "Bookings made 30 days before departure are recommended for better chances of confirmed train tickets.",
+      "The Belekan–Om Beach trek involves walking along the coastal terrain, so comfortable footwear is recommended.",
+      "Vibhooti Falls is subject to time availability as mentioned in the itinerary.",
+      "The Trip Leader may modify, skip or alter sightseeing or the itinerary in case of an emergency, force majeure or inappropriate participant behaviour.",
+      "In triple-sharing rooms, an extra mattress is provided and should not be considered an extra bed.",
+      "Delays caused by participants at sightseeing locations may result in the cancellation or skipping of subsequent sightseeing.",
+      "Participants are expected to coordinate, maintain discipline and cooperate as a team throughout the trip.",
+      "No refund will be provided in case of a no-show on the day of the trip.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the respective hotel's rules.",
+      "A valid photo ID is mandatory for all members staying at the hotel.",
+      "The itinerary may change slightly during public holidays or festivals.",
+      "Vehicles are provided strictly as per the itinerary on a point-to-point basis and are not available for personal use.",
+      "Travellers are responsible for their own luggage and belongings.",
+      "If any sightseeing location is closed due to a special occasion, public holiday, long weekend or festival, Travel Tribes will not be liable.",
+      "Travel Tribes does not provide insurance covering sickness, accidents, theft or other losses.",
+      "Water and electricity availability may be limited in some areas, and hotels may have fixed schedules for hot and cold water.",
+      "Participants should not expect luxury facilities and are expected to cooperate with fellow travellers.",
+      "Transportation and logistics may vary depending on the final group size.",
+      "Travel Tribes strictly stands against any form of harassment, and physical contact should always respect another person's comfort.",
+      "Participants undertake the risks associated with road travel, vehicles and nature-related activities.",
+      "AC may not be available in vehicles such as Tempo Travellers, Innovas, Xylos, Scorpios or similar vehicles in hilly regions.",
+      "Third-party buses may experience breakdowns, and arranging a replacement vehicle may take some time.",
+      "Bus halts for meals are predefined by the transport vendor and cannot be changed for individual convenience.",
+      "Refunds will be provided only in case the trip is cancelled or postponed by the company/organisers, subject to the applicable policy.",
+      "Participants consent to Travel Tribes using photos and videos taken during the trip for social media, marketing and promotional purposes.",
+      "Booking Amount: ₹5,000 per person to confirm your seat.",
+      "Cancellation 30+ days prior: Advance amount retained / converted to Travel Tribes credit.",
+      "Cancellation 15–29 days prior: 50% deduction of total trip cost.",
+      "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Gokarna (Triple / Quad Sharing)', price: '₹10,999 / person + 5% GST' },
+      { label: 'Mumbai to Mumbai (Non-AC Sleeper Train)', price: '₹11,999 / person + 5% GST' },
+      { label: 'Mumbai to Mumbai (3-Tier AC Train)', price: '₹13,999 / person + 5% GST' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    reviews: [
+      {
+        name: 'Deepak Dhiver',
+        role: 'Local Guide',
+        reviewCount: '16 reviews',
+        photoCount: '51 photos',
+        rating: 5,
+        quote: 'Went on Gokarna New Year trip with Travel Tribes, and this was my 1st Solo trip ever. Met great people, visited Honnavar backwaters and had the best beach NY celebration. Everything was organized perfectly!'
+      },
+      {
+        name: 'Abhishek Dutta',
+        reviewCount: '10 reviews',
+        photoCount: '9 photos',
+        rating: 5,
+        quote: 'Had one of the best trips ever with Travel Tribes. Really nice people and awesome management team. Had gone to Gokarna for new year party and had the best beach front resort & party.'
+      },
+      {
+        name: 'Nakusa Indalkar',
+        role: 'Local Guide',
+        reviewCount: '12 reviews',
+        photoCount: '11 photos',
+        rating: 5,
+        quote: 'All the arrangements done starting from train journey, local travel at Gokarna, accommodation, meals everything was hassle-free. TRIBE HAI TO VIBE HAI !'
+      }
+    ]
+  },
+  {
+    id: 'coorg-backpacking',
     slug: 'coorg-backpacking',
     title: 'Coorg Backpacking Trip',
     location: 'Coorg · Madikeri · Mandalpatti · Mangalore',
@@ -1773,10 +3376,10 @@ export const trips: Trip[] = [
     ],
     duration: '4N/5D',
     price: '₹8,499',
-    image: '/image/Coorg/coorg_img.JPEG',
+    image: '/Card Image/coorg.jpg',
     alt: 'Misty hills and lush coffee plantations of Coorg',
     tag: 'Scotland of India',
-    description: 'Looking for a Coorg trip from Mumbai, a Coorg backpacking trip, or a fun Coorg group trip with strangers? Join Travel Tribes for an unforgettable journey to Coorg, the Scotland of India, and explore misty hills, lush coffee plantations, waterfalls, viewpoints, monasteries and scenic landscapes. From Abbey Falls and Mandalpatti Peak 4x4 Jeep ride to Raja’s Seat, Namdroling Monastery (Golden Temple), Elephant Camp, and coffee tasting. Come solo. Meet strangers. Explore Coorg. Find your tribe.',
+    description: 'Looking for a Coorg trip from Mumbai, a Coorg backpacking trip, or a fun Coorg group trip with strangers? Join Travel Tribes for an unforgettable journey to Coorg, the Scotland of India, and explore misty hills, lush coffee plantations, waterfalls, viewpoints, monasteries and scenic landscapes. This Coorg backpacking trip from Mumbai takes you through some of the best experiences in Coorg, including Abbey Falls, Mandalpatti Peak, Raja’s Seat, Chiklihole Dam, Namdroling Monastery (Golden Temple), Elephant Camp, Nisargadhama, Coffee Plantations, Madikeri Fort and Omkareshwar Temple. Travel by train from Mumbai to Mangalore, continue towards Coorg with your tribe, explore the beautiful Western Ghats and return with a camera full of memories and a bunch of new travel buddies. Come solo. Meet strangers. Explore Coorg. Find your tribe.',
     spots: '6 spots left',
     gallery: [
       { image: "/image/Coorg/coorg_img.JPEG", alt: "Coorg" },
@@ -1791,106 +3394,115 @@ export const trips: Trip[] = [
       { image: "/image/Coorg/IMG_8960.JPEG", alt: "Coorg" }
     ],
     highlights: [
-      "Explore the lush green landscapes of Coorg, the Scotland of India.",
-      "Walk through scenic Coorg coffee plantations and learn the coffee-growing process.",
-      "Visit the picturesque Abbey Falls surrounded by dense greenery.",
-      "Experience an exciting off-roading 4×4 Jeep ride to Mandalpatti Peak.",
-      "Enjoy panoramic Western Ghats sunrise views from Mandalpatti Peak.",
-      "Experience the mesmerising views and sunset from Raja’s Seat.",
-      "Visit the Elephant Camp to spend time with the gentle giants.",
-      "Explore Namdroling Monastery (Golden Temple) — one of the largest Tibetan settlements in India.",
-      "Visit the peaceful Chiklihole Dam reservoir and nature trails.",
-      "Explore Nisargadhama bamboo island and bird sanctuary.",
-      "Visit historic Madikeri Fort and Omkareshwar Temple.",
-      "Explore the local market and shop for authentic Coorg coffee, spices, and homemade chocolates.",
-      "Enjoy ice-breakers, games, bonfire, dinner, and quality time with your tribe.",
-      "Travel with an experienced Travel Tribes Trip Captain."
+      "Explore the lush green landscapes of Coorg",
+      "Walk through scenic Coorg coffee plantations",
+      "Visit the picturesque Abbey Falls",
+      "Experience an exciting off-roading Jeep ride to Mandalpatti Peak",
+      "Enjoy panoramic Western Ghats views from Mandalpatti Peak",
+      "Experience the mesmerising views from Raja’s Seat",
+      "Visit the Elephant Camp",
+      "Explore Namdroling Monastery (Golden Temple)",
+      "Visit the peaceful Chiklihole Dam",
+      "Explore Nisargadhama and bird sanctuary",
+      "Visit Madikeri Fort",
+      "Visit Omkareshwar Temple",
+      "Explore the local market and shop for Coorg coffee and spices",
+      "Enjoy ice-breakers, games and group activities",
+      "Enjoy bonfire, dinner and quality time with your tribe",
+      "Meet fellow travellers through the Travel Tribes community experience"
     ],
     itinerary: [
       {
+        id: 'coorg-day-1',
         day: 1,
-        title: 'Mumbai to Mangalore | The Train Journey 🚂',
+        title: 'DAY 1 — Mumbai to Mangalore | The Train Journey 🚂',
         activities: [
-          "Hello fellow Coorg Travellers! We're all meeting on the train.",
-          "Netravati Express (16345) departure points: 11:40 AM (LTT), 12:05 PM (Thane), 12:50 PM (Panvel).",
-          "Let's have a fantastic journey with ice-breaking games, music, stories, and lots of fun! Let the Journey Begin!",
-          "Meals: Not included on the train."
+          "Hello! fellow Coorg Traveller!! We're all meeting on the train.",
+          "Netravati Exp (16345) arriving at different times: 11:40 AM — LTT | 12:05 PM — Thane | 12:50 PM — Panvel.",
+          "Let's have a fantastic journey with ice-breaking games and lots of fun! Let the Journey Begins!!!",
+          "Meals: Not Included on the train."
         ]
       },
       {
+        id: 'coorg-day-2',
         day: 2,
-        title: 'Coorg Plantation, Wine Tasting & Raja’s Seat Sunset ☕🍷',
+        title: 'DAY 2 — Coorg Plantation & Tasting Experience ☕🍷',
         activities: [
           "Reach Mangalore Station by 5:00 AM.",
-          "Start your journey towards Coorg immediately (3–4 hrs). En route breakfast stop.",
-          "Check-in to our stay and freshen up. Get ready for the next adventure!",
+          "Start your journey towards Coorg immediately (3–4 hrs). En route, have breakfast.",
+          "Check-in to our stay & freshen up. Get ready for the next adventure!",
           "Start the day with an immersive Coffee Plantation Tour through the lush green plantations of Coorg.",
-          "Explore the beautiful coffee estates and learn about the coffee-growing process and Coorg's rich coffee culture.",
-          "Next, explore a Spice Garden and discover the variety of aromatic spices grown in the region.",
-          "Enjoy a Wine Tasting Experience and sample different varieties while learning about regional flavours and wine-making.",
-          "Later, head towards Raja’s Seat for stunning panoramic views of Coorg's hills, valleys, and sunset.",
-          "Relax at the viewpoint and capture some beautiful Insta-worthy pictures.",
-          "Return to stay for delicious dinner, tribe vibes, and relaxing night with fellow travellers.",
-          "Meals: Breakfast & Dinner included."
+          "Explore the beautiful coffee estates and learn about the coffee-growing process and Coorg’s rich coffee culture.",
+          "Next, explore a Spice Garden and discover the variety of spices grown in the region.",
+          "Experience the aroma and flavours of locally grown spices while walking through the plantation.",
+          "Enjoy a Wine Tasting Experience and sample different varieties while learning about the flavours and making process.",
+          "Later, head towards Raja’s Seat. Enjoy the stunning panoramic views of Coorg’s hills and valleys. Relax at the viewpoint and capture some beautiful Insta-worthy pictures.",
+          "Experience the mesmerising sunset at Raja’s Seat.",
+          "Later, return to the stay. Enjoy dinner, relax and spend time with your fellow travellers.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'coorg-day-3',
         day: 3,
-        title: 'Chiklihole Dam, Golden Temple & Elephant Camp 🐘🛕',
+        title: 'DAY 3 — Chiklihole Dam, Golden Temple & Elephant Camp 🐘🛕',
         activities: [
-          "After breakfast, first visit Chiklihole Dam — a peaceful spot where nature meets a stunning man-made reservoir.",
+          "After breakfast, we’ll first visit Chiklihole Dam, a peaceful spot where nature meets a stunning man-made reservoir.",
           "Next up is the Namdroling Monastery (Golden Temple) — a calm, spiritual escape and one of the largest Tibetan settlements in India.",
-          "Head to the Elephant Camp to spend time observing and interacting with the gentle giants.",
-          "If time permits, explore Nisargadhama bamboo forest and deer park.",
-          "Later, enjoy free time at the local market to experience and shop for Coorg's famous coffee, homemade chocolates, and spices.",
-          "Dinner and restful night back at the stay!",
-          "Meals: Breakfast & Dinner included."
+          "Then we’ll head to the Elephant Camp to spend some time with the gentle giants.",
+          "If time permits, we’ll also explore Nisargadhama.",
+          "Later, enjoy some time at the local market to experience Coorg’s famous coffee and spices.",
+          "Dinner and rest back at the stay!",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'coorg-day-4',
         day: 4,
-        title: 'Mandalpatti 4x4 Jeep Sunrise, Abbey Falls & Board the Train 🚙🌄',
+        title: 'DAY 4 — Mandalpatti Sunrise, Abbey Falls & Omkareshwar Temple 🚙🌄',
         activities: [
           "Wake up early in the morning and get ready for an exciting adventure.",
-          "Leave for Mandalpatti Peak in a 4×4 Jeep and experience an exciting off-roading ride through scenic trails.",
+          "Leave for Mandalpatti Peak in a 4×4 Jeep. Experience an exciting off-roading Jeep ride through the scenic trails of Coorg.",
           "Reach Mandalpatti Peak early morning and witness the breathtaking sunrise over the Western Ghats.",
-          "Return from Mandalpatti and head towards Abbey Falls to witness its majestic cascading beauty surrounded by lush greenery.",
-          "Later, visit Omkareshwar Temple, a historic architectural marvel located in Madikeri.",
-          "Freshen up, enjoy lunch en route, and proceed towards Mangalore Railway Station.",
-          "Reach Mangalore Station and board your return train (Netravati Exp 16349) towards Mumbai.",
-          "Meals: Breakfast included."
+          "Return from Mandalpatti and head towards Abbey Falls. Witness the majestic beauty of the famous Abbey Falls, surrounded by lush greenery.",
+          "Later, visit Omkareshwar Temple, a historic temple located in Madikeri.",
+          "Freshen up and proceed towards Mangalore Railway Station.",
+          "Reach Mangalore Station and board your train for the return journey.",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'coorg-day-5',
         day: 5,
-        title: 'Back to Mumbai with Cherished Memories 🏠',
+        title: 'DAY 5 — Back to Mumbai 🏠',
         activities: [
-          "Returning home with cherished memories, countless pictures to look back at, and the joy of all the fun experiences on this incredible trip.",
-          "Promise to stay in touch and plan more adventures together.",
-          "Train: Netravati Exp 16349."
+          "Returning home with cherished memories, countless pictures to look back at, and the joy of all the fun experiences we had on this incredible trip.",
+          "We promise to stay in touch and plan more adventures together.",
+          "Train: Netravati Exp 16349.",
+          "Meals: Not Included."
         ]
       }
     ],
     inclusions: [
-      "Train Travel from Mumbai and back in Sleeper Non-AC / 3AC (Confirm or RAC)",
-      "2 Nights stay in Hotel/Resort on Triple / Quad sharing basis",
-      "5 Meals: 3 Breakfasts & 2 Dinners",
-      "Jeep ride at Mandalpatti Peak (4x4 Off-roading)",
-      "Internal transport in Private Vehicle (6-Seater / Tempo Traveller / Bus)",
+      "Train Travel From Mumbai and Back — Sleeper / AC (Confirm or RAC)",
+      "2 Night Stay on Triple / Quad Sharing Basis",
+      "5 Meals: 3 Breakfast, 2 Dinner",
+      "Jeep ride at Mandalpatti Peak",
+      "Internal Transport with Private Vehicle (6 Seater / TT / Bus)",
       "Entry fee and parking charges",
       "Coffee Plantation Tour entry charges",
-      "Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip"
+      "Experience a Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip."
     ],
     exclusions: [
-      "Train meals are not included",
-      "Lunch throughout the trip",
-      "Personal expenses (shopping, personal café visits, etc.)",
-      "Any extra railway cost and train food",
-      "Tatkal ticket charges, if applicable",
-      "Any personal expense like tips to driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
-      "Any cost arising due to natural calamities like landslides, roadblocks, etc. to be borne directly by the customer on the spot",
-      "Animal feeding charges at Elephant Camp and Nisargadhama",
-      "GST 5%"
+      "Train meals are not included.",
+      "Lunch throughout the trip.",
+      "Personal expenses.",
+      "Any extra railway cost and train food.",
+      "Tatkal ticket charges, if applicable.",
+      "Any personal expense like a tip to the driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
+      "Any cost arising due to natural calamities like landslides, roadblocks, etc. to be borne directly by the customer on the spot.",
+      "Animal feeding charges at Elephant Camp and Nisargdhama.",
+      "GST 5%."
     ],
     thingsToCarry: [
       "Valid Government Photo ID for all members (Aadhaar / Driving License / Passport) — Mandatory",
@@ -1904,29 +3516,41 @@ export const trips: Trip[] = [
       "Sufficient cash for local market shopping (coffee, spices, chocolates) and personal café orders"
     ],
     policies: [
-      "Book your trip at least 30 days prior to the departure date to get confirmed train tickets.",
-      "Booking Amount: ₹4,000/- advance per person (Non-refundable upon cancellation; transferable to another person or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Ex-Mangalore ₹8,499 | Ex-Mumbai Non-AC ₹9,499 | Ex-Mumbai 3AC ₹11,999 | Double Sharing Add-on ₹1,500 (+5% GST; ₹1,000/- extra on long weekends).",
-      "Room Sharing: In triple/quad-sharing rooms, an extra mattress is provided.",
-      "Trip Authority: The trip leader has all rights to alter/skip sightseeing if emergencies, acts of God, or unfavorable weather occur.",
-      "Discipline & Alignment: Participants should coordinate, be disciplined, and align together as a team during the trip.",
-      "Punctuality: Any delay at particular sightseeing spots by participants may result in the cancellation of further sightseeing.",
-      "Safety: Safety is a top priority; however, organizers are not liable for individual severe injuries or fatal events.",
-      "Harassment: Travel Tribes strictly stands against any form of harassment.",
-      "Vehicle & Hill Driving: AC may not be operated in hilly regions. Point-to-point vehicle usage only.",
-      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
-      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
-      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
-      "Cancellation 3–6 days prior: 90% deduction on remaining balance.",
-      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Book your trip before 30 days prior to the departure date to get the confirmed train tickets.",
+      "The trip leader has all the rights to discard, skip or alter sightseeing/itinerary if an emergency occurs, act of God or due to unfavorable behavior of participants.",
+      "In triple-sharing rooms, an extra mattress is provided, but it should not be confused with an extra bed.",
+      "Any delay in time at particular sightseeing by participants will result in cancellation of further sightseeing.",
+      "Participants should coordinate, be disciplined and align together as a team during the trip.",
+      "No refund will be provided if the participant doesn’t show up on the day of the event.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the rules and regulations of the respective hotels.",
+      "Though safety is a top priority, event organizers are not responsible for severe injuries or fatal events.",
+      "A valid photo ID for all members staying at the hotel is mandatory.",
+      "Itineraries might change slightly on public holidays/festivals.",
+      "The vehicle provided will be used exclusively as per the itinerary on a point-to-point basis and will not be available for personal use.",
+      "Travellers must take care of their luggage and belongings. Management shall not be accountable for missing items.",
+      "If sightseeing is closed due to special occasions, public holidays, long weekends or festivals, Travel Tribes is not liable.",
+      "Travel Tribes does not provide an insurance policy covering sickness, accidents, theft or other losses.",
+      "Water and electricity scarcity may occur in hilly areas; some hotels have fixed schedules for hot and cold water.",
+      "Please do not expect luxury facilities and appreciate being cooperative with fellow participants.",
+      "Transportation and logistics may vary depending on group size.",
+      "Travel Tribes strictly stands against any form of harassment.",
+      "Individuals enrolling in the plan must accept road, vehicle and nature-related risks.",
+      "AC may not be available in vehicles such as Tempo Traveller/Innova/Xylo/Scorpio or similar categories in hilly regions.",
+      "Third-party buses may experience breakdowns, and replacement arrangements may take some time.",
+      "Bus halts for lunch/dinner are predefined by the vendor and cannot be changed for convenience.",
+      "Refund will be done only in case of cancellation of the plan by the company/organizers or if the plan is postponed.",
+      "By joining the trip, you give consent and authority to Travel Tribes to use clicked pictures/videos for social media, marketing or other media purposes.",
+      "Cancellation & Refund Policy: The booking amount is non-refundable if the traveller cancels the trip. If the traveller cancels, the booking amount can be transferred to another person or used as Travel Tribes credit within 3 months.",
+      "Any additional amount paid beyond the booking amount will be refunded as per the applicable cancellation timeline: 10–30 days before departure: 25% deduction | 8–10 days before departure: 50% deduction | 6–8 days before departure: 70% deduction | 3–6 days before departure: 90% deduction | Less than 2 days before departure: 100% deduction | No-show / partial attendance: No refund for unused services.",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable. Rescheduling or travel credit may also be offered. Eligible refunds will be processed within 4–7 business days.",
+      "Booking Transfer: Bookings can be transferred to another person, subject to applicable terms and eligibility."
     ],
     pricingOptions: [
       { label: 'Ex-Mangalore (Mangalore to Mangalore)', price: '₹8,499 / person' },
       { label: 'Ex-Mumbai (Non-AC Sleeper Train)', price: '₹9,499 / person' },
-      { label: 'Ex-Mumbai (3AC Train Ticket)', price: '₹11,999 / person' },
+      { label: 'Ex-Mumbai — 3AC (3AC Train Ticket)', price: '₹11,999 / person' },
       { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' },
-      { label: 'New Year / Festive Batch Special', price: '₹9,999 / person', note: 'Applicable on Christmas & New Year batches' }
+      { label: 'Special Dates / Long Weekend Pricing', price: '+₹1,000 / person', note: 'Applicable on Long Weekends & Festive batches' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -1969,9 +3593,10 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'udaipur-backpacking',
     slug: 'udaipur-backpacking',
-    title: 'Udaipur Backpacking Trip',
-    location: 'Udaipur · Lake Pichola · Fateh Sagar · Bahubali Hills',
+    title: 'Udaipur Backpacking Trip from Mumbai',
+    location: 'Udaipur · Rajasthan · Lake Pichola · City Palace · Sajjangarh · Bahubali Hills',
     region: 'Domestic',
     date: 'Nov 20–24, 2026',
     dates: [
@@ -1981,10 +3606,10 @@ export const trips: Trip[] = [
     ],
     duration: '4N/5D',
     price: '₹9,999',
-    image: '/image/Udaipur/udaipur_img.JPEG',
+    image: '/Card Image/udaipur.jpg',
     alt: 'Majestic City Palace overlooking Lake Pichola in Udaipur',
     tag: 'City of Lakes',
-    description: 'Looking for a Udaipur trip from Mumbai, a Udaipur backpacking trip, or a fun Udaipur group trip with strangers? Join Travel Tribes for a 5-day backpacking adventure to the City of Lakes — Udaipur. Explore magnificent palaces, beautiful lakes, historic ghats, vibrant markets, cultural performances and some of the best viewpoints in the city. From City Palace and Lake Pichola to Sajjangarh Monsoon Palace sunset, Bahubali Hills sunrise, Karni Mata ropeway, Bagore Ki Haveli show and street-food trails. Come solo. Meet strangers. Explore Udaipur. Find your tribe.',
+    description: 'Looking for a Udaipur trip from Mumbai, a Udaipur backpacking trip, or a fun Udaipur group trip with strangers? Join Travel Tribes for a 5-day backpacking adventure to the City of Lakes — Udaipur. Explore magnificent palaces, beautiful lakes, historic ghats, vibrant markets, cultural performances and some of the best viewpoints in the city. From the iconic City Palace and Lake Pichola to the sunset at Sajjangarh Monsoon Palace, the Bahubali Hills sunrise, Karni Mata cable car ride, Bagore Ki Haveli cultural show and local street-food trails — this Udaipur group trip is designed to experience the city beyond the usual tourist checklist. Travel from Mumbai to Udaipur by train, explore the city with your tribe and return home with new memories, countless photographs and new travel buddies. Come solo. Meet strangers. Explore Udaipur. Find your tribe.',
     spots: '7 spots left',
     gallery: [
       { image: "/image/Udaipur/udaipur_img.JPEG", alt: "Udaipur" },
@@ -1999,100 +3624,118 @@ export const trips: Trip[] = [
       { image: "/image/Udaipur/IMG_8911.JPEG", alt: "Udaipur" }
     ],
     highlights: [
-      "City Palace with stunning Lake Pichola views.",
-      "Boat ride to Jag Mandir Palace on Lake Pichola.",
-      "Explore serene Fateh Sagar Lake.",
-      "Sunset at Sajjangarh Monsoon Palace.",
-      "Experience the Bagore Ki Haveli cultural dance & puppet show.",
-      "Explore Gangore Ghat & Ambrai Ghat.",
-      "Visit historic 17th-century Jagdish Temple.",
-      "Explore the beautiful Saheliyon-ki-Bari gardens.",
-      "Experience the Karni Mata cable car / ropeway ride.",
-      "Catch the breathtaking sunrise at Bahubali Hills.",
-      "Explore Hathipole & Bada Bazaar markets.",
-      "Experience a local Rajasthani street-food trail (Pyaz Kachori, Poha, Rabdi & more).",
-      "Explore vibrant lakeside cafés.",
-      "Meet fellow travellers through the Travel Tribes community experience."
+      "🏰 City Palace with stunning Lake Pichola views",
+      "🚤 Boat ride to Jag Mandir Palace",
+      "🌊 Explore Fateh Sagar Lake",
+      "🌅 Sunset at Sajjangarh Monsoon Palace",
+      "💃 Experience the Bagore Ki Haveli cultural show",
+      "🌃 Explore Gangore Ghat & Ambrai Ghat",
+      "🛕 Visit Jagdish Temple",
+      "🌸 Explore the beautiful Saheliyon-ki-Bari gardens",
+      "🚡 Experience the Karni Mata cable car / ropeway ride",
+      "🌄 Catch the sunrise at Bahubali Hills",
+      "🛍️ Explore Hathipole & Bada Bazaar",
+      "🍴 Experience a local Rajasthani street-food trail",
+      "🥟 Try local favourites like Pyaz Kachori, Poha, Rabdi & more",
+      "☕ Explore lakeside cafés",
+      "👥 Meet fellow travellers through the Travel Tribes community experience"
     ],
     itinerary: [
       {
+        id: 'udaipur-day-1',
         day: 1,
-        title: 'Mumbai to Udaipur | The Journey Begins 🚂',
+        title: 'DAY 1 — Mumbai to Udaipur | The Journey Begins 🚂',
         activities: [
+          "Mumbai to Udaipur Train Journey • Ice-Breaking Games",
           "Hello, fellow backpackers! Begin your journey from Mumbai to Udaipur by train.",
-          "Train: 22901 – BDTS UDZ SF Exp (Bandra Terminus: 11:25 PM, Borivali: 11:52 PM).",
-          "Let's have a fantastic journey with ice-breaking games, stories, music, and lots of fun! Let the journey begin!",
-          "Meals: Not Included on the train."
+          "Train: 22901 – Bdts Udz Sf Exp",
+          "Bandra Terminus: 11:25 PM | Borivali: 11:52 PM",
+          "Let's have a fantastic journey with ice-breaking games and lots of fun! Let the journey begin!!!",
+          "Meals: Not Included"
         ]
       },
       {
+        id: 'udaipur-day-2',
         day: 2,
-        title: 'Fateh Sagar Lake, Bagore Ki Haveli, Gangore & Ambrai Ghats 🌊💃',
+        title: 'DAY 2 — Fateh Sagar Lake, Bagore Ki Haveli, Gangore Ghat & Ambrai Ghat 🌊💃',
         activities: [
+          "Udaipur Lakes • Cultural Show • Ghats • Sunset",
           "Upon reaching Udaipur in the afternoon, check in to the stay.",
           "Have a delicious lunch and freshen up.",
-          "By evening, immerse yourself in the serene ambiance of Fateh Sagar Lake and witness an enchanting sunset.",
-          "Later, watch a captivating cultural dance and puppet show at Bagore Ki Haveli.",
-          "Explore Gangore Ghat and enjoy the magical illuminated evening ambiance at Ambrai Ghat.",
-          "Explore lakeside cafés for dinner and relaxing time with your tribe.",
-          "Meals: Lunch included."
+          "By evening, immerse yourself in the serene ambiance of Fateh Sagar Lake.",
+          "Witness the enchanting sunset at Fateh Sagar Lake.",
+          "Later, watch a captivating cultural dance show at Bagore Ki Haveli.",
+          "Explore Gangore Ghat.",
+          "Enjoy the ambiance at Ambrai Ghat.",
+          "Explore some lakeside cafés for dinner and rest.",
+          "Meals: Lunch"
         ]
       },
       {
+        id: 'udaipur-day-3',
         day: 3,
-        title: 'City Palace, Jag Mandir & Sajjangarh Monsoon Palace 🏰🌅',
+        title: 'DAY 3 — City Palace, Jag Mandir & Sajjangarh Monsoon Palace 🏰🌅',
         activities: [
-          "Begin your day with a guided tour of the magnificent City Palace — a captivating blend of Mughal and Rajasthani architecture.",
-          "Get to know the rich royal history and take in stunning views of Lake Pichola.",
-          "Next, immerse yourself in the serene ambiance of Jag Mandir Palace via boat ride on Lake Pichola.",
-          "As the day winds down, head to Sajjangarh Fort (Monsoon Palace) perched on a hilltop for a breathtaking panoramic sunset.",
-          "Enjoy dinner at a rooftop lakeside café, return to the stay, and relax with your fellow travellers.",
-          "Meals: Breakfast included."
+          "Begin your day with a visit to the City Palace.",
+          "Explore this captivating blend of Mughal and Rajasthani architecture.",
+          "Get to know the history of the magnificent City Palace.",
+          "Next, immerse yourself in the serene ambiance of Jag Mandir Palace via boating.",
+          "Jag Mandir is an island palace in the midst of Lake Pichola.",
+          "As the day winds down, head to Sajjangarh Fort, also known as Monsoon Palace. Perched on a hill, it offers a panoramic view of Udaipur. Experience a breathtaking sunset from Monsoon Palace.",
+          "Later have dinner at some lakeside café.",
+          "Get back to the stay and relax and spend time with your fellow travellers.",
+          "Meals: Breakfast"
         ]
       },
       {
+        id: 'udaipur-day-4',
         day: 4,
-        title: 'Bahubali Hills Sunrise, Karni Mata Ropeway & Udaipur Bazaars 🌄🚡',
+        title: 'DAY 4 — Bahubali Hills Sunrise, Karni Mata Temple & Udaipur Market 🌄🚡🛍️',
         activities: [
-          "Get up early to catch a glorious sunrise over the tranquil waters at Bahubali Hills.",
-          "Return to the stay, freshen up, check out, and have breakfast.",
-          "Visit Karni Mata Temple via Ropeway for 360° panoramic city views.",
-          "Explore Saheliyon-ki-Bari — the beautiful royal garden built for queens with marble fountains and lotus pools.",
-          "In the afternoon, explore Hathipole and Bada Bazaar markets — indulge in street food (Pyaz Kachori, Poha, Rabdi) and shop for souvenirs.",
-          "In the evening, board your return train (22902 – UDZ BDTS SF Exp) back towards Mumbai.",
-          "Meals: Breakfast included."
+          "Bahubali Hill Sunrise • Karni Mata Ropeway • Hathipole • Bada Bazaar",
+          "Get up early to catch a beautiful sunrise at Bahubali Hills.",
+          "Get back to the stay. Freshen up and check out.",
+          "Have breakfast.",
+          "Visit Karni Mata Temple via Ropeway for panoramic city views.",
+          "Explore Saheliyon-ki-Bari — a beautiful garden for queens and their friends to chill out.",
+          "In the afternoon, explore Hathipole and Bada Bazaar markets.",
+          "Indulge in street food and shop for souvenirs.",
+          "In the evening, board your train back to Mumbai (Train: 22902 – Udz Bdts Sf Exp).",
+          "Meals: Breakfast"
         ]
       },
       {
+        id: 'udaipur-day-5',
         day: 5,
-        title: 'Back to Mumbai with Royal Memories 🏠',
+        title: 'DAY 5 — Back to Mumbai 🚂',
         activities: [
+          "Udaipur to Mumbai Return Journey",
           "Returning home with cherished memories and countless pictures to look back at.",
-          "Relive the joy of all the fun experiences we had on this incredible trip.",
-          "Promise to stay in touch and plan more adventures together.",
-          "Meals: Not Included."
+          "Enjoy the joy of all the fun experiences we had on this incredible trip.",
+          "We promise to stay in touch and plan more adventures together.",
+          "Meals: Not Included"
         ]
       }
     ],
     inclusions: [
-      "2-night hotel stay on Triple / Quad sharing basis",
-      "Train from Mumbai and back in 3AC or Non-AC Sleeper (Confirmed or RAC)",
+      "2-night hotel stay Triple / Quad sharing basis",
+      "Train from Mumbai and back 3AC or Non-AC Sleeper (Confirmed or RAC)",
       "Internal transfers as per the itinerary",
-      "3 Meals: 1 Lunch (Day 2) & 2 Breakfasts (Day 3 & Day 4)",
-      "Bahubali Hill sunrise excursion",
+      "Meals: 1 Lunch & 2 Breakfasts",
+      "Bahubali Hill trek",
       "Entry Fees & Local Charges at: City Palace, Bagore Ki Haveli, Saheliyon Ki Bari",
-      "Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip"
+      "Experience a Travel Tribes Trip Captain cum friend to assist you with the best service throughout the trip."
     ],
     exclusions: [
-      "Train meals are not included",
-      "Lunch throughout the trip (except Day 2 Lunch)",
-      "Personal expenses and shopping",
-      "Any extra railway cost and train food",
-      "Tatkal ticket charges, if applicable",
-      "Any personal expense like tips to driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
+      "Train meals are not included.",
+      "Lunch throughout the trip.",
+      "Personal expenses.",
+      "Any extra railway cost and train food.",
+      "Tatkal ticket charges, if applicable.",
+      "Any personal expense like a tip to the driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
       "Any cost arising due to natural calamities like landslides, roadblocks, etc. to be borne directly by the customer on the spot",
-      "Optional boating charges at Fateh Sagar Lake & Lake Pichola (Jag Mandir)",
-      "GST 5%"
+      "Any additional activities such as boating at: Fateh Sagar Lake & Lake Pichola",
+      "GST 5%."
     ],
     thingsToCarry: [
       "Valid Government Photo ID for all members (Aadhaar / Driving License / Passport) — Mandatory",
@@ -2106,27 +3749,42 @@ export const trips: Trip[] = [
       "Sufficient cash for local bazaar shopping (handicrafts, juttis) and street food"
     ],
     policies: [
-      "Book your trip at least 30 days prior to the departure date to get confirmed train tickets.",
-      "Booking Amount: ₹4,000/- advance per person (Non-refundable upon cancellation; transferable to another person or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Ex-Mumbai Non-AC ₹9,999 | Ex-Mumbai 3AC ₹11,999 | Double Sharing Add-on ₹1,000 (+5% GST).",
-      "Room Sharing: In triple/quad-sharing rooms, an extra mattress is provided.",
-      "Trip Authority: The trip leader has all rights to alter/skip sightseeing if emergencies, acts of God, or unfavorable weather occur.",
-      "Discipline & Alignment: Participants should coordinate, be disciplined, and align together as a team during the trip.",
-      "Punctuality: Any delay at particular sightseeing spots by participants may result in the cancellation of further sightseeing.",
-      "Safety: Safety is a top priority; however, organizers are not liable for individual severe injuries or fatal events.",
-      "Harassment: Travel Tribes strictly stands against any form of harassment.",
-      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
-      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
-      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
-      "Cancellation 3–6 days prior: 90% deduction on remaining balance.",
-      "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
-      "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
+      "Book your trip before 30 days prior to the departure date to get the confirmed train tickets.",
+      "The trip leader has all the rights to discard, skip or alter sightseeing/itinerary if an emergency occurs, act of God or due to unfavorable behavior of participants.",
+      "In triple-sharing rooms, an extra mattress is provided, but it should not be confused with an extra bed.",
+      "Any delay in time at particular sightseeing by participants will result in cancellation of further sightseeing.",
+      "Participants should coordinate, be disciplined and align together as a team during the trip.",
+      "No refund will be provided if the participant doesn’t show up on the day of the event.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the rules and regulations of the respective hotels.",
+      "Though safety is a top priority, event organizers are not responsible for severe injuries or fatal events.",
+      "A valid photo ID for all members staying at the hotel is mandatory.",
+      "Itineraries might change slightly on public holidays/festivals.",
+      "The vehicle provided will be used exclusively as per the itinerary on a point-to-point basis and will not be available for personal use.",
+      "Travellers must take care of their luggage and belongings. Management shall not be accountable for missing items.",
+      "If sightseeing is closed due to special occasions, public holidays, long weekends or festivals, Travel Tribes is not liable.",
+      "Travel Tribes does not provide an insurance policy covering sickness, accidents, theft or other losses.",
+      "Water and electricity scarcity may occur in hilly areas; some hotels have fixed schedules for hot and cold water.",
+      "Please do not expect luxury facilities and appreciate being cooperative with fellow participants.",
+      "Transportation and logistics may vary depending on group size.",
+      "Travel Tribes strictly stands against any form of harassment.",
+      "Individuals enrolling in the plan must accept road, vehicle and nature-related risks.",
+      "AC may not be available in vehicles such as Tempo Traveller/Innova/Xylo/Scorpio or similar categories in hilly regions.",
+      "Third-party buses may experience breakdowns, and replacement arrangements may take some time.",
+      "Bus halts for lunch/dinner are predefined by the vendor and cannot be changed for convenience.",
+      "Refund will be done only in case of cancellation of the plan by the company/organizers or if the plan is postponed.",
+      "By joining the trip, you give consent and authority to Travel Tribes to use clicked pictures/videos for social media, marketing or other media purposes.",
+      "Booking/Advance Amount: The booking amount is non-refundable if the traveller cancels the trip. If the traveller cancels, the booking amount can be transferred to another person or used as Travel Tribes credit within 3 months.",
+      "Cancellation 10–30 days before departure: 25% deduction on remaining balance.",
+      "Cancellation 8–10 days before departure: 50% deduction on remaining balance.",
+      "Cancellation 6–8 days before departure: 70% deduction on remaining balance.",
+      "Cancellation 3–6 days before departure: 90% deduction on remaining balance.",
+      "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
     pricingOptions: [
-      { label: 'Mumbai to Mumbai (Non-AC Train)', price: '₹9,999 / person' },
-      { label: 'Mumbai to Mumbai (3AC Train)', price: '₹11,999 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' },
-      { label: 'New Year / Festive Batch Special', price: '₹10,999 / person', note: 'Applicable on Christmas & New Year batches' }
+      { label: 'Mumbai to Mumbai (Non-AC Train)', price: '₹9,999 + 5% GST' },
+      { label: 'Mumbai to Mumbai (3AC Train)', price: '₹11,999 + 5% GST' },
+      { label: 'Double Sharing Add-On', price: '+₹1,000 + 5% GST' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -2175,17 +3833,217 @@ export const trips: Trip[] = [
     ]
   },
   {
+    id: 'udaipur-xmas-new-year',
+    slug: 'udaipur-xmas-new-year',
+    title: 'Udaipur Christmas & New Year Special',
+    location: 'Udaipur · Rajasthan · Lake Pichola · City Palace · Sajjangarh · Bahubali Hills',
+    region: 'Domestic',
+    date: 'Dec 24–28, 2026 (XMAS Special)',
+    dates: [
+      'Dec 24–28, 2026 (XMAS Special)',
+      'Dec 29, 2026–Jan 02, 2027 (New Year Special)'
+    ],
+    duration: '4N/5D',
+    price: '₹11,999',
+    image: '/Card Image/udaipur.jpg',
+    alt: 'Udaipur Christmas and New Year Special Celebration at Lake Pichola and City Palace',
+    tag: 'Xmas & New Year Special',
+    description: 'Celebrate Christmas & New Year in Udaipur with Travel Tribes, and experience the magic of Rajasthan’s City of Lakes with a fun-filled 5-day backpacking trip from Mumbai. Explore City Palace, Jag Mandir, Fateh Sagar Lake, Bagore Ki Haveli, Monsoon Palace and Udaipur’s vibrant local markets. Enjoy stunning sunsets, cultural experiences, Rajasthani street food and a special 31st Night New Year celebration near the ghats. Come solo, meet new people and make your festive season unforgettable with your travel tribe.',
+    spots: '6 spots left',
+    gallery: [
+      { image: "/image/Udaipur/udaipur_img.JPEG", alt: "City Palace & Lake Pichola Panorama" },
+      { image: "/image/Udaipur/IMG_0424.JPG", alt: "Jag Mandir Island Palace" },
+      { image: "/image/Udaipur/IMG_1067.JPEG", alt: "Fateh Sagar Lake Sunset" },
+      { image: "/image/Udaipur/IMG_1132.JPEG", alt: "Bagore Ki Haveli Traditional Folk Dance" },
+      { image: "/image/Udaipur/IMG_1310.JPEG", alt: "Sajjangarh Monsoon Palace Hilltop View" },
+      { image: "/image/Udaipur/IMG_1667.JPG", alt: "Bahubali Hills Sunrise" },
+      { image: "/image/Udaipur/IMG_3857.JPG", alt: "Gangore & Ambrai Ghat Evening Vibe" },
+      { image: "/image/Udaipur/IMG_4003.JPG", alt: "Karni Mata Ropeway View" },
+      { image: "/image/Udaipur/IMG_6276.JPEG", alt: "Hathipole Street Food & Bazaar" },
+      { image: "/image/Udaipur/IMG_8911.JPEG", alt: "New Year Celebration with Travel Tribes" }
+    ],
+    highlights: [
+      "Explore the magnificent City Palace with Lake Pichola views.",
+      "Take a scenic boat ride to Jag Mandir Palace.",
+      "Experience the sunset at Sajjangarh Monsoon Palace.",
+      "Watch a traditional Bagore Ki Haveli cultural show.",
+      "Visit Fateh Sagar Lake, Gangore Ghat and Ambrai Ghat.",
+      "Catch the sunrise at Bahubali Hills.",
+      "Ride the Karni Mata Temple ropeway.",
+      "Explore Hathipole & Bada Bazaar.",
+      "Try authentic Rajasthani street food like Pyaz Kachori, Poha and Rabdi.",
+      "Celebrate New Year’s Eve near the ghats with your Travel Tribes community."
+    ],
+    itinerary: [
+      {
+        id: 'udaipur-ny-day-1',
+        day: 1,
+        title: 'Day 1: Mumbai to Udaipur | Journey Begins 🚂',
+        activities: [
+          "Begin your journey from Mumbai to Udaipur by train 22901 – BDTS Udz SF Exp.",
+          "Boarding points include Bandra Terminus (11:25 PM) and Borivali (11:52 PM).",
+          "Meet your fellow travellers and enjoy ice-breaking games as the journey begins.",
+          "Overnight journey to Udaipur.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'udaipur-ny-day-2',
+        day: 2,
+        title: 'Day 2: Fateh Sagar Lake | Bagore Ki Haveli | Gangore Ghat | Ambrai Ghat 🌊💃',
+        activities: [
+          "Arrive in Udaipur and check in to your stay.",
+          "Freshen up and enjoy lunch.",
+          "Visit Fateh Sagar Lake and witness the beautiful sunset.",
+          "Experience a traditional cultural dance show at Bagore Ki Haveli.",
+          "Explore Gangore Ghat and soak in the evening atmosphere at Ambrai Ghat.",
+          "Later, explore lakeside cafés, enjoy dinner and relax.",
+          "Meals: Lunch."
+        ]
+      },
+      {
+        id: 'udaipur-ny-day-3',
+        day: 3,
+        title: 'Day 3: City Palace | Jag Mandir | Sajjangarh Monsoon Palace | NY Celebration 🏰🌅🎆',
+        activities: [
+          "Start your day with a visit to the magnificent City Palace overlooking Lake Pichola.",
+          "Take a boat ride to Jag Mandir Palace, the beautiful island palace in Lake Pichola.",
+          "Visit Sajjangarh Monsoon Palace and enjoy panoramic views of Udaipur.",
+          "Witness a spectacular sunset from the hilltop.",
+          "New Year Batch: Celebrate 31st Night near the ghats with your travel tribe.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'udaipur-ny-day-4',
+        day: 4,
+        title: 'Day 4: Bahubali Hills Sunrise | Karni Mata Temple | Udaipur Markets 🌄🚡🛍️',
+        activities: [
+          "Wake up early for a beautiful sunrise at Bahubali Hills.",
+          "Return to the stay, freshen up and check out.",
+          "Visit Karni Mata Temple and enjoy panoramic city views via the ropeway.",
+          "Explore Hathipole and Bada Bazaar for shopping and local street food.",
+          "In the evening, board your train back to Mumbai (Train: 22902 – Udz Bdts Sf Exp).",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'udaipur-ny-day-5',
+        day: 5,
+        title: 'Day 5: Back to Mumbai 🏠✨',
+        activities: [
+          "Arrive back in Mumbai with new memories, countless photographs and a new travel tribe.",
+          "Meals: Not included."
+        ]
+      }
+    ],
+    inclusions: [
+      "2 nights hotel stay on triple/quad sharing basis.",
+      "Mumbai–Udaipur–Mumbai train journey by 3AC or Non-AC Sleeper, subject to confirmation/RAC.",
+      "Internal transfers as per the itinerary.",
+      "1 lunch + 2 breakfasts.",
+      "Hathipole and Bada Bazaar market exploration.",
+      "Karni Mata Temple cable car/ropeway.",
+      "Bahubali Hill experience.",
+      "Sajjangarh Monsoon Palace.",
+      "Entry fees for City Palace, Bagore Ki Haveli, Saheliyon Ki Bari, Monsoon Palace and Karni Mata Temple ropeway charges.",
+      "Trip Captain throughout the trip."
+    ],
+    exclusions: [
+      "Train meals, lunch and dinner except the meals specifically mentioned in inclusions.",
+      "Water bottles.",
+      "Driver tips and personal expenses.",
+      "Monument/entry charges not mentioned under inclusions.",
+      "Camera/video charges, laundry and telephone expenses.",
+      "Additional railway/train food costs.",
+      "Tatkal charges, if applicable.",
+      "5% GST.",
+      "Additional activities such as boating at Fateh Sagar Lake or Lake Pichola.",
+      "Costs arising from roadblocks, landslides, climate changes or other unavoidable circumstances.",
+      "Anything not specifically mentioned under inclusions."
+    ],
+    thingsToCarry: [
+      "Valid Government Photo ID for all members (Aadhaar / Driving License / Passport) — Mandatory",
+      "Comfortable walking / trekking shoes and casual footwear",
+      "Comfortable cotton clothing and smart casuals for photography",
+      "Light sweater or jacket for cooler evenings / early mornings",
+      "Sun protection: Sunscreen (SPF 50+), sunglasses, and wide cap/hat",
+      "Personal medications, basic first-aid, ORS / Glucose",
+      "Power bank, camera, and charging cables",
+      "Reusable water bottle"
+    ],
+    policies: [
+      "The itinerary is planned as a Mumbai-to-Mumbai group trip with approximately 20 travellers.",
+      "Boating at Fateh Sagar Lake or Lake Pichola is an additional activity and is not included.",
+      "Carry a valid government-issued photo ID matching the details submitted during booking.",
+      "Train berth/seat preferences and group seating are subject to Indian Railways allocation.",
+      "Book at least 30 days before departure for better chances of confirmed train tickets.",
+      "The Trip Leader may modify or skip sightseeing in case of emergencies, unforeseen situations or inappropriate participant behaviour.",
+      "Triple-sharing rooms include an extra mattress, not an additional bed.",
+      "Delays caused by participants may result in cancellation of subsequent sightseeing.",
+      "Participants are expected to cooperate and follow the group schedule.",
+      "No refund is provided for no-shows or unused portions of the trip.",
+      "Hotel rules apply to alcohol consumption.",
+      "Valid government photo ID is mandatory.",
+      "Vehicles are provided strictly as per the itinerary and are not available for personal use.",
+      "Travellers are responsible for their own luggage and belongings.",
+      "Sightseeing may be affected by public holidays, festivals or closures.",
+      "Travel Tribes does not provide travel insurance.",
+      "Water and electricity availability may vary.",
+      "Do not expect luxury facilities on a backpacking/group trip.",
+      "Transportation may vary depending on the final group size.",
+      "Participants must accept normal road, vehicle and nature-related travel risks.",
+      "AC may not be available in vehicles operating in hilly regions.",
+      "Third-party vehicle breakdowns may cause operational delays.",
+      "Bus/train halts and transportation schedules may be predefined.",
+      "Photos/videos taken during the trip may be used by Travel Tribes for marketing purposes.",
+      "Booking starts with ₹4,000/-.",
+      "Cancellation 10–30 days before departure: 25% deduction on remaining balance.",
+      "Cancellation 8–10 days before departure: 50% deduction on remaining balance.",
+      "Cancellation 6–8 days before departure: 70% deduction on remaining balance.",
+      "Cancellation 3–6 days before departure: 90% deduction on remaining balance.",
+      "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days."
+    ],
+    pricingOptions: [
+      { label: 'Mumbai to Mumbai (Non-AC Sleeper Train)', price: '₹11,999 / person + 5% GST' },
+      { label: 'Mumbai to Mumbai (3-Tier AC Train)', price: '₹13,999 / person + 5% GST' },
+      { label: 'Double Sharing Add-On', price: '+₹1,500 / person + 5% GST' }
+    ],
+    bookingAmount: '₹4,000 / person',
+    reviews: [
+      {
+        name: 'Anushree',
+        detail: 'Girls Trip',
+        rating: 5,
+        quote: 'Superb experience!!! We went to Udaipur for the New Year celebration with Travel Tribes. The hosts made us feel so much at home. Lakeside party and fireworks were unforgettable!'
+      },
+      {
+        name: 'Mansi Sinha',
+        rating: 5,
+        quote: 'One of the best travel experiences I’ve had! What I loved most was how flexible and thoughtfully planned the itinerary was. Sunrise at Bahubali Hills and sunset at Monsoon Palace were magical.'
+      },
+      {
+        name: 'Kajal Rambhia',
+        detail: 'Solo Traveller',
+        rating: 5,
+        quote: 'Travelled solo for the Udaipur festive batch. Safe, comfortable, and made friends for life. Tribe hai to vibe hai!'
+      }
+    ]
+  },
+  {
+    id: 'spiti-valley-chandrataal',
     slug: 'spiti-valley-chandrataal',
-    title: 'Spiti Valley with Chandrataal',
-    location: 'Chitkul · Tabo · Kaza · Chandrataal · Manali',
+    title: 'Spiti Valley with Chandrataal — Trip from Delhi',
+    location: 'Spiti Valley · Chandrataal · Manali · Chitkul · Tabo · Kaza',
     region: 'Domestic',
     date: 'Jun 12–20, 2027',
     duration: '8N/9D',
     price: '₹18,999',
-    image: '/image/Spiti/spiti_img.JPEG',
+    image: '/Card Image/Spiti_with_chandrataal.png',
     alt: 'High-altitude Himalayan desert and snow peaks of Spiti Valley',
     tag: 'Himalayan Expedition',
-    description: 'Looking for a Spiti Valley trip from Delhi, a Spiti backpacking trip, or an unforgettable Spiti Valley group trip? Travel Tribes takes you on an epic Himalayan road trip through Shimla, Chitkul, Tabo, Dhankar, Kaza, Langza, Hikkim, Komic, Kibber, Chicham Bridge, Chandrataal and Manali. From remote villages and ancient monasteries to stargazing by Chandrataal Lake and Old Manali cafés. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.',
+    description: 'Looking for a Spiti Valley trip from Delhi, a Spiti backpacking trip, or an unforgettable Spiti Valley group trip? Travel Tribes takes you on an epic Himalayan road trip through Shimla, Chitkul, Tabo, Dhankar, Kaza, Langza, Hikkim, Komic, Kibber, Chicham Bridge, Chandrataal and Manali. From the remote landscapes of Chitkul to the ancient Tabo Monastery, dramatic Dhankar Monastery, high-altitude villages of Langza, Hikkim and Komic, and the breathtaking Chandrataal Lake, this is a journey through some of the most incredible landscapes of Himachal Pradesh. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.',
     spots: '5 spots left',
     gallery: [
       { image: "/image/Spiti/spiti_img.JPEG", alt: "Spiti Valley" },
@@ -2200,143 +4058,179 @@ export const trips: Trip[] = [
       { image: "/image/Spiti/IMG_7185.JPEG", alt: "Spiti Valley" }
     ],
     highlights: [
-      "Explore the spectacular high-altitude landscapes of Spiti Valley.",
-      "Visit Chitkul — the last inhabited village before the Indo-China border.",
-      "Enjoy Pahadon Wali Maggi by the pristine Baspa River.",
-      "Explore the 1000-year-old ancient Tabo Monastery and meditation caves.",
-      "Visit the dramatic cliffside Dhankar Monastery.",
-      "Explore the iconic Key Monastery perched high on a hill.",
-      "Cross Chicham Bridge — Asia's Highest Suspension Bridge.",
-      "Send postcards from Hikkim — the world's highest post office.",
-      "Visit Komic — one of the world's highest motorable villages.",
-      "Explore Langza — India's fossil village with the giant Buddha statue.",
-      "Spot snow leopards around Kibber Village (subject to season and luck).",
-      "Experience the breathtaking crescent-shaped Chandrataal Lake.",
-      "Camp at Chandrataal under the starlit Himalayan night sky.",
-      "Explore the vibrant cafés, live music, and bohemian vibe of Old Manali.",
-      "Meet fellow travellers through the Travel Tribes community experience."
+      "🏔️ Explore the spectacular Spiti Valley",
+      "🏡 Visit Chitkul — the last inhabited village before the Indo-China border",
+      "🍜 Enjoy Pahadon Wali Maggi by the Baspa River",
+      "🛕 Explore the ancient Tabo Monastery",
+      "⛰️ Discover the mysterious ancient caves of Tabo",
+      "🏰 Visit the cliffside Dhankar Monastery",
+      "🏯 Explore the iconic Key Monastery",
+      "🌉 Cross Chicham Bridge — Asia's Highest Bridge",
+      "📮 Send postcards from Hikkim — the world's highest post office",
+      "🏔️ Visit Komic — one of the world's highest villages",
+      "🗿 Explore Langza — India's fossil village",
+      "🐆 Spot snow leopards around Kibber Village (sighting subject to luck and season)",
+      "🌊 Experience the breathtaking Chandrataal Lake",
+      "⛺ Camp at Chandrataal under the Himalayan night sky",
+      "☕ Explore the cafés and vibe of Old Manali",
+      "👥 Meet fellow travellers through the Travel Tribes community"
     ],
     itinerary: [
       {
+        id: 'spiti-chandrataal-day-1',
         day: 1,
-        title: 'Delhi to Shimla | The Journey Begins 🚍',
+        title: 'DAY 1 — Delhi to Shimla | The Journey Begins 🚍',
         activities: [
-          "Meet your fellow travellers in Delhi at Kashmiri Gate / R K Ashram.",
-          "Board our Semi Sleeper AC Volvo bus for an overnight journey to Shimla starting at 8:00 PM.",
-          "Get comfortable, introduce yourself to your tribe, and get ready for an epic Himalayan adventure.",
-          "Meals: Not Included."
+          "The Journey Begins",
+          "Meet your fellow travellers in Delhi.",
+          "We will take our bus for Shimla at Kashmiri Gate / R K Ashram.",
+          "Our exciting journey to Shimla begins at 8 PM.",
+          "Get ready to board our Semi Sleeper AC Volvo bus for an overnight ride to the journey.",
+          "Get comfortable, meet your fellow travellers and get ready for an epic Himalayan adventure.",
+          "Meals: Not Included"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-2',
         day: 2,
-        title: 'Shimla to Chitkul | The Last Indian Village 🏡',
+        title: 'DAY 2 — Shimla to Chitkul | The Last Inhabited Village 🏡',
         activities: [
-          "Arrive in Shimla as the first light of day breaks, and the real mountain adventure begins!",
-          "Hit the mountain roads in our Tempo Traveller, following the Sutlej River towards Kinnaur.",
-          "Take a thrilling turn along the mesmerizing Baspa River towards Chitkul — the last inhabited village on the Indo-China border.",
-          "Explore the wooden architecture, apple orchards, and peaceful mountain atmosphere of this remote village.",
-          "Overnight stay and warm dinner in Chitkul / Sangla.",
-          "Meals: Dinner included."
+          "As the first light of day breaks, we'll arrive in Shimla, and the real adventure begins!",
+          "Hit the road as we journey from Shimla to the mystical Chitkul.",
+          "Follow the Sutlej River, taking a thrilling right turn towards Chitkul along the mesmerizing Baspa River.",
+          "Chitkul, the last inhabited village before the Indo-China border, awaits us.",
+          "Explore the beautiful surroundings of this remote Himalayan village.",
+          "Enjoy the peaceful mountain atmosphere and breathtaking landscapes.",
+          "Overnight stay and dinner in the quaint village of Chitkul.",
+          "Meals: Dinner"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-3',
         day: 3,
-        title: 'Chitkul to Tabo | Entering the Spiti Realm 🏔️',
+        title: 'DAY 3 — Chitkul to Tabo | Entering Spiti 🏔️',
         activities: [
-          "Wake up in Chitkul and savor the flavors of hot 'pahadon wali maggi' by the serene Baspa River.",
-          "Short exploration of Sangla village before continuing our journey into the dramatic moonscape terrain of Spiti Valley.",
-          "Drive along the confluence of Spiti and Sutlej rivers at Khab, passing through Nako.",
-          "Prepare for an overnight stay in Tabo, where ancient history and spiritual mystique await.",
-          "Meals: Breakfast & Dinner included."
+          "Wake up in Chitkul and savor the flavors of 'pahadon wali maggi' by the serene Baspa River.",
+          "If time allows, we'll venture into a nearby Sangla village in the captivating Kinnaur Valley.",
+          "Continue our journey towards Tabo in Spiti.",
+          "Enjoy the changing landscapes as we enter the dramatic terrain of Spiti Valley.",
+          "Prepare for an overnight stay in Tabo, where history and mystique await your exploration.",
+          "Meals: Breakfast & Dinner"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-4',
         day: 4,
-        title: 'Tabo to Kaza via Dhankar Monastery 🛕',
+        title: 'DAY 4 — Tabo to Kaza via Dhankar 🛕',
         activities: [
-          "Have a homely cooked breakfast and start the day exploring Tabo's ancient meditation caves.",
-          "Visit the awe-inspiring, 1000-year-old Tabo Monastery (Ajanta of the Himalayas).",
-          "Journey towards the ancient Dhankar Monastery perched dramatically on a high cliff with breathtaking valley views.",
-          "Continue driving towards Kaza, the heart and cultural center of Spiti Valley.",
-          "Reach Kaza, check in to your homestay, enjoy hot dinner, and rest.",
-          "Meals: Breakfast & Dinner included."
+          "Have a homely cooked breakfast and start your day.",
+          "Today, we dive into the village's soul, exploring its ancient caves.",
+          "Visit the awe-inspiring Tabo Monastery.",
+          "Explore the ancient surroundings and experience the history and spiritual atmosphere of Tabo.",
+          "Our journey then takes us to the ancient Dhankar Monastery.",
+          "Admire the dramatic cliffside setting and breathtaking Himalayan views.",
+          "Continue towards Kaza, the heart of Spiti Valley.",
+          "Reach Kaza and settle into your stay.",
+          "Spend the night in Kaza.",
+          "Meals: Breakfast & Dinner"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-5',
         day: 5,
-        title: 'Kaza, Key Monastery, Hikkim, Komic & Langza 📮🕉️',
+        title: 'DAY 5 — Kaza, Langza, Hikkim & Komic 📮🏔️',
         activities: [
-          "After breakfast, explore the high-altitude marvels of Spiti Valley.",
-          "Visit the iconic Key Monastery and cross Chicham Bridge (Asia's Highest Bridge).",
-          "Head towards Hikkim (14,400 ft) to send postcards to your loved ones from the world's highest post office.",
-          "Continue towards Komic (15,027 ft) — one of the highest motorable villages in the world.",
-          "Explore Langza, known for its giant golden Buddha statue and rich marine fossils.",
-          "Return to Kaza by evening for group dinner and restful overnight stay.",
-          "Meals: Breakfast & Dinner included."
+          "After breakfast, explore the highlights of Spiti Valley.",
+          "Visit the iconic Key Monastery.",
+          "Cross Chicham Bridge, known as Asia's Highest Bridge.",
+          "Head towards Hikkim, home to the world's highest post office.",
+          "Send postcards from Hikkim and create a unique travel memory.",
+          "Continue towards Komic, one of the world's highest villages.",
+          "Explore Langza, known for its iconic Buddha Statue and breathtaking mountain views.",
+          "Langza is also famous as India's fossil village.",
+          "Take in the dramatic Himalayan landscapes surrounding these high-altitude villages.",
+          "Return to Kaza by evening.",
+          "Have dinner and enjoy an overnight stay in Kaza.",
+          "Meals: Breakfast & Dinner"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-6',
         day: 6,
-        title: 'Kaza to Chandrataal Lake | Stargazing Campsite ⛺🌌',
+        title: 'DAY 6 — Kaza to Chandrataal | Starlit Camping ⛺🌌',
         activities: [
-          "After breakfast and check-out, drive towards the mesmerizing moon-lake — Chandrataal.",
-          "Take a short halt at Losar (the last village of Spiti Valley) and traverse through high-altitude Kunzum Pass (14,931 ft).",
-          "Reach Chandrataal campsite by evening and check in to your shared Swiss tents.",
-          "Trek to the pristine crystal-clear turquoise waters of Chandrataal Lake.",
-          "Enjoy dinner under the starlit sky and end the day with an unforgettable high-altitude camping experience.",
-          "Meals: Breakfast & Dinner included."
+          "After breakfast and check-out, drive towards the mesmerizing Chandrataal Lake.",
+          "En route, take a short halt at Losar, the last village of Spiti Valley.",
+          "Continue your scenic drive through the incredible Himalayan landscape.",
+          "Reach the Chandrataal campsite by evening.",
+          "Check in to your shared tents.",
+          "Soak in the serene beauty of the Himalayas.",
+          "Spend time experiencing the peaceful surroundings of Chandrataal.",
+          "Enjoy dinner under a starlit sky.",
+          "End the day with an unforgettable overnight camping experience at Chandrataal.",
+          "Meals: Breakfast & Dinner"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-7',
         day: 7,
-        title: 'Chandrataal to Manali via Atal Tunnel 🚗🌲',
+        title: 'DAY 7 — Chandrataal to Manali 🌲🚗',
         activities: [
-          "Enjoy an early breakfast surrounded by crisp mountain air.",
-          "Depart on a thrilling scenic drive through Batal, Chhatru, and the legendary Atal Tunnel towards Manali.",
-          "Experience the dramatic transition from rugged barren Spiti terrain to lush green cedar valleys of Manali.",
-          "Check in to your hotel in Manali and relax.",
-          "In the evening, explore the charming cafés, live music, and vibrant atmosphere of Old Manali at your own pace.",
-          "Return to hotel for group dinner and overnight stay.",
-          "Meals: Breakfast & Dinner included."
+          "Enjoy an early breakfast.",
+          "Depart for Manali on a scenic drive through the majestic Himalayas.",
+          "Experience the changing landscapes as you leave the high-altitude desert of Spiti behind.",
+          "Upon arrival in Manali, check in to your hotel and relax.",
+          "In the evening, explore the charming cafés and vibrant atmosphere of Old Manali at your own pace.",
+          "Enjoy some free time to explore the cafés, streets and local vibe.",
+          "Return to the hotel for dinner and an overnight stay.",
+          "Meals: Breakfast & Dinner"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-8',
         day: 8,
-        title: 'Manali Exploration & Departure to Delhi 🛍️🚍',
+        title: 'DAY 8 — Manali Exploration & Departure to Delhi 🛍️🚍',
         activities: [
-          "Wake up to beautiful pine-covered mountain views and enjoy breakfast.",
-          "Visit the ancient wooden Hadimba Devi Temple and take a stroll down bustling Mall Road.",
-          "Explore the bohemian lanes, bakeries, and souvenir shops of Old Manali at leisure.",
-          "In the evening, board your AC Volvo bus from Manali for the overnight return journey to Delhi.",
-          "Meals: Breakfast included."
+          "Hadimba Temple • Mall Road • Old Manali • Overnight Journey",
+          "Wake up to beautiful sunrise views.",
+          "Enjoy a relaxed morning in Manali.",
+          "Visit the famous Hadimba Devi Temple.",
+          "Stroll through the bustling Mall Road.",
+          "Explore the charming lanes and cafés of Old Manali.",
+          "Spend the day at leisure before departing for Delhi in the evening.",
+          "Enjoy an overnight journey with unforgettable memories of the Himalayas.",
+          "Meals: Breakfast"
         ]
       },
       {
+        id: 'spiti-chandrataal-day-9',
         day: 9,
-        title: 'Back to Delhi with Lifetime Memories 🏠',
+        title: 'DAY 9 — Back to Delhi 🏠',
         activities: [
-          "Reach Delhi in the morning by 8:00 AM.",
-          "Return home with cherished memories of rugged Spiti passes, high-altitude monasteries, and starry camping nights.",
-          "Carry back countless pictures, stories, and a lifelong bond with your new tribe.",
-          "Meals: Not Included."
+          "Reach Delhi after your overnight journey.",
+          "Return home with cherished memories of the Spiti Valley and Chandrataal adventure.",
+          "Carry back countless pictures, stories and memories from the Himalayas.",
+          "Say goodbye to your fellow travellers and your new tribe.",
+          "Meals: Not Included"
         ]
       }
     ],
     inclusions: [
-      "Delhi to Shimla: AC Semi-Sleeper Volvo Bus",
-      "Shimla to Kaza to Manali: Dedicated Tempo Traveller / SUV for entire circuit",
-      "Manali to Delhi: AC Volvo Bus",
-      "6 Nights Stay: 1N Hotel at Chitkul/Sangla, 1N Homestay at Tabo, 2N Homestay at Kaza, 1N Swiss Camp at Chandrataal, 1N Hotel at Manali",
-      "12 Meals: 6 Breakfasts & 6 Dinners",
-      "Experienced Travel Tribes Trip Captain & certified high-altitude mountain driver throughout the circuit"
+      "Delhi to Shimla: Semi Sleeper Volvo",
+      "Shimla to Kaza to Manali: Tempo Traveller",
+      "Manali to Delhi: Volvo",
+      "Accommodation 6 Nights Stay: 01 Night Hotel at Chitkul / Sangla, 01 Night Homestay at Tabo, 02 Nights Homestay at Kaza, 01 Night Camp at Chandrataal, 01 Night Hotel at Manali",
+      "Meals: 6 Breakfasts, 6 Dinners",
+      "Trip Captain throughout the trip"
     ],
     exclusions: [
-      "Any food or beverage not included in package (alcoholic drinks, mineral water)",
-      "Meals, refreshments, and lunches on highways / cafés",
-      "Entry fees to monuments/monasteries and room heaters (if requested)",
-      "Personal expenses (shopping, café visits in Old Manali, laundry, tips)",
-      "Any cost arising due to unforeseen natural calamities (landslides, roadblocks, snow blockages, etc.)",
-      "Expenses in Delhi (fresh-up, food, stay)",
+      "Any food or beverage not included in the package, including alcoholic drinks, mineral water, meals / refreshments / lunches on the highway",
+      "Tip to the driver",
+      "Entry to monuments",
+      "Laundry, Telephone bills, room heater",
+      "Any cost arising due to natural calamities such as landslides, roadblocks, other unforeseen circumstances",
+      "Any expenses in Delhi such as fresh-up, food, stay",
+      "Anything not specifically mentioned under inclusions",
       "GST 5%"
     ],
     thingsToCarry: [
@@ -2351,39 +4245,55 @@ export const trips: Trip[] = [
       "Cash (ATMs in Kaza and remote Spiti are frequently non-operational)"
     ],
     policies: [
-      "High Altitude & Acclimatization: Adequate hydration and rest are essential. Trip captain holds authority to adjust route if needed for safety.",
-      "Booking Amount: ₹5,000/- advance per person (Non-refundable on cancellation; transferable to another person or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Triple Sharing ₹18,999 | Double Sharing ₹21,999 (+5% GST).",
-      "Room Sharing: In triple-sharing rooms, an extra mattress is provided (standard in mountain homestays).",
-      "Trip Authority: Trip leader has all rights to alter/skip spots in case of emergencies, roadblocks, landslides, or acts of God.",
-      "Discipline & Punctuality: Team coordination is mandatory for high-altitude road journeys.",
-      "Safety & Harassment: Travel Tribes strictly stands against any form of harassment.",
-      "Vehicle in Hills: AC is not operated on mountain uphill terrain. Point-to-point vehicle usage only.",
-      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
-      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
-      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
-      "Cancellation 3–6 days prior: 90% deduction on remaining balance.",
-      "Cancellation < 2 days / No-Show: 100% deduction (No refund).",
-      "Operator Cancellation: 100% full refund within 4–7 business days if trip cancelled by operator."
+      "The trip leader has the right to discard, skip or alter sightseeing/itinerary in case of an emergency, act of God or unfavorable participant behavior.",
+      "In triple-sharing rooms, an extra mattress is provided and should not be confused with an extra bed.",
+      "Delays by participants at particular sightseeing locations may result in cancellation of further sightseeing.",
+      "Participants should coordinate, remain disciplined and align together as a team.",
+      "No refund is provided if a participant doesn't show up on the day of the event.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the respective hotel's rules.",
+      "A valid photo ID is mandatory for all members staying at the hotel.",
+      "Itineraries might change slightly on public holidays/festivals.",
+      "Vehicles are provided exclusively as per the itinerary on a point-to-point basis and are not available for personal use.",
+      "Travellers are responsible for their luggage and belongings.",
+      "Travel Tribes is not liable if sightseeing is closed due to special occasions, public holidays, long weekends or festivals.",
+      "Travel insurance is not provided for sickness, accidents, theft or other losses.",
+      "Water and electricity scarcity can occur in hilly areas. Some hotels may have fixed schedules for hot and cold water.",
+      "Please do not expect luxury facilities and cooperate with fellow participants.",
+      "Transportation and logistics may vary depending on group size — 7-seater Sumo, 11-seater Tempo Traveller or 20-seater Bus.",
+      "Travel Tribes strictly stands against any form of harassment.",
+      "Participants accept road, vehicle and nature-related risks associated with the trip.",
+      "AC may not be available in Tempo Traveller, Innova, Xylo, Scorpio or similar vehicles in hilly regions.",
+      "Third-party buses may experience breakdowns and replacement arrangements may take some time.",
+      "Bus halts for lunch/dinner are predefined by the vendor.",
+      "Refund will be done only in case of cancellation of the plan by the company/organizers or if the plan is postponed.",
+      "By joining the trip, you give consent and authority to Travel Tribes to use clicked pictures/videos for social media, marketing or other media purposes.",
+      "Booking/Advance Amount: The booking amount is non-refundable if the traveller cancels the trip. If the traveller cancels, the booking amount can be transferred to another person or used as Travel Tribes credit within 3 months.",
+      "Cancellation 10–30 days before departure: 25% deduction on remaining balance.",
+      "Cancellation 8–10 days before departure: 50% deduction on remaining balance.",
+      "Cancellation 6–8 days before departure: 70% deduction on remaining balance.",
+      "Cancellation 3–6 days before departure: 90% deduction on remaining balance.",
+      "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
     pricingOptions: [
-      { label: 'Triple Sharing (Delhi to Delhi)', price: '₹18,999 / person' },
-      { label: 'Double Sharing (Delhi to Delhi)', price: '₹21,999 / person' }
+      { label: 'Triple Sharing (Delhi to Delhi)', price: '₹18,999 + 5% GST' },
+      { label: 'Double Sharing (Delhi to Delhi)', price: '₹21,999 + 5% GST' }
     ],
     bookingAmount: '₹5,000 / person'
   },
   {
+    id: 'spiti-winter-expedition',
     slug: 'spiti-winter-expedition',
-    title: 'Spiti Valley Winter Expedition',
-    location: 'Chitkul · Tabo · Kaza · Kalpa · Kinnaur',
+    title: 'Spiti Valley Winter Expedition from Delhi',
+    location: 'Chitkul · Tabo · Kaza · Langza · Hikkim · Komic · Key Monastery · Chicham · Kibber · Kalpa',
     region: 'Domestic',
     date: 'Jan 16–24, 2027',
     duration: '8N/9D',
     price: '₹18,999',
-    image: '/image/Spiti/spiti_img.JPEG',
+    image: '/Card Image/winter_spiti.png',
     alt: 'Snow-covered winter wonderland of Spiti Valley and Key Monastery in white',
     tag: 'Winter Expedition',
-    description: 'Snow-covered mountains, frozen landscapes, remote Himalayan villages, ancient monasteries and dramatic mountain roads — welcome to the Spiti Valley Winter Expedition. Travel from Delhi to Spiti Valley with Travel Tribes through Chitkul, Tabo, Kaza, Langza, Hikkim, Komic, Key Monastery, Chicham Bridge, Kibber Village, 500-year-old Gue Mummy, and the stunning snow views of Kalpa with Kinner Kailash peak. Come solo. Meet strangers. Explore Spiti in winter. Leave with a tribe.',
+    description: "Snow-covered mountains, frozen landscapes, remote Himalayan villages, ancient monasteries and some of the most dramatic roads in Himachal Pradesh — welcome to the Spiti Valley Winter Expedition. Travel from Delhi to Spiti Valley with Travel Tribes and explore the cold desert landscape of the Himalayas with a group of fellow travellers. From Chitkul, the last inhabited village before the Indo-China border, to the ancient Tabo Monastery, high-altitude villages of Hikkim, Komic and Langza, the iconic Key Monastery, Chicham Bridge, Kibber Village and the stunning landscapes of Kalpa, this is a true winter Himalayan adventure. This is more than a Spiti Valley trip from Delhi — it's an expedition through some of the most remote and beautiful corners of Himachal. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.",
     spots: '4 spots left',
     gallery: [
       { image: "/image/Spiti/spiti_img.JPEG", alt: "Spiti Winter Expedition" },
@@ -2398,138 +4308,158 @@ export const trips: Trip[] = [
       { image: "/image/Spiti/IMG_7218.JPEG", alt: "Spiti Winter Expedition" }
     ],
     highlights: [
-      "Explore Chitkul — the last inhabited village before the Indo-China border in snow.",
-      "Enjoy hot Maggi by the frozen/winter Baspa River.",
-      "Explore the 1,025-year-old ancient Tabo Monastery and meditation caves.",
-      "Visit the cliffside Dhankar Monastery in snow.",
-      "Send postcards from Hikkim — the world's highest post office.",
-      "Visit Komic — the world's highest village.",
-      "Explore Langza — India's fossil village with the snow-backed giant Buddha statue.",
-      "Visit Key Monastery, dating back to the 11th century surrounded by white snowscapes.",
-      "Cross Chicham Bridge — Asia's Highest Suspension Bridge.",
-      "Explore Kibber Village, famous for snow leopard sightings.",
-      "Visit the 500-year-old preserved monk mummy at Gue Monastery.",
-      "Experience Kalpa and its stunning views of Kinner Kailash Peak.",
-      "Capture memories at Suicide Point in Kalpa.",
-      "Meet fellow travellers and conquer the sub-zero winter expedition with your tribe."
+      "🏔️ Explore Chitkul — the last inhabited village before the Indo-China border",
+      "🍜 Enjoy Maggi by the Baspa River",
+      "🛕 Explore 1,025-year-old Tabo Monastery",
+      "⛰️ Explore the ancient caves of Tabo",
+      "🏰 Visit the cliffside Dhankar Monastery",
+      "📮 Send postcards from Hikkim — the world's highest post office",
+      "🏔️ Visit Komic — the world's highest village",
+      "🗿 Explore Langza — India's fossil village",
+      "🏯 Visit Key Monastery, dating back to the 11th century",
+      "🌉 Cross Chicham Bridge — Asia's Highest Bridge",
+      "🐆 Explore Kibber Village, famous for snow leopard sightings",
+      "🌄 Experience Kalpa and its stunning views",
+      "📸 Capture memories at Suicide Point in Kalpa"
     ],
     itinerary: [
       {
+        id: 'spiti-winter-day-1',
         day: 1,
-        title: 'Delhi to Shimla | The Winter Expedition Begins 🚍',
+        title: 'DAY 1 — DELHI TO SHIMLA | The Journey Begins 🚍',
         activities: [
-          "Meet your fellow travellers at Kashmiri Gate / R K Ashram in Delhi.",
-          "Board our Semi-Sleeper AC Volvo bus starting at 8:00 PM for an overnight ride to Shimla.",
-          "Get comfortable, meet your fellow travellers, and enjoy a meetup & ice-breaking games session.",
+          "We will take our bus for Shimla at Kashmiri Gate / R K Ashram.",
+          "Our exciting journey to Shimla begins at 8 PM.",
+          "Get ready to board our semi-sleeper AC Volvo bus for an overnight ride to the enchanting journey.",
+          "Get comfortable, meet your fellow travellers and get ready for an exciting Himalayan adventure.",
+          "Meetup & Ice Breaking games session",
           "Meals: Not Included."
         ]
       },
       {
+        id: 'spiti-winter-day-2',
         day: 2,
-        title: 'Shimla to Chitkul | Snow Village on Indo-China Border 🏡',
+        title: 'DAY 2 — SHIMLA TO CHITKUL 🏡',
         activities: [
-          "As the first light of day breaks, arrive in Shimla and transition to our dedicated mountain vehicle.",
-          "Hit the mountain road following the Sutlej River, taking a thrilling turn towards Chitkul along the Baspa River.",
-          "Chitkul, the last inhabited village before the Indo-China border, awaits for an unforgettable stay.",
-          "Enjoy warm dinner and cozy overnight stay in the quaint village of Chitkul / Sangla.",
-          "Meals: Breakfast & Dinner included."
+          "As the first light of day breaks, we'll arrive in Shimla, and the real adventure begins!",
+          "Hit the road as we journey from Shimla to the mystical Chitkul.",
+          "Follow the Sutlej River, taking a thrilling right turn towards Chitkul along the mesmerizing Baspa River.",
+          "Chitkul, the last inhabited village before the Indo-China border, awaits us for an unforgettable overnight stay.",
+          "Enjoy dinner in the quaint village of Chitkul.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'spiti-winter-day-3',
         day: 3,
-        title: 'Chitkul to Tabo via Khab Sangam 🏔️',
+        title: 'DAY 3 — CHITKUL TO TABO 🏔️',
         activities: [
-          "After breakfast, explore Chitkul village and enjoy hot Maggi at the last dhaba of India by the Baspa River.",
-          "Move towards Tabo, halting en route at Khab Sangam — the confluence of Sutlej and Spiti River.",
-          "Check into a cozy local homestay in Tabo and enjoy a warm, authentic home-cooked meal.",
-          "Meals: Breakfast & Dinner included."
+          "After breakfast we will go to explore the Chitkul village.",
+          "You can also trek down to the riverside or enjoy some Maggi at the last dhaba of India.",
+          "We will then move towards Tabo.",
+          "On the way, halt at the Khab Sangam, the confluence of Sutlej and Spiti River.",
+          "We will be staying in a homestay in Tabo where you can enjoy a home-cooked meal.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'spiti-winter-day-4',
         day: 4,
-        title: 'Tabo to Kaza via Dhankar Monastery 🛕',
+        title: 'DAY 4 — TABO TO KAZA VIA DHANKAR 🛕',
         activities: [
-          "Tabo, with its 1,025-year-old history, holds ancient spiritual secrets waiting to be uncovered.",
-          "Explore the ancient caves and the awe-inspiring Tabo Monastery (Ajanta of the Himalayas).",
-          "Journey towards the ancient Dhankar Monastery perched dramatically on a high cliff with valley views.",
-          "Continue driving towards Kaza — the heart and winter capital of Spiti.",
-          "Check into your homestay in Kaza, enjoy dinner, and rest.",
-          "Meals: Breakfast & Dinner included."
+          "Tabo Monastery • Ancient Caves • Dhankar Monastery • Kaza",
+          "Tabo, with its 1,025-year-old history, holds secrets waiting to be uncovered.",
+          "Today, we dive into the village's soul, exploring its caves and the awe-inspiring Tabo Monastery.",
+          "Our journey then takes us to the ancient Dhankar Monastery.",
+          "Continue towards Kaza, the heart of Spiti.",
+          "We will spend the following days exploring the spectacular landscapes and villages around Kaza.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'spiti-winter-day-5',
         day: 5,
-        title: 'Kaza, Langza, Hikkim & Komic | High-Altitude Snow Villages 📮❄️',
+        title: 'DAY 5 — KAZA, LANGZA, HIKKIM & KOMIC 📮❄️',
         activities: [
-          "After enjoying a delicious local breakfast at the homestay, get ready to explore Hikkim (14,400 ft) — the highest post office in the world.",
-          "Post letters and postcards to loved ones from the top of the world.",
-          "Visit Komic Village (15,027 ft) — one of the highest motorable villages in the world.",
-          "Continue to Langza, the fossil village of India, and photograph the iconic golden Buddha statue against snow peaks.",
-          "Return to Kaza by evening, explore the local Kaza market, and enjoy dinner at the stay.",
-          "Meals: Breakfast & Dinner included."
+          "After enjoying the delicious local breakfast at the homestay, get ready to explore the highest post office of the world in Hikkim.",
+          "After posting a few letters to our loved ones, we'll then visit Komic Village, the world's highest village.",
+          "Continue to Langza, the fossil village of India.",
+          "Come back to Kaza by evening.",
+          "Explore the Kaza market.",
+          "Enjoy dinner at the stay.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'spiti-winter-day-6',
         day: 6,
-        title: 'Key Monastery, Chicham Bridge & Kibber Village 🕉️🐆',
+        title: 'DAY 6 — KEY MONASTERY TO CHICHAM 🏯🌉',
         activities: [
-          "Prepare for awe-inspiring sights as we visit the famous 11th-century Key Monastery perched high on a hill.",
-          "Cross the incredible Chicham Bridge — Asia's highest suspension bridge over a dramatic snow canyon.",
-          "Journey into Kibber Village, famous for high-altitude wildlife and snow leopard spotting.",
-          "Return to Kaza and enjoy some local home-cooked dinner and stories by the heater.",
-          "Meals: Breakfast & Dinner included."
+          "Prepare for awe-inspiring sights today as we visit the famous Key Monastery.",
+          "Key Monastery is perched high on a mountain hill, with a history dating back to the 11th century.",
+          "After Key, we'll cross the incredible Chicham Bridge, Asia's highest bridge.",
+          "Our journey then takes us to Kibber Village, famous for its snow leopard spotting.",
+          "Come back and enjoy some local home-cooked dinner.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'spiti-winter-day-7',
         day: 7,
-        title: 'Kaza to Kalpa via Gue Mummy & Nako 🏛️',
+        title: 'DAY 7 — KAZA TO KALPA VIA GUE & NAKO 🏛️',
         activities: [
-          "After an early breakfast, start our return journey towards Kinnaur.",
-          "Visit Gue Monastery to witness the 500-year-old naturally preserved monk mummy.",
-          "Take a quick halt at Nako for lunch.",
-          "Reach Kalpa, check into your hotel rooms, enjoy dinner, and unwind.",
-          "Meals: Breakfast & Dinner included."
+          "Today morning marks as our last day at Kaza.",
+          "After an early breakfast, we move towards Kalpa via Gue.",
+          "At Gue, visit the Gue Monastery and 500-year-old mummy.",
+          "We will take a quick halt at Nako for lunch.",
+          "Reach Kalpa and check into your hotel rooms.",
+          "Enjoy your dinner and then rewind.",
+          "Meals: Breakfast & Dinner."
         ]
       },
       {
+        id: 'spiti-winter-day-8',
         day: 8,
-        title: 'Kalpa, Suicide Point & Departure to Delhi 🌄🚍',
+        title: 'DAY 8 — KALPA TO SHIMLA & DEPARTURE 🌄🚍',
         activities: [
-          "Wake up to the breathtaking view of the sacred, snow-covered Kinner Kailash Peak.",
-          "Post breakfast, explore Kalpa and capture memories at the famous Suicide Point.",
-          "Drive down towards Shimla to catch your evening Volvo bus to Delhi.",
-          "Leave for Delhi on an overnight bus with unforgettable winter memories.",
-          "Meals: Breakfast included."
+          "Wake up to the view of the magnificent Kinner Kailash Peak.",
+          "Post breakfast, we will explore Kalpa.",
+          "Visit nearby Suicide Point.",
+          "Move towards Shimla to catch an evening bus to Delhi.",
+          "Leave for Delhi in an overnight bus with loads of memories.",
+          "Arrive Delhi on Sunday morning, cherishing the memories of an unforgettable journey.",
+          "Meals: Breakfast."
         ]
       },
       {
+        id: 'spiti-winter-day-9',
         day: 9,
-        title: 'Back to Delhi with Lifetime Winter Memories 🏠',
+        title: 'DAY 9 — BACK TO DELHI 🏠',
         activities: [
-          "Arrive in Delhi on Sunday morning after your overnight journey.",
-          "Return home with cherished memories of Winter Spiti Valley, frozen rivers, and white desert landscapes.",
-          "Carry back countless pictures, stories, and a lifelong bond with your new tribe.",
+          "Reach Delhi after your overnight journey.",
+          "Return home with cherished memories of the Winter Spiti Valley.",
+          "Carry back countless pictures, stories and memories from the Himalayas.",
+          "Say goodbye to your fellow travellers and your new tribe.",
           "Meals: Not Included."
         ]
       }
     ],
     inclusions: [
-      "Delhi to Shimla: AC Semi-Sleeper Volvo Bus",
-      "Shimla to Kaza to Shimla: Dedicated Mountain Tempo Traveller / SUV for entire circuit",
-      "Shimla to Delhi: AC Volvo Bus",
-      "6 Nights Stay: 1N Hotel at Chitkul/Sangla, 1N Homestay at Tabo, 3N Homestay at Kaza, 1N Hotel in Kalpa",
-      "12 Meals: 6 Breakfasts & 6 Dinners",
-      "Experienced Travel Tribes Trip Captain throughout the trip",
-      "Driver night charges, toll taxes, parking charges"
+      "Stay for 6 nights: 01 night in hotel at Chitkul/Sangla, 01 night in homestay at Tabo, 03 nights in homestay at Kaza, 01 night in hotel in Kalpa",
+      "Transportation: Delhi to Shimla Semi Sleeper Volvo, Shimla to Kaza to Shimla Tempo Traveller, Shimla to Delhi Volvo",
+      "Meals: 6 Breakfasts & 6 Dinners",
+      "Trip Captain throughout the trip",
+      "Driver night charges, Toll Tax, Parking Charges"
     ],
     exclusions: [
       "5% GST",
-      "Highway meals, refreshments, lunches on the highway",
-      "Alcoholic drinks & mineral water",
-      "Entry fees to monuments/monasteries, camera charges, room heaters (if requested directly)",
-      "Personal expenses, shopping, laundry, tips to driver",
-      "Unforeseen costs arising due to natural calamities (landslides, roadblocks, heavy snow)",
-      "Expenses in Delhi (stay, fresh-up, food)",
+      "Any kind of food or beverage that is not included in the package (alcoholic drinks, mineral water, meals, refreshments, lunches on the highway)",
+      "Tip to the driver",
+      "Entry to monuments",
+      "Camera/video camera charges, Room Heater",
+      "Laundry, Telephone bills",
+      "Any cost arising due to natural calamities like landslides, roadblocks, other unavoidable circumstances",
+      "Any expenses in Delhi such as stay, fresh-up, food",
       "Anything not mentioned in the inclusions"
     ],
     thingsToCarry: [
@@ -2544,24 +4474,208 @@ export const trips: Trip[] = [
       "Sufficient cash for remote locations in Spiti"
     ],
     policies: [
-      "Winter & Sub-Zero Conditions: Participants must prepare for sub-zero temperatures (-10°C to -25°C). Trip captain holds full authority to alter route for safety.",
-      "Booking Amount: ₹5,000/- advance per person (Non-refundable upon cancellation; transferable to another person or convertible to 3-month Travel Tribes credit).",
-      "Pricing: Triple Sharing ₹18,999 | Double Sharing ₹21,999 (+5% GST).",
-      "Room Sharing: In triple-sharing rooms, an extra mattress is provided.",
-      "Discipline & Punctuality: Team coordination and alignment are strictly required on mountain routes.",
-      "Safety & Harassment: Travel Tribes strictly stands against any form of harassment.",
-      "Cancellation 10–30 days prior: 25% deduction on remaining balance.",
-      "Cancellation 8–10 days prior: 50% deduction on remaining balance.",
-      "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
-      "Cancellation 3–6 days prior: 90% deduction on remaining balance.",
-      "Cancellation < 2 days / No-Show: 100% deduction (No refund).",
-      "Operator Cancellation: 100% full refund within 4–7 business days if trip is cancelled by the operator."
+      "The trip leader has the right to discard, skip or alter sightseeing/itinerary in case of an emergency, act of God or unfavorable participant behavior.",
+      "In triple-sharing rooms, an extra mattress is provided and should not be confused with an extra bed.",
+      "Delays by participants at particular sightseeing locations may result in cancellation of further sightseeing.",
+      "Participants should coordinate, remain disciplined and align together as a team.",
+      "No refund is provided if a participant doesn't show up on the day of the event.",
+      "Alcohol consumption and serving in hotels/rooms are subject to the respective hotel's rules.",
+      "A valid photo ID is mandatory for all members staying at the hotel.",
+      "Itineraries might change slightly on public holidays/festivals.",
+      "Vehicles are provided exclusively as per the itinerary on a point-to-point basis and are not available for personal use.",
+      "Travellers are responsible for their luggage and belongings.",
+      "Travel Tribes is not liable if sightseeing is closed due to special occasions, public holidays, long weekends or festivals.",
+      "Travel insurance is not provided for sickness, accidents, theft or other losses.",
+      "Water and electricity scarcity can occur in hilly areas. Some hotels may have fixed schedules for hot and cold water.",
+      "Please do not expect luxury facilities and cooperate with fellow participants.",
+      "Transportation and logistics may vary depending on group size — 7-seater Sumo, 11-seater Tempo Traveller or 20-seater Bus.",
+      "Travel Tribes strictly stands against any form of harassment.",
+      "Participants accept road, vehicle and nature-related risks associated with the trip.",
+      "AC may not be available in Tempo Traveller, Innova, Xylo, Scorpio or similar vehicles in hilly regions.",
+      "Third-party buses may experience breakdowns and replacement arrangements may take some time.",
+      "Bus halts for lunch/dinner are predefined by the vendor.",
+      "Refund will be done only in case of cancellation of the plan by the company/organizers or if the plan is postponed.",
+      "By joining the trip, you give consent and authority to Travel Tribes to use clicked pictures/videos for social media, marketing or other media purposes.",
+      "Booking/Advance Amount: The booking amount is non-refundable if the traveller cancels the trip. If the traveller cancels, the booking amount can be transferred to another person or used as Travel Tribes credit within 3 months.",
+      "Cancellation 10–30 days before departure: 25% deduction on remaining balance.",
+      "Cancellation 8–10 days before departure: 50% deduction on remaining balance.",
+      "Cancellation 6–8 days before departure: 70% deduction on remaining balance.",
+      "Cancellation 3–6 days before departure: 90% deduction on remaining balance.",
+      "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
+      "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
     pricingOptions: [
-      { label: 'Triple Sharing (Delhi to Delhi)', price: '₹18,999 / person' },
-      { label: 'Double Sharing (Delhi to Delhi)', price: '₹21,999 / person' }
+      { label: 'Triple Sharing (Delhi to Delhi)', price: '₹18,999 + 5% GST' },
+      { label: 'Double Sharing (Delhi to Delhi)', price: '₹21,999 + 5% GST' }
     ],
     bookingAmount: '₹5,000 / person'
+  },
+  {
+    id: 'jawai-leopard-safari',
+    slug: 'jawai-leopard-safari',
+    title: 'Jawai — The Land of Leopards',
+    location: 'Jawai · Bera · Jawai Dam · Pali · Rajasthan',
+    region: 'Domestic',
+    date: 'Oct 02–05, 2026',
+    dates: [
+      'Oct 02–05, 2026 (Long Weekend)',
+      'Oct 16–19, 2026',
+      'Oct 30–Nov 02, 2026',
+      'Nov 06–09, 2026 (Diwali / Long Weekend)',
+      'Nov 20–23, 2026',
+      'Dec 04–07, 2026',
+      'Dec 18–21, 2026',
+      'Dec 24–27, 2026 (Christmas Weekend)',
+      'Dec 30–Jan 02, 2027 (New Year Special)'
+    ],
+    duration: '3N/4D',
+    price: '₹11,499',
+    image: img('photo-1456926631375-92c8ce872def'),
+    alt: 'Wild Leopard on Granite Hills in Jawai Rajasthan',
+    tag: 'Wildlife & Leopard Safari',
+    description: 'Experience Jawai, the Land of Leopards, with Travel Tribes on a 3N/4D experiential wildlife trip from Mumbai. Go beyond a regular weekend getaway with two Jeep safaris — a dramatic sunset leopard safari and an early-morning sunrise safari — while exploring the rugged Jawai landscape, Jawai Dam and its crocodile habitat. Add a wilderness stay, a Tribe Vibe evening with stories, music and new friends, and a scenic train journey from Mumbai to Mumbai. This Jawai leopard safari group trip is designed for travellers looking for wildlife, nature, adventure and meaningful travel experiences.',
+    spots: '8 spots left',
+    gallery: [
+      { image: img('photo-1456926631375-92c8ce872def'), alt: 'Wild Leopard on Granite Rocks in Jawai' },
+      { image: img('photo-1516426122078-c23e76319801'), alt: 'Jawai Open 4x4 Jeep Safari Experience' },
+      { image: img('photo-1506744038136-46273834b3fb'), alt: 'Rugged Aravalli Granite Hills & Sunset Horizon' },
+      { image: img('photo-1544644181-1484b3fdfc62'), alt: 'Scenic Jawai Dam Water Reservoir & Crocodiles' },
+      { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Wilderness Stay amidst Jawai Landscape' },
+      { image: img('photo-1519671482749-fd09be7ccebf'), alt: 'Tribe Vibe Evening Music, Bonfire & Stories' }
+    ],
+    highlights: [
+      "Sunset Leopard Safari through Jawai's rugged granite hills.",
+      "Sunrise Leopard Safari at 4:00 AM tracking big cats in morning light.",
+      "Explore the dramatic prehistoric Aravalli granite boulder landscape.",
+      "Visit the scenic Jawai Dam reservoir and bird sanctuary.",
+      "Experience wild crocodile spotting along Jawai Dam waters.",
+      "Enjoy a lively Tribe Vibe session with stories, music, games and bonding.",
+      "Stay at a curated wilderness resort amidst Jawai's nature.",
+      "Compact 3N/4D experiential group trip curated for 18–40 year old travellers.",
+      "Comfortable 3AC train journey from Mumbai to Mumbai."
+    ],
+    itinerary: [
+      {
+        id: 'jawai-day-1',
+        day: 1,
+        title: 'Day 1: Mumbai to Jawai | Overnight Train Journey 🚂✨',
+        activities: [
+          "Board your night train from Mumbai (Bandra Terminus / Borivali).",
+          "Meet your fellow travellers, break the ice with group travel games, and get ready for the wilderness adventure ahead.",
+          "Enjoy an overnight 3AC train journey towards Jawai Bandh.",
+          "Meals: Not included."
+        ]
+      },
+      {
+        id: 'jawai-day-2',
+        day: 2,
+        title: 'Day 2: Jawai Bandh Arrival | Sunset Leopard Safari | Tribe Vibe 🐆🌅🔥',
+        activities: [
+          "Arrive at Jawai Bandh Railway Station around 10:00 AM.",
+          "Transfer and check in to your stay amidst the wilderness. Freshen up and relax.",
+          "Enjoy a delicious lunch at the stay.",
+          "Head out for your first thrilling Open-Jeep Leopard Safari at 3:00 PM.",
+          "Traverse Jawai’s rugged granite hills and caves while tracking wild leopards with expert local trackers.",
+          "Capture breathtaking sunset vistas over the granite rocks.",
+          "Return to the resort around 7:00 PM and enjoy a warm, delicious dinner.",
+          "End the night with a signature Tribe Vibe session featuring stories, music, dance and getting to know fellow travellers.",
+          "Overnight stay in Jawai.",
+          "Meals: Breakfast, Lunch and Dinner."
+        ]
+      },
+      {
+        id: 'jawai-day-3',
+        day: 3,
+        title: 'Day 3: Sunrise Safari | Jawai Dam | Crocodile Spotting | Return Journey 🌄🐊🚂',
+        activities: [
+          "Wake up early for an exhilarating 4:00 AM Sunrise Leopard Safari.",
+          "Witness the wilderness awakening in early morning golden light and track big cats returning from nocturnal hunts.",
+          "Return around 8:00 AM for a hot breakfast and check out.",
+          "Head out to explore the scenic Jawai Dam.",
+          "Enjoy wild crocodile and migratory bird spotting along the dam backwaters.",
+          "Have lunch before beginning your return journey towards Jawai Bandh Railway Station.",
+          "Board the 5:00 PM train back towards Mumbai.",
+          "Overnight train journey to Mumbai.",
+          "Meals: Breakfast."
+        ]
+      },
+      {
+        id: 'jawai-day-4',
+        day: 4,
+        title: 'Day 4: Back to Mumbai 🏠✨',
+        activities: [
+          "Arrive back in Mumbai early morning.",
+          "Conclude an action-packed wilderness getaway with thrilling leopard sightings, unforgettable memories, and lifelong friendships from your travel tribe!",
+          "Meals: Not included."
+        ]
+      }
+    ],
+    inclusions: [
+      "3AC-class train travel from Mumbai to Mumbai and back (Confirmed / RAC basis).",
+      "All internal transfers and sightseeing as per the itinerary in private vehicles.",
+      "1-Night stay amidst the wilderness in Jawai on triple sharing basis.",
+      "2 Jeep safaris — one sunset safari and one sunrise safari.",
+      "Jawai Dam visit and crocodile spotting.",
+      "All forest permits and entry fees.",
+      "4 Meals: 2 Breakfasts, 1 Lunch, 1 Dinner.",
+      "Travel Tribes Trip Captain / Local Wildlife Guide assistance throughout the trip."
+    ],
+    exclusions: [
+      "5% GST.",
+      "Meals not specifically mentioned in the inclusions (train food, Day 3 lunch/dinner).",
+      "Personal expenses such as beverages, bottled water, and shopping.",
+      "Optional activities or additional safaris beyond the 2 included.",
+      "Camera/video equipment charges, if applicable.",
+      "Costs arising from natural calamities, delays or unforeseen circumstances.",
+      "Anything not specifically mentioned under inclusions."
+    ],
+    policies: [
+      "Regular Price: Ex-Mumbai 3AC ₹11,499/- per person + 5% GST.",
+      "Booking Amount: ₹4,000/- per person advance to confirm your seat.",
+      "Book at least 30 days before departure for better chances of confirmed 3AC train tickets.",
+      "Train tickets are subject to availability and may be Confirmed/RAC.",
+      "A valid government-issued photo ID is mandatory for hotel stay.",
+      "The trip includes only 2 Jeep safaris; additional safaris are not included.",
+      "Wildlife sightings, including leopard sightings, are subject to natural conditions and cannot be guaranteed.",
+      "The 4:00 AM safari requires an early start, so travellers should be prepared for the schedule.",
+      "Safari timings and sightseeing may be modified in case of emergencies or unforeseen circumstances.",
+      "Accommodation is on triple sharing, with an extra mattress provided rather than an additional bed.",
+      "Transportation and vehicle type may vary depending on group size.",
+      "No refund will be provided in case of a no-show.",
+      "Participants are expected to coordinate with the group and follow the trip schedule.",
+      "Cancellation Policy: Initial booking amount is non-refundable. Cancellation 30+ days before departure: 50% trip cost charged as cancellation fee | 15–30 days before departure: 75% cancellation fee | 0–15 days before departure: 100% cancellation fee."
+    ],
+    pricingOptions: [
+      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹11,499 / person' },
+      { label: 'Booking Advance', price: '₹4,000 / person' },
+      { label: 'Long Weekend / Festive Batch Special', price: '₹12,499 / person', note: 'Applicable on Diwali, Xmas & New Year batches' }
+    ],
+    bookingAmount: '₹4,000 / person',
+    reviews: [
+      {
+        name: 'Siddharth Mehta',
+        role: 'Verified Traveller',
+        detail: 'Jawai Leopard Safari Trip',
+        rating: 5,
+        quote: 'Spotting two leopards on the granite rocks during the sunset safari was surreal! The 4 AM morning safari was thrilling too. The wilderness resort and campfire vibe made this the ultimate Mumbai weekend trip.'
+      },
+      {
+        name: 'Prachi Shah',
+        role: 'Verified Traveller',
+        detail: 'Jawai Wildlife Expedition',
+        rating: 5,
+        quote: 'Travelled solo from Mumbai by 3AC train and felt completely safe and welcomed. The Jawai Dam crocodile spotting was amazing and the group bonding was top tier. Tribe hai to vibe hai!'
+      },
+      {
+        name: 'Harsh Vardhan',
+        role: 'Local Guide',
+        reviewCount: '15 reviews',
+        photoCount: '48 photos',
+        detail: 'Jawai Experiential Tour',
+        rating: 5,
+        quote: 'Incredible big cat tracking! Our local safari drivers knew exactly where the leopards hide in the cave crevices. Everything from train tickets to food and stay was well coordinated.'
+      }
+    ]
   }
 ]
 
@@ -2876,12 +4990,19 @@ export function toFestiveTrip(trip: Trip): Trip | null {
     )
     if (festiveOpt) {
       if (festiveOpt.price.startsWith('+')) {
-        const baseNum = parseInt(trip.price.replace(/[^\d]/g, ''), 10) || 0
-        const addNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 1000
-        festivePrice = `₹${(baseNum + addNum).toLocaleString('en-IN')}`
-      } else {
-        const optNum = parseInt(festiveOpt.price.replace(/[^\d]/g, ''), 10) || 0
-        festivePrice = `₹${optNum.toLocaleString('en-IN')}`
+        const baseMatch = trip.price.match(/(\d[\d,]*)/)
+        const baseNum = baseMatch ? parseInt(baseMatch[1].replace(/,/g, ''), 10) : 0
+        const addMatch = festiveOpt.price.match(/(\d[\d,]*)/)
+        const addNum = addMatch ? parseInt(addMatch[1].replace(/,/g, ''), 10) : 1000
+        if (baseNum > 0) {
+          festivePrice = `₹${(baseNum + addNum).toLocaleString('en-IN')}`
+        }
+      } else if (!festiveOpt.price.toLowerCase().includes('request')) {
+        const optMatch = festiveOpt.price.match(/(\d[\d,]*)/)
+        const optNum = optMatch ? parseInt(optMatch[1].replace(/,/g, ''), 10) : 0
+        if (optNum > 0) {
+          festivePrice = `₹${optNum.toLocaleString('en-IN')}`
+        }
       }
     }
   }

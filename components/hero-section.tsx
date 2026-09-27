@@ -15,18 +15,22 @@ const HERO_IMAGES = [
   '/image/Udaipur/udaipur_img.JPEG',
 ]
 
-const CLIENT_IMAGES_COL1 = [
-  { name: 'Gokarna Tribe', loc: 'Gokarna', img: '/image/Gokarna/IMG_4170.JPG' },
-  { name: 'Meghalaya Tribe', loc: 'Meghalaya', img: '/image/Meghalaya/IMG_0857.JPEG' },
-  { name: 'Spiti Tribe', loc: 'Spiti Valley', img: '/image/Spiti/IMG_5483.jpg' },
-  { name: 'Hampi Tribe', loc: 'Hampi', img: '/image/Hampi/IMG_9698.JPEG' },
+const DOMESTIC_SCENERY_IMAGES = [
+  { name: 'Spiti Valley', loc: 'Spiti Valley', tag: 'Domestic', img: '/Card Image/Spiti_with_chandrataal.png' },
+  { name: 'Meghalaya', loc: 'Meghalaya', tag: 'Domestic', img: '/Card Image/meghalaya_6_days.jpg' },
+  { name: 'Gokarna', loc: 'Gokarna', tag: 'Domestic', img: '/Card Image/Gokarna.jpg' },
+  { name: 'Hampi', loc: 'Hampi', tag: 'Domestic', img: '/image/Hampi/hampi_img.jpeg' },
+  { name: 'Coorg', loc: 'Coorg', tag: 'Domestic', img: '/Card Image/coorg.jpg' },
+  { name: 'Udaipur', loc: 'Udaipur', tag: 'Domestic', img: '/Card Image/udaipur.jpg' },
+  { name: 'Kokan', loc: 'Kokan', tag: 'Domestic', img: '/Card Image/kokan.png' },
 ]
 
-const CLIENT_IMAGES_COL2 = [
-  { name: 'Coorg Tribe', loc: 'Coorg', img: '/image/Coorg/IMG_5499.JPEG' },
-  { name: 'Udaipur Tribe', loc: 'Udaipur', img: '/image/Udaipur/IMG_4003.JPG' },
-  { name: 'Gokarna Friends', loc: 'Gokarna', img: '/image/Gokarna/IMG_8908_Original.JPEG' },
-  { name: 'Hampi Sunset', loc: 'Hampi', img: '/image/Hampi/IMG_6658.JPG' },
+const INTERNATIONAL_SCENERY_IMAGES = [
+  { name: 'Vietnam', loc: 'Vietnam', tag: 'International', img: '/Card Image/vietnam.png' },
+  { name: 'Bali & Gili', loc: 'Bali & Gili', tag: 'International', img: '/Card Image/bali_with_gili.png' },
+  { name: 'Bhutan', loc: 'Bhutan', tag: 'International', img: '/Card Image/Bhutan.png' },
+  { name: 'Sri Lanka', loc: 'Sri Lanka', tag: 'International', img: '/Card Image/srilanka.png' },
+  { name: 'Thailand', loc: 'Thailand', tag: 'International', img: '/Card Image/Phuket_&_Krabi_Thailand_.png' },
 ]
 
 const ROTATING_WORDS = ['Gokarna', 'Spiti', 'Coorg', 'Udaipur', 'Meghalaya', 'Kerala', 'Rajasthan', 'Ladakh']
@@ -104,7 +108,7 @@ export function Hero() {
 
   return (
     <section className="min-h-[80vh] sm:min-h-[85vh] md:min-h-[90vh] pt-16 sm:pt-20 md:pt-14 pb-40 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-visible flex items-center bg-primary z-20">
-      {/* CSS Styles for the Infinite Scrolling client tracks */}
+      {/* CSS Styles for the Infinite Scrolling scenery tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes scroll-up {
@@ -116,10 +120,10 @@ export function Hero() {
           100% { transform: translateY(0); }
         }
         .animate-scroll-up {
-          animation: scroll-up 18s linear infinite;
+          animation: scroll-up 26s linear infinite;
         }
         .animate-scroll-down {
-          animation: scroll-down 18s linear infinite;
+          animation: scroll-down 24s linear infinite;
         }
         .animate-scroll-up:hover, .animate-scroll-down:hover {
           animation-play-state: paused;
@@ -262,28 +266,28 @@ export function Hero() {
             </span>
           </div>
 
-          {/* Right Column: Sliding Client Travel Images (Dual-Track Infinite Scroll) */}
+          {/* Right Column: Sliding Scenery Images (Col 1: Domestic, Col 2: International) */}
           <div className="lg:col-span-5 hidden lg:block h-[450px] relative overflow-hidden select-none">
             <div className="grid grid-cols-2 gap-4 h-full">
 
-              {/* Column 1: Upward scrolling */}
+              {/* Column 1: Domestic Trips Scenery (Upward scrolling) */}
               <div className="h-full overflow-hidden relative">
                 <div className="flex flex-col gap-4 animate-scroll-up">
-                  {/* Map twice for loop */}
-                  {[...CLIENT_IMAGES_COL1, ...CLIENT_IMAGES_COL1].map((client, idx) => (
+                  {/* Loop list */}
+                  {[...DOMESTIC_SCENERY_IMAGES, ...DOMESTIC_SCENERY_IMAGES].map((item, idx) => (
                     <div
-                      key={idx}
-                      className="relative rounded-2xl overflow-hidden group shadow-lg border border-white/10 h-52 shrink-0"
+                      key={`dom-${idx}`}
+                      className="relative rounded-2xl overflow-hidden group shadow-lg border border-white/10 h-52 shrink-0 bg-slate-900"
                     >
                       <img
-                        src={client.img}
-                        alt={`${client.name} in ${client.loc}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        src={item.img}
+                        alt={`${item.name} scenery`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      {/* Left bottom overlay for destination */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent p-4 flex items-end">
+                      {/* Bottom overlay for destination */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3.5 flex items-end">
                         <span className="text-[13px] font-extrabold text-white tracking-wide leading-tight drop-shadow-md">
-                          {client.loc}
+                          {item.loc}
                         </span>
                       </div>
                     </div>
@@ -291,24 +295,24 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Column 2: Downward scrolling */}
+              {/* Column 2: International Trips Scenery (Downward scrolling) */}
               <div className="h-full overflow-hidden relative">
                 <div className="flex flex-col gap-4 animate-scroll-down">
-                  {/* Map twice for loop */}
-                  {[...CLIENT_IMAGES_COL2, ...CLIENT_IMAGES_COL2].map((client, idx) => (
+                  {/* Loop list */}
+                  {[...INTERNATIONAL_SCENERY_IMAGES, ...INTERNATIONAL_SCENERY_IMAGES, ...INTERNATIONAL_SCENERY_IMAGES].map((item, idx) => (
                     <div
-                      key={idx}
-                      className="relative rounded-2xl overflow-hidden group shadow-lg border border-white/10 h-52 shrink-0"
+                      key={`intl-${idx}`}
+                      className="relative rounded-2xl overflow-hidden group shadow-lg border border-white/10 h-52 shrink-0 bg-slate-900"
                     >
                       <img
-                        src={client.img}
-                        alt={`${client.name} in ${client.loc}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        src={item.img}
+                        alt={`${item.name} scenery`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      {/* Left bottom overlay for destination */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent p-4 flex items-end">
+                      {/* Bottom overlay for destination */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3.5 flex items-end">
                         <span className="text-[13px] font-extrabold text-white tracking-wide leading-tight drop-shadow-md">
-                          {client.loc}
+                          {item.loc}
                         </span>
                       </div>
                     </div>
