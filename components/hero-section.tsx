@@ -7,12 +7,15 @@ import Link from 'next/link'
 import { SAMPLE_TRIPS, type Trip } from '@/lib/trips'
 
 const HERO_IMAGES = [
-  '/image/Spiti/spiti_img.JPEG',
-  '/image/Meghalaya/meghalaya_img.JPEG',
-  '/image/Gokarna/gokarna_img.jpeg',
-  '/image/Hampi/hampi_img.jpeg',
-  '/image/Coorg/coorg_img.JPEG',
-  '/image/Udaipur/udaipur_img.JPEG',
+  '/Hero%20section/1000004663.jpg',
+  '/Hero%20section/20241021_200540_D98AB8.jpeg',
+  '/Hero%20section/20251009_200654_C3F41C.jpeg',
+  '/Hero%20section/20260904_212930_73DB89.jpeg',
+  '/Hero%20section/20260906_162928_7A440F.jpeg',
+  '/Hero%20section/IMG_1034.JPEG',
+  '/Hero%20section/IMG_1192.JPEG',
+  '/Hero%20section/IMG_8960.JPEG',
+  '/Hero%20section/Must%20Do%20Experiences.png',
 ]
 
 const DOMESTIC_SCENERY_IMAGES = [
@@ -140,7 +143,7 @@ export function Hero() {
             exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.8, ease: 'easeInOut' }}
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${HERO_IMAGES[currentImage]})` }}
+            style={{ backgroundImage: `url('${HERO_IMAGES[currentImage]}')` }}
           />
         </AnimatePresence>
         {/* Dark readability overlays */}

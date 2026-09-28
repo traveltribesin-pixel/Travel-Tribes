@@ -197,33 +197,13 @@ function MarqueeVideoCard({
         className="w-full h-full object-cover brightness-[0.95] group-hover:brightness-105 transition-all duration-500"
       />
 
-      {/* Subtle bottom gradient with title if available */}
-      <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
-        {reel.title && (
-          <p className="text-white font-bold text-xs line-clamp-1 drop-shadow-sm">
-            {reel.title}
-          </p>
-        )}
-        {reel.location && (
-          <p className="text-white/80 text-[10px] font-medium drop-shadow-sm">
-            {reel.location}
-          </p>
-        )}
-      </div>
-
-      {/* Minimal Hover Overlay with Expand & Sound Icon */}
-      <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      {/* Minimal Hover Overlay with Play & Expand Icon */}
+      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
         <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
           <Play size={20} className="fill-white translate-x-0.5" />
         </div>
         <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center">
           <Maximize2 size={14} />
-        </div>
-        <div className="absolute bottom-3 inset-x-3 text-center">
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-bold text-white border border-white/20">
-            <Volume2 size={12} className="text-[var(--sky)]" />
-            Click to Play
-          </span>
         </div>
       </div>
     </div>

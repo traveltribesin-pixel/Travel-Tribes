@@ -6,6 +6,13 @@ import { Award, CheckCircle2, ShieldCheck, Sparkles, Star } from 'lucide-react'
 
 export const recognitionLogos = [
   {
+    name: 'Maharashtra Tourism',
+    src: '/image/Maha_Tourism_logo.jpg',
+    width: 400,
+    height: 300,
+    className: 'h-14 sm:h-18 md:h-22 w-auto object-contain rounded-xl sm:rounded-2xl shadow-xs',
+  },
+  {
     name: 'MSME',
     src: '/image/msme_logo.png',
     width: 520,
@@ -18,6 +25,20 @@ export const recognitionLogos = [
     width: 678,
     height: 199,
     className: 'h-11 sm:h-14 md:h-17 w-auto object-contain',
+  },
+  {
+    name: 'Treebo Hotels',
+    src: '/image/treebo-hotels-logo-startuptalky.jpg',
+    width: 400,
+    height: 250,
+    className: 'h-14 sm:h-18 md:h-22 w-auto object-contain rounded-xl sm:rounded-2xl shadow-xs',
+  },
+  {
+    name: 'The Hosteller',
+    src: '/image/hostelers_logo.png',
+    width: 400,
+    height: 250,
+    className: 'h-12 sm:h-16 md:h-20 w-auto object-contain',
   },
   {
     name: 'LBB',

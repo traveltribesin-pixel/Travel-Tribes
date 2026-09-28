@@ -5084,22 +5084,10 @@ export const whyUsFaqs: FaqItem[] = [
     answer: 'Every Travel Tribes trip is accompanied by a Trip Captain - someone from our team who is there to handle the on-ground logistics, keep the trip running smoothly and, most importantly, keep the Tribe together.\n\nFrom coordinating transport and stays to helping with plans, activities and those unexpected travel moments, your Trip Captain has got it covered.\n\nYou focus on exploring. We’ll handle the rest.'
   },
   {
-    id: 'what-is-a-trip-captain',
-    question: 'What is a Trip Captain?',
-    category: 'Trip Captain',
-    answer: 'A Trip Captain is more than just a trip coordinator. They’re your on-ground point of contact, problem-solver and vibe keeper throughout the journey.\n\nThey make sure the group stays connected, the plans stay on track and nobody feels like they’re travelling alone.\n\nBasically: logistics handled. Good vibes guaranteed.'
-  },
-  {
     id: 'join-trip-alone',
     question: 'Can I join a trip alone?',
     category: 'Solo Travel',
     answer: 'Absolutely. Most of our travellers join solo. You don’t need to know anyone before the trip — that’s kind of the point. You’ll meet your tribe along the way.'
-  },
-  {
-    id: 'who-usually-travels',
-    question: 'Who usually travels with Travel Tribes?',
-    category: 'Community',
-    answer: 'Our trips are for curious, easy-going travellers who love exploring new places and meeting new people. Expect a mix of solo travellers, friends, couples, and small groups.'
   },
   {
     id: 'only-for-young-people',
@@ -5112,12 +5100,6 @@ export const whyUsFaqs: FaqItem[] = [
     question: 'How big are the groups?',
     category: 'Group Travel',
     answer: 'We keep our groups small enough to actually connect, rather than feeling like a typical large tour group. Group size can vary by destination and trip.'
-  },
-  {
-    id: 'share-room',
-    question: 'Do I have to share a room with someone?',
-    category: 'Stay & Rooms',
-    answer: 'Most of our trips are planned on a sharing basis. Room-sharing details and available options are mentioned on the respective trip page.'
   },
   {
     id: 'how-to-book',
@@ -5142,12 +5124,6 @@ export const whyUsFaqs: FaqItem[] = [
     question: 'Can I join if I’m travelling with my friends?',
     category: 'Group Travel',
     answer: 'Of course. Bring your people or come solo — either way, you’re part of the Tribe.'
-  },
-  {
-    id: 'cancellation-policy',
-    question: 'What happens if I need to cancel my trip?',
-    category: 'Policies',
-    answer: 'Cancellation and refund policies vary by trip. Please check the cancellation policy on your specific trip page before booking.'
   }
 ]
 

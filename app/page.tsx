@@ -28,16 +28,20 @@ export default function Home() {
 
         {/* 3. Upcoming Trips */}
         <UpcomingTripsSection />
-        <BrandValuesSection />
 
-        {/* 3. Domestic Journeys */}
-        <DomesticJourneysSection />
+        {/* 5. High Impact Community Banner & WhatsApp CTA */}
+        <CommunityBannerSection />
+
 
         {/* 4. International Trips */}
         <InternationalTripsSection />
 
-        {/* 5. High Impact Community Banner & WhatsApp CTA */}
-        <CommunityBannerSection />
+        {/* 3. Domestic Journeys */}
+        <DomesticJourneysSection />
+
+
+
+        <BrandValuesSection />
 
         {/* 7. Honeymoon Escapes */}
         {/* <HoneymoonEscapesSection /> */}

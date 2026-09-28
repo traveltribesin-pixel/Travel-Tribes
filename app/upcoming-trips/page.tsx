@@ -1,6 +1,22 @@
 import { TripsPage } from '@/app/trips-page'
 import { trips } from '@/lib/travel-data'
 
+const UPCOMING_TRIP_SLUGS = [
+  'spiti-winter-expedition',   // Winter Spiti
+  'meghalaya-backpacking',     // Meghalaya Backpacking
+  'udaipur-backpacking',       // Udaipur
+  'meghalaya-with-kaziranga',  // Meghalaya with kaziranga
+  'coorg-backpacking',         // Coorg
+  'bali-gili-islands',         // Bali with Gili
+  'sri-lanka-island-escape',   // Srilanka
+  'vietnam-classic',           // Vietnam
+  'bhutan-backpacking',        // Bhutan
+]
+
+const upcomingTrips = UPCOMING_TRIP_SLUGS
+  .map(slug => trips.find(t => t.slug === slug))
+  .filter((t): t is (typeof trips)[0] => Boolean(t))
+
 const categories = [
   { value: 'All', title: 'All' },
   { value: 'Domestic', title: 'Domestic' },
@@ -16,7 +32,7 @@ export default function Page() {
       title="Upcoming trips."
       intro="The next places we are going, and the people you could go with. Pick a date, then let the anticipation begin."
       image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=88"
-      trips={trips}
+      trips={upcomingTrips}
       categories={categories}
     />
   )
