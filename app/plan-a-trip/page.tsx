@@ -717,7 +717,7 @@ export default function PlanATripPage() {
                       src={vibe.image}
                       alt={vibe.label}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover object-balanced group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                     
@@ -801,7 +801,7 @@ export default function PlanATripPage() {
                       src={dest.image}
                       alt={dest.title}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover object-balanced group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
                     
@@ -1032,7 +1032,7 @@ export default function PlanATripPage() {
                         src={item.image}
                         alt={item.name}
                         fill
-                        className="object-cover"
+                        className="object-cover object-center"
                       />
                     </div>
                     <div>

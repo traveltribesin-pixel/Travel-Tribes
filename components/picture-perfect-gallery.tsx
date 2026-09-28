@@ -200,7 +200,7 @@ export function PicturePerfectGallery({
                       fill
                       sizes="25vw"
                       priority={slot === 0 || slot === 1}
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                      className="object-cover object-balanced transition-transform duration-700 ease-out group-hover:scale-108"
                     />
 
                     {/* Clean Hover Overlay */}
@@ -240,7 +240,7 @@ export function PicturePerfectGallery({
                       alt={photo.alt || `${tripTitle} photo`}
                       fill
                       sizes="80vw"
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      className="object-cover object-balanced transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-slate-800 shadow">

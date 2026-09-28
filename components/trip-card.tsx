@@ -24,7 +24,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
           alt={trip.alt}
           fill
           sizes="(max-width: 700px) 90vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover object-balanced transition-transform duration-500 group-hover:scale-105"
         />
         {/* Featured Tag (top left) */}
         {trip.tag && (

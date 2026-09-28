@@ -273,7 +273,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               alt={trip.alt}
               fill
               priority
-              className="object-cover group-hover:scale-105 transition-transform duration-700"
+              className="object-cover object-balanced group-hover:scale-105 transition-transform duration-700"
             />
           </div>
           <div className="hidden md:flex flex-col gap-1 col-span-1 h-full">
@@ -287,7 +287,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                   src={img.image}
                   alt={img.alt}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover object-balanced group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
             ))}

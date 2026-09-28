@@ -24,7 +24,7 @@ export function BlogSection() {
                 alt="" 
                 fill 
                 sizes="(max-width: 700px) 80vw, 33vw" 
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
               />
             </div>
             {/* Card details body */}

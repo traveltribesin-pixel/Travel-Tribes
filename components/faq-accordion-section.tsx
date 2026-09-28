@@ -48,7 +48,7 @@ export function FaqAccordionSection({
   return (
     <section className={`w-full max-w-[1240px] py-8 sm:py-12 px-4 sm:px-6 lg:px-8 mx-auto ${className}`}>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-        
+
         {/* Left Column: FAQ Content (Header + Accordion + CTA) */}
         <div className="lg:col-span-7">
           {/* Header Container (Left aligned on desktop, center on mobile) */}
@@ -76,11 +76,10 @@ export function FaqAccordionSection({
               return (
                 <div
                   key={faq.id}
-                  className={`rounded-xl sm:rounded-2xl transition-all duration-200 border overflow-hidden ${
-                    isOpen
+                  className={`rounded-xl sm:rounded-2xl transition-all duration-200 border overflow-hidden ${isOpen
                       ? 'bg-white border-[var(--sky)]/60 shadow-sm ring-1 ring-[var(--sky)]/20'
                       : 'bg-white/90 hover:bg-white border-slate-200/80 hover:border-slate-300'
-                  }`}
+                    }`}
                 >
                   <button
                     type="button"
@@ -90,17 +89,15 @@ export function FaqAccordionSection({
                   >
                     <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                       <span
-                        className={`text-[11px] sm:text-xs font-bold tracking-tight shrink-0 transition-colors ${
-                          isOpen ? 'text-[var(--sky)]' : 'text-slate-300 group-hover:text-slate-400'
-                        }`}
+                        className={`text-[11px] sm:text-xs font-bold tracking-tight shrink-0 transition-colors ${isOpen ? 'text-[var(--sky)]' : 'text-slate-300 group-hover:text-slate-400'
+                          }`}
                       >
                         {itemNumber}
                       </span>
                       <div className="flex items-center gap-2 flex-wrap min-w-0">
                         <span
-                          className={`text-xs sm:text-[13.5px] font-bold transition-colors leading-snug ${
-                            isOpen ? 'text-[var(--navy)]' : 'text-slate-800 group-hover:text-[var(--navy)]'
-                          }`}
+                          className={`text-xs sm:text-[13.5px] font-bold transition-colors leading-snug ${isOpen ? 'text-[var(--navy)]' : 'text-slate-800 group-hover:text-[var(--navy)]'
+                            }`}
                         >
                           {faq.question}
                         </span>
@@ -113,11 +110,10 @@ export function FaqAccordionSection({
                     </div>
 
                     <div
-                      className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 ${
-                        isOpen
+                      className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 ${isOpen
                           ? 'bg-[var(--sky)] text-white rotate-180 shadow-xs'
                           : 'bg-slate-100 group-hover:bg-[var(--sky-pale)] text-slate-500 group-hover:text-[var(--sky)]'
-                      }`}
+                        }`}
                     >
                       <ChevronDown size={14} className="stroke-[2.5]" />
                     </div>
@@ -213,11 +209,11 @@ export function FaqAccordionSection({
                     alt={item.label}
                     fill
                     sizes="(max-width: 1200px) 200px, 240px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover object-balanced group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent flex items-end p-3 opacity-90 group-hover:opacity-100 transition-opacity">
                     <span className="text-white text-xs font-bold tracking-wide drop-shadow-sm">
-                      {item.label}
+                      {/* {item.label} */}
                     </span>
                   </div>
                 </div>
@@ -236,7 +232,7 @@ export function FaqAccordionSection({
                     alt={item.label}
                     fill
                     sizes="(max-width: 1200px) 200px, 240px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover object-balanced group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent flex items-end p-3 opacity-90 group-hover:opacity-100 transition-opacity">
                     <span className="text-white text-xs font-bold tracking-wide drop-shadow-sm">

@@ -415,7 +415,7 @@ export default function CorporateTripsPage() {
                       src={item.image}
                       alt={item.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover object-balanced group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 
@@ -654,7 +654,7 @@ export default function CorporateTripsPage() {
                     src={act.image}
                     alt={act.title}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="object-cover object-balanced group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
                   <div className="absolute bottom-3 left-3 text-white">
@@ -695,7 +695,7 @@ export default function CorporateTripsPage() {
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80"
                     alt="Happy corporate team"
                     fill
-                    className="object-cover"
+                    className="object-cover object-center"
                   />
                 </div>
                 <div className="space-y-4">

@@ -219,7 +219,7 @@ export default function AboutPage() {
                   src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1300&q=85"
                   alt="Friends sharing a bonfire story outdoors"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                   priority
                 />
               </div>
@@ -426,7 +426,7 @@ export default function AboutPage() {
                   src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=85"
                   alt="Beach sunset gathering with Travel Tribes"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
             </div>
@@ -589,7 +589,7 @@ export default function AboutPage() {
                   src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85"
                   alt="Travel Tribes Trip Captain with group"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
             </div>

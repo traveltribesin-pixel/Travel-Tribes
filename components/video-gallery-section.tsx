@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Play, Video, Maximize2, Volume2, ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -148,9 +149,30 @@ function MarqueeVideoCard({
   reel: VideoReel
   onSelect: (reel: VideoReel) => void
 }) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isNearView, setIsNearView] = useState(false)
 
   useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (entry.isIntersecting) {
+          setIsNearView(true)
+        }
+      },
+      { rootMargin: '300px' }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isNearView) return
     const video = videoRef.current
     if (!video) return
 
@@ -177,25 +199,39 @@ function MarqueeVideoCard({
       video.removeEventListener('canplay', playVideo)
       video.removeEventListener('loadeddata', playVideo)
     }
-  }, [])
+  }, [isNearView])
 
   return (
     <div
+      ref={containerRef}
       onClick={() => onSelect(reel)}
       className="group relative bg-slate-900 rounded-3xl overflow-hidden shrink-0 w-[190px] sm:w-[230px] md:w-[260px] aspect-[9/15] shadow-[0_10px_30px_rgba(11,41,64,0.12)] cursor-pointer hover:scale-[1.03] transition-all duration-300 border border-slate-200/80 hover:border-[var(--sky)] hover:shadow-[0_16px_40px_rgba(67,169,209,0.25)]"
     >
-      {/* Autoplaying muted looping clean video */}
-      <video
-        ref={videoRef}
-        src={reel.videoUrl}
-        poster={reel.poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="w-full h-full object-cover brightness-[0.95] group-hover:brightness-105 transition-all duration-500"
-      />
+      {/* Optimized Poster Image while not in view */}
+      {!isNearView && (
+        <Image
+          src={reel.poster}
+          alt={reel.title || 'Travel Tribes Reel'}
+          fill
+          sizes="(max-width: 768px) 190px, 260px"
+          className="w-full h-full object-cover brightness-[0.95]"
+        />
+      )}
+
+      {/* Autoplaying muted looping clean video mounted when in view */}
+      {isNearView && (
+        <video
+          ref={videoRef}
+          src={reel.videoUrl}
+          poster={reel.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover brightness-[0.95] group-hover:brightness-105 transition-all duration-500"
+        />
+      )}
 
       {/* Minimal Hover Overlay with Play & Expand Icon */}
       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, MapPin, Users, Compass, Search, Star } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { SAMPLE_TRIPS, type Trip } from '@/lib/trips'
 
 const HERO_IMAGES = [
@@ -142,9 +143,17 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.8, ease: 'easeInOut' }}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${HERO_IMAGES[currentImage]}')` }}
-          />
+            className="absolute inset-0"
+          >
+            <Image
+              src={HERO_IMAGES[currentImage]}
+              alt="Travel Tribes Background"
+              fill
+              priority={currentImage === 0}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </motion.div>
         </AnimatePresence>
         {/* Dark readability overlays */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/35" />
@@ -285,7 +294,7 @@ export function Hero() {
                       <img
                         src={item.img}
                         alt={`${item.name} scenery`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Bottom overlay for destination */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3.5 flex items-end">
@@ -310,7 +319,7 @@ export function Hero() {
                       <img
                         src={item.img}
                         alt={`${item.name} scenery`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Bottom overlay for destination */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3.5 flex items-end">
