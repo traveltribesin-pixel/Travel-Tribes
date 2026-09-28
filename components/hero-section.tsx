@@ -291,14 +291,18 @@ export function Hero() {
                       key={`dom-${idx}`}
                       className="relative rounded-2xl overflow-hidden group shadow-lg border border-white/10 h-52 shrink-0 bg-slate-900"
                     >
-                      <img
+                      <Image
                         src={item.img}
                         alt={`${item.name} scenery`}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        sizes="220px"
+                        quality={65}
+                        loading="lazy"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Bottom overlay for destination */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3.5 flex items-end">
-                        <span className="text-[13px] font-extrabold text-white tracking-wide leading-tight drop-shadow-md">
+                        <span className="text-[13px] font-extrabold text-white tracking-wide leading-tight drop-shadow-md z-10">
                           {item.loc}
                         </span>
                       </div>
@@ -311,19 +315,23 @@ export function Hero() {
               <div className="h-full overflow-hidden relative">
                 <div className="flex flex-col gap-4 animate-scroll-down">
                   {/* Loop list */}
-                  {[...INTERNATIONAL_SCENERY_IMAGES, ...INTERNATIONAL_SCENERY_IMAGES, ...INTERNATIONAL_SCENERY_IMAGES].map((item, idx) => (
+                  {[...INTERNATIONAL_SCENERY_IMAGES, ...INTERNATIONAL_SCENERY_IMAGES].map((item, idx) => (
                     <div
                       key={`intl-${idx}`}
                       className="relative rounded-2xl overflow-hidden group shadow-lg border border-white/10 h-52 shrink-0 bg-slate-900"
                     >
-                      <img
+                      <Image
                         src={item.img}
                         alt={`${item.name} scenery`}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        sizes="220px"
+                        quality={65}
+                        loading="lazy"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Bottom overlay for destination */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3.5 flex items-end">
-                        <span className="text-[13px] font-extrabold text-white tracking-wide leading-tight drop-shadow-md">
+                        <span className="text-[13px] font-extrabold text-white tracking-wide leading-tight drop-shadow-md z-10">
                           {item.loc}
                         </span>
                       </div>

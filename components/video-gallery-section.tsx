@@ -149,92 +149,52 @@ function MarqueeVideoCard({
   reel: VideoReel
   onSelect: (reel: VideoReel) => void
 }) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [isHovered, setIsHovered] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isNearView, setIsNearView] = useState(false)
 
   useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        if (entry.isIntersecting) {
-          setIsNearView(true)
-        }
-      },
-      { rootMargin: '300px' }
-    )
-
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!isNearView) return
-    const video = videoRef.current
-    if (!video) return
-
-    video.muted = true
-    video.defaultMuted = true
-
-    const playVideo = () => {
-      if (video.paused) {
-        video.play().catch(() => {
-          video.muted = true
-          video.play().catch(() => {})
-        })
-      }
+    if (isHovered && videoRef.current) {
+      videoRef.current.muted = true
+      videoRef.current.play().catch(() => {})
+    } else if (!isHovered && videoRef.current) {
+      videoRef.current.pause()
     }
-
-    if (video.readyState >= 2) {
-      playVideo()
-    } else {
-      video.addEventListener('canplay', playVideo)
-      video.addEventListener('loadeddata', playVideo)
-    }
-
-    return () => {
-      video.removeEventListener('canplay', playVideo)
-      video.removeEventListener('loadeddata', playVideo)
-    }
-  }, [isNearView])
+  }, [isHovered])
 
   return (
     <div
-      ref={containerRef}
       onClick={() => onSelect(reel)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="group relative bg-slate-900 rounded-3xl overflow-hidden shrink-0 w-[190px] sm:w-[230px] md:w-[260px] aspect-[9/15] shadow-[0_10px_30px_rgba(11,41,64,0.12)] cursor-pointer hover:scale-[1.03] transition-all duration-300 border border-slate-200/80 hover:border-[var(--sky)] hover:shadow-[0_16px_40px_rgba(67,169,209,0.25)]"
     >
-      {/* Optimized Poster Image while not in view */}
-      {!isNearView && (
-        <Image
-          src={reel.poster}
-          alt={reel.title || 'Travel Tribes Reel'}
-          fill
-          sizes="(max-width: 768px) 190px, 260px"
-          className="w-full h-full object-cover brightness-[0.95]"
-        />
-      )}
+      {/* Optimized Poster Image */}
+      <Image
+        src={reel.poster}
+        alt={reel.title || 'Travel Tribes Reel'}
+        fill
+        sizes="(max-width: 768px) 190px, 260px"
+        quality={75}
+        loading="lazy"
+        className={`w-full h-full object-cover transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100 brightness-[0.95]'}`}
+      />
 
-      {/* Autoplaying muted looping clean video mounted when in view */}
-      {isNearView && (
+      {/* On-demand Video on Hover */}
+      {isHovered && (
         <video
           ref={videoRef}
           src={reel.videoUrl}
-          poster={reel.poster}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
-          className="w-full h-full object-cover brightness-[0.95] group-hover:brightness-105 transition-all duration-500"
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover brightness-[0.98] transition-all duration-300"
         />
       )}
 
       {/* Minimal Hover Overlay with Play & Expand Icon */}
-      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
         <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
           <Play size={20} className="fill-white translate-x-0.5" />
         </div>

@@ -26,6 +26,8 @@ function GalleryPhotoCard({
         alt={item.alt}
         fill
         sizes="(max-width: 768px) 320px, 480px"
+        quality={70}
+        loading="lazy"
         className="object-cover object-balanced transition-transform duration-700 ease-out group-hover:scale-105"
       />
     </div>
