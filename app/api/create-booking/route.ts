@@ -102,6 +102,7 @@ export async function POST(req: NextRequest) {
     // Never trust any price, discount, or amount sent by the client
     const pricing = calculateBookingPricing({
       tripSlug: String(body.tripSlug || ''),
+      selectedDate: date,
       packageIndex: Number(body.packageIndex),
       guests: Number(body.guests),
       isDoubleSharing: Boolean(body.isDoubleSharing),

@@ -14,6 +14,8 @@ import { ReviewCard } from '@/components/trip-components'
 import { generateItineraryPDF } from '@/lib/generate-itinerary-pdf'
 import { PicturePerfectGallery } from '@/components/picture-perfect-gallery'
 
+import { resolveTripDynamicPackages } from '@/lib/pricing-calculator'
+
 export function TripContent({ trip }: { trip: Trip }) {
   const searchParams = useSearchParams()
   const isFestiveParam = searchParams.get('festive') === '1' || searchParams.get('festive') === 'true'
@@ -112,35 +114,19 @@ export function TripContent({ trip }: { trip: Trip }) {
     }
   }
 
-  // Dynamic price resolving based on selected date (automatically adjusts for New Year / Xmas batches)
+  // Authoritative dynamic price resolving based on selected departure date (Long Weekend, Xmas/NY, Regular)
+  const dynamicPricingInfo = useMemo(() => {
+    return resolveTripDynamicPackages(trip, selectedDate)
+  }, [trip, selectedDate])
+
   const displayPrice = useMemo(() => {
-    if (isFestiveDate(selectedDate) && trip.pricingOptions && trip.pricingOptions.length > 0) {
-      const festiveOpt = trip.pricingOptions.find(
-        (opt) =>
-          opt.label.toLowerCase().includes('xmas') ||
-          opt.label.toLowerCase().includes('new year') ||
-          opt.label.toLowerCase().includes('festive')
-      )
-      if (festiveOpt) {
-        if (festiveOpt.price.startsWith('+')) {
-          const baseMatch = trip.price.match(/(\d[\d,]*)/)
-          const baseNum = baseMatch ? parseInt(baseMatch[1].replace(/,/g, ''), 10) : 0
-          const addMatch = festiveOpt.price.match(/(\d[\d,]*)/)
-          const addNum = addMatch ? parseInt(addMatch[1].replace(/,/g, ''), 10) : 1000
-          if (baseNum > 0) {
-            return `₹${(baseNum + addNum).toLocaleString('en-IN')}`
-          }
-        } else if (!festiveOpt.price.toLowerCase().includes('request')) {
-          const optMatch = festiveOpt.price.match(/(\d[\d,]*)/)
-          const optNum = optMatch ? parseInt(optMatch[1].replace(/,/g, ''), 10) : 0
-          if (optNum > 0) {
-            return `₹${optNum.toLocaleString('en-IN')}`
-          }
-        }
-      }
+    if (dynamicPricingInfo.packages && dynamicPricingInfo.packages.length > 0) {
+      const primaryPkg = dynamicPricingInfo.packages[0]
+      const priceText = primaryPkg.price.split(' ')[0]
+      return priceText.startsWith('₹') ? priceText : `₹${priceText}`
     }
     return trip.price
-  }, [selectedDate, trip])
+  }, [dynamicPricingInfo, trip.price])
 
   const galleryImages = useMemo(() => {
     if (trip.gallery && trip.gallery.length > 0) return trip.gallery
@@ -604,9 +590,27 @@ export function TripContent({ trip }: { trip: Trip }) {
                 </div>
               </div>
 
-              {/* Package Pricing Options */}
-              {trip.pricingOptions && trip.pricingOptions.length > 0 && (
-                <div className="hidden lg:block bg-slate-50/90 rounded-2xl p-3.5 border border-slate-200/80 mb-5 space-y-1.5">
+              {/* Dynamic Package Options strictly for Selected Date */}
+              {dynamicPricingInfo.packages && dynamicPricingInfo.packages.length > 0 && (
+                <div className="hidden lg:block bg-slate-50/90 rounded-2xl p-3.5 border border-slate-200/80 mb-5 space-y-2">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                    Packages for {selectedDate}
+                  </div>
+                  <div className="space-y-1.5">
+                    {dynamicPricingInfo.packages.map((pkg, i) => (
+                      <div key={i} className="flex justify-between items-center text-xs">
+                        <span className="font-semibold text-slate-700">{pkg.label}</span>
+                        <span className="font-extrabold text-[var(--navy)]">{pkg.price.split(' ')[0]}</span>
+                      </div>
+                    ))}
+                    {dynamicPricingInfo.doubleSharingRate > 0 &&
+                    !dynamicPricingInfo.packages.some((p) => p.label.toLowerCase().includes('double')) && (
+                      <div className="pt-1.5 border-t border-dashed border-slate-200 flex justify-between items-center text-[11px] text-amber-900">
+                        <span>Double Sharing Room Add-on</span>
+                        <span className="font-bold">+₹{dynamicPricingInfo.doubleSharingRate.toLocaleString('en-IN')} / person</span>
+                      </div>
+                    )}
+                  </div>
                   {trip.bookingAmount && (
                     <div className="mt-2 pt-2 border-t border-dashed border-slate-300 flex justify-between items-center text-[11px]">
                       <span className="text-[var(--sky)] font-bold">Advance Booking</span>

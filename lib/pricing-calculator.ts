@@ -1,12 +1,15 @@
-import { trips, type Trip } from '@/lib/travel-data'
+import { trips, type Trip, type TripPricingOption } from '@/lib/travel-data'
+import { isLongWeekendDate, isFestiveDate } from '@/lib/date-utils'
 
 export interface PricingBreakdown {
   tripSlug: string
   tripTitle: string
+  selectedDate?: string
   selectedPackageIndex: number
   packageLabel: string
   basePricePerPerson: number
   isDoubleSharing: boolean
+  doubleSharingRate: number
   doubleSharingAddonPerPerson: number
   totalPerPerson: number
   guests: number
@@ -23,12 +26,15 @@ export interface PricingBreakdown {
   amountToPayToday: number
   remainingBalance: number
   isFullPayment: boolean
+  isLongWeekend: boolean
+  isFestive: boolean
   currency: string
+  availablePackages: TripPricingOption[]
 }
 
 export const FULL_PAYMENT_DISCOUNT_AMOUNT = 1000
 export const GST_RATE = 0.05
-export const DOUBLE_SHARING_ADDON_RATE = 1500
+export const DEFAULT_DOUBLE_SHARING_RATE = 1500
 export const MIN_GUESTS = 1
 export const MAX_GUESTS = 50
 
@@ -43,7 +49,12 @@ export const VALID_COUPONS: Record<string, { discount: number; description: stri
 /**
  * Validates a coupon code and returns discount amount & description
  */
-export function validateCoupon(code?: string): { valid: boolean; discount: number; description?: string; cleanCode?: string } {
+export function validateCoupon(code?: string): {
+  valid: boolean
+  discount: number
+  description?: string
+  cleanCode?: string
+} {
   if (!code || typeof code !== 'string') return { valid: false, discount: 0 }
   const cleanCode = code.trim().toUpperCase()
   const found = VALID_COUPONS[cleanCode]
@@ -75,87 +86,195 @@ export function sanitizeGuests(guestsInput: unknown): number {
 }
 
 /**
- * Single Authoritative Pricing Engine
- * Recalculates every rupee exclusively from official trip records.
- * NEVER trusts client-side price strings or tampered figures.
+ * Resolves dynamic packages and pricing for a specific trip and date directly from travel-data.ts.
+ * All pricing options, long weekend rates, festive rates, and double sharing add-ons reside in travel-data.ts.
+ */
+export function resolveTripDynamicPackages(trip: Trip, selectedDate?: string): {
+  packages: TripPricingOption[]
+  doubleSharingRate: number
+  isLongWeekend: boolean
+  isFestive: boolean
+} {
+  const isLW = isLongWeekendDate(selectedDate)
+  const isFestive = isFestiveDate(selectedDate)
+
+  // 1. Festive Batch Resolution (Christmas & New Year)
+  if (isFestive && trip.festivePackages && trip.festivePackages.length > 0) {
+    const doubleRate =
+      typeof trip.festiveDoubleSharingRate === 'number'
+        ? trip.festiveDoubleSharingRate
+        : typeof trip.doubleSharingRate === 'number'
+        ? trip.doubleSharingRate
+        : 0
+    const hasDoubleInPackages = trip.festivePackages.some((p) => p.label.toLowerCase().includes('double'))
+
+    return {
+      packages: trip.festivePackages,
+      doubleSharingRate: hasDoubleInPackages ? 0 : doubleRate,
+      isLongWeekend: isLW,
+      isFestive: true,
+    }
+  }
+
+  // 2. Long Weekend Batch Resolution
+  if (isLW && trip.longWeekendPackages && trip.longWeekendPackages.length > 0) {
+    const doubleRate = typeof trip.doubleSharingRate === 'number' ? trip.doubleSharingRate : 0
+    const hasDoubleInPackages = trip.longWeekendPackages.some((p) => p.label.toLowerCase().includes('double'))
+
+    return {
+      packages: trip.longWeekendPackages,
+      doubleSharingRate: hasDoubleInPackages ? 0 : doubleRate,
+      isLongWeekend: true,
+      isFestive: false,
+    }
+  }
+
+  // 3. Regular Batch Resolution
+  if (trip.regularPackages && trip.regularPackages.length > 0) {
+    const doubleRate = typeof trip.doubleSharingRate === 'number' ? trip.doubleSharingRate : 0
+    const hasDoubleInPackages = trip.regularPackages.some((p) => p.label.toLowerCase().includes('double'))
+
+    return {
+      packages: trip.regularPackages,
+      doubleSharingRate: hasDoubleInPackages ? 0 : doubleRate,
+      isLongWeekend: isLW,
+      isFestive: isFestive,
+    }
+  }
+
+  // 4. Backward Compatibility Fallback from trip.pricingOptions
+  let fallbackList =
+    trip.pricingOptions && trip.pricingOptions.length > 0
+      ? trip.pricingOptions.filter(
+          (o) =>
+            !o.label.toLowerCase().includes('add-on') &&
+            !o.label.toLowerCase().includes('booking advance') &&
+            !o.label.toLowerCase().includes('taxes') &&
+            !o.price.startsWith('+') &&
+            !o.price.toLowerCase().includes('on request') &&
+            !o.price.toLowerCase().includes('as applicable')
+        )
+      : [{ label: 'Standard Package', price: trip.price }]
+
+  if (isFestive) {
+    const festiveMatches = fallbackList.filter((o) => {
+      const txt = (o.label + ' ' + (o.note || '')).toLowerCase()
+      return (
+        txt.includes('xmas') ||
+        txt.includes('christmas') ||
+        txt.includes('new year') ||
+        txt.includes('festive') ||
+        txt.includes('special batch')
+      )
+    })
+    if (festiveMatches.length > 0) {
+      fallbackList = festiveMatches
+    }
+  } else {
+    const nonFestiveMatches = fallbackList.filter((o) => {
+      const txt = (o.label + ' ' + (o.note || '')).toLowerCase()
+      return (
+        !txt.includes('xmas') &&
+        !txt.includes('christmas') &&
+        !txt.includes('new year') &&
+        !txt.includes('festive') &&
+        !txt.includes('special batch')
+      )
+    })
+    if (nonFestiveMatches.length > 0) {
+      fallbackList = nonFestiveMatches
+    }
+  }
+
+  const hasDoubleInPackages = fallbackList.some((p) => p.label.toLowerCase().includes('double'))
+  const doubleRate =
+    typeof trip.doubleSharingRate === 'number'
+      ? trip.doubleSharingRate
+      : hasDoubleInPackages
+      ? 0
+      : DEFAULT_DOUBLE_SHARING_RATE
+
+  return {
+    packages: fallbackList.length > 0 ? fallbackList : [{ label: 'Standard Package', price: trip.price }],
+    doubleSharingRate: hasDoubleInPackages ? 0 : doubleRate,
+    isLongWeekend: isLW,
+    isFestive: isFestive,
+  }
+}
+
+/**
+ * Single Authoritative Dynamic Pricing Engine
+ * Recalculates every rupee exclusively based on the exact selected departure date & package.
  */
 export function calculateBookingPricing(params: {
   tripSlug: string
+  selectedDate?: string
   packageIndex?: number
   guests?: number
   isDoubleSharing?: boolean
   paymentType?: 'advance' | 'full'
   couponCode?: string
 }): PricingBreakdown {
-  const { tripSlug } = params
-  
-  // 1. Locate authoritative trip record
+  const { tripSlug, selectedDate } = params
+
+  // 1. Locate trip record
   const trip: Trip = trips.find((t) => t.slug === tripSlug) || trips[0]
 
   // 2. Sanitize guest count
   const guests = sanitizeGuests(params.guests)
 
-  // 3. Resolve and sanitize package index
-  const availablePricingOptions = trip.pricingOptions || []
+  // 3. Resolve dynamic packages for the selected date
+  const { packages, doubleSharingRate, isLongWeekend, isFestive } = resolveTripDynamicPackages(
+    trip,
+    selectedDate
+  )
+
+  // 4. Resolve package selection
   let selectedPackageIndex = 0
   let packageLabel = 'Standard Package'
   let basePricePerPerson = parseNumericPrice(trip.price, 8499)
 
-  if (availablePricingOptions.length > 0) {
+  if (packages.length > 0) {
     const rawIdx = typeof params.packageIndex === 'number' ? Math.floor(params.packageIndex) : 0
-    selectedPackageIndex = Math.max(0, Math.min(availablePricingOptions.length - 1, rawIdx))
-    const selectedOption = availablePricingOptions[selectedPackageIndex]
+    selectedPackageIndex = Math.max(0, Math.min(packages.length - 1, rawIdx))
+    const selectedOption = packages[selectedPackageIndex]
     packageLabel = selectedOption.label
-    if (
-      selectedOption.price.startsWith('+') ||
-      selectedOption.label.toLowerCase().includes('add-on') ||
-      selectedOption.label.toLowerCase().includes('upgrade')
-    ) {
-      const tripBase = parseNumericPrice(trip.price, 8499)
-      const addon = parseNumericPrice(selectedOption.price, 0)
-      basePricePerPerson = tripBase + addon
-    } else if (!selectedOption.price.toLowerCase().includes('request')) {
-      basePricePerPerson = parseNumericPrice(selectedOption.price, basePricePerPerson)
-    }
+    basePricePerPerson = parseNumericPrice(selectedOption.price, basePricePerPerson)
   }
 
-  // 4. Double sharing calculation
-  const isDoubleSharing = Boolean(params.isDoubleSharing)
-  const isPackageAlreadyDoubleSharing = packageLabel.toLowerCase().includes('double sharing')
-  const doubleSharingAddonOpt = availablePricingOptions.find(
-    (o) =>
-      o.label.toLowerCase().includes('double sharing') &&
-      (o.label.toLowerCase().includes('add-on') || o.price.startsWith('+'))
-  )
-  const dynamicDoubleSharingRate = doubleSharingAddonOpt
-    ? parseNumericPrice(doubleSharingAddonOpt.price, DOUBLE_SHARING_ADDON_RATE)
-    : DOUBLE_SHARING_ADDON_RATE
-  const doubleSharingAddonPerPerson =
-    isDoubleSharing && !isPackageAlreadyDoubleSharing ? dynamicDoubleSharingRate : 0
+  // 5. Double sharing calculation
+  // If packages already contain double sharing tiers (e.g. Spiti, Meghalaya), double sharing is NOT an add-on
+  const hasDoubleInPackages =
+    packages.some((p) => p.label.toLowerCase().includes('double')) ||
+    packageLabel.toLowerCase().includes('double')
+
+  const effectiveDoubleSharingRate = hasDoubleInPackages ? 0 : doubleSharingRate
+  const isDoubleSharing = Boolean(params.isDoubleSharing) && effectiveDoubleSharingRate > 0
+  const doubleSharingAddonPerPerson = isDoubleSharing ? effectiveDoubleSharingRate : 0
+
   const totalPerPerson = basePricePerPerson + doubleSharingAddonPerPerson
 
-  // 5. Subtotal & GST
+  // 6. Subtotal & GST
   const subtotal = totalPerPerson * guests
   const gstAmount = Math.round(subtotal * GST_RATE)
-  let rawGrandTotal = subtotal + gstAmount
+  const rawGrandTotal = subtotal + gstAmount
 
-  // 6. Coupon Discount
+  // 7. Coupon Discount
   const couponValidation = validateCoupon(params.couponCode)
   const couponDiscount = couponValidation.valid ? Math.min(couponValidation.discount, rawGrandTotal) : 0
   const couponCode = couponValidation.valid ? couponValidation.cleanCode : undefined
   const couponDescription = couponValidation.valid ? couponValidation.description : undefined
   const grandTotal = Math.max(0, rawGrandTotal - couponDiscount)
 
-  // 7. Advance calculation
+  // 8. Advance calculation
   const advancePerPerson = parseNumericPrice(trip.bookingAmount, 4000)
   const rawAdvanceTotal = advancePerPerson * guests
   const advanceTotal = Math.min(rawAdvanceTotal, grandTotal)
 
-  // 8. Payment Type & Discount (₹1,000 off strictly for full payment)
+  // 9. Payment Type & Discount (₹1,000 off strictly for full payment)
   const paymentType: 'advance' | 'full' = params.paymentType === 'full' ? 'full' : 'advance'
   const isFullPayment = paymentType === 'full'
 
-  // Guarantee discount cannot make price negative
   const fullPaymentDiscount = isFullPayment ? Math.min(FULL_PAYMENT_DISCOUNT_AMOUNT, grandTotal) : 0
   const fullPaymentTotal = Math.max(0, grandTotal - fullPaymentDiscount)
 
@@ -165,10 +284,12 @@ export function calculateBookingPricing(params: {
   return Object.freeze({
     tripSlug: trip.slug,
     tripTitle: trip.title,
+    selectedDate,
     selectedPackageIndex,
     packageLabel,
     basePricePerPerson,
     isDoubleSharing,
+    doubleSharingRate,
     doubleSharingAddonPerPerson,
     totalPerPerson,
     guests,
@@ -185,7 +306,9 @@ export function calculateBookingPricing(params: {
     amountToPayToday,
     remainingBalance,
     isFullPayment,
-    currency: 'INR'
+    isLongWeekend,
+    isFestive,
+    currency: 'INR',
+    availablePackages: packages,
   })
 }
-

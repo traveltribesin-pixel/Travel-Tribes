@@ -141,6 +141,7 @@ export async function POST(req: NextRequest) {
     // 4. SERVER-SIDE PRICE RECONCILIATION
     // Recalculate price strictly from database/data to ensure zero amount tampering
     const tripSlug = sanitizeString(bookingConfig.tripSlug || paymentDetails.notes?.tripSlug || '', 100)
+    const selectedDate = sanitizeString(bookingConfig.date || bookingConfig.selectedDate || paymentDetails.notes?.travelDate || '', 100)
     const packageIndex = Number(bookingConfig.packageIndex ?? paymentDetails.notes?.packageIndex ?? 0)
     const guests = sanitizeGuests(bookingConfig.guests ?? paymentDetails.notes?.guests ?? 1)
     const isDoubleSharing = Boolean(bookingConfig.isDoubleSharing ?? paymentDetails.notes?.isDoubleSharing === 'true')
@@ -149,6 +150,7 @@ export async function POST(req: NextRequest) {
 
     const authoritativePricing = calculateBookingPricing({
       tripSlug,
+      selectedDate,
       packageIndex,
       guests,
       isDoubleSharing,
@@ -183,6 +185,11 @@ export async function POST(req: NextRequest) {
     const city = sanitizeString(traveller.city, 80)
     const specialRequest = sanitizeString(traveller.specialRequest, 500)
     const travelDate = sanitizeString(traveller.date || paymentDetails.notes?.travelDate || 'Confirmed Departure Batch', 60)
+
+    const rawTravellers = Array.isArray(traveller.travellers) ? traveller.travellers : []
+    const travellersRoster = rawTravellers.length > 0
+      ? rawTravellers
+      : [{ fullName, age: Number(age) || '', gender: 'Male', phone, email }]
 
     const tripTitle = authoritativePricing.tripTitle
     const packageLabel = authoritativePricing.packageLabel
@@ -265,10 +272,10 @@ export async function POST(req: NextRequest) {
               </table>
 
               <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
-              <h3 style="color: #00b4d8; font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Traveller Information</h3>
+              <h3 style="color: #00b4d8; font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.5px;">Traveller Information (${travellersRoster.length} Travellers)</h3>
               <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
                 <tr>
-                  <td style="padding: 6px 0; color: #64748b; width: 160px;"><strong>Lead Traveller:</strong></td>
+                  <td style="padding: 6px 0; color: #64748b; width: 160px;"><strong>Lead Contact:</strong></td>
                   <td style="padding: 6px 0; color: #0b2940;">${fullName} ${age ? `(Age: ${age})` : ''}</td>
                 </tr>
                 <tr>
@@ -283,7 +290,7 @@ export async function POST(req: NextRequest) {
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding: 6px 0; color: #64748b;"><strong>City:</strong></td>
+                  <td style="padding: 6px 0; color: #64748b;"><strong>Departure City:</strong></td>
                   <td style="padding: 6px 0; color: #0b2940;">${city || 'Not specified'}</td>
                 </tr>
                 ${
@@ -296,6 +303,23 @@ export async function POST(req: NextRequest) {
                     : ''
                 }
               </table>
+
+              ${
+                travellersRoster.length > 1
+                  ? `
+              <div style="margin-top: 14px; padding: 12px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <h4 style="margin: 0 0 8px; color: #0b2940; font-size: 13px;">All Travellers Roster</h4>
+                <ol style="margin: 0; padding-left: 20px; font-size: 13px; color: #334155;">
+                  ${travellersRoster
+                    .map(
+                      (t: any) =>
+                        `<li><strong>${t.fullName || 'Guest'}</strong> (${t.gender || 'N/A'}, Age: ${t.age || 'N/A'})</li>`
+                    )
+                    .join('')}
+                </ol>
+              </div>`
+                  : ''
+              }
             </div>
           `,
         }).catch((err) => {
@@ -422,6 +446,9 @@ export async function POST(req: NextRequest) {
         remainingBalance: `₹${remainingBalance.toLocaleString('en-IN')}`,
         grandTotal: `₹${grandTotal.toLocaleString('en-IN')}`,
         specialRequest: specialRequest || '',
+        travellersRoster: travellersRoster
+          .map((t: any, i: number) => `${i + 1}. ${t.fullName || 'Guest'} (${t.gender || 'N/A'}, Age: ${t.age || 'N/A'})`)
+          .join('; '),
       }).catch((err) => {
         console.error('Razorpay Google Sheet sync error:', err)
         return { success: false, error: err?.message }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -30,6 +30,14 @@ import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
 import { calculateBookingPricing, sanitizeGuests, validateCoupon, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
 import { getTripPrimaryDate, filterUpcomingDates, isDateUpcoming } from '@/lib/date-utils'
+
+export type TravellerInfo = {
+  fullName: string
+  age: string
+  gender: string
+  phone?: string
+  email?: string
+}
 
 export function BookingContent() {
   const searchParams = useSearchParams()
@@ -75,15 +83,51 @@ export function BookingContent() {
   const [couponError, setCouponError] = useState<string | null>(null)
   const [couponSuccess, setCouponSuccess] = useState<string | null>(null)
 
-  // Traveller Form state
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    age: '',
-    city: '',
-    specialRequest: ''
+  // Dynamic Multi-Traveller Form state
+  const [travellers, setTravellers] = useState<TravellerInfo[]>(() => {
+    const initialCount = sanitizeGuests(guestsParam || 2)
+    return Array.from({ length: initialCount }, () => ({
+      fullName: '',
+      age: '',
+      gender: 'Male',
+      phone: '',
+      email: ''
+    }))
   })
+
+  // General group notes
+  const [city, setCity] = useState<string>('')
+  const [specialRequest, setSpecialRequest] = useState<string>('')
+
+  // Sync travellers array with guests count
+  useEffect(() => {
+    setTravellers((prev) => {
+      if (prev.length === guests) return prev
+      const updated = [...prev]
+      if (updated.length < guests) {
+        while (updated.length < guests) {
+          updated.push({
+            fullName: '',
+            age: '',
+            gender: 'Male',
+            phone: '',
+            email: ''
+          })
+        }
+      } else if (updated.length > guests) {
+        return updated.slice(0, guests)
+      }
+      return updated
+    })
+  }, [guests])
+
+  const updateTraveller = (index: number, field: keyof TravellerInfo, value: string) => {
+    setTravellers((prev) => {
+      const updated = [...prev]
+      updated[index] = { ...updated[index], [field]: value }
+      return updated
+    })
+  }
 
   // Booking state
   const [isProcessing, setIsProcessing] = useState(false)
@@ -92,17 +136,25 @@ export function BookingContent() {
   const [paymentId, setPaymentId] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  // Rigorous Anti-Tamper Pricing Engine Calculation
+  // Rigorous Anti-Tamper Pricing Engine Calculation (Dynamically adjusts based on selected departure date)
   const pricing = useMemo(() => {
     return calculateBookingPricing({
       tripSlug: selectedTrip.slug,
+      selectedDate,
       packageIndex: selectedPackageIndex,
       guests,
       isDoubleSharing,
       paymentType,
       couponCode: appliedCoupon
     })
-  }, [selectedTrip.slug, selectedPackageIndex, guests, isDoubleSharing, paymentType, appliedCoupon])
+  }, [selectedTrip.slug, selectedDate, selectedPackageIndex, guests, isDoubleSharing, paymentType, appliedCoupon])
+
+  // Auto-reset double sharing selection when navigating to a trip or package without double sharing add-on
+  useEffect(() => {
+    if (pricing.doubleSharingRate === 0 && isDoubleSharing) {
+      setIsDoubleSharing(false)
+    }
+  }, [pricing.doubleSharingRate, isDoubleSharing])
 
   const {
     basePricePerPerson,
@@ -152,6 +204,7 @@ export function BookingContent() {
       const primary = getTripPrimaryDate(found)
       setSelectedDate(primary)
       setSelectedPackageIndex(0)
+      setIsDoubleSharing(false)
     }
   }
 
@@ -179,31 +232,50 @@ export function BookingContent() {
     e.preventDefault()
     setErrorMessage(null)
 
-    const trimmedName = formData.fullName.trim()
-    const trimmedEmail = formData.email.trim()
-    const trimmedPhone = formData.phone.trim()
-    const ageNum = parseInt(formData.age.trim(), 10)
+    // Validate All Selected Travellers (Name, Email, Phone/WhatsApp, Age, Gender)
+    for (let i = 0; i < guests; i++) {
+      const member = travellers[i] || { fullName: '', email: '', phone: '', age: '', gender: 'Male' }
+      const name = (member.fullName || '').trim()
+      const email = (member.email || '').trim()
+      const phone = (member.phone || '').trim()
+      const ageNum = parseInt((member.age || '').trim(), 10)
+      const label = i === 0 ? 'Traveller 1 (Lead)' : `Traveller ${i + 1}`
 
-    if (!trimmedName || !trimmedEmail || !trimmedPhone || !formData.age.trim()) {
-      setErrorMessage('Please fill all required fields (Name, Email, WhatsApp Number, and Age).')
-      return
+      if (!name) {
+        setErrorMessage(`Please enter the full name for ${label}.`)
+        return
+      }
+
+      if (!phone) {
+        setErrorMessage(`Please enter the WhatsApp / contact number for ${label}.`)
+        return
+      }
+      const phoneDigits = phone.replace(/[^\d]/g, '')
+      if (phoneDigits.length < 10) {
+        setErrorMessage(`Please enter a valid 10-digit WhatsApp number for ${label}.`)
+        return
+      }
+
+      if (!email) {
+        setErrorMessage(`Please enter the email address for ${label}.`)
+        return
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setErrorMessage(`Please provide a valid email address for ${label}.`)
+        return
+      }
+
+      if (!member.age || isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
+        setErrorMessage(`Please enter a valid age (between 1 and 120) for ${label}.`)
+        return
+      }
     }
 
-    if (isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
-      setErrorMessage('Please enter a valid traveller age between 1 and 120.')
-      return
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      setErrorMessage('Please provide a valid email address.')
-      return
-    }
-
-    const phoneDigits = trimmedPhone.replace(/[^\d]/g, '')
-    if (phoneDigits.length < 10) {
-      setErrorMessage('Please enter a valid 10-digit WhatsApp/phone number.')
-      return
-    }
+    const lead = travellers[0] || { fullName: '', email: '', phone: '', age: '', gender: 'Male' }
+    const trimmedLeadName = (lead.fullName || '').trim()
+    const trimmedLeadEmail = (lead.email || '').trim()
+    const trimmedLeadPhone = (lead.phone || '').trim()
+    const leadAgeNum = parseInt((lead.age || '').trim(), 10) || 25
 
     setIsProcessing(true)
 
@@ -226,12 +298,19 @@ export function BookingContent() {
           paymentType,
           couponCode: appliedCoupon,
           date: selectedDate,
-          fullName: trimmedName,
-          email: trimmedEmail,
-          phone: trimmedPhone,
-          age: ageNum,
-          city: formData.city.trim(),
-          specialRequest: formData.specialRequest.trim()
+          fullName: trimmedLeadName,
+          email: trimmedLeadEmail,
+          phone: trimmedLeadPhone,
+          age: leadAgeNum,
+          city: city.trim(),
+          specialRequest: specialRequest.trim(),
+          travellers: travellers.map((t, idx) => ({
+            fullName: t.fullName.trim(),
+            age: parseInt(t.age.trim(), 10) || (idx === 0 ? leadAgeNum : 25),
+            gender: t.gender || 'Male',
+            phone: (t.phone || '').trim(),
+            email: (t.email || '').trim()
+          }))
         })
       })
 
@@ -251,9 +330,9 @@ export function BookingContent() {
         image: '/image/Logowithbg.png',
         order_id: orderData.orderId,
         prefill: {
-          name: trimmedName,
-          email: trimmedEmail,
-          contact: trimmedPhone
+          name: trimmedLeadName,
+          email: trimmedLeadEmail,
+          contact: trimmedLeadPhone
         },
         notes: {
           bookingId: orderData.bookingId,
@@ -368,7 +447,7 @@ export function BookingContent() {
                 )}
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mt-3">
-                Pack Your Bags, {formData.fullName.split(' ')[0]}!
+                Pack Your Bags, {(travellers[0]?.fullName || 'Traveller').split(' ')[0]}!
               </h2>
               <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
                 Your payment is verified and your slot is officially confirmed. A receipt has been emailed to you.
@@ -390,10 +469,22 @@ export function BookingContent() {
                 <span className="font-semibold text-slate-800">{guests} {guests > 1 ? 'Persons' : 'Person'}</span>
               </div>
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
-                <span className="text-slate-500">Primary Contact</span>
+                <span className="text-slate-500">Lead Contact</span>
                 <span className="font-semibold text-slate-800">
-                  {formData.fullName} ({formData.phone}) {formData.age ? `• Age: ${formData.age}` : ''}
+                  {travellers[0]?.fullName} ({travellers[0]?.phone})
                 </span>
+              </div>
+              {/* All Travellers Roster */}
+              <div className="py-2 border-b border-slate-200/60">
+                <span className="text-slate-500 block mb-1 font-medium">Traveller List ({guests})</span>
+                <div className="space-y-1 pl-1">
+                  {travellers.map((t, i) => (
+                    <div key={i} className="flex justify-between text-xs text-slate-700 font-semibold">
+                      <span>{i + 1}. {t.fullName || `Traveller ${i + 1}`} {t.gender ? `(${t.gender})` : ''}</span>
+                      <span className="text-slate-500">Age: {t.age || '-'}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
                 <span className="text-slate-500">Payment Option</span>
@@ -440,7 +531,7 @@ export function BookingContent() {
             <div className="space-y-3 pt-2">
               <a
                 href={`https://wa.me/919975822023?text=${encodeURIComponent(
-                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests, Lead: ${formData.fullName}, Age: ${formData.age}). My Booking ID is *${bookingId}*${paymentId ? ` (Payment ID: ${paymentId})` : ''}. Payment Mode: ${isFullPayment ? `Full Payment (₹${amountToPayToday.toLocaleString('en-IN')})` : `Advance Payment (₹${amountToPayToday.toLocaleString('en-IN')})`}${couponDiscount > 0 ? ` [Coupon ${couponCode}: ₹${couponDiscount} off]` : ''}. Please share the group chat link and preparation guide!`
+                  `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests:\n${travellers.map((t, i) => `${i + 1}. ${t.fullName} (Age ${t.age})`).join('\n')}).\nBooking ID: *${bookingId}*${paymentId ? ` (Payment ID: ${paymentId})` : ''}. Payment Mode: ${isFullPayment ? `Full Payment (₹${amountToPayToday.toLocaleString('en-IN')})` : `Advance Payment (₹${amountToPayToday.toLocaleString('en-IN')})`}${couponDiscount > 0 ? ` [Coupon ${couponCode}: ₹${couponDiscount} off]` : ''}. Please share the group chat link and preparation guide!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -515,7 +606,10 @@ export function BookingContent() {
                       <div className="relative">
                         <select
                           value={selectedDate}
-                          onChange={(e) => setSelectedDate(e.target.value)}
+                          onChange={(e) => {
+                            setSelectedDate(e.target.value)
+                            setSelectedPackageIndex(0)
+                          }}
                           className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-[var(--navy)] font-semibold focus:outline-none focus:border-[var(--sky)] focus:bg-white appearance-none cursor-pointer transition-all"
                         >
                           {availableDates.map((d, i) => (
@@ -558,69 +652,76 @@ export function BookingContent() {
                     </div>
                   </div>
 
+                  {/* Batch Type Badge Indicator */}
+                  {(pricing.isLongWeekend || pricing.isFestive) && (
+                    <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--sky-pale)]/70 border border-[var(--sky)]/30 text-xs font-bold text-[var(--navy)]">
+                      <Sparkles size={14} className="text-[var(--sky)] shrink-0" />
+                      <span>
+                        {pricing.isFestive
+                          ? '🎉 Christmas & New Year Special Batch — Festive Rates Applied'
+                          : '⭐ Long Weekend Batch (LW) — Special Long Weekend Rates Applied'}
+                      </span>
+                    </div>
+                  )}
+
                   {/* Package Tier Options (e.g. Sleeper / 3AC / Quad / Triple) */}
-                  {selectedTrip.pricingOptions && selectedTrip.pricingOptions.length > 0 && (
+                  {pricing.availablePackages && pricing.availablePackages.length > 0 && (
                     <div className="pt-2">
                       <label className="block text-xs font-bold text-slate-600 mb-2">
                         Select Travel / Room Package
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        {selectedTrip.pricingOptions
-                          .filter((opt) => !opt.label.toLowerCase().includes('add-on') && !opt.price.startsWith('+'))
-                          .map((opt, idx) => {
-                            const isSelected = selectedPackageIndex === idx
-                            return (
-                              <div
-                                key={idx}
-                                onClick={() => setSelectedPackageIndex(idx)}
-                                className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
-                                  isSelected
-                                    ? 'border-[var(--sky)] bg-[var(--sky-pale)]/50 shadow-sm'
-                                    : 'border-slate-200 bg-slate-50/70 hover:bg-slate-100/80'
-                                }`}
-                              >
-                                <div className="flex items-center justify-between">
-                                  <span className="text-xs font-bold text-[var(--navy)]">{opt.label}</span>
-                                  {isSelected && <CheckCircle2 size={16} className="text-[var(--sky)]" />}
-                                </div>
-                                <div className="mt-2 flex items-baseline justify-between">
-                                  <span className="text-sm font-extrabold text-[var(--navy)]">{opt.price}</span>
-                                  {opt.note && <span className="text-[10px] text-slate-400 font-medium">{opt.note}</span>}
-                                </div>
+                        {pricing.availablePackages.map((opt, idx) => {
+                          const isSelected = selectedPackageIndex === idx
+                          return (
+                            <div
+                              key={idx}
+                              onClick={() => setSelectedPackageIndex(idx)}
+                              className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
+                                isSelected
+                                  ? 'border-[var(--sky)] bg-[var(--sky-pale)]/50 shadow-sm'
+                                  : 'border-slate-200 bg-slate-50/70 hover:bg-slate-100/80'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-[var(--navy)]">{opt.label}</span>
+                                {isSelected && <CheckCircle2 size={16} className="text-[var(--sky)]" />}
                               </div>
-                            )
-                          })}
-                      </div>
-
-                      {/* Double Sharing Room Addon Checkbox */}
-                      {(() => {
-                        const dsOpt = selectedTrip.pricingOptions.find(
-                          (o) =>
-                            o.label.toLowerCase().includes('double sharing') &&
-                            (o.label.toLowerCase().includes('add-on') || o.price.startsWith('+'))
-                        )
-                        if (!dsOpt) return null
-                        const dsPriceStr = dsOpt.price
-                        return (
-                          <div className="mt-3 p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-xl flex items-center justify-between cursor-pointer"
-                            onClick={() => setIsDoubleSharing(!isDoubleSharing)}
-                          >
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="checkbox"
-                                checked={isDoubleSharing}
-                                onChange={(e) => setIsDoubleSharing(e.target.checked)}
-                                className="w-4 h-4 accent-[var(--sky)] cursor-pointer"
-                              />
-                              <div>
-                                <span className="text-xs font-bold text-amber-950">Add Double Sharing Room</span>
-                                <p className="text-[10px] text-amber-800/80">Private room for 2 persons ({dsPriceStr})</p>
+                              <div className="mt-2 flex items-baseline justify-between">
+                                <span className="text-sm font-extrabold text-[var(--navy)]">{opt.price}</span>
+                                {opt.note && <span className="text-[10px] text-slate-400 font-medium">{opt.note}</span>}
                               </div>
                             </div>
-                            <span className="text-xs font-bold text-amber-900">{dsPriceStr.replace('/ person', '').trim()}</span>
+                          )
+                        })}
+                      </div>
+
+                      {/* Double Sharing Room Addon Checkbox (Only for trips where double sharing is an add-on, NOT already a package) */}
+                      {pricing.doubleSharingRate > 0 &&
+                      !pricing.availablePackages.some((p) => p.label.toLowerCase().includes('double')) ? (
+                        <div
+                          className="mt-3 p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-xl flex items-center justify-between cursor-pointer"
+                          onClick={() => setIsDoubleSharing(!isDoubleSharing)}
+                        >
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="checkbox"
+                              checked={isDoubleSharing}
+                              onChange={(e) => setIsDoubleSharing(e.target.checked)}
+                              className="w-4 h-4 accent-[var(--sky)] cursor-pointer"
+                            />
+                            <div>
+                              <span className="text-xs font-bold text-amber-950">Add Double Sharing Room</span>
+                              <p className="text-[10px] text-amber-800/80">
+                                Private room for 2 persons (+₹{pricing.doubleSharingRate.toLocaleString('en-IN')} / person)
+                              </p>
+                            </div>
                           </div>
-                        )
-                      })()}
+                          <span className="text-xs font-bold text-amber-900">
+                            +₹{pricing.doubleSharingRate.toLocaleString('en-IN')} / person
+                          </span>
+                        </div>
+                      ) : null}
                     </div>
                   )}
 
@@ -634,100 +735,162 @@ export function BookingContent() {
                     2
                   </span>
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--navy)]">Lead Traveller Details</h2>
-                    <p className="text-xs text-slate-400">We’ll send trip vouchers & updates to these details</p>
+                    <h2 className="text-lg font-bold text-[var(--navy)]">
+                      Traveller Details ({guests} {guests > 1 ? 'Travellers' : 'Traveller'})
+                    </h2>
+                    <p className="text-xs text-slate-400">Fill details for all members travelling in your party</p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  {/* Name */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                      Full Name <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="e.g. Rahul Sharma"
-                      value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                    />
-                  </div>
+                  {travellers.map((traveller, index) => {
+                    const isLead = index === 0
+                    return (
+                      <div
+                        key={index}
+                        className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                          isLead
+                            ? 'bg-sky-50/30 border-[var(--sky-pale)] shadow-sm'
+                            : 'bg-slate-50/60 border-slate-200/80'
+                        } space-y-3.5`}
+                      >
+                        <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center ${
+                                isLead
+                                  ? 'bg-[var(--sky)] text-white'
+                                  : 'bg-slate-300 text-slate-700'
+                              }`}
+                            >
+                              {index + 1}
+                            </span>
+                            <span className="text-xs font-extrabold text-[var(--navy)]">
+                              {isLead
+                                ? 'Traveller 1 (Lead Traveller & Primary Contact)'
+                                : `Traveller ${index + 1} Details`}
+                            </span>
+                          </div>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              isLead
+                                ? 'text-[var(--sky)] bg-[var(--sky-pale)]'
+                                : 'text-slate-500 bg-slate-200/60'
+                            }`}
+                          >
+                            {isLead ? 'Lead Traveller' : `Guest ${index + 1}`}
+                          </span>
+                        </div>
 
-                  {/* Email & Phone */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                        Email Address <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        required
-                        type="email"
-                        placeholder="rahul@gmail.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                        WhatsApp Number <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        required
-                        type="tel"
-                        placeholder="+91 99758 22023"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                      />
-                    </div>
-                  </div>
+                        {/* Name */}
+                        <div>
+                          <label className="block text-xs font-bold text-slate-600 mb-1">
+                            Full Name <span className="text-rose-500">*</span>
+                          </label>
+                          <input
+                            required
+                            type="text"
+                            placeholder={isLead ? 'e.g. Rahul Sharma (Lead)' : `e.g. Guest ${index + 1} Full Name`}
+                            value={traveller.fullName}
+                            onChange={(e) => updateTraveller(index, 'fullName', e.target.value)}
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                          />
+                        </div>
 
-                  {/* Age & City */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                        Age <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        required
-                        type="number"
-                        min="1"
-                        max="120"
-                        placeholder="e.g. 24"
-                        value={formData.age}
-                        onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                        Departure City / State
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Mumbai / Pune / Delhi"
-                        value={formData.city}
-                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                      />
-                    </div>
-                  </div>
+                        {/* WhatsApp Number & Email Address */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                              WhatsApp / Phone Number <span className="text-rose-500">*</span>
+                            </label>
+                            <input
+                              required
+                              type="tel"
+                              placeholder={isLead ? '+91 99758 22023' : `+91 Mobile / WhatsApp`}
+                              value={traveller.phone || ''}
+                              onChange={(e) => updateTraveller(index, 'phone', e.target.value)}
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                              Email Address <span className="text-rose-500">*</span>
+                            </label>
+                            <input
+                              required
+                              type="email"
+                              placeholder={isLead ? 'rahul@gmail.com' : `guest${index + 1}@gmail.com`}
+                              value={traveller.email || ''}
+                              onChange={(e) => updateTraveller(index, 'email', e.target.value)}
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                            />
+                          </div>
+                        </div>
 
-                  {/* Special Request */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                      Special Notes / Dietary
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Pure Veg, travelling solo, early check-in"
-                      value={formData.specialRequest}
-                      onChange={(e) => setFormData({ ...formData, specialRequest: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                    />
+                        {/* Age & Gender */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                              Age <span className="text-rose-500">*</span>
+                            </label>
+                            <input
+                              required
+                              type="number"
+                              min="1"
+                              max="120"
+                              placeholder="e.g. 24"
+                              value={traveller.age}
+                              onChange={(e) => updateTraveller(index, 'age', e.target.value)}
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                              Gender <span className="text-rose-500">*</span>
+                            </label>
+                            <select
+                              value={traveller.gender || 'Male'}
+                              onChange={(e) => updateTraveller(index, 'gender', e.target.value)}
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] focus:outline-none focus:border-[var(--sky)] transition-all cursor-pointer"
+                            >
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+
+                  {/* General Details (City & Special Requests) */}
+                  <div className="pt-2 border-t border-slate-100">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                          Departure City / Pickup Point
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Mumbai / Pune / Delhi"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[var(--navy)] font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                          Dietary / Special Requests (Optional)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Pure Veg, Jain, early check-in"
+                          value={specialRequest}
+                          onChange={(e) => setSpecialRequest(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[var(--navy)] font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -921,10 +1084,10 @@ export function BookingContent() {
                     <span>Base Package (₹{basePricePerPerson.toLocaleString('en-IN')} × {guests})</span>
                     <span className="font-semibold text-slate-800">₹{(basePricePerPerson * guests).toLocaleString('en-IN')}</span>
                   </div>
-                  {isDoubleSharing && (
+                  {isDoubleSharing && pricing.doubleSharingAddonPerPerson > 0 && (
                     <div className="flex justify-between text-amber-700 font-medium">
-                      <span>Double Sharing Addon (₹1,500 × {guests})</span>
-                      <span>+₹{(1500 * guests).toLocaleString('en-IN')}</span>
+                      <span>Double Sharing Addon (₹{pricing.doubleSharingRate.toLocaleString('en-IN')} × {guests})</span>
+                      <span>+₹{(pricing.doubleSharingRate * guests).toLocaleString('en-IN')}</span>
                     </div>
                   )}
                   <div className="flex justify-between">

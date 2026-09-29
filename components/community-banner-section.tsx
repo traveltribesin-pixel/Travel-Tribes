@@ -1,137 +1,186 @@
 'use client'
 
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import {
-  ArrowRight,
-  Sparkles,
-  Users,
-  Compass,
-  Star,
-  CheckCircle2,
-  ShieldCheck,
-  MessageCircle,
-  Flame
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
+const BANNER_SLIDES = [
+  {
+    id: 1,
+    image: '/Banner/1.png',
+    alt: 'Bali with Gili Community Trip Banner',
+    link: '/itinerary/bali-gili-islands'
+  },
+  {
+    id: 2,
+    image: '/Banner/2.png',
+    alt: 'Sri Lanka Island Escape Community Trip Banner',
+    link: '/itinerary/sri-lanka-island-escape'
+  },
+  {
+    id: 3,
+    image: '/Banner/3.png',
+    alt: 'Vietnam Backpacking Community Trip Banner',
+    link: '/itinerary/vietnam-backpacking'
+  },
+  {
+    id: 4,
+    image: '/Banner/4.png',
+    alt: 'Bhutan Road Trip Community Trip Banner',
+    link: '/itinerary/bhutan-road-trip'
+  },
+  {
+    id: 5,
+    image: '/Banner/5.png',
+    alt: 'Thailand Full Moon Party Community Trip Banner',
+    link: '/itinerary/phuket-krabi-thailand'
+  },
+  {
+    id: 6,
+    image: '/Banner/6.png',
+    alt: 'Spiti Valley Winter Expedition Banner',
+    link: '/itinerary/spiti-winter-expedition'
+  },
+  {
+    id: 7,
+    image: '/Banner/Bali & Gili.png',
+    alt: 'Christmas and New Year Special Trips Banner',
+    link: '/xmas-new-year-trips'
+  }
+]
 
 export function CommunityBannerSection() {
-  return (
-    <section className="py-6 sm:py-8 bg-[#f7fbfd]">
-      <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-[var(--navy)] text-white p-6 sm:p-10 lg:p-14 border border-slate-700/40 shadow-[0_20px_50px_rgba(11,41,64,0.25)]">
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
 
-          {/* Background Image with Artistic Overlay */}
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=85"
-              alt="Travel community camping under starlit sky"
-              fill
-              priority
-              className="object-cover object-center brightness-[0.35] scale-105"
-            />
-            {/* Color Wash Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--navy)] via-[var(--navy)]/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--navy)] via-transparent to-transparent" />
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % BANNER_SLIDES.length)
+  }, [])
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + BANNER_SLIDES.length) % BANNER_SLIDES.length)
+  }, [])
+
+  // Auto-slide every 3 seconds (3000ms) with smooth sliding animation
+  useEffect(() => {
+    if (isHovered) return
+
+    const timer = setInterval(() => {
+      goToNext()
+    }, 3000)
+
+    return () => clearInterval(timer)
+  }, [isHovered, goToNext])
+
+  // Touch Swipe Handlers for Mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const distance = touchStartX.current - touchEndX.current
+    const isLeftSwipe = distance > 40
+    const isRightSwipe = distance < -40
+
+    if (isLeftSwipe) {
+      goToNext()
+    } else if (isRightSwipe) {
+      goToPrev()
+    }
+
+    touchStartX.current = null
+    touchEndX.current = null
+  }
+
+  return (
+    <section className="py-4 sm:py-7 bg-[#f7fbfd]">
+      <div className="max-w-[1200px] mx-auto px-3 sm:px-6 lg:px-8">
+        <div
+          className="relative group rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_12px_40px_rgba(11,41,64,0.12)] border border-slate-200/80 bg-slate-950 select-none"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Continuous Sliding Horizontal Track (True Slide Effect) */}
+          <div className="w-full overflow-hidden relative">
+            <motion.div
+              className="flex w-full"
+              animate={{ x: `-${currentIndex * 100}%` }}
+              transition={{ duration: 0.65, ease: [0.25, 1, 0.5, 1] }}
+            >
+              {BANNER_SLIDES.map((slide, idx) => (
+                <div
+                  key={slide.id}
+                  className="min-w-full relative aspect-[21/9] sm:aspect-[2.8/1] md:aspect-[3.2/1] lg:aspect-[3.4/1] shrink-0"
+                >
+                  <Link
+                    href={slide.link}
+                    className="block w-full h-full relative cursor-pointer group/link"
+                  >
+                    <Image
+                      src={slide.image}
+                      alt={slide.alt}
+                      fill
+                      priority={idx === 0 || idx === 1}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1200px) 95vw, 1200px"
+                      className="object-cover object-center w-full h-full transition-transform duration-500 group-hover/link:scale-[1.01]"
+                      draggable={false}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </motion.div>
           </div>
 
-          {/* Banner Content Grid */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Navigation Arrow - Left */}
+          <button
+            type="button"
+            onClick={goToPrev}
+            aria-label="Previous Banner"
+            className="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-            {/* Left Content Column */}
-            <div className="lg:col-span-8 space-y-4 sm:space-y-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[var(--sky)] text-xs font-extrabold uppercase tracking-wider border border-white/15">
-                <Flame size={14} className="text-[var(--sun)]" />
-                <span>Next Departures Filling Fast</span>
-              </div>
+          {/* Navigation Arrow - Right */}
+          <button
+            type="button"
+            onClick={goToNext}
+            aria-label="Next Banner"
+            className="absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-                Come as a Solo Explorer. <br className="hidden sm:inline" />
-                <span className="bg-gradient-to-r from-[var(--sky)] via-sky-300 to-[var(--sun)] bg-clip-text text-transparent">
-                  Return with a Lifelong Tribe.
-                </span>
-              </h2>
-
-              <p className="text-slate-300 text-xs sm:text-sm sm:leading-relaxed max-w-2xl font-normal opacity-95">
-                Say goodbye to cancelled plans with friends. Join curated group trips designed for 20s–30s solo travellers, remote workers, and adventurers. Handpicked stays, experienced trip captains, and zero hassle.
-              </p>
-
-              {/* Highlights Chips */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-2">
-                <span className="flex items-center gap-1.5 text-xs bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-white font-medium">
-                  <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
-                  Small Groups (12–15 People)
-                </span>
-                <span className="flex items-center gap-1.5 text-xs bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-white font-medium">
-                  <ShieldCheck size={14} className="text-[var(--sky)] shrink-0" />
-                  Solo-Female Friendly
-                </span>
-                <span className="flex items-center gap-1.5 text-xs bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-white font-medium">
-                  <Compass size={14} className="text-[var(--sun)] shrink-0" />
-                  Certified Trip Captains
-                </span>
-              </div>
-
-              {/* CTA Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-4">
-                <Link
-                  href="/upcoming-trips"
-                  className="glow-btn py-3.5 px-7 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 text-center shadow-lg"
-                >
-                  Explore Upcoming Batches <ArrowRight size={16} />
-                </Link>
-
-                <a
-                  href={`https://wa.me/919975822023?text=${encodeURIComponent(
-                    "Hi Travel Tribes! I'm planning my next backpacking trip and would like to know the upcoming dates and available slots."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="py-3.5 px-6 rounded-full font-bold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center gap-2 transition-colors duration-300"
-                >
-                  <MessageCircle size={16} className="text-[#25D366]" /> Chat on WhatsApp (+91 99758 22023)
-                </a>
-              </div>
-            </div>
-
-            {/* Right Stats / Trust Card */}
-            <div className="lg:col-span-4 bg-white/10 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-8 space-y-6">
-              <div className="text-center pb-4 border-b border-white/10">
-                <div className="flex justify-center items-center gap-1 text-amber-400 mb-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-amber-400" />
-                  ))}
-                </div>
-                <div className="font-bold text-lg text-white">4.9 / 5.0 Rating</div>
-                <p className="text-[11px] text-slate-300">Over 1,200+ Verified Reviews</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div className="p-3 bg-black/20 rounded-2xl border border-white/5">
-                  <div className="text-2xl sm:text-3xl font-black text-[var(--sky)]">5,000+</div>
-                  <div className="text-[10px] sm:text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
-                    Happy Travellers
-                  </div>
-                </div>
-
-                <div className="p-3 bg-black/20 rounded-2xl border border-white/5">
-                  <div className="text-2xl sm:text-3xl font-black text-[var(--sun)]">100+</div>
-                  <div className="text-[10px] sm:text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
-                    Batches Done
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-[var(--sky)]/15 border border-[var(--sky)]/30 rounded-2xl text-center">
-                <span className="text-xs font-bold text-sky-200">
-                  ⚡ ₹1,000 Early Bird Discount
-                </span>
-                <p className="text-[10px] text-slate-300 mt-0.5">
-                  Applied automatically on bookings made 15 days in advance
-                </p>
-              </div>
-            </div>
-
+          {/* Dot Pagination Indicators */}
+          <div className="absolute bottom-2.5 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 sm:gap-2 bg-black/35 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-sm">
+            {BANNER_SLIDES.map((slide, idx) => {
+              const isActive = idx === currentIndex
+              return (
+                <button
+                  key={slide.id}
+                  type="button"
+                  onClick={() => setCurrentIndex(idx)}
+                  aria-label={`Go to banner slide ${idx + 1}`}
+                  className={`transition-all duration-300 rounded-full cursor-pointer ${
+                    isActive
+                      ? 'w-6 sm:w-8 h-2 sm:h-2.5 bg-gradient-to-r from-[var(--sky)] to-white shadow-sm'
+                      : 'w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white/50 hover:bg-white/90'
+                  }`}
+                />
+              )
+            })}
           </div>
 
         </div>

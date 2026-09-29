@@ -40,6 +40,14 @@ export type Trip = {
   thingsToCarry?: string[]
   policies?: string[]
   pricingOptions?: TripPricingOption[]
+  
+  // Date-Specific Dynamic Packages & Rates (Single Source of Truth)
+  regularPackages?: TripPricingOption[]
+  longWeekendPackages?: TripPricingOption[]
+  festivePackages?: TripPricingOption[]
+  doubleSharingRate?: number
+  festiveDoubleSharingRate?: number
+
   bookingAmount?: string
   reviews?: TripReview[]
 }
@@ -217,7 +225,23 @@ export const trips: Trip[] = [
       "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services).",
       "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Ex-Hospete', price: '₹7,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹8,999 / person' },
+      { label: 'AC 3-Tier Train', price: '₹10,999 / person' }
+    ],
+    longWeekendPackages: [
+      { label: 'Ex-Hospete', price: '₹8,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹9,999 / person' },
+      { label: 'AC 3-Tier Train', price: '₹11,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Hospete', price: '₹8,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹9,999 / person' },
+      { label: 'AC 3-Tier Train', price: '₹11,999 / person' }
+    ],
+    doubleSharingRate: 1000,
+pricingOptions: [
       { label: 'Ex-Hospete (Hospete to Hospete)', price: '₹7,999 / person' },
       { label: 'Ex-Mumbai & Pune (Non-AC Sleeper Train)', price: '₹8,999 / person' },
       { label: 'Ex-Mumbai & Pune (AC 3-Tier Train)', price: '₹10,999 / person' },
@@ -262,7 +286,7 @@ export const trips: Trip[] = [
       'Dec 28–Jan 02, 2027 (New Year Special)'
     ],
     duration: '5N/6D',
-    price: '₹14,499',
+    price: '₹13,499',
     image: '/image/Coorg/IMG_8960.JPEG',
     alt: 'Coorg and Mysore New Year Special — Coffee Plantations, Abbey Falls and Mysore Palace Fireworks',
     tag: 'New Year Special',
@@ -436,10 +460,19 @@ export const trips: Trip[] = [
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
-      { label: 'Ex-Mangalore (Triple / Quad Sharing)', price: '₹12,999 / person + 5% GST' },
-      { label: 'Mumbai to Mumbai (Non-AC Sleeper Train)', price: '₹14,499 / person + 5% GST' },
-      { label: 'Mumbai to Mumbai (3-Tier AC Train)', price: '₹16,499 / person + 5% GST' }
+        regularPackages: [
+      { label: 'Non-AC Train', price: '₹13,499 / person' },
+      { label: '3AC Train', price: '₹15,499 / person' }
+    ],
+    festivePackages: [
+      { label: 'Non-AC Train', price: '₹13,499 / person' },
+      { label: '3AC Train', price: '₹15,499 / person' }
+    ],
+    doubleSharingRate: 1500,
+pricingOptions: [
+      { label: 'Non-AC Train (New Year Special)', price: '₹13,499 / person' },
+      { label: '3AC Train (New Year Special)', price: '₹15,499 / person' },
+      { label: 'Double Sharing', price: '+₹1,500 / person' }
     ],
     bookingAmount: '₹5,000 / person',
     reviews: [
@@ -488,7 +521,7 @@ export const trips: Trip[] = [
       'Dec 05–10, 2026',
       'Dec 12–17, 2026',
       'Dec 19–24, 2026',
-      'Dec 24–29, 2026 (XMAS Special)',
+      'Dec 24–30, 2026 (Christmas Special)',
       'Dec 27–Jan 01, 2027 (New Year Special)',
       'Jan 02–07, 2027',
       'Jan 09–14, 2027',
@@ -659,11 +692,20 @@ export const trips: Trip[] = [
       "Cancellation < 7 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
-    pricingOptions: [
-      { label: 'Triple Sharing (Guwahati to Guwahati)', price: '₹20,999 / person + 5% GST' },
-      { label: 'Double Sharing (Guwahati to Guwahati)', price: '₹22,999 / person + 5% GST' },
-      { label: 'Xmas & New Year (Triple Sharing)', price: '₹22,999 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' },
-      { label: 'Xmas & New Year (Double Sharing)', price: '₹24,499 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' }
+        regularPackages: [
+      { label: 'Triple Sharing', price: '₹20,999 / person' },
+      { label: 'Double Sharing', price: '₹22,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹22,999 / person' },
+      { label: 'Double Sharing', price: '₹24,499 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
+      { label: 'Triple Sharing', price: '₹20,999 / person' },
+      { label: 'Double Sharing', price: '₹22,999 / person' },
+      { label: 'XMAS & NY (Triple Sharing)', price: '₹22,999 / person', note: 'Dec 24 & Dec 27 departures' },
+      { label: 'XMAS & NY (Double Sharing)', price: '₹24,499 / person', note: 'Dec 24 & Dec 27 departures' }
     ],
     bookingAmount: '₹5,000 / person',
     reviews: [
@@ -712,7 +754,7 @@ export const trips: Trip[] = [
       'Dec 05–11, 2026',
       'Dec 12–18, 2026',
       'Dec 19–25, 2026',
-      'Dec 24–31, 2026 (XMAS Special)',
+      'Dec 24–31, 2026 (Christmas Special)',
       'Dec 27–Jan 02, 2027 (New Year Special)',
       'Jan 02–08, 2027',
       'Jan 09–15, 2027',
@@ -898,11 +940,20 @@ export const trips: Trip[] = [
       "Cancellation < 7 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
-    pricingOptions: [
-      { label: 'Triple Sharing (Guwahati to Guwahati)', price: '₹23,999 / person + 5% GST' },
-      { label: 'Double Sharing (Guwahati to Guwahati)', price: '₹25,999 / person + 5% GST' },
-      { label: 'Xmas & New Year (Triple Sharing)', price: '₹26,499 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' },
-      { label: 'Xmas & New Year (Double Sharing)', price: '₹28,499 / person + 5% GST', note: 'Applicable on Dec 24 & Dec 27 batches' }
+        regularPackages: [
+      { label: 'Triple Sharing', price: '₹23,999 / person' },
+      { label: 'Double Sharing', price: '₹25,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹26,499 / person' },
+      { label: 'Double Sharing', price: '₹28,499 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
+      { label: 'Triple Sharing', price: '₹23,999 / person' },
+      { label: 'Double Sharing', price: '₹25,999 / person' },
+      { label: 'XMAS & NY (Triple Sharing)', price: '₹26,499 / person', note: 'Dec 24 & Dec 27 departures' },
+      { label: 'XMAS & NY (Double Sharing)', price: '₹28,499 / person', note: 'Dec 24 & Dec 27 departures' }
     ],
     bookingAmount: '₹5,000 / person',
     reviews: [
@@ -946,7 +997,7 @@ export const trips: Trip[] = [
       'Dec 27–Jan 03, 2027 (New Year Special)'
     ],
     duration: '7N/8D',
-    price: '₹52,999',
+    price: '₹49,999',
     image: '/Card Image/srilanka.png',
     alt: 'Sri Lanka iconic Nine Arch Bridge surrounded by lush tea hills in Ella',
     tag: 'International Island Escape',
@@ -1140,9 +1191,16 @@ export const trips: Trip[] = [
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
-      { label: 'Normal Batch (Double / Triple Sharing)', price: '₹52,999 / person + 5% GST & 2% TCS' },
-      { label: 'Christmas & New Year Special Batch', price: '₹56,999 / person + 5% GST & 2% TCS', note: 'Applicable on Dec 19 & Dec 27 departures' }
+        regularPackages: [
+      { label: 'Triple Sharing', price: '₹49,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹54,999 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
+      { label: 'Triple Sharing', price: '₹49,999 / person' },
+      { label: 'XMAS & NY Batch', price: '₹54,999 / person', note: 'Dec 19 & Dec 27 departures' }
     ],
     bookingAmount: '₹15,000 / person',
     reviews: [
@@ -1177,16 +1235,15 @@ export const trips: Trip[] = [
     title: 'Bali with Gili — 8 Nights / 9 Days',
     location: 'Seminyak · Kuta · Nusa Penida · Gili · Ubud · Bali',
     region: 'International',
-    date: 'Sep 26–Oct 04, 2026',
+    date: 'Oct 17–25, 2026',
     dates: [
-      '26 September – 4 October 2026',
-      '17–25 October 2026',
-      '14–22 November 2026',
-      '19–27 December 2026 (Christmas Special)',
-      '27 December 2026 – 4 January 2027 (New Year Special)'
+      'Oct 17–25, 2026',
+      'Nov 14–22, 2026',
+      'Dec 19–27, 2026 (Christmas Special)',
+      'Dec 27–Jan 04, 2027 (New Year Special)'
     ],
     duration: '8N/9D',
-    price: '₹52,999',
+    price: '₹53,000',
     image: '/Card Image/bali_with_gili.png',
     alt: 'Bali and Gili Islands — Tropical Beaches, Kelingking Cliff, Mount Batur Jeep Safari and Ubud Culture',
     tag: 'Island of Vibe',
@@ -1401,9 +1458,16 @@ export const trips: Trip[] = [
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
-      { label: 'Normal Batch (Double / Triple Sharing)', price: '₹52,999 / person + 5% GST & 2% TCS' },
-      { label: 'Christmas & New Year Batch', price: '₹58,999 / person + 5% GST & 2% TCS', note: 'Applicable on Dec 19 & Dec 27 departures' }
+        regularPackages: [
+      { label: 'Triple / Double Sharing', price: '₹53,000 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple / Double Sharing', price: '₹59,000 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
+      { label: 'Triple / Double Sharing', price: '₹53,000 / person' },
+      { label: 'XMAS & NY Batch', price: '₹59,000 / person', note: 'Dec 19 & Dec 27 departures' }
     ],
     bookingAmount: '₹15,000 / person',
     reviews: [
@@ -1438,11 +1502,12 @@ export const trips: Trip[] = [
     title: 'Bhutan — Land of the Thunder Dragon',
     location: 'Phuentsholing · Thimphu · Punakha · Paro · Bhutan',
     region: 'International',
-    date: 'Oct 10–16, 2026',
+    date: 'Sep 20–26, 2026',
     dates: [
-      '10–16 October 2026',
-      '7–13 November 2026',
-      '12–18 December 2026'
+      'Sep 20–26, 2026',
+      'Oct 10–16, 2026',
+      'Nov 07–13, 2026',
+      'Dec 12–18, 2026'
     ],
     duration: '6N/7D',
     price: '₹26,499',
@@ -1641,7 +1706,12 @@ export const trips: Trip[] = [
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Ex-Bagdogra (Double Sharing Package)', price: '₹26,499 / person' },
+      { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹32,499 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Ex-Bagdogra (Double Sharing Package)', price: '₹26,499 / person + 5% GST & 2% TCS', note: 'Excludes mandatory SDF ₹6,000' },
       { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹32,499 / person + 5% GST & 2% TCS', note: 'Includes ₹6,000 Bhutan SDF fee' }
     ],
@@ -1850,7 +1920,12 @@ export const trips: Trip[] = [
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
       "Company Cancellation: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Ex-Bagdogra (Double Sharing Package)', price: '₹29,499 / person' },
+      { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹35,499 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Ex-Bagdogra (Festival Special Batch)', price: '₹29,499 / person', note: 'Excludes mandatory SDF ₹6,000' },
       { label: 'All-Inclusive Package (With Bhutan SDF)', price: '₹35,499 / person', note: 'Includes ₹6,000 Bhutan SDF fee' }
     ],
@@ -2101,7 +2176,14 @@ export const trips: Trip[] = [
       "Booking transfers are not permitted; only the names confirmed at booking can travel.",
       "The operator reserves the right to modify the itinerary in the interest of safety and traveller comfort in case of weather or unforeseen circumstances."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Regular Package (With 2 Internal Flights)', price: '₹74,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'All-Inclusive Package (With 2 Internal Flights)', price: '₹79,999 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Regular Package (With 2 Internal Flights)', price: '₹74,999 / person + 5% GST & 5% TCS' },
       { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 5% TCS', note: 'Available on request for late Dec batches' }
     ],
@@ -2364,7 +2446,14 @@ export const trips: Trip[] = [
       "The operator reserves the right to modify the schedule for safety, comfort and operational reasons.",
       "Cancellation Policy: Cancellation 75+ days before departure: 0% cancellation fee on total trip cost (advance retained/credited) | 74–45 days before departure: 50% cancellation fee | 44–30 days before departure: 50% cancellation fee | Less than 30 days before departure: 100% cancellation fee."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Land Package + 2 Domestic Flights', price: '₹59,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Land Package + 2 Domestic Flights', price: '₹64,999 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Land Package + 2 Domestic Flights (Double/Triple Sharing)', price: '₹59,999 / person' },
       { label: 'Booking Advance', price: '₹20,000 / person' },
       { label: 'Christmas & New Year Special Batch', price: 'On Request', note: 'Dates available on request' },
@@ -2626,7 +2715,14 @@ export const trips: Trip[] = [
       "Misconduct or indiscipline may result in removal from the trip without refund.",
       "Cancellation Policy: Initial booking amount is non-refundable. Cancellation 30+ days before departure: 50% trip cost charged as cancellation fee | 15–30 days before departure: 75% cancellation fee | 0–15 days before departure: 100% cancellation fee."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Land Package + 2 Domestic Flights + Sapa', price: '₹69,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Land Package + 2 Domestic Flights + Sapa', price: '₹74,999 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Land Package + 2 Domestic Flights + Sapa (Double Sharing)', price: '₹69,999 / person' },
       { label: 'Booking Advance', price: '₹20,000 / person' },
       { label: 'Christmas & New Year Special Batch', price: 'On Request', note: 'Dates available on request' },
@@ -2824,7 +2920,20 @@ export const trips: Trip[] = [
       "Cancellation 6–8 days prior: 70% deduction on remaining balance.",
       "Cancellation < 2 days / No-Show: 100% deduction (No refund for unused services)."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹8,499 / person' },
+      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹9,499 / person' }
+    ],
+    longWeekendPackages: [
+      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹9,499 / person' },
+      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹10,499 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹9,499 / person' },
+      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹10,499 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹8,499 / person' },
       { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹9,499 / person' },
       { label: 'Double Sharing Upgrade', price: '+₹1,000 / person' },
@@ -2863,11 +2972,21 @@ export const trips: Trip[] = [
     title: 'Gokarna Backpacking Trip',
     location: 'Gokarna · Murdeshwar · Honnavar · Yana Caves',
     region: 'Domestic',
-    date: 'Oct 18–22, 2026',
+    date: 'Oct 01–05, 2026',
     dates: [
-      'Oct 18–22, 2026',
-      'Nov 14–18, 2026',
-      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Oct 01–05, 2026 (Long Weekend)',
+      'Oct 08–12, 2026',
+      'Oct 16–19, 2026 (Long Weekend)',
+      'Oct 22–26, 2026',
+      'Oct 29–Nov 02, 2026',
+      'Nov 05–09, 2026 (Long Weekend)',
+      'Nov 12–16, 2026',
+      'Nov 19–23, 2026',
+      'Nov 26–30, 2026',
+      'Dec 03–07, 2026',
+      'Dec 10–14, 2026',
+      'Dec 17–21, 2026',
+      'Dec 24–28, 2026 (Christmas Special)',
       'Dec 29–Jan 02, 2027 (New Year Special)'
     ],
     duration: '4N/5D',
@@ -3035,12 +3154,32 @@ export const trips: Trip[] = [
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable. Rescheduling or travel credit may also be offered. Eligible refunds will be processed within 4–7 business days.",
       "Booking Transfer: Bookings can be transferred to another person, subject to applicable terms and eligibility."
     ],
-    pricingOptions: [
-      { label: 'Ex-Gokarna (Gokarna to Gokarna)', price: '₹8,499 / person' },
-      { label: 'Ex-Mumbai — Non-AC Train', price: '₹9,499 / person' },
-      { label: 'Ex-Mumbai — AC Train', price: '₹11,499 / person' },
-      { label: 'Add-On — Double Sharing', price: '+₹1,500 / person' },
-      { label: 'New Year / Festive Batch Special', price: '₹9,999 / person', note: 'Applicable on Christmas & New Year batches' }
+        regularPackages: [
+      { label: 'Ex-Gokarna', price: '₹8,499 / person' },
+      { label: 'Non-AC Train', price: '₹9,499 / person' },
+      { label: '3AC Train', price: '₹11,499 / person' }
+    ],
+    longWeekendPackages: [
+      { label: 'Ex-Gokarna', price: '₹9,499 / person' },
+      { label: 'Non-AC Train', price: '₹10,499 / person' },
+      { label: '3AC Train', price: '₹12,499 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Gokarna', price: '₹9,999 / person' },
+      { label: 'Non-AC Train', price: '₹10,999 / person' },
+      { label: '3AC Train', price: '₹12,999 / person' }
+    ],
+    doubleSharingRate: 1500,
+pricingOptions: [
+      { label: 'Ex-Gokarna', price: '₹8,499 / person' },
+      { label: 'Non-AC Train', price: '₹9,499 / person' },
+      { label: '3AC Train', price: '₹11,499 / person' },
+      { label: 'Double Sharing', price: '+₹1,500 / person' },
+      { label: 'Long Weekend (LW)', price: '+₹1,000 / person', note: 'Applicable on LW batches' },
+      { label: 'XMAS & NY (Ex-Gokarna)', price: '₹9,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (Non-AC Train)', price: '₹10,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (3AC Train)', price: '₹12,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY Double Sharing', price: '+₹1,500 / person', note: 'Festive double sharing' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -3151,11 +3290,11 @@ export const trips: Trip[] = [
     region: 'Domestic',
     date: 'Dec 24–28, 2026 (XMAS Special)',
     dates: [
-      'Dec 24–28, 2026 (XMAS Special)',
-      'Dec 29, 2026–Jan 02, 2027 (New Year Special)'
+      'Dec 24–28, 2026 (Christmas Special)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
     ],
     duration: '4N/5D',
-    price: '₹11,999',
+    price: '₹9,999',
     image: '/Card Image/gokarna_newyear.png',
     alt: 'Gokarna Christmas and New Year Special Beach Party and Fireworks',
     tag: 'Xmas & New Year Special',
@@ -3330,10 +3469,22 @@ export const trips: Trip[] = [
       "Cancellation < 14 days / No-Show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
-    pricingOptions: [
-      { label: 'Ex-Gokarna (Triple / Quad Sharing)', price: '₹10,999 / person + 5% GST' },
-      { label: 'Mumbai to Mumbai (Non-AC Sleeper Train)', price: '₹11,999 / person + 5% GST' },
-      { label: 'Mumbai to Mumbai (3-Tier AC Train)', price: '₹13,999 / person + 5% GST' }
+        regularPackages: [
+      { label: 'Ex-Gokarna', price: '₹9,999 / person' },
+      { label: 'Non-AC Train', price: '₹10,999 / person' },
+      { label: '3AC Train', price: '₹12,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Gokarna', price: '₹9,999 / person' },
+      { label: 'Non-AC Train', price: '₹10,999 / person' },
+      { label: '3AC Train', price: '₹12,999 / person' }
+    ],
+    doubleSharingRate: 1500,
+pricingOptions: [
+      { label: 'Ex-Gokarna (XMAS & NY)', price: '₹9,999 / person' },
+      { label: 'Non-AC Train (XMAS & NY)', price: '₹10,999 / person' },
+      { label: '3AC Train (XMAS & NY)', price: '₹12,999 / person' },
+      { label: 'Double Sharing', price: '+₹1,500 / person' }
     ],
     bookingAmount: '₹5,000 / person',
     reviews: [
@@ -3368,11 +3519,21 @@ export const trips: Trip[] = [
     title: 'Coorg Backpacking Trip',
     location: 'Coorg · Madikeri · Mandalpatti · Mangalore',
     region: 'Domestic',
-    date: 'Nov 14–18, 2026',
+    date: 'Oct 01–05, 2026',
     dates: [
-      'Nov 14–18, 2026',
-      'Dec 23–27, 2026 (Christmas Weekend)',
-      'Dec 29–Jan 02, 2027 (New Year Special)'
+      'Oct 01–05, 2026 (Long Weekend)',
+      'Oct 08–12, 2026',
+      'Oct 15–19, 2026 (Long Weekend)',
+      'Oct 22–26, 2026',
+      'Oct 29–Nov 02, 2026',
+      'Nov 05–09, 2026 (Long Weekend)',
+      'Nov 12–16, 2026',
+      'Nov 19–23, 2026',
+      'Nov 26–30, 2026',
+      'Dec 03–07, 2026',
+      'Dec 10–14, 2026',
+      'Dec 17–21, 2026',
+      'Dec 24–28, 2026 (Christmas Special)'
     ],
     duration: '4N/5D',
     price: '₹8,499',
@@ -3545,12 +3706,29 @@ export const trips: Trip[] = [
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable. Rescheduling or travel credit may also be offered. Eligible refunds will be processed within 4–7 business days.",
       "Booking Transfer: Bookings can be transferred to another person, subject to applicable terms and eligibility."
     ],
-    pricingOptions: [
-      { label: 'Ex-Mangalore (Mangalore to Mangalore)', price: '₹8,499 / person' },
-      { label: 'Ex-Mumbai (Non-AC Sleeper Train)', price: '₹9,499 / person' },
-      { label: 'Ex-Mumbai — 3AC (3AC Train Ticket)', price: '₹11,999 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,500 / person' },
-      { label: 'Special Dates / Long Weekend Pricing', price: '+₹1,000 / person', note: 'Applicable on Long Weekends & Festive batches' }
+        regularPackages: [
+      { label: 'Ex-Mangalore', price: '₹8,499 / person' },
+      { label: 'Non-AC Train', price: '₹9,499 / person' },
+      { label: '3AC Train', price: '₹11,999 / person' }
+    ],
+    longWeekendPackages: [
+      { label: 'Ex-Mangalore', price: '₹9,499 / person' },
+      { label: 'Non-AC Train', price: '₹10,499 / person' },
+      { label: '3AC Train', price: '₹12,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Non-AC Train', price: '₹11,499 / person' },
+      { label: '3AC Train', price: '₹13,999 / person' }
+    ],
+    doubleSharingRate: 1500,
+pricingOptions: [
+      { label: 'Ex-Mangalore', price: '₹8,499 / person' },
+      { label: 'Non-AC Train', price: '₹9,499 / person' },
+      { label: '3AC Train', price: '₹11,999 / person' },
+      { label: 'Double Sharing', price: '+₹1,500 / person' },
+      { label: 'Long Weekend (LW)', price: '+₹1,000 / person', note: 'Applicable on LW batches' },
+      { label: 'XMAS Batch (Non-AC Train)', price: '₹11,499 / person', note: 'Dec 24–28 departure' },
+      { label: 'XMAS Batch (3AC Train)', price: '₹13,999 / person', note: 'Dec 24–28 departure' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -3598,14 +3776,25 @@ export const trips: Trip[] = [
     title: 'Udaipur Backpacking Trip from Mumbai',
     location: 'Udaipur · Rajasthan · Lake Pichola · City Palace · Sajjangarh · Bahubali Hills',
     region: 'Domestic',
-    date: 'Nov 20–24, 2026',
+    date: 'Oct 01–05, 2026',
     dates: [
-      'Nov 20–24, 2026',
-      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Oct 01–05, 2026 (Long Weekend)',
+      'Oct 08–12, 2026',
+      'Oct 15–19, 2026 (Long Weekend)',
+      'Oct 22–26, 2026',
+      'Oct 29–Nov 02, 2026',
+      'Nov 05–09, 2026 (Long Weekend)',
+      'Nov 12–16, 2026',
+      'Nov 19–23, 2026',
+      'Nov 26–30, 2026',
+      'Dec 03–07, 2026',
+      'Dec 10–14, 2026',
+      'Dec 17–21, 2026',
+      'Dec 24–28, 2026 (Christmas Special)',
       'Dec 29–Jan 02, 2027 (New Year Special)'
     ],
     duration: '4N/5D',
-    price: '₹9,999',
+    price: '₹8,999',
     image: '/Card Image/udaipur.jpg',
     alt: 'Majestic City Palace overlooking Lake Pichola in Udaipur',
     tag: 'City of Lakes',
@@ -3781,10 +3970,33 @@ export const trips: Trip[] = [
       "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
-    pricingOptions: [
-      { label: 'Mumbai to Mumbai (Non-AC Train)', price: '₹9,999 + 5% GST' },
-      { label: 'Mumbai to Mumbai (3AC Train)', price: '₹11,999 + 5% GST' },
-      { label: 'Double Sharing Add-On', price: '+₹1,000 + 5% GST' }
+        regularPackages: [
+      { label: 'Ex-Udaipur', price: '₹8,999 / person' },
+      { label: 'Non-AC Train', price: '₹9,999 / person' },
+      { label: '3AC Train', price: '₹11,999 / person' }
+    ],
+    longWeekendPackages: [
+      { label: 'Ex-Udaipur', price: '₹9,999 / person' },
+      { label: 'Non-AC Train', price: '₹10,999 / person' },
+      { label: '3AC Train', price: '₹12,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Udaipur', price: '₹10,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹11,999 / person' },
+      { label: '3AC Train', price: '₹13,999 / person' }
+    ],
+    doubleSharingRate: 1000,
+    festiveDoubleSharingRate: 1500,
+pricingOptions: [
+      { label: 'Ex-Udaipur', price: '₹8,999 / person' },
+      { label: 'Non-AC Train', price: '₹9,999 / person' },
+      { label: '3AC Train', price: '₹11,999 / person' },
+      { label: 'Double Sharing', price: '+₹1,000 / person' },
+      { label: 'Long Weekend (LW)', price: '+₹1,000 / person', note: 'Applicable on LW batches' },
+      { label: 'XMAS & NY (Ex-Udaipur)', price: '₹10,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (Non-AC Sleeper)', price: '₹11,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (3AC Train)', price: '₹13,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY Double Sharing', price: '+₹1,500 / person', note: 'Festive double sharing' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -3840,11 +4052,11 @@ export const trips: Trip[] = [
     region: 'Domestic',
     date: 'Dec 24–28, 2026 (XMAS Special)',
     dates: [
-      'Dec 24–28, 2026 (XMAS Special)',
-      'Dec 29, 2026–Jan 02, 2027 (New Year Special)'
+      'Dec 24–28, 2026 (Christmas Special)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
     ],
     duration: '4N/5D',
-    price: '₹11,999',
+    price: '₹10,999',
     image: '/image/Udaipur/IMG_3859.jpg',
     alt: 'Udaipur Christmas and New Year Special Celebration at Lake Pichola and City Palace',
     tag: 'Xmas & New Year Special',
@@ -4005,10 +4217,22 @@ export const trips: Trip[] = [
       "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days."
     ],
-    pricingOptions: [
-      { label: 'Mumbai to Mumbai (Non-AC Sleeper Train)', price: '₹11,999 / person + 5% GST' },
-      { label: 'Mumbai to Mumbai (3-Tier AC Train)', price: '₹13,999 / person + 5% GST' },
-      { label: 'Double Sharing Add-On', price: '+₹1,500 / person + 5% GST' }
+        regularPackages: [
+      { label: 'Ex-Udaipur', price: '₹10,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹11,999 / person' },
+      { label: '3AC Train', price: '₹13,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Udaipur', price: '₹10,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹11,999 / person' },
+      { label: '3AC Train', price: '₹13,999 / person' }
+    ],
+    doubleSharingRate: 1500,
+pricingOptions: [
+      { label: 'Ex-Udaipur (XMAS & NY)', price: '₹10,999 / person' },
+      { label: 'Non-AC Sleeper (XMAS & NY)', price: '₹11,999 / person' },
+      { label: '3AC Train (XMAS & NY)', price: '₹13,999 / person' },
+      { label: 'Double Sharing', price: '+₹1,500 / person' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -4037,7 +4261,21 @@ export const trips: Trip[] = [
     title: 'Spiti Valley with Chandrataal — Trip from Delhi',
     location: 'Spiti Valley · Chandrataal · Manali · Chitkul · Tabo · Kaza',
     region: 'Domestic',
-    date: 'Jun 12–20, 2027',
+    date: 'Aug 15–23, 2026',
+    dates: [
+      'Aug 15–23, 2026',
+      'Aug 22–30, 2026',
+      'Aug 29–Sep 06, 2026',
+      'Sep 05–13, 2026',
+      'Sep 12–20, 2026',
+      'Sep 19–27, 2026',
+      'Sep 26–Oct 04, 2026',
+      'Oct 03–11, 2026',
+      'Oct 10–18, 2026',
+      'Oct 17–25, 2026',
+      'Oct 24–Nov 01, 2026',
+      'Oct 31–Nov 08, 2026'
+    ],
     duration: '8N/9D',
     price: '₹18,999',
     image: '/Card Image/Spiti_with_chandrataal.png',
@@ -4275,7 +4513,16 @@ export const trips: Trip[] = [
       "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Triple Sharing', price: '₹18,999 / person' },
+      { label: 'Double Sharing', price: '₹21,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹20,999 / person' },
+      { label: 'Double Sharing', price: '₹23,999 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Triple Sharing (Delhi to Delhi)', price: '₹18,999 + 5% GST' },
       { label: 'Double Sharing (Delhi to Delhi)', price: '₹21,999 + 5% GST' }
     ],
@@ -4287,7 +4534,43 @@ export const trips: Trip[] = [
     title: 'Spiti Valley Winter Expedition from Delhi',
     location: 'Chitkul · Tabo · Kaza · Langza · Hikkim · Komic · Key Monastery · Chicham · Kibber · Kalpa',
     region: 'Domestic',
-    date: 'Jan 16–24, 2027',
+    date: 'Oct 03–11, 2026',
+    dates: [
+      'Oct 03–11, 2026',
+      'Oct 10–18, 2026',
+      'Oct 17–25, 2026',
+      'Oct 24–Nov 01, 2026',
+      'Nov 07–15, 2026',
+      'Nov 14–22, 2026',
+      'Nov 21–29, 2026',
+      'Nov 28–Dec 06, 2026',
+      'Dec 05–13, 2026',
+      'Dec 12–20, 2026',
+      'Dec 19–27, 2026 (Christmas Special)',
+      'Dec 25–Jan 02, 2027 (New Year Special)',
+      'Dec 26–Jan 03, 2027 (New Year Special)',
+      'Dec 27–Jan 04, 2027 (New Year Special)',
+      'Jan 02–10, 2027',
+      'Jan 09–17, 2027',
+      'Jan 16–24, 2027',
+      'Jan 23–31, 2027',
+      'Jan 30–Feb 07, 2027',
+      'Feb 06–14, 2027',
+      'Feb 13–21, 2027',
+      'Feb 20–28, 2027',
+      'Feb 27–Mar 07, 2027',
+      'Mar 06–14, 2027',
+      'Mar 13–21, 2027',
+      'Mar 20–28, 2027',
+      'Mar 27–Apr 04, 2027',
+      'Apr 03–11, 2027',
+      'Apr 10–18, 2027',
+      'Apr 17–25, 2027',
+      'Apr 24–May 02, 2027',
+      'May 01–09, 2027',
+      'May 08–16, 2027',
+      'May 22–30, 2027'
+    ],
     duration: '8N/9D',
     price: '₹18,999',
     image: '/Card Image/winter_spiti.png',
@@ -4504,9 +4787,20 @@ export const trips: Trip[] = [
       "Cancellation less than 2 days before departure / No-show: 100% deduction (No refund for unused services).",
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days. Rescheduling or travel credit may also be offered."
     ],
-    pricingOptions: [
-      { label: 'Triple Sharing (Delhi to Delhi)', price: '₹18,999 + 5% GST' },
-      { label: 'Double Sharing (Delhi to Delhi)', price: '₹21,999 + 5% GST' }
+        regularPackages: [
+      { label: 'Triple Sharing', price: '₹18,999 / person' },
+      { label: 'Double Sharing', price: '₹21,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹20,999 / person' },
+      { label: 'Double Sharing', price: '₹23,999 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
+      { label: 'Triple Sharing', price: '₹18,999 / person' },
+      { label: 'Double Sharing', price: '₹21,999 / person' },
+      { label: 'XMAS & NY (Triple Sharing)', price: '₹20,999 / person', note: 'Festive batches' },
+      { label: 'XMAS & NY (Double Sharing)', price: '₹23,999 / person', note: 'Festive batches' }
     ],
     bookingAmount: '₹5,000 / person'
   },
@@ -4645,7 +4939,17 @@ export const trips: Trip[] = [
       "Participants are expected to coordinate with the group and follow the trip schedule.",
       "Cancellation Policy: Initial booking amount is non-refundable. Cancellation 30+ days before departure: 50% trip cost charged as cancellation fee | 15–30 days before departure: 75% cancellation fee | 0–15 days before departure: 100% cancellation fee."
     ],
-    pricingOptions: [
+        regularPackages: [
+      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹11,499 / person' }
+    ],
+    longWeekendPackages: [
+      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹12,499 / person' }
+    ],
+    festivePackages: [
+      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹12,499 / person' }
+    ],
+    doubleSharingRate: 0,
+pricingOptions: [
       { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹11,499 / person' },
       { label: 'Booking Advance', price: '₹4,000 / person' },
       { label: 'Long Weekend / Festive Batch Special', price: '₹12,499 / person', note: 'Applicable on Diwali, Xmas & New Year batches' }

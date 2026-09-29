@@ -102,10 +102,21 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Accept & sanitize multiple travellers if provided
+    const rawTravellers = Array.isArray(body.travellers) ? body.travellers : []
+    const travellers = rawTravellers.map((t: any) => ({
+      fullName: sanitizeString(t.fullName, 100),
+      age: parseInt(String(t.age || ''), 10) || null,
+      gender: sanitizeString(t.gender, 20) || 'Male',
+      phone: sanitizeString(t.phone, 30),
+      email: sanitizeString(t.email, 120).toLowerCase(),
+    }))
+
     // 2. AUTHORITATIVE PRICING CALCULATION (Strict Server-Side Computation)
     // Completely ignores any amount/discount parameters that might be sent from client
     const pricing = calculateBookingPricing({
       tripSlug,
+      selectedDate: date,
       packageIndex,
       guests,
       isDoubleSharing,
@@ -207,6 +218,7 @@ export async function POST(req: NextRequest) {
         city,
         specialRequest,
         date,
+        travellers: travellers.length > 0 ? travellers : undefined,
       },
     })
   } catch (error: any) {

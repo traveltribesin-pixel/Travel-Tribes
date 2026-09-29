@@ -183,6 +183,19 @@ export function isTripUpcoming(
 }
 
 /**
+ * Checks if a date string is a Long Weekend batch (LW).
+ */
+export function isLongWeekendDate(dateStr?: string): boolean {
+  if (!dateStr || typeof dateStr !== 'string') return false
+  const lower = dateStr.toLowerCase()
+  return (
+    lower.includes('(lw)') ||
+    lower.includes('long weekend') ||
+    lower.includes('christmas weekend')
+  )
+}
+
+/**
  * Checks if a date string belongs to an Xmas, Christmas or New Year departure batch.
  */
 export function isFestiveDate(dateStr?: string): boolean {
@@ -190,6 +203,7 @@ export function isFestiveDate(dateStr?: string): boolean {
   const lower = dateStr.toLowerCase()
   if (
     lower.includes('new year') ||
+    lower.includes('(ny)') ||
     lower.includes('xmas') ||
     lower.includes('christmas') ||
     lower.includes('festive') ||
@@ -226,4 +240,3 @@ export function filterFestiveDates(dates?: string[]): string[] {
   if (!dates || !Array.isArray(dates)) return []
   return dates.filter((d) => isFestiveDate(d))
 }
-
