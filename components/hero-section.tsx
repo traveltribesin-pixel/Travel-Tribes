@@ -66,7 +66,7 @@ export function Hero() {
   }
 
   return (
-    <section className="min-h-[80vh] sm:min-h-[85vh] md:min-h-[80vh] pt-24 sm:pt-28 md:pt-32 lg:pt-28 pb-36 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-visible flex items-center bg-primary z-20">
+    <section className="min-h-[80vh] sm:min-h-[85vh] md:min-h-[80vh] pt-24 sm:pt-28 lg:pt-15 pb-36 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-visible flex items-center bg-primary z-20">
       {/* CSS Styles for the Infinite Scrolling scenery tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
