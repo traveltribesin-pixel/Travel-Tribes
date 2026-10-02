@@ -6,6 +6,7 @@ import { ArrowRight, MapPin, Users, Compass, Search, Star } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SAMPLE_TRIPS, type Trip } from '@/lib/trips'
+import { SearchModal } from './search-modal'
 
 const HERO_IMAGES = [
   '/Hero%20section/1000004663.jpg',
@@ -41,11 +42,9 @@ const ROTATING_WORDS = ['Gokarna', 'Spiti', 'Coorg', 'Udaipur', 'Meghalaya', 'Ke
 
 export function Hero() {
   const [currentImage, setCurrentImage] = useState(0)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [suggestions, setSuggestions] = useState<Trip[]>([])
-  const [showSuggestions, setShowSuggestions] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchInitialQuery, setSearchInitialQuery] = useState('')
   const [wordIndex, setWordIndex] = useState(0)
-  const searchRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -61,57 +60,13 @@ export function Hero() {
     return () => clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setShowSuggestions(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setSearchQuery(value)
-
-    if (value.trim().length >= 1) {
-      const query = value.trim().toLowerCase()
-      const matches = SAMPLE_TRIPS.filter((trip) =>
-        trip.title.toLowerCase().includes(query) ||
-        trip.destination.toLowerCase().includes(query) ||
-        trip.category.toLowerCase().includes(query)
-      ).slice(0, 5)
-      setSuggestions(matches)
-      setShowSuggestions(true)
-    } else {
-      setSuggestions([])
-    }
-  }
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const query = searchQuery.trim().toLowerCase()
-    if (query) {
-      //  Find a matching trip dynamically in the dataset
-      const matchedTrip = SAMPLE_TRIPS.find((trip) =>
-        trip.title.toLowerCase().includes(query) ||
-        trip.destination.toLowerCase().includes(query) ||
-        trip.category.toLowerCase().includes(query) ||
-        trip.description.toLowerCase().includes(query) ||
-        trip.highlights.some(h => h.toLowerCase().includes(query))
-      )
-
-      if (matchedTrip) {
-        window.location.href = `/itinerary/${matchedTrip.id}`
-      } else {
-        alert('Sorry, no trips found for this location. Please try another destination.')
-      }
-    }
+  const handleOpenSearch = (initialText: string = '') => {
+    setSearchInitialQuery(initialText)
+    setIsSearchOpen(true)
   }
 
   return (
-    <section className="min-h-[80vh] sm:min-h-[85vh] md:min-h-[90vh] pt-16 sm:pt-20 md:pt-14 pb-40 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-visible flex items-center bg-primary z-20">
+    <section className="min-h-[80vh] sm:min-h-[85vh] md:min-h-[80vh] pt-24 sm:pt-28 md:pt-32 lg:pt-28 pb-36 sm:pb-36 md:pb-28 lg:pb-24 relative overflow-visible flex items-center bg-primary z-20">
       {/* CSS Styles for the Infinite Scrolling scenery tracks */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -209,71 +164,61 @@ export function Hero() {
               </p>
             </div>
 
-            {/* Search Input Box */}
-            <div ref={searchRef} className="max-w-md w-full relative z-40 mb-4 sm:mb-6">
-              <form onSubmit={handleSearchSubmit} className="w-full relative">
-                <div className="flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-1.5 border border-white/20">
-                  <div className="flex items-center flex-grow pl-3 sm:pl-4 min-w-0">
-                    <Search className="text-muted-foreground mr-2 shrink-0" size={16} />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                      onFocus={() => setShowSuggestions(true)}
-                      placeholder="Where do you want to go?"
-                      className="w-full py-1.5 sm:py-2 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none text-xs sm:text-sm md:text-base font-medium min-w-0"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="glow-btn inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 text-xs sm:text-sm font-bold rounded-full cursor-pointer transition-all duration-300 shrink-0"
-                  >
-                    Search
-                  </button>
-                </div>
-              </form>
+            {/* Interactive Search Trigger Box */}
+            <div className="max-w-lg w-full relative z-40 mb-3 sm:mb-4">
+              <button
+                type="button"
+                onClick={() => handleOpenSearch('')}
+                className="w-full flex items-center justify-between bg-white/95 hover:bg-white backdrop-blur-md rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.35)] p-1.5 sm:p-2 border-2 border-white/40 hover:border-[var(--sky)] transition-all duration-300 group cursor-pointer text-left"
+              >
+                <div className="flex items-center flex-grow pl-3 sm:pl-4 min-w-0 gap-2.5 sm:gap-3">
 
-              {/* Suggestions Dropdown */}
-              <AnimatePresence>
-                {showSuggestions && suggestions.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 right-0 mt-2 z-50 bg-white rounded-2xl border border-gray-100 shadow-2xl overflow-hidden max-h-[300px] overflow-y-auto no-scrollbar"
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-slate-500 font-bold text-xs sm:text-sm md:text-[15px] truncate">
+                      Where do you want to go?
+                    </span>
+                    {/* <span className="text-[10px] sm:text-xs text-slate-500 truncate hidden sm:block">
+                      Spiti, Bali, Vietnam, Gokarna, Meghalaya...
+                    </span> */}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  {/* <span className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-[10.5px] font-extrabold text-slate-400 bg-slate-100 rounded-lg border border-slate-200">
+                    <kbd className="font-mono">⌘K</kbd>
+                  </span> */}
+                  <div className="glow-btn inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-extrabold rounded-full shrink-0 shadow-md">
+                    Search
+                  </div>
+                </div>
+              </button>
+
+              {/* Quick Popular Destination Tags below Search Bar */}
+              {/* <div className="flex items-center gap-1.5 sm:gap-2 mt-3 overflow-x-auto no-scrollbar py-0.5">
+                <span className="text-[11px] font-bold text-white/70 uppercase tracking-wider shrink-0 flex items-center gap-1">
+                  Popular:
+                </span>
+                {['Spiti', 'Vietnam', 'Bali', 'Gokarna', 'Meghalaya'].map((dest) => (
+                  <button
+                    key={dest}
+                    type="button"
+                    onClick={() => handleOpenSearch(dest)}
+                    className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/15 hover:bg-white hover:text-slate-900 text-white backdrop-blur-sm border border-white/20 transition-all duration-200 shrink-0 cursor-pointer shadow-xs"
                   >
-                    {suggestions.map((trip) => (
-                      <Link href={`/itinerary/${trip.id}`} key={trip.id} className="block no-underline">
-                        <div className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-3.5 hover:bg-accent/5 transition-colors border-b border-gray-100 last:border-0 group cursor-pointer">
-                          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0">
-                              <Compass size={15} />
-                            </div>
-                            <div className="text-left min-w-0">
-                              <p className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-accent transition-colors line-clamp-1">
-                                {trip.title}
-                              </p>
-                              <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-gray-500 font-medium mt-0.5">
-                                <MapPin size={9} className="text-accent shrink-0" />
-                                <span className="truncate">{trip.destination}</span>
-                                <span className="mx-1">•</span>
-                                <span className="shrink-0">{trip.duration} {trip.duration === 1 ? 'Day' : 'Days'}</span>
-                              </div>
-                            </div>
-                          </div>
-                          <span className="bg-gray-100 text-gray-600 font-bold text-[8.5px] sm:text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0 ml-2">
-                            {trip.category}
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    {dest}
+                  </button>
+                ))}
+              </div> */}
             </div>
 
-            <span className="text-[11px] sm:text-xs text-white/70 block font-medium">
+            {/* Render the Professional Pop-up Search Modal */}
+            <SearchModal
+              isOpen={isSearchOpen}
+              onClose={() => setIsSearchOpen(false)}
+              initialQuery={searchInitialQuery}
+            />
+
+            <span className="text-[11px] sm:text-xs text-white/70 block font-medium mt-2">
               Guided group tours & customizable packages
             </span>
           </div>

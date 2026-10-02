@@ -206,7 +206,7 @@ export function VideoGallerySection() {
   // 3 sets of videos for infinite seamless loop
   const tripleVideos = [...videoReels, ...videoReels, ...videoReels]
 
-  const pauseAutoScrollTemporarily = useCallback((duration = 4000) => {
+  const pauseAutoScrollTemporarily = useCallback((duration = 3000) => {
     isInteractingRef.current = true
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
     resumeTimeoutRef.current = setTimeout(() => {
@@ -214,20 +214,27 @@ export function VideoGallerySection() {
     }, duration)
   }, [])
 
-  // Continuous auto-scroll loop with infinite wrap-around
+  // Continuous smooth auto-scroll loop with infinite wrap-around
   useEffect(() => {
     const container = scrollContainerRef.current
     if (!container) return
 
     // Initialize in the middle set if scroll is at 0
-    if (container.scrollLeft === 0) {
-      const singleSetWidth = container.scrollWidth / 3
-      container.scrollLeft = singleSetWidth
-    }
+    const initTimer = setTimeout(() => {
+      if (container && container.scrollLeft === 0) {
+        const singleSetWidth = container.scrollWidth / 3
+        if (singleSetWidth > 0) {
+          container.scrollLeft = singleSetWidth
+        }
+      }
+    }, 150)
 
-    const scrollSpeed = 0.65 // px per frame
+    let lastTime = performance.now()
 
-    const step = () => {
+    const step = (currentTime: number) => {
+      const delta = Math.min((currentTime - lastTime) / 1000, 0.05)
+      lastTime = currentTime
+
       if (
         container &&
         isAutoScrolling &&
@@ -235,13 +242,16 @@ export function VideoGallerySection() {
         !isDragging &&
         selectedVideoIndex === null
       ) {
-        container.scrollLeft += scrollSpeed
+        // ~50px per second for smooth, steady continuous flow
+        container.scrollLeft += 52 * delta
 
         const singleSetWidth = container.scrollWidth / 3
-        if (container.scrollLeft >= singleSetWidth * 2) {
-          container.scrollLeft -= singleSetWidth
-        } else if (container.scrollLeft <= 0) {
-          container.scrollLeft += singleSetWidth
+        if (singleSetWidth > 100) {
+          if (container.scrollLeft >= singleSetWidth * 2) {
+            container.scrollLeft -= singleSetWidth
+          } else if (container.scrollLeft <= 10) {
+            container.scrollLeft += singleSetWidth
+          }
         }
       }
       animFrameIdRef.current = requestAnimationFrame(step)
@@ -250,6 +260,7 @@ export function VideoGallerySection() {
     animFrameIdRef.current = requestAnimationFrame(step)
 
     return () => {
+      clearTimeout(initTimer)
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current)
       if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
     }
@@ -440,12 +451,7 @@ export function VideoGallerySection() {
           onMouseLeave={handleMouseUpOrLeave}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          onMouseEnter={() => {
-            isInteractingRef.current = true
-          }}
-          className={`flex items-center gap-4 sm:gap-6 px-6 sm:px-12 overflow-x-auto no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing select-none ${
-            isDragging ? 'scroll-auto' : ''
-          }`}
+          className="flex items-center gap-4 sm:gap-6 px-6 sm:px-12 overflow-x-auto no-scrollbar scroll-auto cursor-grab active:cursor-grabbing select-none"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',

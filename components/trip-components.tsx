@@ -91,9 +91,9 @@ export function TripExplorer({
 }: {
   trips: Trip[];
   categories?: { value: string; title: string }[];
-}) { 
-  const [query, setQuery] = useState(''); 
-  const [filter, setFilter] = useState('All'); 
+}) {
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('All');
   const [selectedMonth, setSelectedMonth] = useState('All');
 
   const activeCategories = categories || defaultCategories;
@@ -169,9 +169,8 @@ export function TripExplorer({
                   `}
                 >
                   <div
-                    className={`h-2 w-2 rounded-full transition-colors ${
-                      filter === category.value ? 'bg-[#43a9d1]' : 'bg-gray-300'
-                    }`}
+                    className={`h-2 w-2 rounded-full transition-colors ${filter === category.value ? 'bg-[#43a9d1]' : 'bg-gray-300'
+                      }`}
                   />
                   {category.title}
                 </button>
