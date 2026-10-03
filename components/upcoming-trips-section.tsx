@@ -6,22 +6,6 @@ import { HorizontalRail, SectionHeading } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
 import { trips } from '@/lib/travel-data'
 
-const UPCOMING_TRIP_SLUGS = [
-  'spiti-winter-expedition',   // Winter Spiti
-  'meghalaya-backpacking',     // Meghalaya Backpacking
-  'udaipur-backpacking',       // Udaipur
-  'meghalaya-with-kaziranga',  // Meghalaya with kaziranga
-  'coorg-backpacking',         // Coorg
-  'bali-gili-islands',         // Bali with Gili
-  'sri-lanka-island-escape',   // Srilanka
-  'vietnam-classic',           // Vietnam
-  'bhutan-backpacking',        // Bhutan
-]
-
-const upcomingTrips = UPCOMING_TRIP_SLUGS
-  .map(slug => trips.find(t => t.slug === slug))
-  .filter((t): t is (typeof trips)[0] => Boolean(t))
-
 export function UpcomingTripsSection() {
   return (
     <section
@@ -37,7 +21,7 @@ export function UpcomingTripsSection() {
         center
       />
       <HorizontalRail label="Upcoming trips">
-        {upcomingTrips.map(t => (
+        {trips.map(t => (
           <TripCard key={t.slug} trip={t} featured />
         ))}
       </HorizontalRail>

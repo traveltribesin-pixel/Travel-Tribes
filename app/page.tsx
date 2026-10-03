@@ -4,6 +4,7 @@ import { HeroSection } from '@/components/hero-section'
 import { BrandValuesSection } from '@/components/brand-values-section'
 import { FeaturedRecognitionSection } from '@/components/featured-recognition-section'
 import { UpcomingTripsSection } from '@/components/upcoming-trips-section'
+import { XmasNewYearSection } from '@/components/xmas-new-year-section'
 import { DomesticJourneysSection } from '@/components/domestic-journeys-section'
 import { CommunityBannerSection } from '@/components/community-banner-section'
 import { InternationalTripsSection } from '@/components/international-trips-section'
@@ -23,20 +24,19 @@ export default function Home() {
         {/* 1. Hero Section */}
         <HeroSection />
 
-        {/* 2. Not Your Usual Travel Company (Brand Values) */}
-
-
-        {/* 3. Upcoming Trips */}
+        {/* 2. Upcoming Trips (All Itineraries) */}
         <UpcomingTripsSection />
 
-        {/* 5. High Impact Community Banner & WhatsApp CTA */}
+        {/* 3. Xmas & New Year Specials */}
+        <XmasNewYearSection />
+
+        {/* 4. High Impact Community Banner & WhatsApp CTA */}
         <CommunityBannerSection />
 
-
-        {/* 4. International Trips */}
+        {/* 5. International Trips */}
         <InternationalTripsSection />
 
-        {/* 3. Domestic Journeys */}
+        {/* 6. Domestic Journeys */}
         <DomesticJourneysSection />
 
 
