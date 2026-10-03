@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { addLead } from '@/lib/crm-store'
 
 export async function POST(req: NextRequest) {
   try {
@@ -148,6 +149,21 @@ export async function POST(req: NextRequest) {
         return { success: false, error: err?.message }
       })
     )
+
+    // 4. Save into Built-in CRM Store
+    try {
+      addLead({
+        fullName: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone !== 'Not provided' ? cleanPhone : '',
+        source: sourceLabel,
+        tripTitle: tripInterest,
+        message: cleanMessage,
+        priority: 'HIGH'
+      })
+    } catch (crmErr) {
+      console.error('CRM lead store failed:', crmErr)
+    }
 
     // Await all notification tasks to complete before responding
     await Promise.allSettled(tasks)

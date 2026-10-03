@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { calculateBookingPricing } from '@/lib/pricing-calculator'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { addBooking, addLead } from '@/lib/crm-store'
 
 // Simple in-memory rate limiting map for basic DDoS/spam prevention
 const requestCounts = new Map<string, { count: number; timestamp: number }>()
@@ -331,6 +332,50 @@ export async function POST(req: NextRequest) {
         return { success: false, error: err?.message }
       })
     )
+
+    // 6. Save Booking & Customer Record in Built-in CRM Store
+    try {
+      addBooking({
+        id: bookingId,
+        source: sourceLabel,
+        tripTitle: pricing.tripTitle,
+        tripSlug: pricing.tripSlug,
+        date: date || 'Selected Batch',
+        fullName,
+        email,
+        phone,
+        age: age || null,
+        city,
+        guests: pricing.guests,
+        sharingType: pricing.packageLabel,
+        paymentType: pricing.isFullPayment ? 'full' : 'advance',
+        paymentStatus: pricing.isFullPayment ? 'PAID' : 'PARTIAL',
+        bookingStatus: 'CONFIRMED',
+        totalAmount: pricing.grandTotal,
+        paidAmount: pricing.amountToPayToday,
+        balanceDue: pricing.remainingBalance,
+        specialRequest: specialRequest || undefined,
+        couponCode: couponCode || undefined,
+        note: `Direct online booking. ${pricing.guests} travellers (${pricing.packageLabel}). Amount paid: ₹${pricing.amountToPayToday.toLocaleString('en-IN')}${pricing.remainingBalance > 0 ? `, Remaining balance: ₹${pricing.remainingBalance.toLocaleString('en-IN')}` : ''}.`
+      })
+
+      // Also register as converted lead in CRM pipeline
+      addLead({
+        fullName,
+        email,
+        phone,
+        source: sourceLabel,
+        tripTitle: pricing.tripTitle,
+        tripSlug: pricing.tripSlug,
+        travelDates: date,
+        groupSize: `${pricing.guests} Travellers`,
+        budget: `₹${pricing.grandTotal.toLocaleString('en-IN')}`,
+        message: specialRequest || `Confirmed Booking ${bookingId}`,
+        priority: 'HIGH'
+      })
+    } catch (crmErr) {
+      console.error('CRM booking store failed:', crmErr)
+    }
 
     // Await all notification tasks to settle before responding
     await Promise.allSettled(tasks)

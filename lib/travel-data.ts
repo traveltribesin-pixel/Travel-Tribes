@@ -54,7 +54,7 @@ export type Trip = {
 
 const img = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=88`
 
-export const trips: Trip[] = [
+const baseTrips: Trip[] = [
   {
     id: 'hampi-backpacking',
     slug: 'hampi-backpacking',
@@ -5220,6 +5220,262 @@ export const testimonials: TripReview[] = [
     quote: 'Udaipur was SUCH a vibe! 🥹🌅 Sunset by the lake, sunrise at Bahubali Hills, beautiful streets and the whole city just hits different. Travel Tribes made it even better — everything was sorted and our trip leader was a total W. Would 100% do this trip again!'
   }
 ]
+
+const festiveDuplicateOverrides: {
+  origId: string
+  id: string
+  slug: string
+  title: string
+  dates: string[]
+  price: string
+  regularPackages?: TripPricingOption[]
+  pricingOptions?: TripPricingOption[]
+}[] = [
+  {
+    origId: 'hampi-backpacking',
+    id: 'hampi-backpacking-xmas-new-year',
+    slug: 'hampi-backpacking-xmas-new-year',
+    title: 'Hampi Backpacking — Xmas & New Year Special',
+    dates: [
+      'Dec 23–27, 2026 (Long Weekend)',
+      'Dec 28–Jan 02, 2027 (New Year Special)'
+    ],
+    price: '₹8,999',
+    regularPackages: [
+      { label: 'Ex-Hospete', price: '₹8,999 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹9,999 / person' },
+      { label: 'AC 3-Tier Train', price: '₹11,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Ex-Hospete (Festive Batch)', price: '₹8,999 / person' },
+      { label: 'Ex-Mumbai & Pune (Non-AC Sleeper Train)', price: '₹9,999 / person' },
+      { label: 'Ex-Mumbai & Pune (AC 3-Tier Train)', price: '₹11,999 / person' },
+      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' }
+    ]
+  },
+  {
+    origId: 'meghalaya-backpacking',
+    id: 'meghalaya-backpacking-xmas-new-year',
+    slug: 'meghalaya-backpacking-xmas-new-year',
+    title: 'Meghalaya Backpacking — Xmas & New Year Special',
+    dates: [
+      'Dec 24–30, 2026 (Christmas Special)',
+      'Dec 27–Jan 01, 2027 (New Year Special)'
+    ],
+    price: '₹22,999',
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹22,999 / person' },
+      { label: 'Double Sharing', price: '₹24,499 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Triple Sharing (Festive Batch)', price: '₹22,999 / person' },
+      { label: 'Double Sharing (Festive Batch)', price: '₹24,499 / person' }
+    ]
+  },
+  {
+    origId: 'meghalaya-with-kaziranga',
+    id: 'meghalaya-with-kaziranga-xmas-new-year',
+    slug: 'meghalaya-with-kaziranga-xmas-new-year',
+    title: 'Meghalaya with Kaziranga — Xmas & New Year Special',
+    dates: [
+      'Dec 24–31, 2026 (Christmas Special)',
+      'Dec 27–Jan 02, 2027 (New Year Special)'
+    ],
+    price: '₹26,499',
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹26,499 / person' },
+      { label: 'Double Sharing', price: '₹28,499 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Triple Sharing (Festive Batch)', price: '₹26,499 / person' },
+      { label: 'Double Sharing (Festive Batch)', price: '₹28,499 / person' }
+    ]
+  },
+  {
+    origId: 'sri-lanka-island-escape',
+    id: 'sri-lanka-island-escape-xmas-new-year',
+    slug: 'sri-lanka-island-escape-xmas-new-year',
+    title: 'Sri Lanka — Xmas & New Year Special',
+    dates: [
+      'Dec 19–26, 2026 (Christmas Special)',
+      'Dec 27–Jan 03, 2027 (New Year Special)'
+    ],
+    price: '₹54,999',
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹54,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Triple Sharing (Festive Batch)', price: '₹54,999 / person' },
+      { label: 'Single Occupancy Upgrade', price: '+₹15,000 / person' }
+    ]
+  },
+  {
+    origId: 'bali-gili-islands',
+    id: 'bali-gili-islands-xmas-new-year',
+    slug: 'bali-gili-islands-xmas-new-year',
+    title: 'Bali with Gili — Xmas & New Year Special',
+    dates: [
+      'Dec 19–27, 2026 (Christmas Special)',
+      'Dec 27–Jan 04, 2027 (New Year Special)'
+    ],
+    price: '₹59,000',
+    regularPackages: [
+      { label: 'Triple / Double Sharing', price: '₹59,000 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Triple / Double Sharing (Festive Batch)', price: '₹59,000 / person' }
+    ]
+  },
+  {
+    origId: 'vietnam-phu-quoc',
+    id: 'vietnam-phu-quoc-xmas-new-year',
+    slug: 'vietnam-phu-quoc-xmas-new-year',
+    title: 'Vietnam with Phu Quoc — Xmas & New Year Special',
+    dates: [
+      'Dec 24–31, 2026 (Christmas Special - On Request)',
+      'Dec 28–Jan 04, 2027 (New Year Special - On Request)'
+    ],
+    price: '₹79,999',
+    regularPackages: [
+      { label: 'All-Inclusive Package (With 2 Internal Flights)', price: '₹79,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 5% TCS' },
+      { label: 'Booking Advance', price: '₹20,000 / person' }
+    ]
+  },
+  {
+    origId: 'vietnam-classic',
+    id: 'vietnam-classic-xmas-new-year',
+    slug: 'vietnam-classic-xmas-new-year',
+    title: 'Vietnam — Xmas & New Year Special',
+    dates: [
+      'Dec 24–31, 2026 (Christmas Special - On Request)',
+      'Dec 28–Jan 04, 2027 (New Year Special - On Request)'
+    ],
+    price: '₹64,999',
+    regularPackages: [
+      { label: 'Land Package + 2 Domestic Flights', price: '₹64,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Land Package + 2 Domestic Flights (Festive Batch)', price: '₹64,999 / person' },
+      { label: 'Booking Advance', price: '₹20,000 / person' }
+    ]
+  },
+  {
+    origId: 'vietnam-sapa',
+    id: 'vietnam-sapa-xmas-new-year',
+    slug: 'vietnam-sapa-xmas-new-year',
+    title: 'Vietnam with Sapa — Xmas & New Year Special',
+    dates: [
+      'Dec 24–Jan 01, 2027 (Christmas & New Year Special - On Request)'
+    ],
+    price: '₹74,999',
+    regularPackages: [
+      { label: 'Land Package + 2 Domestic Flights + Sapa', price: '₹74,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Land Package + 2 Domestic Flights + Sapa (Festive Batch)', price: '₹74,999 / person' },
+      { label: 'Booking Advance', price: '₹20,000 / person' }
+    ]
+  },
+  {
+    origId: 'konkan-coastal-roadtrip',
+    id: 'konkan-coastal-roadtrip-xmas-new-year',
+    slug: 'konkan-coastal-roadtrip-xmas-new-year',
+    title: 'Coastal Maharashtra Road Trip — Xmas & New Year Special',
+    dates: [
+      'Dec 23–27, 2026 (Christmas Weekend)',
+      'Dec 29–Jan 02, 2027 (New Year Special)'
+    ],
+    price: '₹9,499',
+    regularPackages: [
+      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹9,499 / person' },
+      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹10,499 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹9,499 / person' },
+      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹10,499 / person' }
+    ]
+  },
+  {
+    origId: 'coorg-backpacking',
+    id: 'coorg-backpacking-xmas-new-year',
+    slug: 'coorg-backpacking-xmas-new-year',
+    title: 'Coorg Backpacking — Xmas & New Year Special',
+    dates: [
+      'Dec 24–28, 2026 (Christmas Special)'
+    ],
+    price: '₹11,499',
+    regularPackages: [
+      { label: 'Non-AC Train', price: '₹11,499 / person' },
+      { label: '3AC Train', price: '₹13,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Non-AC Train (Christmas Special)', price: '₹11,499 / person' },
+      { label: '3AC Train (Christmas Special)', price: '₹13,999 / person' },
+      { label: 'Double Sharing', price: '+₹1,500 / person' }
+    ]
+  },
+  {
+    origId: 'spiti-winter-expedition',
+    id: 'spiti-winter-expedition-xmas-new-year',
+    slug: 'spiti-winter-expedition-xmas-new-year',
+    title: 'Spiti Valley Winter Expedition — Xmas & New Year Special',
+    dates: [
+      'Dec 19–27, 2026 (Christmas Special)',
+      'Dec 25–Jan 02, 2027 (New Year Special)',
+      'Dec 26–Jan 03, 2027 (New Year Special)',
+      'Dec 27–Jan 04, 2027 (New Year Special)'
+    ],
+    price: '₹20,999',
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹20,999 / person' },
+      { label: 'Double Sharing', price: '₹23,999 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Triple Sharing (Festive Batch)', price: '₹20,999 / person' },
+      { label: 'Double Sharing (Festive Batch)', price: '₹23,999 / person' }
+    ]
+  },
+  {
+    origId: 'jawai-leopard-safari',
+    id: 'jawai-leopard-safari-xmas-new-year',
+    slug: 'jawai-leopard-safari-xmas-new-year',
+    title: 'Jawai — Xmas & New Year Special',
+    dates: [
+      'Dec 24–27, 2026 (Christmas Weekend)',
+      'Dec 30–Jan 02, 2027 (New Year Special)'
+    ],
+    price: '₹12,499',
+    regularPackages: [
+      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹12,499 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹12,499 / person' },
+      { label: 'Booking Advance', price: '₹4,000 / person' }
+    ]
+  }
+]
+
+const duplicateTrips: Trip[] = festiveDuplicateOverrides.map((override) => {
+  const orig = baseTrips.find((t) => t.id === override.origId)
+  if (!orig) throw new Error(`Trip with id ${override.origId} not found`)
+  return {
+    ...orig,
+    id: override.id,
+    slug: override.slug,
+    title: override.title,
+    date: override.dates[0],
+    dates: override.dates,
+    price: override.price,
+    tag: 'Xmas & New Year Special',
+    ...(override.regularPackages ? { regularPackages: override.regularPackages } : {}),
+    ...(override.pricingOptions ? { pricingOptions: override.pricingOptions } : {}),
+  }
+})
+
+export const trips: Trip[] = [...baseTrips, ...duplicateTrips]
 
 export interface GalleryItem {
   image: string

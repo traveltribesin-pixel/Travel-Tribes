@@ -1,0 +1,247 @@
+{
+  "leads": [
+    {
+      "id": "LEAD-675052",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Test Traveller",
+      "email": "test.traveller@example.com",
+      "phone": "+91 99999 88888",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "tripSlug": "meghalaya-backpacking",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-10-03T08:21:15.052Z",
+      "updatedAt": "2026-10-03T08:21:15.052Z"
+    },
+    {
+      "id": "LEAD-101",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Aarav Sharma",
+      "email": "aarav.sharma@gmail.com",
+      "phone": "+91 98201 12345",
+      "tripTitle": "Bali with Gili — 8 Nights / 9 Days",
+      "tripSlug": "bali-gili-islands",
+      "travelDates": "May 10–18, 2027",
+      "groupSize": "2 Travellers",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-1",
+          "text": "Downloaded PDF brochure. Interested in Scuba diving in Gili Trawangan.",
+          "author": "System",
+          "createdAt": "2026-10-03T06:21:08.654Z"
+        }
+      ],
+      "createdAt": "2026-10-03T06:21:08.655Z",
+      "updatedAt": "2026-10-03T06:21:08.655Z"
+    },
+    {
+      "id": "LEAD-102",
+      "source": "Contact Us Page Form",
+      "fullName": "Priya Mukherjee",
+      "email": "priya.m@outlook.com",
+      "phone": "+91 97412 88990",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "tripSlug": "meghalaya-backpacking",
+      "travelDates": "Oct 02–07, 2026 (Long Weekend)",
+      "groupSize": "1 (Solo Female)",
+      "message": "Is this trip safe for solo female travellers? Looking to join the October batch.",
+      "status": "CONTACTED",
+      "priority": "URGENT",
+      "notes": [
+        {
+          "id": "note-2",
+          "text": "WhatsApp message sent about our solo female traveller safety guidelines and group captain details.",
+          "author": "Rohan (Sales)",
+          "createdAt": "2026-10-03T03:21:08.655Z"
+        }
+      ],
+      "lastContactedAt": "2026-10-03T03:21:08.655Z",
+      "createdAt": "2026-10-03T02:21:08.655Z",
+      "updatedAt": "2026-10-03T03:21:08.655Z"
+    },
+    {
+      "id": "LEAD-103",
+      "source": "Corporate Offsite Proposal Form",
+      "fullName": "Vikram Mehta",
+      "email": "vikram@techventures.co",
+      "phone": "+91 98110 55432",
+      "tripTitle": "Udaipur Heritage & Desert Retreat",
+      "travelDates": "Dec 18–21, 2026",
+      "groupSize": "25 People",
+      "budget": "₹4,50,000 Total",
+      "message": "Need complete offsite planning with team bonding games, palace stay, and Gala dinner.",
+      "status": "IN_PROGRESS",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-3",
+          "text": "Initial proposal deck sent with 3 hotel options in Udaipur.",
+          "author": "Admin",
+          "createdAt": "2026-10-02T08:21:08.655Z"
+        }
+      ],
+      "nextFollowUpDate": "2026-10-04",
+      "createdAt": "2026-10-02T04:21:08.656Z",
+      "updatedAt": "2026-10-02T08:21:08.656Z"
+    },
+    {
+      "id": "LEAD-104",
+      "source": "Custom Trip Builder (Website)",
+      "fullName": "Sneha & Tanmay",
+      "email": "sneha.patel@gmail.com",
+      "phone": "+91 98920 44321",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "tripSlug": "spiti-winter-expedition",
+      "travelDates": "Jan 15–22, 2027",
+      "groupSize": "Couple",
+      "status": "FOLLOW_UP",
+      "priority": "MEDIUM",
+      "notes": [
+        {
+          "id": "note-4",
+          "text": "Looking for 4x4 homestay package with heating.",
+          "author": "Sales Team",
+          "createdAt": "2026-10-01T08:21:08.657Z"
+        }
+      ],
+      "createdAt": "2026-10-01T06:21:08.657Z",
+      "updatedAt": "2026-10-01T08:21:08.657Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "TT-2026-4821",
+      "source": "Direct Trip Booking Form (/book)",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "tripSlug": "coorg-mysore-new-year",
+      "date": "Dec 29, 2026–Jan 03, 2027 (New Year Special)",
+      "fullName": "Rahul Deshmukh",
+      "email": "rahul.deshmukh@gmail.com",
+      "phone": "+91 98230 77112",
+      "age": 26,
+      "city": "Mumbai",
+      "guests": 2,
+      "sharingType": "Double Sharing",
+      "paymentType": "advance",
+      "paymentStatus": "PARTIAL",
+      "bookingStatus": "CONFIRMED",
+      "totalAmount": 21998,
+      "paidAmount": 6000,
+      "balanceDue": 15998,
+      "specialRequest": "Veg food preference on train journey.",
+      "notes": [
+        {
+          "id": "bn-1",
+          "text": "Advance booking received via UPI. Remaining ₹15,998 due 10 days before trip.",
+          "author": "System",
+          "createdAt": "2026-10-02T20:21:08.657Z"
+        }
+      ],
+      "createdAt": "2026-10-02T20:21:08.657Z",
+      "updatedAt": "2026-10-02T20:21:08.657Z"
+    },
+    {
+      "id": "TT-2026-3914",
+      "source": "Direct Trip Booking Form (/book)",
+      "tripTitle": "Gokarna — X-Mas & New Year Special",
+      "tripSlug": "gokarna-xmas-new-year",
+      "date": "Dec 24–28, 2026 (Christmas Special)",
+      "fullName": "Ananya Verma",
+      "email": "ananya.v@gmail.com",
+      "phone": "+91 99881 22334",
+      "age": 24,
+      "city": "Pune",
+      "guests": 1,
+      "sharingType": "Triple Sharing",
+      "paymentType": "full",
+      "paymentStatus": "PAID",
+      "bookingStatus": "CONFIRMED",
+      "totalAmount": 9999,
+      "paidAmount": 9999,
+      "balanceDue": 0,
+      "couponCode": "EARLYBIRD",
+      "notes": [
+        {
+          "id": "bn-2",
+          "text": "Full payment verified. Welcome kit and packing checklist emailed.",
+          "author": "Admin",
+          "createdAt": "2026-10-01T20:21:08.657Z"
+        }
+      ],
+      "createdAt": "2026-10-01T20:21:08.657Z",
+      "updatedAt": "2026-10-01T20:21:08.657Z"
+    },
+    {
+      "id": "TT-2026-2105",
+      "source": "Direct Trip Booking Form (/book)",
+      "tripTitle": "Hampi Backpacking Trip",
+      "tripSlug": "hampi-backpacking",
+      "date": "Oct 01–05, 2026 (Long Weekend)",
+      "fullName": "Kunal Kapoor",
+      "email": "kunal.kapoor@yahoo.com",
+      "phone": "+91 98190 66554",
+      "age": 28,
+      "city": "Mumbai",
+      "guests": 3,
+      "sharingType": "Triple Sharing",
+      "paymentType": "full",
+      "paymentStatus": "PAID",
+      "bookingStatus": "CONFIRMED",
+      "totalAmount": 23997,
+      "paidAmount": 23997,
+      "balanceDue": 0,
+      "notes": [],
+      "createdAt": "2026-09-30T08:21:08.657Z",
+      "updatedAt": "2026-09-30T08:21:08.657Z"
+    }
+  ],
+  "activities": [
+    {
+      "id": "act-1791015675052",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Test Traveller (Meghalaya Backpacking Trip)",
+      "entityType": "lead",
+      "entityId": "LEAD-675052",
+      "createdAt": "2026-10-03T08:21:15.052Z"
+    },
+    {
+      "id": "act-1",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Aarav Sharma downloaded Bali with Gili itinerary brochure",
+      "entityType": "lead",
+      "entityId": "LEAD-101",
+      "createdAt": "2026-10-03T06:21:08.657Z"
+    },
+    {
+      "id": "act-2",
+      "type": "BOOKING_CREATED",
+      "title": "New Booking Received",
+      "description": "Rahul Deshmukh booked Coorg New Year (2 Guests) — ₹6,000 Advance Paid",
+      "entityType": "booking",
+      "entityId": "TT-2026-4821",
+      "createdAt": "2026-10-02T20:21:08.657Z"
+    },
+    {
+      "id": "act-3",
+      "type": "STATUS_CHANGED",
+      "title": "Lead Status Updated",
+      "description": "Priya Mukherjee marked as CONTACTED",
+      "entityType": "lead",
+      "entityId": "LEAD-102",
+      "createdAt": "2026-10-03T03:21:08.657Z"
+    }
+  ],
+  "settings": {
+    "whatsappTemplates": {
+      "greeting": "Hi {{name}}! 👋 Thanks for reaching out to Travel Tribes regarding {{trip}}. When are you planning to travel with us? We have some amazing upcoming batches!",
+      "itineraryFollowUp": "Hi {{name}}! 🎒 Hope you enjoyed checking out the itinerary for {{trip}}. We have a few spots remaining for the upcoming batch. Would you like me to reserve a tentative spot for you?",
+      "bookingConfirmed": "Woohoo {{name}}! 🎉 Your booking for {{trip}} (Booking ID: {{bookingId}}) is confirmed! Your Trip Captain will connect with you 3 days prior to departure. Get ready for an epic journey! 🚀",
+      "paymentReminder": "Hi {{name}}! 👋 This is a friendly reminder regarding your upcoming {{trip}} trip. Your remaining balance is ₹{{balance}}. Let us know once completed so we can finalize your travel kit!"
+    }
+  }
+}
