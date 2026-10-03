@@ -1,5 +1,5 @@
 import { TripsPage } from '@/app/trips-page'
-import { xmasNewYearTrips, trips } from '@/lib/travel-data'
+import { xmasNewYearTrips } from '@/lib/travel-data'
 
 const categories = [
   { value: 'All', title: 'All' },

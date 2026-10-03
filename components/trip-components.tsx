@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useMemo, useRef, useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight, CalendarDays, Clock3, Compass, MapPin, Search, Star, ChevronDown, RotateCcw } from 'lucide-react'
 import { filterUpcomingDates, getTripPrimaryDate } from '@/lib/date-utils'
-import { toFestiveTrip, type Trip } from '@/lib/travel-data'
+import { toFestiveTrip, isFestiveTripTitle, type Trip } from '@/lib/travel-data'
 
 export function HorizontalRail({ children, label = 'Scrollable content' }: { children: React.ReactNode; label?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -102,6 +102,7 @@ export function TripExplorer({
     let sourceTrips = trips;
     if (filter === 'Xmas & New Year') {
       sourceTrips = trips
+        .filter((t) => isFestiveTripTitle(t.title))
         .map((t) => toFestiveTrip(t))
         .filter((t): t is Trip => t !== null);
     }

@@ -5260,6 +5260,17 @@ export const blogs = [
 
 export const honeymoonTrips = trips.filter(t => t.region === 'Honeymoon')
 
+export function isFestiveTripTitle(title?: string): boolean {
+  if (!title) return false
+  const t = title.toLowerCase()
+  return (
+    t.includes('new year') ||
+    t.includes('xmas') ||
+    t.includes('x-mas') ||
+    t.includes('christmas')
+  )
+}
+
 /**
  * Transforms a standard trip into its dedicated Xmas & New Year festive presentation:
  * - Dates strictly filtered to ONLY Xmas & New Year departure dates.
@@ -5271,6 +5282,7 @@ export function toFestiveTrip(trip: Trip): Trip | null {
   const festiveDates = filterFestiveDates(allDates)
 
   if (
+    !isFestiveTripTitle(trip.title) &&
     festiveDates.length === 0 &&
     trip.region !== 'Xmas & New Year' &&
     !trip.tag?.toLowerCase().includes('new year') &&
@@ -5279,7 +5291,7 @@ export function toFestiveTrip(trip: Trip): Trip | null {
     return null
   }
 
-  const finalDates = festiveDates.length > 0 ? festiveDates : [trip.date]
+  const finalDates = festiveDates.length > 0 ? festiveDates : allDates
   const upcomingFestive = filterUpcomingDates(finalDates)
   const primaryFestiveDate = upcomingFestive.length > 0 ? upcomingFestive[0] : finalDates[0]
 
@@ -5340,6 +5352,7 @@ export function toFestiveTrip(trip: Trip): Trip | null {
 }
 
 export const xmasNewYearTrips: Trip[] = trips
+  .filter((t) => isFestiveTripTitle(t.title))
   .map(toFestiveTrip)
   .filter((t): t is Trip => t !== null)
 
