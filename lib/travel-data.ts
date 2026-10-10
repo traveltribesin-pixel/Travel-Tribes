@@ -5508,10 +5508,190 @@ export const galleryRow2: GalleryItem[] = [
 export const gallery: GalleryItem[] = [...galleryRow1, ...galleryRow2]
 
 
-export const blogs = [
-  { title: 'How to choose your first group trip', category: 'Travel notes', image: img('photo-1527631746610-bca00a040d60') },
-  { title: 'The art of leaving room for wonder', category: 'Journal', image: img('photo-1464822759023-fed622ff2c3b') },
-  { title: 'A slower way to see the world', category: 'Field guide', image: img('photo-1500534623283-312aade485b7') }
+export interface BlogPost {
+  slug: string
+  title: string
+  category: string
+  excerpt: string
+  content: string[]
+  author: {
+    name: string
+    role: string
+    avatar: string
+  }
+  date: string
+  readTime: string
+  image: string
+  tags: string[]
+  relatedTripSlug?: string
+  metaTitle: string
+  metaDescription: string
+}
+
+export const blogs: BlogPost[] = [
+  {
+    slug: 'how-to-choose-your-first-solo-group-trip',
+    title: 'How to Choose Your First Solo Group Trip: A Beginner’s Complete Guide',
+    category: 'Solo Travel & Guides',
+    excerpt: 'Thinking about travelling solo with a group of strangers for the first time? Here is everything you need to know about trip captains, group dynamics, packing, and overcoming the initial hesitation.',
+    author: {
+      name: 'Rohan Deshmukh',
+      role: 'Head of Experience, Travel Tribes',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+    },
+    date: 'Oct 10, 2026',
+    readTime: '5 min read',
+    image: img('photo-1527631746610-bca00a040d60'),
+    tags: ['Solo Travel', 'Beginner Guide', 'Community', 'Group Trips'],
+    relatedTripSlug: 'gokarna-backpacking',
+    metaTitle: 'How to Choose Your First Solo Group Trip in India | Travel Tribes',
+    metaDescription: 'Complete beginner guide to solo group travel in India. Learn how Travel Tribes plans safe solo trips, on-ground trip captains, and meeting your tribe.',
+    content: [
+      'The idea of packing your bags and heading out with a dozen people you have never met before can feel both thrilling and slightly terrifying. Will they be friendly? What if everyone else already knows someone? What if I am the odd one out?',
+      'If you have ever had these questions cross your mind, you are not alone. In fact, more than 70% of travellers who join Travel Tribes sign up completely solo. Within the first two hours of meeting at the pickup point, those nervous smiles turn into shared playlist debates and inside jokes.',
+      'Here are 4 key things to keep in mind when choosing your first solo group trip:',
+      '1. Pick a Destination That Matches Your Energy: If you want relaxed beach vibes and cafe hopping, start with a 3-day Gokarna or Coorg trip. If you crave raw mountain adventure and disconnect, opt for Spiti Valley or Meghalaya.',
+      '2. Look for On-Ground Trip Captains: A dedicated trip captain changes everything. They handle the transfers, hotel check-ins, local permits, and ensure everyone in the group feels included and safe.',
+      '3. Small Group Sizes Matter: Large bus tours of 40-50 people make it hard to form real bonds. Boutique groups of 12 to 18 people allow everyone to talk, share meals, and actually connect.',
+      '4. Pack Light and Keep an Open Mind: The best travel memories are often unplanned — watching a spontaneous sunset from a cliffside, singing around a bonfire, or trying local street food together.',
+      'Solo travel does not mean travelling lonely. Come with an open mind, and let the tribe do the rest.'
+    ]
+  },
+  {
+    slug: 'gokarna-beach-trek-guide',
+    title: 'The Ultimate Gokarna Beach Trek Guide: Stays, Cafes & Secret Trails',
+    category: 'Destinations & Trails',
+    excerpt: 'From Kudle Beach to Half Moon and Paradise Beach, discover the ultimate coastal backpacking route in Gokarna with cliffside views, beachside shacks, and glowing bioluminescence.',
+    author: {
+      name: 'Ananya Sharma',
+      role: 'Trip Captain, Travel Tribes',
+      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80'
+    },
+    date: 'Oct 08, 2026',
+    readTime: '6 min read',
+    image: img('photo-1507525428034-b723cf961d3e'),
+    tags: ['Gokarna', 'Beach Trek', 'Karnataka', 'Weekend Getaway'],
+    relatedTripSlug: 'gokarna-backpacking',
+    metaTitle: 'Gokarna Beach Trek & Backpacking Guide 2026 | Travel Tribes',
+    metaDescription: 'Detailed Gokarna beach trek itinerary covering Kudle, Om Beach, Half Moon Beach, and Paradise Beach. Tips on sunset viewpoints, cafes, and stays.',
+    content: [
+      'Gokarna is where the Western Ghats dramatically tumble into the Arabian Sea. Unlike commercial beach destinations, Gokarna maintains a raw, laid-back charm with sacred temple bells on one end and pristine secluded coves on the other.',
+      'The 5-Beach Trek is the crown jewel of any Gokarna trip. Here is the step-by-step trail overview:',
+      '• Kudle Beach to Om Beach: A scenic 20-minute cliff walk offering sweeping panoramic views of the ocean waves crashing against granite boulders.',
+      '• Om Beach to Half Moon Beach: A rugged jungle trail winding through coastal shrubbery, opening up into a secluded crescent bay reachable only on foot or by boat.',
+      '• Half Moon to Paradise Beach: The wildest stretch of the trek. Hike along rocky ridges and golden sand to reach Paradise Beach, surrounded by coconut palms and clear turquoise water.',
+      'Best Time to Visit: October to March is the ideal season when the weather is pleasant, the sea is calm, and evening breezes make beachside bonfires magical.',
+      'Must-Do Experiences: Grab banana nutella pancakes at Namaste Cafe, watch the sunset from Belekan cliff, and take a midnight dip to look for bioluminescent plankton.'
+    ]
+  },
+  {
+    slug: 'spiti-valley-road-trip-tips',
+    title: 'Spiti Valley Road Trip: Acclimatization, Packing List & Best Season',
+    category: 'Adventure & Mountains',
+    excerpt: 'Planning a high-altitude expedition across the Middle Land? Complete road trip guide covering Kunzum Pass, Chandratal Lake, homestays in Kaza, and AMS prevention.',
+    author: {
+      name: 'Vikram Mehta',
+      role: 'Senior Expedition Leader',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
+    },
+    date: 'Oct 04, 2026',
+    readTime: '7 min read',
+    image: img('photo-1464822759023-fed622ff2c3b'),
+    tags: ['Spiti Valley', 'Himachal', 'Road Trip', 'High Altitude'],
+    relatedTripSlug: 'spiti-valley-road-trip',
+    metaTitle: 'Spiti Valley Road Trip Guide: Acclimatization & Packing | Travel Tribes',
+    metaDescription: 'Essential Spiti Valley guide for high-altitude backpacking. Key stops at Kaza, Key Monastery, Hikkim, and camping at Chandratal Lake.',
+    content: [
+      'Perched at an average altitude of over 12,500 feet, Spiti Valley is a cold desert landscape of barren mountains, thousand-year-old Tibetan monasteries, and turquoise glacier rivers.',
+      'Travelling through Spiti is a bucket-list dream, but high altitude requires respect and preparation.',
+      '1. The Golden Rule of Acclimatization: Never rush the ascent. Starting from Shimla and ascending gradually through Kalpa and Nako allows your body to produce red blood cells naturally, minimizing Acute Mountain Sickness (AMS).',
+      '2. Stay Hydrated: Drink at least 3 to 4 liters of water daily. Avoid alcohol and heavy caffeine on the first few days of the climb.',
+      '3. What to Pack for Spiti: Layering is essential. Thermals, windproof fleece jacket, UV protection sunglasses, lip balm, hydration tablets, and high-SPF sunscreen.',
+      '4. Key Monasteries & High Villages: Send a postcard from the world’s highest post office in Hikkim (14,567 ft), witness fossil trails in Langza, and visit the iconic 11th-century Key Gompa.',
+      '5. Chandratal Lake Experience: Camping near the crescent-shaped Moon Lake under a galaxy of millions of visible stars is an emotional and unforgettable highlight of the journey.'
+    ]
+  },
+  {
+    slug: 'why-community-travel-is-the-future',
+    title: 'Why Community Travel is Changing the Way Young India Explores',
+    category: 'Travel Culture',
+    excerpt: 'Why social group travel beats traditional tour packages. How shared bonfires, local food crawls, and small tribes turn strangers into lifelong friends.',
+    author: {
+      name: 'Rohan Deshmukh',
+      role: 'Head of Experience, Travel Tribes',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+    },
+    date: 'Sep 28, 2026',
+    readTime: '4 min read',
+    image: img('photo-1500534623283-312aade485b7'),
+    tags: ['Community', 'Travel Culture', 'Solo Travel', 'Future of Travel'],
+    metaTitle: 'Why Community Travel is Changing Group Trips in India | Travel Tribes',
+    metaDescription: 'Explore the rise of community-first group travel in India. Why millennials and Gen-Z choose curated social tribes over traditional package tours.',
+    content: [
+      'For decades, group travel in India meant giant tourist buses, rushed 10-minute photo stops, and rigid schedules managed by megaphone-holding guides. That era is officially over.',
+      'Today’s curious travellers want more than just checking off sightseeing monuments. They want stories, authentic local homestays, spontaneous late-night conversations, and genuine human connection.',
+      'Here is what sets community travel apart:',
+      '• Travel With Your Tribe: Instead of random tourists of all demographics, you travel with people in similar life stages — working professionals, creators, and students who share your curiosity and vibe.',
+      '• Flexible & Balanced Itineraries: Mornings filled with scenic treks and local food walks, afternoons with free time to explore cozy cafes, and evenings around a campfire with acoustic music.',
+      '• Safety Without Sacrificing Freedom: Solo female travellers and first-timers get complete peace of mind with vetted stays, trusted drivers, and supportive trip captains while enjoying the thrill of adventure.',
+      'When you travel with Travel Tribes, you don’t just visit a place — you belong to a tribe.'
+    ]
+  },
+  {
+    slug: 'meghalaya-backpacking-caves-waterfalls',
+    title: 'Meghalaya Backpacking 101: Living Root Bridges, Crystal Rivers & Waterfalls',
+    category: 'Destinations & Trails',
+    excerpt: 'A curated day-by-day backpacker roadmap to Cherrapunji, Nongriat Double Decker Root Bridge, crystal clear waters of Dawki, and Asia’s cleanest village Mawlynnong.',
+    author: {
+      name: 'Ananya Sharma',
+      role: 'Trip Captain, Travel Tribes',
+      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80'
+    },
+    date: 'Sep 20, 2026',
+    readTime: '6 min read',
+    image: img('photo-1506461883276-594a12b11cf3'),
+    tags: ['Meghalaya', 'Northeast India', 'Waterfalls', 'Backpacking'],
+    relatedTripSlug: 'meghalaya-backpacking',
+    metaTitle: 'Meghalaya Backpacking Itinerary & Guide | Travel Tribes',
+    metaDescription: 'Complete guide to backpacking in Meghalaya. Explore Cherrapunji, Nongriat Double Decker Root Bridge, crystal river Dawki and Krang Shuri falls.',
+    content: [
+      'Known as the "Abode of Clouds", Meghalaya is unlike anywhere else on earth. Ancient bio-engineering by the Khasi tribe has woven living tree roots into suspension bridges that grow stronger with age, while natural springs flow like liquid glass.',
+      'Top Highlights for a Meghalaya Backpacking Trip:',
+      '1. Nongriat Double Decker Root Bridge: A descent of 3,500 stone steps through dense tropical rainforest leads to this legendary 250-year-old living marvel, followed by the ethereal blue waters of Rainbow Falls.',
+      '2. The Glass River of Dawki (Umngot River): Experience the surreal illusion of boats floating in mid-air above crystal-clear emerald water along the India-Bangladesh border.',
+      '3. Plunge Waterfalls of Cherrapunji: Witness Nohkalikai Falls (India’s tallest plunge waterfall), Wei Sawdong three-tier cascades, and Seven Sisters Falls enveloped in mist.',
+      '4. Mawlynnong & Khasi Culture: Experience the warm hospitality of Asia’s cleanest village and learn about the indigenous matrilineal culture that honors nature and community.',
+      'Pro Tip: Carry waterproof dry-bags and comfortable trekking shoes with good grip, as rainforest trails can get naturally slick.'
+    ]
+  },
+  {
+    slug: 'weekend-getaways-from-mumbai-pune',
+    title: 'Top 7 Weekend Getaways from Mumbai & Pune for Working Professionals',
+    category: 'Weekend Escapes',
+    excerpt: 'Escape the city hustle on Friday evening and be back by Monday morning. The best handpicked 2-3 day weekend getaways across Maharashtra and Karnataka.',
+    author: {
+      name: 'Rohan Deshmukh',
+      role: 'Head of Experience, Travel Tribes',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+    },
+    date: 'Sep 15, 2026',
+    readTime: '5 min read',
+    image: img('photo-1516483638261-f4dbaf036963'),
+    tags: ['Weekend Getaways', 'Mumbai', 'Pune', 'Short Breaks'],
+    relatedTripSlug: 'hampi-backpacking',
+    metaTitle: 'Top Weekend Getaways from Mumbai & Pune 2026 | Travel Tribes',
+    metaDescription: 'Best 2 to 3-day weekend trips from Mumbai and Pune for young professionals. Explore Gokarna, Hampi, Coorg, Kolad, and Udaipur.',
+    content: [
+      'When the corporate workweek drains your battery, you don’t need a 10-day leave application to recharge. A well-planned weekend escape with good people can completely reset your headspace.',
+      'Here are our top recommended weekend trips:',
+      '1. Gokarna Beach Trek: Catch the Friday evening train/sleeper bus from Mumbai or Pune, spend Saturday trekking golden beaches and cafe-hopping, and be refreshed by Sunday night.',
+      '2. Hampi Heritage & Bouldering: Explore the UNESCO ruins of the Vijayanagara Empire, cliff-jump at Sanapur Lake, and watch the sunset from Anjaneya Hill.',
+      '3. Coorg Coffee Trails & Waterfalls: Lush green coffee estates, misty valley viewpoints at Raja’s Seat, and traditional Kodava feast.',
+      '4. Kolad White Water Rafting: Conquer grade 3 rapids on the Kundalika River — the fastest adrenaline pump just 3 hours from Mumbai and Pune.',
+      '5. Udaipur Royal Lakes: Stroll along Lake Pichola, visit boutique art galleries, and enjoy rooftop dinner overlooking lit palaces.',
+      'Take the trip. The emails can wait until Monday.'
+    ]
+  }
 ]
 
 export const honeymoonTrips = trips.filter(t => t.region === 'Honeymoon')

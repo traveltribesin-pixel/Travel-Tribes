@@ -39,6 +39,33 @@
   --sky: #43a9d1;
   --sky-pale: #dff2f8;
   --sun: #f5be18;
+  --nav-header-height: 60px;
+}
+
+@media (min-width: 561px) {
+  :root {
+    --nav-header-height: 68px;
+  }
+}
+
+@media (min-width: 921px) {
+  :root {
+    --nav-header-height: 116px;
+  }
+}
+
+.sticky-itinerary-nav {
+  position: sticky !important;
+  top: var(--nav-header-height) !important;
+  z-index: 30 !important;
+}
+
+.itinerary-scroll-target {
+  scroll-margin-top: calc(var(--nav-header-height) + 55px) !important;
+}
+
+.sticky-sidebar-offset {
+  top: calc(var(--nav-header-height) + 20px) !important;
 }
 
 * {
@@ -46,8 +73,10 @@
 }
 
 html {
-  scroll-behavior: smooth;
   background: #f7fbfd;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -1612,6 +1641,8 @@ h2 em {
   width: max-content;
   animation: marquee-slide-left 40s linear infinite;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .animate-marquee-right {
@@ -1619,12 +1650,19 @@ h2 em {
   width: max-content;
   animation: marquee-slide-right 40s linear infinite;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 @media (hover: hover) {
-
   .animate-marquee-left:hover,
   .animate-marquee-right:hover {
     animation-play-state: paused;
   }
 }
+
+/* Rendering performance optimization for long scrollable pages */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}

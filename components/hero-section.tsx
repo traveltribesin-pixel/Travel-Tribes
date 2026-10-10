@@ -71,18 +71,24 @@ export function Hero() {
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes scroll-up {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(0, -50%, 0); }
         }
         @keyframes scroll-down {
-          0% { transform: translateY(-50%); }
-          100% { transform: translateY(0); }
+          0% { transform: translate3d(0, -50%, 0); }
+          100% { transform: translate3d(0, 0, 0); }
         }
         .animate-scroll-up {
           animation: scroll-up 26s linear infinite;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
         }
         .animate-scroll-down {
           animation: scroll-down 24s linear infinite;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
         }
         .animate-scroll-up:hover, .animate-scroll-down:hover {
           animation-play-state: paused;

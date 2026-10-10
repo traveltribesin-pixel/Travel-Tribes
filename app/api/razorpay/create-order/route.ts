@@ -81,9 +81,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    if (!isValidEmail(email)) {
+    if (email && !isValidEmail(email)) {
       return NextResponse.json(
-        { success: false, error: 'Please enter a valid email address.' },
+        { success: false, error: 'Please enter a valid email address or leave it blank.' },
         { status: 400 }
       )
     }

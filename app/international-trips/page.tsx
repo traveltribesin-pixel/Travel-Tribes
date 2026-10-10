@@ -1,5 +1,16 @@
+import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips } from '@/lib/travel-data'
+
+export const metadata: Metadata = {
+  title: 'International Group Tours & Backpacking Trips | Travel Tribes',
+  description: 'Join epic international group trips to Vietnam, Bali, Thailand, Kazakhstan & Georgia. Hassle-free travel with verified stays, transfers and local captains.',
+  openGraph: {
+    title: 'International Group Tours & Backpacking Trips | Travel Tribes',
+    description: 'Join epic international group trips to Vietnam, Bali, Thailand, Kazakhstan & Georgia. Hassle-free travel with verified stays, transfers and local captains.',
+    images: ['/image/Logowithbg.png']
+  }
+}
 
 const categories = [
   { value: 'All', title: 'All' },

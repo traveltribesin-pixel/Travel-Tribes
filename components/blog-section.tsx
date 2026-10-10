@@ -18,24 +18,24 @@ export function BlogSection() {
         {blogs.map(blog => (
           <article className="group relative bg-white rounded-3xl overflow-hidden border border-[var(--sky-pale)] hover:border-[var(--sky)] shadow-[0_4px_16px_rgba(67,169,209,0.08)] hover:shadow-[0_14px_30px_rgba(67,169,209,0.18)] transition-all duration-300 hover:-translate-y-1 flex flex-col w-[88vw] max-w-[340px] shrink-0" key={blog.title}>
             {/* Top image block */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50">
+            <Link href={`/blog/${blog.slug}`} className="block relative aspect-[16/10] w-full overflow-hidden bg-slate-50">
               <Image 
                 src={blog.image} 
-                alt="" 
+                alt={blog.title} 
                 fill 
                 sizes="(max-width: 700px) 80vw, 33vw" 
                 className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
               />
-            </div>
+            </Link>
             {/* Card details body */}
             <div className="p-6 flex flex-col flex-grow">
               <span className="text-[10px] font-extrabold text-[var(--sky)] uppercase tracking-widest leading-none block mb-3">
                 {blog.category}
               </span>
               <h3 className="font-sans font-bold text-[17px] text-slate-800 leading-snug mb-5 hover:text-[var(--sky)] transition-colors line-clamp-2 min-h-[44px]">
-                <Link href="/about">{blog.title}</Link>
+                <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
               </h3>
-              <Link className="text-xs font-extrabold text-slate-800 hover:text-[var(--sky)] transition-colors inline-flex items-center gap-1.5 mt-auto no-underline" href="/about">
+              <Link className="text-xs font-extrabold text-slate-800 hover:text-[var(--sky)] transition-colors inline-flex items-center gap-1.5 mt-auto no-underline" href={`/blog/${blog.slug}`}>
                 Read story <ArrowRight size={15} />
               </Link>
             </div>
@@ -46,10 +46,10 @@ export function BlogSection() {
       {/* Centered Glow Button Below Cards */}
       <div className="mt-8 sm:mt-10 flex justify-center">
         <Link
-          href="/about"
+          href="/blog"
           className="glow-btn inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold rounded-full shadow-lg !text-white cursor-pointer"
         >
-          <span>Read our journal</span>
+          <span>Read all stories</span>
           <ArrowRight size={15} />
         </Link>
       </div>

@@ -1,8 +1,26 @@
+import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
-import type { Trip } from '@/lib/travel-data'
+import { trips, type Trip } from '@/lib/travel-data'
+
+export const metadata: Metadata = {
+  title: 'Weekend Getaways & Short Trips from Mumbai & Pune | Travel Tribes',
+  description: 'Quick 2-3 day weekend escapes from Mumbai and Pune. Explore Gokarna beach treks, Hampi heritage, Coorg coffee trails and Kolad rafting with Travel Tribes.',
+  openGraph: {
+    title: 'Weekend Getaways & Short Trips from Mumbai & Pune | Travel Tribes',
+    description: 'Quick 2-3 day weekend escapes from Mumbai and Pune. Explore Gokarna beach treks, Hampi heritage, Coorg coffee trails and Kolad rafting with Travel Tribes.',
+    images: ['/image/Logowithbg.png']
+  }
+}
 
 export default function Page() {
-  const weekendTrips: Trip[] = []
+  const weekendTrips: Trip[] = trips.filter(
+    (t) =>
+      t.region === 'Weekend' ||
+      t.tag?.toLowerCase().includes('weekend') ||
+      t.duration?.includes('2D') ||
+      t.duration?.includes('3D') ||
+      t.duration?.includes('4D')
+  )
   return (
     <TripsPage
       eyebrow="A little time away"

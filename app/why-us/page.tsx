@@ -7,8 +7,13 @@ import { Newsletter } from '@/components/trip-components'
 import { Users, ShieldCheck, Compass, Sparkles, HeartHandshake, CheckCircle2, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Why Us | Travel Tribes - Community-Led Group Adventures',
-  description: 'Learn why 10,000+ travellers choose Travel Tribes for solo trips, group adventures, safe travel, and unforgettable experiences across India and beyond.',
+  title: 'Why Travel With Us | Safe Solo Travel & Verified Tribes | Travel Tribes',
+  description: 'Discover why 10,000+ travellers choose Travel Tribes for solo trips, women-safe group tours, verified captains and curated itineraries across India and beyond.',
+  openGraph: {
+    title: 'Why Travel With Us | Safe Solo Travel & Verified Tribes | Travel Tribes',
+    description: 'Discover why 10,000+ travellers choose Travel Tribes for solo trips, women-safe group tours, verified captains and curated itineraries across India and beyond.',
+    images: ['/image/Logowithbg.png']
+  }
 }
 
 export default function WhyUsPage() {

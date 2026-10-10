@@ -16,6 +16,19 @@ import { PicturePerfectGallery } from '@/components/picture-perfect-gallery'
 
 import { resolveTripDynamicPackages } from '@/lib/pricing-calculator'
 
+/**
+ * Calculates visual strikethrough price with +₹3,000 markup matching trip cards.
+ */
+function getCutPrice(priceStr?: string): string {
+  if (!priceStr) return '₹ 11,499'
+  const match = priceStr.match(/(\d[\d,]*)/)
+  if (!match) return '₹ 11,499'
+  const numeric = parseInt(match[1].replace(/,/g, ''), 10)
+  if (isNaN(numeric) || numeric <= 0) return '₹ 11,499'
+  const cutPrice = numeric + 3000
+  return `₹ ${cutPrice.toLocaleString('en-IN')}`
+}
+
 export function TripContent({ trip }: { trip: Trip }) {
   const searchParams = useSearchParams()
   const isFestiveParam = searchParams.get('festive') === '1' || searchParams.get('festive') === 'true'
@@ -283,46 +296,57 @@ export function TripContent({ trip }: { trip: Trip }) {
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}
-            className="absolute bottom-4 right-4 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/20 transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer z-10"
+            className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md text-white text-[10.5px] sm:text-xs font-bold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl flex items-center gap-1.5 border border-white/20 transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer z-10"
           >
-            <Camera size={15} className="text-[var(--sun)]" />
-            <span>View All Photos ({galleryImages.length})</span>
+            <Camera size={13} className="text-[var(--sun)] shrink-0" />
+            <span>View All Photos</span>
           </button>
         </div>
 
         {/* 2. Title & Metadata */}
         <div>
-          <div className="flex items-center gap-2 text-[var(--sky)] font-bold text-xs tracking-wider uppercase mb-1">
-            <MapPin size={14} />
-            <span>{trip.location}</span>
+          {/* Location Bar (Above Title) */}
+          <div className="flex items-center gap-1.5 text-[var(--sky)] font-bold text-[11px] sm:text-xs tracking-wider uppercase mb-1.5">
+            <MapPin size={13} className="shrink-0" />
+            <span className="truncate">{trip.location}</span>
           </div>
-          <h1 className="text-2xl lg:text-5xl font-extrabold text-[var(--navy)] mb-3 leading-tight">
+
+          {/* Heading Title (Proportional & Clean on mobile & desktop) */}
+          <h1 className="text-[20px] sm:text-2xl lg:text-4xl font-extrabold text-[var(--navy)] mb-3 leading-snug tracking-tight">
             {trip.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-slate-500 font-medium text-xs md:text-sm">
-            <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
-              <Clock3 size={16} className="text-[var(--sky)]" /> {trip.duration}
+
+          {/* 4 Compact Header Badges in a Balanced 2x2 Grid (Mobile) / Flex Row (Desktop) */}
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 text-slate-600 font-semibold text-[11.5px] sm:text-xs">
+            <span className="flex items-center justify-center sm:justify-start gap-1.5 bg-white border border-slate-200/90 px-3 py-2 rounded-xl shadow-xs">
+              <Clock3 size={14} className="text-[var(--sky)] shrink-0" />
+              <span className="truncate">{trip.duration}</span>
             </span>
-            <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
-              <CalendarDays size={16} className="text-[var(--sky)]" /> {primaryDate}
+
+            <span className="flex items-center justify-center sm:justify-start gap-1.5 bg-white border border-slate-200/90 px-3 py-2 rounded-xl shadow-xs truncate">
+              <CalendarDays size={14} className="text-[var(--sky)] shrink-0" />
+              <span className="truncate">{primaryDate}</span>
             </span>
-            <span className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
-              <Users size={16} className="text-[var(--sky)]" /> {trip.spots}
+
+            <span className="flex items-center justify-center sm:justify-start gap-1.5 bg-white border border-slate-200/90 px-3 py-2 rounded-xl shadow-xs">
+              <Users size={14} className="text-[var(--sky)] shrink-0" />
+              <span className="truncate">{trip.spots}</span>
             </span>
+
             <button
               type="button"
               onClick={() => setIsPdfModalOpen(true)}
-              className="flex items-center gap-2 bg-[var(--sky-pale)] hover:bg-[var(--sky)] text-[var(--sky)] hover:text-white border border-sky-200 hover:border-[var(--sky)] px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shadow-sm cursor-pointer"
+              className="flex items-center justify-center gap-1.5 bg-[var(--sky-pale)] hover:bg-[var(--sky)] text-[var(--sky)] hover:text-white border border-sky-200 hover:border-[var(--sky)] px-3 py-2 rounded-xl text-[11.5px] sm:text-xs font-bold transition-all duration-200 shadow-xs cursor-pointer truncate"
             >
-              <FileDown size={15} />
-              <span>Download Itinerary PDF</span>
+              <FileDown size={14} className="shrink-0" />
+              <span className="truncate">Download PDF</span>
             </button>
           </div>
         </div>
       </section>
 
-      {/* Sticky Tabs */}
-      <div className="sticky top-[68px] min-[560px]:top-[78px] z-30 bg-[#f7fbfd]/95 backdrop-blur-md border-y border-[var(--border)] shadow-sm">
+      {/* Sticky Tabs (Properly offset below Primary & Secondary Sub-Navbar) */}
+      <div className="sticky-itinerary-nav bg-[#f7fbfd]/95 backdrop-blur-md border-y border-[var(--border)] shadow-sm transition-all duration-200">
         <div id="tabs-container" className="max-w-[1160px] mx-auto px-6 lg:px-8 flex gap-8 overflow-x-auto no-scrollbar scroll-smooth">
           {availableTabs.map((tab) => (
             <button
@@ -352,7 +376,7 @@ export function TripContent({ trip }: { trip: Trip }) {
           <div className="lg:col-span-2 space-y-10">
 
             {/* 1. Overview */}
-            <section id="overview" className="scroll-mt-40 space-y-6">
+            <section id="overview" className="itinerary-scroll-target space-y-6">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)]">About the Trip</h2>
               <p className="text-slate-600 leading-relaxed text-sm sm:text-base font-normal">
                 {trip.description}
@@ -400,7 +424,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             {trip.itinerary && trip.itinerary.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
-                <section id="itinerary" className="scroll-mt-40">
+                <section id="itinerary" className="itinerary-scroll-target">
                   <div className="flex items-center justify-center mb-6">
                     <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)]">Day Wise Itinerary</h2>
                     {/* <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{trip.duration}</span> */}
@@ -461,7 +485,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             {((trip.inclusions && trip.inclusions.length > 0) || (trip.exclusions && trip.exclusions.length > 0)) && (
               <>
                 <hr className="border-[var(--border)]" />
-                <section id="inclusions" className="scroll-mt-40">
+                <section id="inclusions" className="itinerary-scroll-target">
                   <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] mb-6">What&apos;s Included & Excluded</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Inclusions */}
@@ -507,7 +531,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             {trip.policies && trip.policies.length > 0 && (
               <>
                 <hr className="border-[var(--border)]" />
-                <section id="policy" className="scroll-mt-40">
+                <section id="policy" className="itinerary-scroll-target">
                   <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] mb-4 flex items-center gap-3">
                     <ShieldAlert className="text-slate-400" size={28} /> Policies
                   </h2>
@@ -529,13 +553,18 @@ export function TripContent({ trip }: { trip: Trip }) {
 
           {/* Right Column / Sticky Booking Widget */}
           <div className="lg:col-span-1">
-            <div className="fixed bottom-0 left-0 w-full z-40 lg:z-20 lg:sticky lg:top-[144px] bg-white lg:rounded-3xl px-6 py-4 lg:p-6 xl:p-7 border-t lg:border border-[var(--border)] lg:border-[var(--sky-pale)] transition-all duration-300 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] lg:shadow-[0_4px_10px_rgba(67,169,209,0.2)] lg:hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] flex flex-row lg:flex-col items-center lg:items-stretch justify-between lg:justify-start gap-4 lg:gap-0 lg:max-h-[calc(100vh-165px)] lg:overflow-y-auto no-scrollbar">
-              <div className="lg:mb-5 lg:pb-5 lg:border-b border-[var(--border)] flex flex-col">
-                <span className="hidden lg:block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Starting from</span>
-                <span className="lg:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Price</span>
-                <div className="flex items-end gap-1 lg:gap-2">
-                  <span className="text-xl lg:text-3xl font-black text-[var(--navy)]">{displayPrice}</span>
-                  <span className="hidden lg:inline-block text-slate-500 font-medium pb-1 text-sm">/ person</span>
+            <div className="fixed bottom-0 left-0 w-full z-40 lg:z-20 lg:sticky sticky-sidebar-offset bg-white lg:rounded-3xl px-4 sm:px-6 py-3 sm:py-4 lg:p-6 xl:p-7 border-t lg:border border-[var(--border)] lg:border-[var(--sky-pale)] transition-all duration-300 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] lg:shadow-[0_4px_10px_rgba(67,169,209,0.2)] lg:hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] flex flex-row lg:flex-col items-center lg:items-stretch justify-between lg:justify-start gap-3 lg:gap-0 lg:max-h-[calc(100vh-200px)] lg:overflow-y-auto no-scrollbar">
+              <div className="lg:mb-5 lg:pb-5 lg:border-b border-[var(--border)] flex flex-col min-w-0 leading-none">
+                <span className="line-through text-slate-400 text-[11px] sm:text-[12px] font-semibold decoration-rose-500/80 decoration-[1.5px] mb-1 leading-none">
+                  {getCutPrice(displayPrice)}
+                </span>
+                <div className="flex items-baseline gap-1 leading-none">
+                  <span className="text-[19px] sm:text-2xl lg:text-3xl font-black text-[var(--navy)] tracking-tight leading-none">
+                    {displayPrice}
+                  </span>
+                  <span className="text-slate-500 font-bold text-[11px] sm:text-xs lg:text-sm leading-none">
+                    / person
+                  </span>
                 </div>
               </div>
 
@@ -659,18 +688,18 @@ export function TripContent({ trip }: { trip: Trip }) {
 
         {/* PICTURES PERFECT MOMENTS - 3D CURVED PANORAMIC GALLERY SECTION */}
         {galleryImages.length > 0 && (
-          <div className="mt-16 sm:mt-20 pt-8 sm:pt-12 border-t border-[var(--border)]">
+          <section id="gallery" className="itinerary-scroll-target mt-16 sm:mt-20 pt-8 sm:pt-12 border-t border-[var(--border)]">
             <PicturePerfectGallery
               images={galleryImages}
               tripTitle={trip.title}
               location={trip.location}
             />
-          </div>
+          </section>
         )}
 
         {/* 1. DESTINATION-SPECIFIC REVIEWS SLIDER (COMES FIRST BEFORE RELATED TRIPS) */}
         {trip.reviews && trip.reviews.length > 0 && (
-          <section id="reviews" className="mt-16 sm:mt-20 pt-12 sm:pt-16 border-t border-[var(--border)] scroll-mt-32">
+          <section id="reviews" className="itinerary-scroll-target mt-16 sm:mt-20 pt-12 sm:pt-16 border-t border-[var(--border)]">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
               <div>
                 <div className="flex items-center gap-2 text-[11px] font-extrabold text-[var(--sky)] uppercase tracking-widest mb-2">

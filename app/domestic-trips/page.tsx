@@ -1,5 +1,16 @@
+import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips } from '@/lib/travel-data'
+
+export const metadata: Metadata = {
+  title: 'Domestic Group Trips & Backpacking in India | Travel Tribes',
+  description: 'Explore the best of India with Travel Tribes. Curated group tours to Meghalaya, Spiti Valley, Gokarna, Kerala, Rajasthan and more with like-minded travellers.',
+  openGraph: {
+    title: 'Domestic Group Trips & Backpacking in India | Travel Tribes',
+    description: 'Explore the best of India with Travel Tribes. Curated group tours to Meghalaya, Spiti Valley, Gokarna, Kerala, Rajasthan and more with like-minded travellers.',
+    images: ['/image/Logowithbg.png']
+  }
+}
 
 const categories = [
   { value: 'All', title: 'All' },

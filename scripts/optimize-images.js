@@ -5,6 +5,7 @@ const sharp = require('sharp');
 sharp.cache(false);
 
 const targetDirs = [
+  path.join(__dirname, '..', 'public', 'Banner'),
   path.join(__dirname, '..', 'public', 'Hero section'),
   path.join(__dirname, '..', 'public', 'Card Image'),
   path.join(__dirname, '..', 'public', 'image')

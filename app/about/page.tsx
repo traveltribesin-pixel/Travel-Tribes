@@ -25,8 +25,13 @@ import {
 } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'About Us | Travel Tribes - Don\'t Just Travel. Find Your Tribe.',
-  description: 'Founded in Mumbai in 2022, Travel Tribes is a community-first travel brand creating group adventures across India and around the world.',
+  title: "About Travel Tribes | India's Community Travel Brand",
+  description: 'Travel Tribes is a Mumbai-based community travel brand creating group trips, backpacking adventures and meaningful travel experiences across India and beyond.',
+  openGraph: {
+    title: "About Travel Tribes | India's Community Travel Brand",
+    description: 'Travel Tribes is a Mumbai-based community travel brand creating group trips, backpacking adventures and meaningful travel experiences across India and beyond.',
+    images: ['/image/Logowithbg.png']
+  }
 }
 
 export default function AboutPage() {

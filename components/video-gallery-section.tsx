@@ -99,57 +99,77 @@ export const videoReels: VideoReel[] = [
     poster: '/image/Gokarna/20251231_100322_Original.JPEG',
     videoUrl: '/Videos/Video-99158.mp4',
   },
-  {
-    id: 'tribe-video-17',
-    poster: '/image/Gokarna/1000002342.jpeg',
-    videoUrl: '/Videos/copy_BB114A4A-BAC9-424F-A33D-118DA1EE5854.mov',
-  },
-  {
-    id: 'tribe-video-18',
-    poster: '/image/Gokarna/1000003396.jpg',
-    videoUrl: '/Videos/IMG_1415.MOV',
-  },
 ]
 
-function AutoPlayVideoCard({
+/**
+ * Smart Autoplay Reel Card:
+ * Lazy loads video only when the user scrolls near the card and autoplays smoothly.
+ */
+function AutoplayReelCard({
   reel,
   onSelect,
 }: {
   reel: VideoReel
   onSelect: () => void
 }) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [isInView, setIsInView] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  // IntersectionObserver to auto-play when visible, pause when off-screen
+  // Observe when card enters the viewport before loading/playing video
   useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
+    const el = containerRef.current
+    if (!el) return
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.muted = true
-            video.play().catch(() => {})
+            setIsInView(true)
+            if (videoRef.current) {
+              videoRef.current.play().catch(() => {})
+            }
           } else {
-            video.pause()
+            if (videoRef.current) {
+              videoRef.current.pause()
+            }
           }
         })
       },
-      { threshold: 0.15 }
+      { rootMargin: '200px 0px 200px 0px', threshold: 0.1 }
     )
 
-    observer.observe(video)
-    return () => {
-      observer.disconnect()
-    }
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !isInView) return
+
+    video.muted = true
+    video.defaultMuted = true
+
+    const tryPlay = () => {
+      video.play().catch(() => {})
+    }
+
+    tryPlay()
+    video.addEventListener('loadeddata', tryPlay)
+    video.addEventListener('canplay', tryPlay)
+
+    return () => {
+      video.removeEventListener('loadeddata', tryPlay)
+      video.removeEventListener('canplay', tryPlay)
+    }
+  }, [isInView])
 
   return (
     <div
+      ref={containerRef}
       onClick={onSelect}
-      className="group relative bg-slate-900 rounded-3xl overflow-hidden shrink-0 w-[210px] sm:w-[245px] md:w-[275px] aspect-[9/15.5] shadow-[0_10px_30px_rgba(11,41,64,0.12)] cursor-pointer hover:scale-[1.03] transition-all duration-300 border border-slate-200/90 hover:border-[var(--sky)] hover:shadow-[0_16px_40px_rgba(67,169,209,0.28)] select-none"
+      className="group relative bg-slate-900 rounded-3xl overflow-hidden shrink-0 w-[205px] sm:w-[240px] md:w-[265px] aspect-[9/15.5] shadow-[0_10px_30px_rgba(11,41,64,0.12)] cursor-pointer hover:scale-[1.03] transition-all duration-300 border border-slate-200/90 hover:border-[var(--sky)] hover:shadow-[0_16px_40px_rgba(67,169,209,0.28)] select-none"
     >
       {/* Fallback Poster Image */}
       <Image
@@ -158,28 +178,32 @@ function AutoPlayVideoCard({
         fill
         sizes="(max-width: 768px) 210px, 275px"
         quality={75}
-        loading="lazy"
         className={`w-full h-full object-cover transition-opacity duration-500 ${
-          isVideoLoaded ? 'opacity-0' : 'opacity-100 brightness-[0.95]'
+          isLoaded ? 'opacity-0' : 'opacity-100 brightness-[0.96]'
         }`}
       />
 
-      {/* Autoplaying HTML5 Video with Zero Overlay Text */}
-      <video
-        ref={videoRef}
-        src={reel.videoUrl}
-        poster={reel.poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        onLoadedData={() => setIsVideoLoaded(true)}
-        className="absolute inset-0 w-full h-full object-cover brightness-[0.98] group-hover:brightness-105 transition-all duration-300"
-      />
+      {/* Autoplaying HTML5 Video with smart lazy load */}
+      {isInView && (
+        <video
+          ref={videoRef}
+          src={reel.videoUrl}
+          poster={reel.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          onLoadedData={() => setIsLoaded(true)}
+          className="absolute inset-0 w-full h-full object-cover brightness-[0.98] group-hover:brightness-105 transition-all duration-300"
+        />
+      )}
+
+      {/* Subtle bottom gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10 pointer-events-none" />
 
       {/* Subtle hover play indicator */}
-      <div className="absolute inset-0 bg-black/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 bg-black/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20 pointer-events-none">
         <div className="w-13 h-13 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
           <Play size={22} className="fill-white translate-x-0.5" />
         </div>
@@ -190,139 +214,10 @@ function AutoPlayVideoCard({
 
 export function VideoGallerySection() {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(null)
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
-  const [isDragging, setIsDragging] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const animFrameIdRef = useRef<number | null>(null)
-  const isInteractingRef = useRef<boolean>(false)
-  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  // Drag state refs to avoid unnecessary re-renders
-  const dragStartXRef = useRef<number>(0)
-  const dragStartScrollLeftRef = useRef<number>(0)
-  const hasMovedSignificantlyRef = useRef<boolean>(false)
-
-  // 3 sets of videos for infinite seamless loop
-  const tripleVideos = [...videoReels, ...videoReels, ...videoReels]
-
-  const pauseAutoScrollTemporarily = useCallback((duration = 3000) => {
-    isInteractingRef.current = true
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
-    resumeTimeoutRef.current = setTimeout(() => {
-      isInteractingRef.current = false
-    }, duration)
-  }, [])
-
-  // Continuous smooth auto-scroll loop with infinite wrap-around
-  useEffect(() => {
-    const container = scrollContainerRef.current
-    if (!container) return
-
-    // Initialize in the middle set if scroll is at 0
-    const initTimer = setTimeout(() => {
-      if (container && container.scrollLeft === 0) {
-        const singleSetWidth = container.scrollWidth / 3
-        if (singleSetWidth > 0) {
-          container.scrollLeft = singleSetWidth
-        }
-      }
-    }, 150)
-
-    let lastTime = performance.now()
-
-    const step = (currentTime: number) => {
-      const delta = Math.min((currentTime - lastTime) / 1000, 0.05)
-      lastTime = currentTime
-
-      if (
-        container &&
-        isAutoScrolling &&
-        !isInteractingRef.current &&
-        !isDragging &&
-        selectedVideoIndex === null
-      ) {
-        // ~50px per second for smooth, steady continuous flow
-        container.scrollLeft += 52 * delta
-
-        const singleSetWidth = container.scrollWidth / 3
-        if (singleSetWidth > 100) {
-          if (container.scrollLeft >= singleSetWidth * 2) {
-            container.scrollLeft -= singleSetWidth
-          } else if (container.scrollLeft <= 10) {
-            container.scrollLeft += singleSetWidth
-          }
-        }
-      }
-      animFrameIdRef.current = requestAnimationFrame(step)
-    }
-
-    animFrameIdRef.current = requestAnimationFrame(step)
-
-    return () => {
-      clearTimeout(initTimer)
-      if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current)
-      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
-    }
-  }, [isAutoScrolling, isDragging, selectedVideoIndex])
-
-  // Manual slide left / right
-  const handleManualSlide = (direction: 'left' | 'right') => {
-    pauseAutoScrollTemporarily(5000)
-    const container = scrollContainerRef.current
-    if (!container) return
-
-    const cardWidth = container.clientWidth > 640 ? 300 : 230
-    const scrollOffset = direction === 'left' ? -cardWidth * 1.5 : cardWidth * 1.5
-
-    container.scrollBy({
-      left: scrollOffset,
-      behavior: 'smooth',
-    })
-  }
-
-  // Mouse Drag to Slide Handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    const container = scrollContainerRef.current
-    if (!container) return
-
-    setIsDragging(true)
-    isInteractingRef.current = true
-    hasMovedSignificantlyRef.current = false
-    dragStartXRef.current = e.pageX - container.offsetLeft
-    dragStartScrollLeftRef.current = container.scrollLeft
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
-    const container = scrollContainerRef.current
-    if (!container) return
-
-    e.preventDefault()
-    const x = e.pageX - container.offsetLeft
-    const walk = (x - dragStartXRef.current) * 1.4
-    if (Math.abs(walk) > 6) {
-      hasMovedSignificantlyRef.current = true
-    }
-    container.scrollLeft = dragStartScrollLeftRef.current - walk
-  }
-
-  const handleMouseUpOrLeave = () => {
-    if (isDragging) {
-      setIsDragging(false)
-      pauseAutoScrollTemporarily(3500)
-    }
-  }
-
-  // Touch Handlers for mobile
-  const handleTouchStart = () => {
-    isInteractingRef.current = true
-    hasMovedSignificantlyRef.current = false
-  }
-
-  const handleTouchEnd = () => {
-    pauseAutoScrollTemporarily(3500)
-  }
+  // 2 repeating sets of video reels for continuous infinite seamless slide
+  const infiniteReels = [...videoReels, ...videoReels]
 
   // Modal navigation
   const selectedVideo = selectedVideoIndex !== null ? videoReels[selectedVideoIndex] : null
@@ -355,6 +250,34 @@ export function VideoGallerySection() {
 
   return (
     <section className="py-12 sm:py-16 bg-[#f8fafc] relative overflow-hidden select-none">
+      {/* CSS Continuous Linear Auto-slide Animation */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes continuous-video-slide {
+            0% {
+              transform: translate3d(0, 0, 0);
+            }
+            100% {
+              transform: translate3d(-50%, 0, 0);
+            }
+          }
+          .animate-continuous-video-slide {
+            display: flex;
+            width: max-content;
+            animation: continuous-video-slide 55s linear infinite;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+          }
+          .animate-continuous-video-slide.paused,
+          .animate-continuous-video-slide:hover {
+            animation-play-state: paused;
+          }
+        `,
+        }}
+      />
+
       {/* Background Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[var(--sky-pale)]/50 rounded-full blur-3xl pointer-events-none" />
 
@@ -370,111 +293,58 @@ export function VideoGallerySection() {
               Watch The Adventures Come Alive
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm max-w-xl mt-1.5">
-              Unfiltered moments captured by our travellers on the road. Drag, slide or click any reel to watch with sound.
+              Unfiltered moments captured by our travellers on the road. Videos autoplay and continuously slide at a fixed speed. Hover or tap to pause.
             </p>
           </div>
 
-          {/* Navigation Controls: Prev, Next & Auto-scroll Toggle */}
+          {/* Toggle Pause / Play Button */}
           <div className="flex items-center gap-2.5 self-start md:self-end">
             <button
-              onClick={() => setIsAutoScrolling(!isAutoScrolling)}
+              onClick={() => setIsPaused(!isPaused)}
               className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold transition-all border cursor-pointer ${
-                isAutoScrolling
+                !isPaused
                   ? 'bg-white text-[var(--navy)] border-slate-200 shadow-sm hover:border-[var(--sky)]'
                   : 'bg-[var(--sky)] text-white border-[var(--sky)] shadow-md'
               }`}
-              title={isAutoScrolling ? 'Pause Auto-scroll' : 'Resume Auto-scroll'}
             >
-              {isAutoScrolling ? (
+              {!isPaused ? (
                 <>
                   <Pause size={13} className="text-[var(--sky)]" />
-                  <span>Auto-scroll ON</span>
+                  <span>Auto-slide ON</span>
                 </>
               ) : (
                 <>
                   <Play size={13} className="fill-white" />
-                  <span>Auto-scroll Paused</span>
+                  <span>Auto-slide Paused</span>
                 </>
               )}
             </button>
-
-            <div className="flex items-center gap-1.5 bg-white p-1 rounded-full border border-slate-200 shadow-sm">
-              <button
-                onClick={() => handleManualSlide('left')}
-                className="w-9 h-9 rounded-full bg-slate-50 hover:bg-[var(--sky-pale)] hover:text-[var(--sky)] text-[var(--navy)] flex items-center justify-center transition-all cursor-pointer"
-                aria-label="Slide left"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={() => handleManualSlide('right')}
-                className="w-9 h-9 rounded-full bg-slate-50 hover:bg-[var(--sky-pale)] hover:text-[var(--sky)] text-[var(--navy)] flex items-center justify-center transition-all cursor-pointer"
-                aria-label="Slide right"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* CONTINUOUS SMOOTH VIDEO TRACK (SLIDER + AUTOPLAY + DRAG) */}
+      {/* CONTINUOUS FIXED-SPEED INFINITE SLIDING TRACK */}
       <div className="relative w-full overflow-hidden py-3 group/track">
-        {/* Left Floating Overlay Navigation Button */}
-        <button
-          onClick={() => handleManualSlide('left')}
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/90 hover:bg-white text-[var(--navy)] hover:text-[var(--sky)] shadow-[0_8px_25px_rgba(11,41,64,0.18)] border border-slate-200 backdrop-blur-md hidden sm:flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer opacity-80 group-hover/track:opacity-100"
-          aria-label="Previous videos"
-        >
-          <ChevronLeft size={24} />
-        </button>
-
-        {/* Right Floating Overlay Navigation Button */}
-        <button
-          onClick={() => handleManualSlide('right')}
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/90 hover:bg-white text-[var(--navy)] hover:text-[var(--sky)] shadow-[0_8px_25px_rgba(11,41,64,0.18)] border border-slate-200 backdrop-blur-md hidden sm:flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer opacity-80 group-hover/track:opacity-100"
-          aria-label="Next videos"
-        >
-          <ChevronRight size={24} />
-        </button>
-
         {/* Soft edge fade overlays */}
         <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
 
-        {/* Horizontal Scrollable Slider with Zero Text on Cards */}
-        <div
-          ref={scrollContainerRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUpOrLeave}
-          onMouseLeave={handleMouseUpOrLeave}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          className="flex items-center gap-4 sm:gap-6 px-6 sm:px-12 overflow-x-auto no-scrollbar scroll-auto cursor-grab active:cursor-grabbing select-none"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {tripleVideos.map((reel, index) => {
+        {/* Continuous Linear Scrolling Track */}
+        <div className={`animate-continuous-video-slide flex items-center gap-4 sm:gap-6 px-6 sm:px-12 ${isPaused ? 'paused' : ''}`}>
+          {infiniteReels.map((reel, index) => {
             const realIndex = index % videoReels.length
             return (
-              <AutoPlayVideoCard
+              <AutoplayReelCard
                 key={`${reel.id}-set-${index}`}
                 reel={reel}
-                onSelect={() => {
-                  if (!hasMovedSignificantlyRef.current) {
-                    setSelectedVideoIndex(realIndex)
-                  }
-                }}
+                onSelect={() => setSelectedVideoIndex(realIndex)}
               />
             )
           })}
         </div>
       </div>
 
-      {/* PURE CLEAN FULLSCREEN VIDEO MODAL (ZERO TEXT) */}
+      {/* PURE CLEAN FULLSCREEN VIDEO MODAL (WITH SOUND CONTROLS) */}
       <AnimatePresence>
         {selectedVideo && (
           <motion.div

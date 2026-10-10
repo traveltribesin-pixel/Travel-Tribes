@@ -232,36 +232,43 @@ export function BookingContent() {
     e.preventDefault()
     setErrorMessage(null)
 
-    // Validate All Selected Travellers (Name, Email, Phone/WhatsApp, Age, Gender)
+    // Validate All Selected Travellers
     for (let i = 0; i < guests; i++) {
       const member = travellers[i] || { fullName: '', email: '', phone: '', age: '', gender: 'Male' }
       const name = (member.fullName || '').trim()
       const email = (member.email || '').trim()
       const phone = (member.phone || '').trim()
       const ageNum = parseInt((member.age || '').trim(), 10)
-      const label = i === 0 ? 'Traveller 1 (Lead)' : `Traveller ${i + 1}`
+      const isLead = i === 0
+      const label = isLead ? 'Traveller 1 (Lead)' : `Traveller ${i + 1}`
 
       if (!name) {
         setErrorMessage(`Please enter the full name for ${label}.`)
         return
       }
 
-      if (!phone) {
-        setErrorMessage(`Please enter the WhatsApp / contact number for ${label}.`)
-        return
-      }
-      const phoneDigits = phone.replace(/[^\d]/g, '')
-      if (phoneDigits.length < 10) {
-        setErrorMessage(`Please enter a valid 10-digit WhatsApp number for ${label}.`)
-        return
+      // Phone is compulsory for Lead Traveller; optional for companions (validated if provided)
+      if (isLead) {
+        if (!phone) {
+          setErrorMessage(`Please enter the WhatsApp / contact phone number for ${label}.`)
+          return
+        }
+        const phoneDigits = phone.replace(/[^\d]/g, '')
+        if (phoneDigits.length < 10) {
+          setErrorMessage(`Please enter a valid 10-digit WhatsApp / phone number for ${label}.`)
+          return
+        }
+      } else if (phone) {
+        const phoneDigits = phone.replace(/[^\d]/g, '')
+        if (phoneDigits.length < 10) {
+          setErrorMessage(`Please enter a valid 10-digit phone number for ${label}, or leave it blank.`)
+          return
+        }
       }
 
-      if (!email) {
-        setErrorMessage(`Please enter the email address for ${label}.`)
-        return
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setErrorMessage(`Please provide a valid email address for ${label}.`)
+      // Email is optional for all travellers; validated only if provided
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setErrorMessage(`Please enter a valid email address for ${label}, or leave it blank.`)
         return
       }
 
@@ -575,24 +582,22 @@ export function BookingContent() {
                 </div>
 
                 <div className="space-y-5">
-                  {/* Select Destination */}
+                  {/* Selected Itinerary Trip (Read-only / Locked) */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                      Destination Trip
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={selectedTrip.slug}
-                        onChange={(e) => handleTripChange(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--navy)] font-semibold focus:outline-none focus:border-[var(--sky)] focus:bg-white appearance-none cursor-pointer transition-all"
-                      >
-                        {trips.map((t) => (
-                          <option key={t.slug} value={t.slug}>
-                            {t.title} ({t.duration}) — from {t.price}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-bold text-slate-600">
+                        Destination Trip
+                      </label>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 bg-slate-100 px-2.5 py-0.5 rounded-md">
+                        <Lock size={10} className="text-slate-400" /> Selected from Itinerary
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-50 border border-slate-200/90 rounded-xl px-4 py-3 text-sm text-[var(--navy)] font-bold flex items-center justify-between">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-2 h-2 rounded-full bg-[var(--sky)] shrink-0" />
+                        <span className="truncate">{selectedTrip.title} ({selectedTrip.duration})</span>
+                      </div>
+                      <span className="text-xs font-extrabold text-[var(--sky)] shrink-0 ml-2">from {selectedTrip.price}</span>
                     </div>
                   </div>
 
@@ -801,12 +806,13 @@ export function BookingContent() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div>
                             <label className="block text-xs font-bold text-slate-600 mb-1">
-                              WhatsApp / Phone Number <span className="text-rose-500">*</span>
+                              WhatsApp / Phone Number {isLead && <span className="text-rose-500">*</span>}
+                              {!isLead && <span className="text-slate-400 font-normal ml-1">(Optional)</span>}
                             </label>
                             <input
-                              required
+                              required={isLead}
                               type="tel"
-                              placeholder={isLead ? '+91 99758 22023' : `+91 Mobile / WhatsApp`}
+                              placeholder={isLead ? '+91 99758 22023' : `+91 Mobile / WhatsApp (Optional)`}
                               value={traveller.phone || ''}
                               onChange={(e) => updateTraveller(index, 'phone', e.target.value)}
                               className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
@@ -814,12 +820,11 @@ export function BookingContent() {
                           </div>
                           <div>
                             <label className="block text-xs font-bold text-slate-600 mb-1">
-                              Email Address <span className="text-rose-500">*</span>
+                              Email Address <span className="text-slate-400 font-normal ml-1">(Optional)</span>
                             </label>
                             <input
-                              required
                               type="email"
-                              placeholder={isLead ? 'rahul@gmail.com' : `guest${index + 1}@gmail.com`}
+                              placeholder={isLead ? 'e.g. rahul@gmail.com (Optional)' : `guest${index + 1}@gmail.com (Optional)`}
                               value={traveller.email || ''}
                               onChange={(e) => updateTraveller(index, 'email', e.target.value)}
                               className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
@@ -959,7 +964,7 @@ export function BookingContent() {
                       Payment Preference
                     </label>
                     <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <Sparkles size={11} className="text-emerald-600" /> ₹1,000 OFF on Full Payment
+                      <Sparkles size={11} className="text-emerald-600" /> ₹{(1000 * guests).toLocaleString('en-IN')} OFF (₹1,000/person) on Full Payment
                     </span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
@@ -995,7 +1000,7 @@ export function BookingContent() {
                           <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${
                             paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
                           }`}>
-                            ₹1,000 OFF
+                            ₹{(1000 * guests).toLocaleString('en-IN')} OFF
                           </span>
                         </div>
                         {paymentType === 'full' && <CheckCircle2 size={15} className="text-white shrink-0" />}
@@ -1005,7 +1010,7 @@ export function BookingContent() {
                           ₹{grandTotal.toLocaleString('en-IN')}
                         </span>
                         <span className={`text-xs font-bold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
-                          ₹{Math.max(0, grandTotal - 1000).toLocaleString('en-IN')}
+                          ₹{Math.max(0, grandTotal - (1000 * guests)).toLocaleString('en-IN')}
                         </span>
                       </div>
                     </button>
@@ -1113,9 +1118,9 @@ export function BookingContent() {
                     <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-3 py-2 rounded-xl text-xs border border-emerald-200/80 animate-in fade-in duration-300">
                       <span className="flex items-center gap-1.5">
                         <Sparkles size={14} className="text-emerald-600 shrink-0" />
-                        Full Payment Instant Discount
+                        Full Payment Instant Discount (₹1,000 × {guests} {guests > 1 ? 'guests' : 'guest'})
                       </span>
-                      <span>-₹1,000</span>
+                      <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
                     </div>
                   )}
 

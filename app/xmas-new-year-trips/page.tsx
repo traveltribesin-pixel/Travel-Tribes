@@ -1,5 +1,16 @@
+import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { xmasNewYearTrips } from '@/lib/travel-data'
+
+export const metadata: Metadata = {
+  title: 'Xmas & New Year Trips 2026-2027 | Festive Group Escapes | Travel Tribes',
+  description: 'Celebrate Christmas & New Year with Travel Tribes. Exclusive festive batches to Gokarna, Coorg, Hampi, Udaipur and Spiti with fireworks, beach countdowns and parties.',
+  openGraph: {
+    title: 'Xmas & New Year Trips 2026-2027 | Festive Group Escapes | Travel Tribes',
+    description: 'Celebrate Christmas & New Year with Travel Tribes. Exclusive festive batches to Gokarna, Coorg, Hampi, Udaipur and Spiti with fireworks, beach countdowns and parties.',
+    images: ['/image/Logowithbg.png']
+  }
+}
 
 const categories = [
   { value: 'All', title: 'All' },

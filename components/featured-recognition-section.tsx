@@ -93,13 +93,16 @@ export function FeaturedRecognitionSection() {
           dangerouslySetInnerHTML={{
             __html: `
             @keyframes logo-marquee-scroll {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
+              0% { transform: translate3d(0, 0, 0); }
+              100% { transform: translate3d(-50%, 0, 0); }
             }
             .animate-logo-marquee {
               display: flex;
               width: max-content;
               animation: logo-marquee-scroll 26s linear infinite;
+              will-change: transform;
+              transform: translate3d(0, 0, 0);
+              backface-visibility: hidden;
             }
             @media (hover: hover) {
               .animate-logo-marquee:hover {
@@ -122,7 +125,7 @@ export function FeaturedRecognitionSection() {
                 width={logo.width}
                 height={logo.height}
                 className={logo.className}
-                priority={idx < 5}
+                loading="lazy"
               />
             </div>
           ))}
