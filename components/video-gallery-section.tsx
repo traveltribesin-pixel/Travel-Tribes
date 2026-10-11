@@ -22,82 +22,92 @@ export const videoReels: VideoReel[] = [
   {
     id: 'tribe-video-1',
     poster: '/image/Gokarna/1000004087.jpg',
-    videoUrl: '/Videos/Video-21105.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717726/Video-21105.mp4',
   },
   {
     id: 'tribe-video-2',
     poster: '/image/Meghalaya/IMG_0857.JPEG',
-    videoUrl: '/Videos/Video-21573.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717732/Video-21573.mp4',
   },
   {
     id: 'tribe-video-3',
     poster: '/image/Hampi/IMG_9698.JPEG',
-    videoUrl: '/Videos/Video-27668.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717736/Video-27668.mp4',
   },
   {
     id: 'tribe-video-4',
     poster: '/image/Coorg/IMG_5499.JPEG',
-    videoUrl: '/Videos/Video-29416.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717745/Video-29416.mp4',
   },
   {
     id: 'tribe-video-5',
     poster: '/image/Udaipur/IMG_4003.JPG',
-    videoUrl: '/Videos/Video-38285.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717742/Video-38285.mp4',
   },
   {
     id: 'tribe-video-6',
     poster: '/image/Spiti/IMG_5483.jpg',
-    videoUrl: '/Videos/Video-40613.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717750/Video-40613.mp4',
   },
   {
     id: 'tribe-video-7',
     poster: '/image/Gokarna/1000052570.jpg',
-    videoUrl: '/Videos/Video-46629.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717747/Video-46629.mp4',
   },
   {
     id: 'tribe-video-8',
     poster: '/image/Meghalaya/IMG_1370.JPEG',
-    videoUrl: '/Videos/Video-48547.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717754/Video-48547.mp4',
   },
   {
     id: 'tribe-video-9',
     poster: '/image/Hampi/IMG_0438.JPEG',
-    videoUrl: '/Videos/Video-55721.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717755/Video-55721.mp4',
   },
   {
     id: 'tribe-video-10',
     poster: '/image/Coorg/IMG_7410.JPEG',
-    videoUrl: '/Videos/Video-66864.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717754/Video-66864.mp4',
   },
   {
     id: 'tribe-video-11',
     poster: '/image/Udaipur/IMG_1667.JPG',
-    videoUrl: '/Videos/Video-70154.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717735/Video-70154.mp4',
   },
   {
     id: 'tribe-video-12',
     poster: '/image/Gokarna/IMG_8908_Original.JPEG',
-    videoUrl: '/Videos/Video-71261.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717752/Video-71261.mp4',
   },
   {
     id: 'tribe-video-13',
     poster: '/image/Hampi/IMG_6658.JPG',
-    videoUrl: '/Videos/Video-7164.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717730/Video-7164.mp4',
   },
   {
     id: 'tribe-video-14',
     poster: '/image/Gokarna/IMG_4170.JPG',
-    videoUrl: '/Videos/Video-78991.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717726/Video-78991.mp4',
   },
   {
     id: 'tribe-video-15',
     poster: '/image/Spiti/20250110_161941_8E27C2.jpeg',
-    videoUrl: '/Videos/Video-82115.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717751/Video-82115.mp4',
   },
   {
     id: 'tribe-video-16',
     poster: '/image/Gokarna/20251231_100322_Original.JPEG',
-    videoUrl: '/Videos/Video-99158.mp4',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717762/Video-99158.mp4',
+  },
+  {
+    id: 'tribe-video-17',
+    poster: 'https://res.cloudinary.com/sqm7dvic/video/upload/so_0,q_auto,f_auto/v1791717767/IMG_1415.jpg',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717767/IMG_1415.mp4',
+  },
+  {
+    id: 'tribe-video-18',
+    poster: 'https://res.cloudinary.com/sqm7dvic/video/upload/so_0,q_auto,f_auto/v1791717758/copy_BB114A4A-BAC9-424F-A33D-118DA1EE5854.jpg',
+    videoUrl: 'https://res.cloudinary.com/sqm7dvic/video/upload/q_auto,f_auto/v1791717758/copy_BB114A4A-BAC9-424F-A33D-118DA1EE5854.mp4',
   },
 ]
 
