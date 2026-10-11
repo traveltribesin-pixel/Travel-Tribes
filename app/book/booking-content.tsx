@@ -244,6 +244,7 @@ export function BookingContent() {
 
       if (!name) {
         setErrorMessage(`Please enter the full name for ${label}.`)
+        document.getElementById('traveller-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         return
       }
 
@@ -251,17 +252,20 @@ export function BookingContent() {
       if (isLead) {
         if (!phone) {
           setErrorMessage(`Please enter the WhatsApp / contact phone number for ${label}.`)
+          document.getElementById('traveller-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
           return
         }
         const phoneDigits = phone.replace(/[^\d]/g, '')
         if (phoneDigits.length < 10) {
           setErrorMessage(`Please enter a valid 10-digit WhatsApp / phone number for ${label}.`)
+          document.getElementById('traveller-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
           return
         }
       } else if (phone) {
         const phoneDigits = phone.replace(/[^\d]/g, '')
         if (phoneDigits.length < 10) {
           setErrorMessage(`Please enter a valid 10-digit phone number for ${label}, or leave it blank.`)
+          document.getElementById('traveller-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
           return
         }
       }
@@ -269,11 +273,13 @@ export function BookingContent() {
       // Email is optional for all travellers; validated only if provided
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setErrorMessage(`Please enter a valid email address for ${label}, or leave it blank.`)
+        document.getElementById('traveller-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         return
       }
 
       if (!member.age || isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
         setErrorMessage(`Please enter a valid age (between 1 and 120) for ${label}.`)
+        document.getElementById('traveller-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         return
       }
     }
@@ -408,7 +414,7 @@ export function BookingContent() {
   }
 
   return (
-    <div className="bg-[#f7fbfd] min-h-screen py-8 lg:py-14 text-slate-800">
+    <div className="bg-[#f7fbfd] min-h-screen py-8 pb-28 lg:py-14 lg:pb-14 text-slate-800">
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header Breadcrumb */}
@@ -734,7 +740,7 @@ export function BookingContent() {
               </div>
 
               {/* Step 2: Traveller Details Form */}
-              <form onSubmit={handleFormSubmit} className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
+              <form id="traveller-form" onSubmit={handleFormSubmit} className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
                   <span className="w-8 h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-bold text-sm flex items-center justify-center">
                     2
@@ -1243,6 +1249,51 @@ export function BookingContent() {
         )}
 
       </div>
+
+      {/* MOBILE STICKY BOTTOM BAR (Matching Itinerary Details Page) */}
+      {!isBooked && (
+        <div className="fixed bottom-0 left-0 right-0 top-auto w-full z-40 lg:hidden bg-white px-4 sm:px-6 py-3 sm:py-3.5 border-t border-[var(--border)] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] flex items-center justify-between gap-3">
+          <div className="flex flex-col min-w-0 leading-none">
+            <div className="flex items-center gap-1.5 mb-1 leading-none">
+              {isFullPayment ? (
+                <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide flex items-center gap-0.5">
+                  <Sparkles size={11} className="text-emerald-600" /> Full Pay (₹{fullPaymentDiscount.toLocaleString('en-IN')} off)
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                  Advance to Pay
+                </span>
+              )}
+            </div>
+            <div className="flex items-baseline gap-1.5 leading-none">
+              <span className="text-[20px] sm:text-2xl font-black text-[var(--navy)] tracking-tight leading-none">
+                ₹{amountToPayToday.toLocaleString('en-IN')}
+              </span>
+              <span className="text-slate-500 font-bold text-[11px] leading-none">
+                ({guests} {guests > 1 ? 'guests' : 'guest'})
+              </span>
+            </div>
+          </div>
+
+          <div className="w-[155px] sm:w-[170px] shrink-0">
+            <button
+              type="button"
+              onClick={handleFormSubmit}
+              disabled={isProcessing}
+              className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-bold text-[13px] sm:text-sm disabled:opacity-50 cursor-pointer shadow-md"
+            >
+              {isProcessing ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="animate-spin w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full" />
+                  Processing...
+                </span>
+              ) : (
+                <>Pay Now <ArrowRight size={15} /></>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
