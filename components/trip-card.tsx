@@ -272,8 +272,10 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
         {/* Calendar and Clock Meta details */}
         <div className="flex items-center justify-between text-slate-500 text-[11.5px] font-medium mb-3 gap-2">
           <span className="flex items-center gap-1.5 truncate">
-            <CalendarDays size={14} className="text-[var(--sky)] shrink-0" />
-            <span className="truncate">{getTripPrimaryDate(trip)}</span>
+            <CalendarDays size={14} className={getTripPrimaryDate(trip) === 'No Upcoming Trips' ? 'text-amber-500 shrink-0' : 'text-[var(--sky)] shrink-0'} />
+            <span className={`truncate ${getTripPrimaryDate(trip) === 'No Upcoming Trips' ? 'text-amber-600 font-bold' : ''}`}>
+              {getTripPrimaryDate(trip)}
+            </span>
           </span>
           <span className="flex items-center gap-1 shrink-0 font-bold text-slate-500">
             <Clock3 size={14} className="text-[var(--sky)] shrink-0" />

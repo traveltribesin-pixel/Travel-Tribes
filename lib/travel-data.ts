@@ -61,29 +61,8 @@ const baseTrips: Trip[] = [
     title: 'Hampi Backpacking Trip',
     location: 'Hampi · Hospete · Sanapur Lake · Karnataka',
     region: 'Domestic',
-    date: 'Oct 01–05, 2026',
-    dates: [
-      'Aug 20–24, 2026',
-      'Aug 27–31, 2026',
-      'Sep 03–07, 2026 (Long Weekend)',
-      'Sep 10–14, 2026 (Long Weekend)',
-      'Sep 17–21, 2026',
-      'Sep 24–28, 2026',
-      'Oct 01–05, 2026 (Long Weekend)',
-      'Oct 08–12, 2026',
-      'Oct 15–19, 2026 (Long Weekend)',
-      'Oct 22–26, 2026',
-      'Oct 29–Nov 02, 2026',
-      'Nov 05–09, 2026 (Long Weekend)',
-      'Nov 12–16, 2026',
-      'Nov 19–23, 2026',
-      'Nov 26–30, 2026',
-      'Dec 03–07, 2026',
-      'Dec 10–14, 2026',
-      'Dec 17–21, 2026',
-      'Dec 23–27, 2026 (Long Weekend)',
-      'Dec 28–Jan 02, 2027 (New Year Special)'
-    ],
+    date: 'No Upcoming Trips',
+    dates: ['No Upcoming Trips'],
     duration: '4N/5D',
     price: '₹7,999',
     image: '/image/Hampi/hampi_img.jpeg',
@@ -5231,28 +5210,6 @@ const festiveDuplicateOverrides: {
   regularPackages?: TripPricingOption[]
   pricingOptions?: TripPricingOption[]
 }[] = [
-  {
-    origId: 'hampi-backpacking',
-    id: 'hampi-backpacking-xmas-new-year',
-    slug: 'hampi-backpacking-xmas-new-year',
-    title: 'Hampi Backpacking — Xmas & New Year Special',
-    dates: [
-      'Dec 23–27, 2026 (Long Weekend)',
-      'Dec 28–Jan 02, 2027 (New Year Special)'
-    ],
-    price: '₹8,999',
-    regularPackages: [
-      { label: 'Ex-Hospete', price: '₹8,999 / person' },
-      { label: 'Non-AC Sleeper Train', price: '₹9,999 / person' },
-      { label: 'AC 3-Tier Train', price: '₹11,999 / person' }
-    ],
-    pricingOptions: [
-      { label: 'Ex-Hospete (Festive Batch)', price: '₹8,999 / person' },
-      { label: 'Ex-Mumbai & Pune (Non-AC Sleeper Train)', price: '₹9,999 / person' },
-      { label: 'Ex-Mumbai & Pune (AC 3-Tier Train)', price: '₹11,999 / person' },
-      { label: 'Add-On (Double Sharing Room)', price: '+₹1,000 / person' }
-    ]
-  },
   {
     origId: 'meghalaya-backpacking',
     id: 'meghalaya-backpacking-xmas-new-year',

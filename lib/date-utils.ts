@@ -127,6 +127,7 @@ export function parseTripDate(dateStr?: string): ParsedTripDate | null {
  */
 export function isDateUpcoming(dateStr?: string, referenceDate?: Date): boolean {
   if (!dateStr) return false
+  if (dateStr.toLowerCase().includes('no upcoming')) return false
   const parsed = parseTripDate(dateStr)
   if (!parsed) return true // Fallback to true if unparseable
 
@@ -153,6 +154,10 @@ export function getTripPrimaryDate(
   trip: { date?: string; dates?: string[] },
   referenceDate?: Date
 ): string {
+  if (trip.date?.toLowerCase().includes('no upcoming') || trip.dates?.[0]?.toLowerCase().includes('no upcoming')) {
+    return 'No Upcoming Trips'
+  }
+
   if (trip.dates && trip.dates.length > 0) {
     const upcoming = filterUpcomingDates(trip.dates, referenceDate)
     if (upcoming.length > 0) {
@@ -175,6 +180,10 @@ export function isTripUpcoming(
   trip: { date?: string; dates?: string[] },
   referenceDate?: Date
 ): boolean {
+  if (trip.date?.toLowerCase().includes('no upcoming') || trip.dates?.[0]?.toLowerCase().includes('no upcoming')) {
+    return false
+  }
+
   if (trip.dates && trip.dates.length > 0) {
     const upcoming = filterUpcomingDates(trip.dates, referenceDate)
     return upcoming.length > 0

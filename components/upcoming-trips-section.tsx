@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import { HorizontalRail, SectionHeading } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
 import { trips } from '@/lib/travel-data'
+import { isTripUpcoming } from '@/lib/date-utils'
 
 export function UpcomingTripsSection() {
   return (
@@ -21,9 +22,11 @@ export function UpcomingTripsSection() {
         center
       />
       <HorizontalRail label="Upcoming trips">
-        {trips.map(t => (
-          <TripCard key={t.slug} trip={t} featured />
-        ))}
+        {trips
+          .filter(t => !t.slug.startsWith('hampi') && isTripUpcoming(t))
+          .map(t => (
+            <TripCard key={t.slug} trip={t} featured />
+          ))}
       </HorizontalRail>
 
       {/* Centered Glow Button Below Cards */}

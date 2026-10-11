@@ -16,7 +16,7 @@ export function DomesticJourneysSection() {
       />
       <HorizontalRail label="Domestic trips">
         {trips
-          .filter(t => t.region !== 'International')
+          .filter(t => t.region !== 'International' && !t.slug.startsWith('hampi'))
           .map(t => (
             <TripCard key={t.slug} trip={t} />
           ))}

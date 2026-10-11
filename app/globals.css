@@ -64,8 +64,10 @@
   scroll-margin-top: calc(var(--nav-header-height) + 55px) !important;
 }
 
-.sticky-sidebar-offset {
-  top: calc(var(--nav-header-height) + 20px) !important;
+@media (min-width: 1024px) {
+  .sticky-sidebar-offset {
+    top: calc(var(--nav-header-height) + 20px) !important;
+  }
 }
 
 * {

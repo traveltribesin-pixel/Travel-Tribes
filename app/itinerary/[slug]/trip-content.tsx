@@ -323,8 +323,8 @@ export function TripContent({ trip }: { trip: Trip }) {
               <span className="truncate">{trip.duration}</span>
             </span>
 
-            <span className="flex items-center justify-center sm:justify-start gap-1.5 bg-white border border-slate-200/90 px-3 py-2 rounded-xl shadow-xs truncate">
-              <CalendarDays size={14} className="text-[var(--sky)] shrink-0" />
+            <span className={`flex items-center justify-center sm:justify-start gap-1.5 bg-white border px-3 py-2 rounded-xl shadow-xs truncate ${primaryDate === 'No Upcoming Trips' ? 'border-amber-200 text-amber-600 font-bold' : 'border-slate-200/90 text-slate-600 font-semibold'}`}>
+              <CalendarDays size={14} className={primaryDate === 'No Upcoming Trips' ? 'text-amber-500 shrink-0' : 'text-[var(--sky)] shrink-0'} />
               <span className="truncate">{primaryDate}</span>
             </span>
 
@@ -553,7 +553,7 @@ export function TripContent({ trip }: { trip: Trip }) {
 
           {/* Right Column / Sticky Booking Widget */}
           <div className="lg:col-span-1">
-            <div className="fixed bottom-0 left-0 w-full z-40 lg:z-20 lg:sticky sticky-sidebar-offset bg-white lg:rounded-3xl px-4 sm:px-6 py-3 sm:py-4 lg:p-6 xl:p-7 border-t lg:border border-[var(--border)] lg:border-[var(--sky-pale)] transition-all duration-300 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] lg:shadow-[0_4px_10px_rgba(67,169,209,0.2)] lg:hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] flex flex-row lg:flex-col items-center lg:items-stretch justify-between lg:justify-start gap-3 lg:gap-0 lg:max-h-[calc(100vh-200px)] lg:overflow-y-auto no-scrollbar">
+            <div className="fixed bottom-0 left-0 right-0 top-auto w-full z-40 lg:z-20 lg:sticky lg:bottom-auto sticky-sidebar-offset bg-white lg:rounded-3xl px-4 sm:px-6 py-3 sm:py-4 lg:p-6 xl:p-7 border-t lg:border border-[var(--border)] lg:border-[var(--sky-pale)] transition-all duration-300 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] lg:shadow-[0_4px_10px_rgba(67,169,209,0.2)] lg:hover:shadow-[0_10px_15px_rgba(67,169,209,0.2)] flex flex-row lg:flex-col items-center lg:items-stretch justify-between lg:justify-start gap-3 lg:gap-0 lg:max-h-[calc(100vh-200px)] lg:overflow-y-auto no-scrollbar">
               <div className="lg:mb-5 lg:pb-5 lg:border-b border-[var(--border)] flex flex-col min-w-0 leading-none">
                 <span className="line-through text-slate-400 text-[11px] sm:text-[12px] font-semibold decoration-rose-500/80 decoration-[1.5px] mb-1 leading-none">
                   {getCutPrice(displayPrice)}
@@ -572,14 +572,24 @@ export function TripContent({ trip }: { trip: Trip }) {
                 {/* Date Selector */}
                 <div className="relative">
                   <div
-                    onClick={() => setIsDateDropdownOpen(!isDateDropdownOpen)}
-                    className="border border-[var(--border)] rounded-xl p-3.5 flex justify-between items-center cursor-pointer hover:border-[var(--sky)] transition-colors group"
+                    onClick={() => {
+                      if (selectedDate !== 'No Upcoming Trips') {
+                        setIsDateDropdownOpen(!isDateDropdownOpen)
+                      }
+                    }}
+                    className={`border border-[var(--border)] rounded-xl p-3.5 flex justify-between items-center transition-colors group ${
+                      selectedDate === 'No Upcoming Trips' ? 'bg-slate-50/80 cursor-default' : 'cursor-pointer hover:border-[var(--sky)]'
+                    }`}
                   >
                     <div>
                       <div className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Select Date</div>
-                      <div className="font-medium text-[var(--navy)] text-xs">{selectedDate}</div>
+                      <div className={`text-xs ${selectedDate === 'No Upcoming Trips' ? 'font-bold text-amber-600' : 'font-medium text-[var(--navy)]'}`}>
+                        {selectedDate}
+                      </div>
                     </div>
-                    <ChevronDown size={16} className={`text-slate-300 group-hover:text-[var(--sky)] transition-all ${isDateDropdownOpen ? 'rotate-180 text-[var(--sky)]' : ''}`} />
+                    {selectedDate !== 'No Upcoming Trips' && (
+                      <ChevronDown size={16} className={`text-slate-300 group-hover:text-[var(--sky)] transition-all ${isDateDropdownOpen ? 'rotate-180 text-[var(--sky)]' : ''}`} />
+                    )}
                   </div>
                   <AnimatePresence>
                     {isDateDropdownOpen && (
@@ -619,44 +629,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 </div>
               </div>
 
-              {/* Dynamic Package Options strictly for Selected Date */}
-              {dynamicPricingInfo.packages && dynamicPricingInfo.packages.length > 0 && (
-                <div className="hidden lg:block bg-slate-50/90 rounded-2xl p-3.5 border border-slate-200/80 mb-5 space-y-2">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-                    Packages for {selectedDate}
-                  </div>
-                  <div className="space-y-1.5">
-                    {dynamicPricingInfo.packages.map((pkg, i) => (
-                      <div key={i} className="flex justify-between items-center text-xs">
-                        <span className="font-semibold text-slate-700">{pkg.label}</span>
-                        <span className="font-extrabold text-[var(--navy)]">{pkg.price.split(' ')[0]}</span>
-                      </div>
-                    ))}
-                    {dynamicPricingInfo.doubleSharingRate > 0 &&
-                    !dynamicPricingInfo.packages.some((p) => p.label.toLowerCase().includes('double')) && (
-                      <div className="pt-1.5 border-t border-dashed border-slate-200 flex justify-between items-center text-[11px] text-amber-900">
-                        <span>Double Sharing Room Add-on</span>
-                        <span className="font-bold">+₹{dynamicPricingInfo.doubleSharingRate.toLocaleString('en-IN')} / person</span>
-                      </div>
-                    )}
-                  </div>
-                  {trip.bookingAmount && (
-                    <div className="mt-2 pt-2 border-t border-dashed border-slate-300 flex justify-between items-center text-[11px]">
-                      <span className="text-[var(--sky)] font-bold">Advance Booking</span>
-                      <span className="font-bold text-[var(--sky)]">{trip.bookingAmount}</span>
-                    </div>
-                  )}
-                  <div className="mt-2 p-2 bg-emerald-50/80 border border-emerald-200/80 rounded-xl flex items-center justify-between text-[11px] text-emerald-800 font-bold">
-                    <span className="flex items-center gap-1.5">
-                      <Sparkles size={12} className="text-emerald-600 shrink-0" />
-                      Full Payment Discount
-                    </span>
-                    <span className="text-emerald-700 bg-white px-2 py-0.5 rounded-md border border-emerald-200 text-[10px] font-black">
-                      ₹1,000 OFF
-                    </span>
-                  </div>
-                </div>
-              )}
+
 
               {/* Action Buttons */}
               <div className="w-[160px] lg:w-full space-y-2.5">
