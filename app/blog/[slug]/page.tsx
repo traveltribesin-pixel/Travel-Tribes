@@ -52,7 +52,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound()
   }
 
-  const relatedTrip = blog.relatedTripSlug ? trips.find((t) => t.slug === blog.relatedTripSlug) : null
+  const isExcluded = (s?: string) => {
+    if (!s) return true
+    const lower = s.toLowerCase()
+    return lower.includes('hampi') || lower === 'spiti-valley-chandrataal'
+  }
+  const relatedTrip = (blog.relatedTripSlug && !isExcluded(blog.relatedTripSlug))
+    ? trips.find((t) => t.slug === blog.relatedTripSlug && !t.date?.toLowerCase().includes('no upcoming'))
+    : null
   const otherBlogs = blogs.filter((b) => b.slug !== blog.slug).slice(0, 3)
 
   return (

@@ -16,7 +16,7 @@ export function DomesticJourneysSection() {
       />
       <HorizontalRail label="Domestic trips">
         {trips
-          .filter(t => t.region !== 'International' && !t.slug.startsWith('hampi'))
+          .filter(t => t.region !== 'International' && !t.slug.startsWith('hampi') && t.slug !== 'spiti-valley-chandrataal' && !t.date?.toLowerCase().includes('no upcoming'))
           .map(t => (
             <TripCard key={t.slug} trip={t} />
           ))}

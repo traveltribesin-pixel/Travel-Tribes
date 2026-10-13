@@ -50,6 +50,7 @@ export type Trip = {
 
   bookingAmount?: string
   reviews?: TripReview[]
+  pdfUrl?: string
 }
 
 const img = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=88`
@@ -512,7 +513,7 @@ pricingOptions: [
     image: '/Card Image/meghalaya_6_days.jpg',
     alt: 'Nongriat Double Decker Living Root Bridge and lush rainforest of Meghalaya',
     tag: 'Abode of Clouds',
-    description: 'Immerse yourself in the mystical beauty of Northeast India with our 6-day Meghalaya Backpacking group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, camp by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Explore Meghalaya with fellow curious wanderers and find your tribe.',
+    description: 'Immerse yourself in the mystical beauty of Northeast India with our 6-day Meghalaya Backpacking group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, stay by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Explore Meghalaya with fellow curious wanderers and find your tribe.',
     spots: '5 spots left',
     gallery: [
       { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya" },
@@ -558,11 +559,11 @@ pricingOptions: [
         day: 2,
         title: 'Day 2: Shillong → Laitlum Canyons → Krang Suri → Phe Phe Falls → Dawki 🏞️',
         activities: [
-          "Enjoy breakfast at the Campsite before checking out and starting the journey towards Dawki/Shnongpdeng.",
+          "Enjoy breakfast at the hotel before checking out and starting the journey towards Dawki/Shnongpdeng.",
           "Visit the breathtaking Laitlum Canyons, known for its dramatic landscapes and panoramic valley views.",
           "Continue the journey and explore the beautiful Krang Suri Waterfall, surrounded by lush greenery.",
           "Later, visit the scenic Phe Phe Falls and enjoy the natural beauty of the waterfall.",
-          "Continue towards Dawki/Shnongpdeng and check in to your campsite or homestay.",
+          "Continue towards Dawki/Shnongpdeng and check in to your hotel or homestay.",
           "Spend the evening at leisure, relaxing by the riverside and enjoying the peaceful surroundings.",
           "Overnight stay in Dawki/Shnongpdeng.",
           "Meals: Breakfast & Dinner."
@@ -745,7 +746,7 @@ pricingOptions: [
     image: '/Card Image/meghalaya_with_Kaziranga.png',
     alt: 'Nongriat Double Decker Living Root Bridge and Kaziranga wildlife safari in Meghalaya & Assam',
     tag: 'Abode of Clouds & Safari',
-    description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, camp by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife jeep safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, wild elephants, and rich wildlife in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
+    description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, stay by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife jeep safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, wild elephants, and rich wildlife in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
     spots: '5 spots left',
     gallery: [
       { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya" },
@@ -873,7 +874,7 @@ pricingOptions: [
     ],
     inclusions: [
       "Transportation throughout the itinerary by Tempo Traveller, SUV or Sedan, depending on group size.",
-      "Accommodation on a double/triple sharing basis: 2 nights in Shillong, 1 night camping at Shnongpdeng/Dawki, 2 nights in Cherrapunjee and 1 night in Kaziranga.",
+      "Accommodation on a double/triple sharing basis: 2 nights in Shillong, 1 night stay in hotel/homestay at Shnongpdeng/Dawki, 2 nights in Cherrapunjee and 1 night in Kaziranga.",
       "6 breakfasts from Day 2 to Day 7.",
       "1 dinner on Day 2.",
       "Kaziranga National Park Jeep Safari.",
@@ -1222,7 +1223,7 @@ pricingOptions: [
       'Dec 27–Jan 04, 2027 (New Year Special)'
     ],
     duration: '8N/9D',
-    price: '₹53,000',
+    price: '₹52,999',
     image: '/Card Image/bali_with_gili.png',
     alt: 'Bali and Gili Islands — Tropical Beaches, Kelingking Cliff, Mount Batur Jeep Safari and Ubud Culture',
     tag: 'Island of Vibe',
@@ -1438,14 +1439,14 @@ pricingOptions: [
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
         regularPackages: [
-      { label: 'Triple / Double Sharing', price: '₹53,000 / person' }
+      { label: 'Triple / Double Sharing', price: '₹52,999 / person' }
     ],
     festivePackages: [
       { label: 'Triple / Double Sharing', price: '₹59,000 / person' }
     ],
     doubleSharingRate: 0,
 pricingOptions: [
-      { label: 'Triple / Double Sharing', price: '₹53,000 / person' },
+      { label: 'Triple / Double Sharing', price: '₹52,999 / person' },
       { label: 'XMAS & NY Batch', price: '₹59,000 / person', note: 'Dec 19 & Dec 27 departures' }
     ],
     bookingAmount: '₹15,000 / person',
@@ -2129,7 +2130,7 @@ pricingOptions: [
       "Extra meals, beverages, alcoholic drinks, and packaged mineral water.",
       "Selected optional Ba Na Hills activities (Wax Museum, Debay Wine Cellar, Alpine Coaster).",
       "Personal expenses, tips/gratuities for guides & drivers, laundry, telephone expenses.",
-      "5% GST + 5% TCS.",
+      "5% GST + 2% TCS.",
       "Expenses caused by flight cancellations, weather, or natural calamities.",
       "Anything not specifically mentioned under inclusions."
     ],
@@ -2163,8 +2164,8 @@ pricingOptions: [
     ],
     doubleSharingRate: 0,
 pricingOptions: [
-      { label: 'Regular Package (With 2 Internal Flights)', price: '₹74,999 / person + 5% GST & 5% TCS' },
-      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 5% TCS', note: 'Available on request for late Dec batches' }
+      { label: 'Regular Package (With 2 Internal Flights)', price: '₹74,999 / person + 5% GST & 2% TCS' },
+      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 2% TCS', note: 'Available on request for late Dec batches' }
     ],
     bookingAmount: '₹20,000 / person',
     reviews: [
@@ -2389,7 +2390,7 @@ pricingOptions: [
     exclusions: [
       "International flights between India and Vietnam.",
       "Vietnam E-Visa (approx. ₹2,800).",
-      "5% GST + 5% TCS extra on the package price.",
+      "5% GST + 2% TCS extra on the package price.",
       "Early check-in or late check-out charges.",
       "Lunch and dinner except the included Halong Bay cruise lunch.",
       "Extra meals, snacks, bottled mineral water, and alcoholic/non-alcoholic beverages.",
@@ -2402,7 +2403,7 @@ pricingOptions: [
       "Expenses due to flight cancellations, weather delays, medical evacuation, strikes or force majeure."
     ],
     policies: [
-      "Regular Price: ₹59,999/- per person + 5% GST & 5% TCS (Includes Land Package + 2 Internal Domestic Flights).",
+      "Regular Price: ₹59,999/- per person + 5% GST & 2% TCS (Includes Land Package + 2 Internal Domestic Flights).",
       "Booking Amount: ₹20,000/- per person advance to confirm your seat. Remaining payment is payable 30 days before departure.",
       "Christmas & New Year batches: Dates available on request.",
       "Airport transfers operate at fixed group timings. Early or late transfers may incur additional charges.",
@@ -2436,7 +2437,7 @@ pricingOptions: [
       { label: 'Land Package + 2 Domestic Flights (Double/Triple Sharing)', price: '₹59,999 / person' },
       { label: 'Booking Advance', price: '₹20,000 / person' },
       { label: 'Christmas & New Year Special Batch', price: 'On Request', note: 'Dates available on request' },
-      { label: 'Taxes (5% GST + 5% TCS)', price: 'As Applicable', note: '5% GST + 5% TCS extra' }
+      { label: 'Taxes (5% GST + 2% TCS)', price: 'As Applicable', note: '5% GST + 2% TCS extra' }
     ],
     bookingAmount: '₹20,000 / person',
     reviews: [
@@ -2667,7 +2668,7 @@ pricingOptions: [
     exclusions: [
       "International flights between India and Vietnam & airport taxes.",
       "Vietnam E-Visa service.",
-      "5% GST + 5% TCS extra on the package price.",
+      "5% GST + 2% TCS extra on the package price.",
       "Meals not mentioned in the itinerary (lunches and dinners).",
       "Single-room supplement.",
       "Early check-in and late check-out.",
@@ -2679,7 +2680,7 @@ pricingOptions: [
       "Optional machine gun shooting at Cu Chi Tunnels."
     ],
     policies: [
-      "Regular Price: ₹69,999/- per person + 5% GST & 5% TCS (Includes Land Package + 2 Internal Domestic Flights + Sapa Express Transfers).",
+      "Regular Price: ₹69,999/- per person + 5% GST & 2% TCS (Includes Land Package + 2 Internal Domestic Flights + Sapa Express Transfers).",
       "Booking Amount: ₹20,000/- per person advance to confirm your seat. Remaining payment is payable 30 days before departure.",
       "Recommended luggage: One medium bag up to approx. 65 cm + one handbag per person.",
       "Standard hotel check-in is 2:00 PM; check-out is 11:00 AM.",
@@ -2705,7 +2706,7 @@ pricingOptions: [
       { label: 'Land Package + 2 Domestic Flights + Sapa (Double Sharing)', price: '₹69,999 / person' },
       { label: 'Booking Advance', price: '₹20,000 / person' },
       { label: 'Christmas & New Year Special Batch', price: 'On Request', note: 'Dates available on request' },
-      { label: 'Taxes (5% GST + 5% TCS)', price: 'As Applicable', note: '5% GST + 5% TCS extra' }
+      { label: 'Taxes (5% GST + 2% TCS)', price: 'As Applicable', note: '5% GST + 2% TCS extra' }
     ],
     bookingAmount: '₹20,000 / person',
     reviews: [
@@ -3792,21 +3793,21 @@ pricingOptions: [
       { image: "/image/Udaipur/IMG_8911.JPEG", alt: "Udaipur" }
     ],
     highlights: [
-      "🏰 City Palace with stunning Lake Pichola views",
-      "🚤 Boat ride to Jag Mandir Palace",
-      "🌊 Explore Fateh Sagar Lake",
-      "🌅 Sunset at Sajjangarh Monsoon Palace",
-      "💃 Experience the Bagore Ki Haveli cultural show",
-      "🌃 Explore Gangore Ghat & Ambrai Ghat",
-      "🛕 Visit Jagdish Temple",
-      "🌸 Explore the beautiful Saheliyon-ki-Bari gardens",
-      "🚡 Experience the Karni Mata cable car / ropeway ride",
-      "🌄 Catch the sunrise at Bahubali Hills",
-      "🛍️ Explore Hathipole & Bada Bazaar",
-      "🍴 Experience a local Rajasthani street-food trail",
-      "🥟 Try local favourites like Pyaz Kachori, Poha, Rabdi & more",
-      "☕ Explore lakeside cafés",
-      "👥 Meet fellow travellers through the Travel Tribes community experience"
+      "City Palace with stunning Lake Pichola views",
+      "Boat ride to Jag Mandir Palace",
+      "Explore Fateh Sagar Lake",
+      "Sunset at Sajjangarh Monsoon Palace",
+      "Experience the Bagore Ki Haveli cultural show",
+      "Explore Gangore Ghat & Ambrai Ghat",
+      "Visit Jagdish Temple",
+      "Explore the beautiful Saheliyon-ki-Bari gardens",
+      "Experience the Karni Mata cable car / ropeway ride",
+      "Catch the sunrise at Bahubali Hills",
+      "Explore Hathipole & Bada Bazaar",
+      "Experience a local Rajasthani street-food trail",
+      "Try local favourites like Pyaz Kachori, Poha, Rabdi & more",
+      "Explore lakeside cafés",
+      "Meet fellow travellers through the Travel Tribes community experience"
     ],
     itinerary: [
       {
@@ -3814,7 +3815,6 @@ pricingOptions: [
         day: 1,
         title: 'DAY 1 — Mumbai to Udaipur | The Journey Begins 🚂',
         activities: [
-          "Mumbai to Udaipur Train Journey • Ice-Breaking Games",
           "Hello, fellow backpackers! Begin your journey from Mumbai to Udaipur by train.",
           "Train: 22901 – Bdts Udz Sf Exp",
           "Bandra Terminus: 11:25 PM | Borivali: 11:52 PM",
@@ -3827,7 +3827,6 @@ pricingOptions: [
         day: 2,
         title: 'DAY 2 — Fateh Sagar Lake, Bagore Ki Haveli, Gangore Ghat & Ambrai Ghat 🌊💃',
         activities: [
-          "Udaipur Lakes • Cultural Show • Ghats • Sunset",
           "Upon reaching Udaipur in the afternoon, check in to the stay.",
           "Have a delicious lunch and freshen up.",
           "By evening, immerse yourself in the serene ambiance of Fateh Sagar Lake.",
@@ -3860,7 +3859,6 @@ pricingOptions: [
         day: 4,
         title: 'DAY 4 — Bahubali Hills Sunrise, Karni Mata Temple & Udaipur Market 🌄🚡🛍️',
         activities: [
-          "Bahubali Hill Sunrise • Karni Mata Ropeway • Hathipole • Bada Bazaar",
           "Get up early to catch a beautiful sunrise at Bahubali Hills.",
           "Get back to the stay. Freshen up and check out.",
           "Have breakfast.",
@@ -3877,7 +3875,6 @@ pricingOptions: [
         day: 5,
         title: 'DAY 5 — Back to Mumbai 🚂',
         activities: [
-          "Udaipur to Mumbai Return Journey",
           "Returning home with cherished memories and countless pictures to look back at.",
           "Enjoy the joy of all the fun experiences we had on this incredible trip.",
           "We promise to stay in touch and plan more adventures together.",
@@ -4240,21 +4237,8 @@ pricingOptions: [
     title: 'Spiti Valley with Chandrataal — Trip from Delhi',
     location: 'Spiti Valley · Chandrataal · Manali · Chitkul · Tabo · Kaza',
     region: 'Domestic',
-    date: 'Aug 15–23, 2026',
-    dates: [
-      'Aug 15–23, 2026',
-      'Aug 22–30, 2026',
-      'Aug 29–Sep 06, 2026',
-      'Sep 05–13, 2026',
-      'Sep 12–20, 2026',
-      'Sep 19–27, 2026',
-      'Sep 26–Oct 04, 2026',
-      'Oct 03–11, 2026',
-      'Oct 10–18, 2026',
-      'Oct 17–25, 2026',
-      'Oct 24–Nov 01, 2026',
-      'Oct 31–Nov 08, 2026'
-    ],
+    date: 'No Upcoming Trips',
+    dates: ['No Upcoming Trips'],
     duration: '8N/9D',
     price: '₹18,999',
     image: '/Card Image/Spiti_with_chandrataal.png',
@@ -5297,7 +5281,7 @@ const festiveDuplicateOverrides: {
       { label: 'All-Inclusive Package (With 2 Internal Flights)', price: '₹79,999 / person' }
     ],
     pricingOptions: [
-      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 5% TCS' },
+      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 2% TCS' },
       { label: 'Booking Advance', price: '₹20,000 / person' }
     ]
   },
@@ -5432,7 +5416,61 @@ const duplicateTrips: Trip[] = festiveDuplicateOverrides.map((override) => {
   }
 })
 
-export const trips: Trip[] = [...baseTrips, ...duplicateTrips]
+/**
+ * Official Google Drive PDF Brochure Links
+ * Source: https://drive.google.com/drive/folders/1A2HPsJz-LkqNpfBNhDS08HaefJWzOVeg
+ */
+export const TRIP_DRIVE_PDF_MAP: Record<string, string> = {
+  // 1. Bhutan
+  'bhutan-backpacking': 'https://drive.google.com/file/d/1Z8Pgb1ieOiTDXwRkkyK_huhP96B65qjZ/view',
+  'bhutan-tshechu-festival': 'https://drive.google.com/file/d/1Z8Pgb1ieOiTDXwRkkyK_huhP96B65qjZ/view',
+
+  // 2. Sri Lanka (Regular + Xmas/New Year fallback)
+  'sri-lanka-island-escape': 'https://drive.google.com/file/d/1BfZkcPBPpSXrBQyKMFGT17Q25J5mId2n/view',
+  'sri-lanka-island-escape-xmas-new-year': 'https://drive.google.com/file/d/1BfZkcPBPpSXrBQyKMFGT17Q25J5mId2n/view',
+
+  // 3. Bali with Gili (Regular + Xmas/New Year fallback)
+  'bali-gili-islands': 'https://drive.google.com/file/d/1DSVjzIIhZzacDELXlo4E93C7Ki31QPEF/view',
+  'bali-gili-islands-xmas-new-year': 'https://drive.google.com/file/d/1DSVjzIIhZzacDELXlo4E93C7Ki31QPEF/view',
+
+  // 4. Hampi
+  'hampi-backpacking': 'https://drive.google.com/file/d/1J_UhMHJJC-VV1DtUBECx6OiZRIvO-0NQ/view',
+
+  // 5. Konkan Coastal Road Trip (Regular + Xmas/New Year fallback)
+  'konkan-coastal-roadtrip': 'https://drive.google.com/file/d/1lRlVXizlLN2ok8Etx2gZlQLj3wq5wjlG/view',
+  'konkan-coastal-roadtrip-xmas-new-year': 'https://drive.google.com/file/d/1lRlVXizlLN2ok8Etx2gZlQLj3wq5wjlG/view',
+
+  // 6. Meghalaya (Regular + Xmas/New Year fallback)
+  'meghalaya-backpacking': 'https://drive.google.com/file/d/1JHG5ygrVG9qbzmFiLVm19WV2u6QT3cpc/view',
+  'meghalaya-backpacking-xmas-new-year': 'https://drive.google.com/file/d/1JHG5ygrVG9qbzmFiLVm19WV2u6QT3cpc/view',
+
+  // 7. Meghalaya with Kaziranga (Regular + Xmas/New Year fallback)
+  'meghalaya-with-kaziranga': 'https://drive.google.com/file/d/1rLyqje7clk9K0a8kfToi5770p9VDfkGS/view',
+  'meghalaya-with-kaziranga-xmas-new-year': 'https://drive.google.com/file/d/1rLyqje7clk9K0a8kfToi5770p9VDfkGS/view',
+
+  // 8. Coorg (Regular & New Year)
+  'coorg-backpacking': 'https://drive.google.com/file/d/1fhnrIig4B9W2mh4x9ZUtigUmydzgKQOw/view',
+  'coorg-mysore-new-year': 'https://drive.google.com/file/d/1Z523jdVfPpGvV3yupKak9tC8SgPGMsAB/view',
+  'coorg-backpacking-xmas-new-year': 'https://drive.google.com/file/d/1Z523jdVfPpGvV3yupKak9tC8SgPGMsAB/view',
+
+  // 9. Gokarna (Regular & New Year)
+  'gokarna-backpacking': 'https://drive.google.com/file/d/1NC0FLKB31lHfyRFyJP6JetjQBJzLqJoI/view',
+  'gokarna-xmas-new-year': 'https://drive.google.com/file/d/1E7WVMPxSZmhBce9TuBqrk0aYLdFwL6if/view',
+
+  // 10. Udaipur (Regular & New Year)
+  'udaipur-backpacking': 'https://drive.google.com/file/d/17aMn-NMBfOxUXeu4oyKmrH1AEE5LlE55/view',
+  'udaipur-xmas-new-year': 'https://drive.google.com/file/d/14DWza2_ZndPOC2RK6VXvcoPudQrT_l52/view',
+
+  // 11. Spiti Valley (Regular & Winter / New Year)
+  'spiti-valley-chandrataal': 'https://drive.google.com/file/d/1TyWTcj96NY4pplPgOOraSdkGnUYyDP5M/view',
+  'spiti-winter-expedition': 'https://drive.google.com/file/d/160QHg3nelc9C95BUzUWkb30kOSNK_amV/view',
+  'spiti-winter-expedition-xmas-new-year': 'https://drive.google.com/file/d/160QHg3nelc9C95BUzUWkb30kOSNK_amV/view',
+}
+
+export const trips: Trip[] = [...baseTrips, ...duplicateTrips].map((t) => ({
+  ...t,
+  pdfUrl: TRIP_DRIVE_PDF_MAP[t.slug] || TRIP_DRIVE_PDF_MAP[t.id] || t.pdfUrl,
+}))
 
 export interface GalleryItem {
   image: string
@@ -5635,7 +5673,7 @@ export const blogs: BlogPost[] = [
     readTime: '5 min read',
     image: img('photo-1516483638261-f4dbaf036963'),
     tags: ['Weekend Getaways', 'Mumbai', 'Pune', 'Short Breaks'],
-    relatedTripSlug: 'hampi-backpacking',
+    relatedTripSlug: 'gokarna-backpacking',
     metaTitle: 'Top Weekend Getaways from Mumbai & Pune 2026 | Travel Tribes',
     metaDescription: 'Best 2 to 3-day weekend trips from Mumbai and Pune for young professionals. Explore Gokarna, Hampi, Coorg, Kolad, and Udaipur.',
     content: [

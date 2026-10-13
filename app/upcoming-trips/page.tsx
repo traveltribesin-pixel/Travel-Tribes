@@ -22,7 +22,9 @@ const categories = [
 ]
 
 export default function Page() {
-  const upcomingTrips = trips.filter(t => !t.slug.startsWith('hampi') && isTripUpcoming(t))
+  const upcomingTrips = trips.filter(
+    (t) => !t.slug.startsWith('hampi') && t.slug !== 'spiti-valley-chandrataal' && isTripUpcoming(t)
+  )
 
   return (
     <TripsPage

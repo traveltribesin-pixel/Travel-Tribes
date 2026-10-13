@@ -6,6 +6,9 @@ import { HorizontalRail } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
 import { xmasNewYearTrips } from '@/lib/travel-data'
 
+/* Helper to round coordinates to 1 decimal place to eliminate SSR/client float mismatch */
+const r1 = (n: number) => Math.round(n * 10) / 10
+
 /* --------------------------------------------------------------------------
    SVG Firework Burst 1: Golden Radiance (Gold / Amber / White)
 --------------------------------------------------------------------------- */
@@ -37,12 +40,12 @@ function FireworkGold({ className = '' }: { className?: string }) {
       {[0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5].map((deg, i) => {
         const rad = (deg * Math.PI) / 180
         const len = i % 2 === 0 ? 76 : 58
-        const x2 = 100 + Math.cos(rad) * len
-        const y2 = 100 + Math.sin(rad) * len
+        const x2 = r1(100 + Math.cos(rad) * len)
+        const y2 = r1(100 + Math.sin(rad) * len)
         const dotR = i % 4 === 0 ? 3 : 2
         const dotLen = len + 10
-        const dotX = 100 + Math.cos(rad) * dotLen
-        const dotY = 100 + Math.sin(rad) * dotLen
+        const dotX = r1(100 + Math.cos(rad) * dotLen)
+        const dotY = r1(100 + Math.sin(rad) * dotLen)
         return (
           <g key={deg}>
             <line
@@ -97,10 +100,10 @@ function FireworkCyan({ className = '' }: { className?: string }) {
       {[15, 37.5, 60, 82.5, 105, 127.5, 150, 172.5, 195, 217.5, 240, 262.5, 285, 307.5, 330, 352.5].map((deg, i) => {
         const rad = (deg * Math.PI) / 180
         const len = i % 2 === 0 ? 72 : 52
-        const x2 = 100 + Math.cos(rad) * len
-        const y2 = 100 + Math.sin(rad) * len
-        const dotX = 100 + Math.cos(rad) * (len + 8)
-        const dotY = 100 + Math.sin(rad) * (len + 8)
+        const x2 = r1(100 + Math.cos(rad) * len)
+        const y2 = r1(100 + Math.sin(rad) * len)
+        const dotX = r1(100 + Math.cos(rad) * (len + 8))
+        const dotY = r1(100 + Math.sin(rad) * (len + 8))
         return (
           <g key={deg}>
             <line
@@ -151,10 +154,10 @@ function FireworkRose({ className = '' }: { className?: string }) {
       {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg, i) => {
         const rad = (deg * Math.PI) / 180
         const len = i % 2 === 0 ? 66 : 48
-        const x2 = 100 + Math.cos(rad) * len
-        const y2 = 100 + Math.sin(rad) * len
-        const dotX = 100 + Math.cos(rad) * (len + 9)
-        const dotY = 100 + Math.sin(rad) * (len + 9)
+        const x2 = r1(100 + Math.cos(rad) * len)
+        const y2 = r1(100 + Math.sin(rad) * len)
+        const dotX = r1(100 + Math.cos(rad) * (len + 9))
+        const dotY = r1(100 + Math.sin(rad) * (len + 9))
         return (
           <g key={deg}>
             <line

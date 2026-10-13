@@ -224,7 +224,13 @@ function AutoplayReelCard({
 
 export function VideoGallerySection() {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(null)
-  const [isPaused, setIsPaused] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const isInteractingRef = useRef(false)
+  const resumeTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const dragStartRef = useRef<{ x: number; scrollLeft: number } | null>(null)
+  const hasDraggedRef = useRef(false)
 
   // 2 repeating sets of video reels for continuous infinite seamless slide
   const infiniteReels = [...videoReels, ...videoReels]
@@ -246,6 +252,129 @@ export function VideoGallerySection() {
     )
   }, [])
 
+  // Smooth linear auto-scroll loop with pause-on-interaction & auto-resume
+  useEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    let animationFrameId: number
+    let lastTime = performance.now()
+    const baseSpeed = 0.8 // Smooth, comfortable speed (~50px/sec)
+
+    const loop = (currentTime: number) => {
+      const delta = currentTime - lastTime
+      lastTime = currentTime
+
+      if (!isInteractingRef.current && container) {
+        const halfWidth = container.scrollWidth / 2
+        const step = baseSpeed * (delta / 16.67)
+        container.scrollLeft += step
+
+        // Infinite wrap-around
+        if (container.scrollLeft >= halfWidth) {
+          container.scrollLeft -= halfWidth
+        } else if (container.scrollLeft <= 0) {
+          container.scrollLeft += halfWidth
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(loop)
+    }
+
+    animationFrameId = requestAnimationFrame(loop)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    }
+  }, [])
+
+  // Seamless boundary wrap when user scrolls/swipes manually
+  const handleScroll = () => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const halfWidth = container.scrollWidth / 2
+    if (container.scrollLeft >= halfWidth * 1.8) {
+      container.scrollLeft -= halfWidth
+    } else if (container.scrollLeft <= 5) {
+      container.scrollLeft += halfWidth
+    }
+  }
+
+  // Touch Swipe Handlers for mobile fingers
+  const handleTouchStart = () => {
+    isInteractingRef.current = true
+    hasDraggedRef.current = false
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+  }
+
+  const handleTouchMove = () => {
+    hasDraggedRef.current = true
+  }
+
+  const handleTouchEnd = () => {
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false
+      hasDraggedRef.current = false
+    }, 2200)
+  }
+
+  // Mouse Drag Handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isInteractingRef.current = true
+    hasDraggedRef.current = false
+    setIsDragging(true)
+    dragStartRef.current = {
+      x: e.pageX,
+      scrollLeft: scrollContainerRef.current?.scrollLeft || 0,
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!dragStartRef.current || !scrollContainerRef.current) return
+    const dx = e.pageX - dragStartRef.current.x
+    if (Math.abs(dx) > 6) {
+      hasDraggedRef.current = true
+    }
+    scrollContainerRef.current.scrollLeft = dragStartRef.current.scrollLeft - dx
+  }
+
+  const handleMouseUp = () => {
+    dragStartRef.current = null
+    setIsDragging(false)
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false
+      hasDraggedRef.current = false
+    }, 2200)
+  }
+
+  const handleMouseEnter = () => {
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+      isInteractingRef.current = true
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (dragStartRef.current) {
+      handleMouseUp()
+    } else {
+      isInteractingRef.current = false
+    }
+  }
+
+  const scrollByAmount = (amount: number) => {
+    isInteractingRef.current = true
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: amount, behavior: 'smooth' })
+    }
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false
+    }, 2500)
+  }
+
   // Keyboard navigation for modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -260,94 +389,79 @@ export function VideoGallerySection() {
 
   return (
     <section className="py-12 sm:py-16 bg-[#f8fafc] relative overflow-hidden select-none">
-      {/* CSS Continuous Linear Auto-slide Animation */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes continuous-video-slide {
-            0% {
-              transform: translate3d(0, 0, 0);
-            }
-            100% {
-              transform: translate3d(-50%, 0, 0);
-            }
-          }
-          .animate-continuous-video-slide {
-            display: flex;
-            width: max-content;
-            animation: continuous-video-slide 55s linear infinite;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
-          }
-          .animate-continuous-video-slide.paused,
-          .animate-continuous-video-slide:hover {
-            animation-play-state: paused;
-          }
-        `,
-        }}
-      />
-
       {/* Background Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[var(--sky-pale)]/50 rounded-full blur-3xl pointer-events-none" />
 
       {/* Section Header */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-6 sm:mb-8">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] text-xs font-extrabold uppercase tracking-wider mb-2.5">
-              <Video size={14} className="text-[var(--sky)]" />
-              <span>Real Tribe Moments</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[var(--navy)] tracking-tight">
-              Watch The Adventures Come Alive
-            </h2>
-            <p className="text-slate-500 text-xs sm:text-sm max-w-xl mt-1.5">
-              Unfiltered moments captured by our travellers on the road. Videos autoplay and continuously slide at a fixed speed. Hover or tap to pause.
-            </p>
+        <div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] text-xs font-extrabold uppercase tracking-wider mb-2.5">
+            <Video size={14} className="text-[var(--sky)]" />
+            <span>Real Tribe Moments</span>
           </div>
-
-          {/* Toggle Pause / Play Button */}
-          <div className="flex items-center gap-2.5 self-start md:self-end">
-            <button
-              onClick={() => setIsPaused(!isPaused)}
-              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold transition-all border cursor-pointer ${
-                !isPaused
-                  ? 'bg-white text-[var(--navy)] border-slate-200 shadow-sm hover:border-[var(--sky)]'
-                  : 'bg-[var(--sky)] text-white border-[var(--sky)] shadow-md'
-              }`}
-            >
-              {!isPaused ? (
-                <>
-                  <Pause size={13} className="text-[var(--sky)]" />
-                  <span>Auto-slide ON</span>
-                </>
-              ) : (
-                <>
-                  <Play size={13} className="fill-white" />
-                  <span>Auto-slide Paused</span>
-                </>
-              )}
-            </button>
-          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[var(--navy)] tracking-tight">
+            Watch The Adventures Come Alive
+          </h2>
+          <p className="text-slate-500 text-xs sm:text-sm max-w-xl mt-1.5">
+            Unfiltered moments captured by our travellers on the road. Swipe or tap any video to watch in fullscreen with sound.
+          </p>
         </div>
       </div>
 
-      {/* CONTINUOUS FIXED-SPEED INFINITE SLIDING TRACK */}
+      {/* CONTINUOUS AUTO-SLIDING + MANUAL SWIPEABLE TRACK */}
       <div className="relative w-full overflow-hidden py-3 group/track">
         {/* Soft edge fade overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
 
-        {/* Continuous Linear Scrolling Track */}
-        <div className={`animate-continuous-video-slide flex items-center gap-4 sm:gap-6 px-6 sm:px-12 ${isPaused ? 'paused' : ''}`}>
+        {/* Desktop Quick Nav Arrows (Hover Reveal) */}
+        <button
+          onClick={() => scrollByAmount(-320)}
+          aria-label="Previous videos"
+          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 hover:bg-white text-slate-700 hover:text-[var(--sky)] shadow-lg items-center justify-center border border-slate-200 transition-all opacity-0 group-hover/track:opacity-100 hover:scale-105 cursor-pointer"
+        >
+          <ChevronLeft size={20} />
+        </button>
+
+        <button
+          onClick={() => scrollByAmount(320)}
+          aria-label="Next videos"
+          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 hover:bg-white text-slate-700 hover:text-[var(--sky)] shadow-lg items-center justify-center border border-slate-200 transition-all opacity-0 group-hover/track:opacity-100 hover:scale-105 cursor-pointer"
+        >
+          <ChevronRight size={20} />
+        </button>
+
+        {/* Swipeable & Scrollable Container */}
+        <div
+          ref={scrollContainerRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onScroll={handleScroll}
+          className={`flex items-center gap-4 sm:gap-6 overflow-x-auto px-6 sm:px-12 py-2 select-none ${
+            isDragging ? 'cursor-grabbing' : 'cursor-grab'
+          }`}
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
           {infiniteReels.map((reel, index) => {
             const realIndex = index % videoReels.length
             return (
               <AutoplayReelCard
                 key={`${reel.id}-set-${index}`}
                 reel={reel}
-                onSelect={() => setSelectedVideoIndex(realIndex)}
+                onSelect={() => {
+                  if (hasDraggedRef.current) return
+                  setSelectedVideoIndex(realIndex)
+                }}
               />
             )
           })}

@@ -19,7 +19,18 @@ const categories = [
 ]
 
 export default function Page() {
-  const domesticTrips = trips.filter(t => t.region !== 'International')
+  const isEndedTrip = (slug: string) => {
+    const s = slug.toLowerCase()
+    return s.includes('hampi') || s === 'spiti-valley-chandrataal'
+  }
+  const activeDomesticTrips = trips.filter(
+    (t) => t.region !== 'International' && !isEndedTrip(t.slug)
+  )
+  const endedDomesticTrips = trips.filter(
+    (t) => t.region !== 'International' && isEndedTrip(t.slug)
+  )
+  const domesticTrips = [...activeDomesticTrips, ...endedDomesticTrips]
+
   return (
     <TripsPage
       eyebrow="Closer than you think"

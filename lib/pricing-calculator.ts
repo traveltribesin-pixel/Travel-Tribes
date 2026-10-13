@@ -4,6 +4,7 @@ import { isLongWeekendDate, isFestiveDate } from '@/lib/date-utils'
 export interface PricingBreakdown {
   tripSlug: string
   tripTitle: string
+  isInternational: boolean
   selectedDate?: string
   selectedPackageIndex: number
   packageLabel: string
@@ -14,7 +15,10 @@ export interface PricingBreakdown {
   totalPerPerson: number
   guests: number
   subtotal: number
+  gstRate: number
   gstAmount: number
+  tcsRate: number
+  tcsAmount: number
   grandTotal: number
   advancePerPerson: number
   advanceTotal: number
@@ -35,16 +39,27 @@ export interface PricingBreakdown {
 export const FULL_PAYMENT_DISCOUNT_PER_PERSON = 1000
 export const FULL_PAYMENT_DISCOUNT_AMOUNT = 1000 // alias for backward compatibility
 export const GST_RATE = 0.05
+export const INTERNATIONAL_TCS_RATE = 0.02
 export const DEFAULT_DOUBLE_SHARING_RATE = 1500
 export const MIN_GUESTS = 1
 export const MAX_GUESTS = 50
 
 export const VALID_COUPONS: Record<string, { discount: number; description: string }> = {
-  TRIBE500: { discount: 500, description: '₹500 off for the Tribe' },
-  EARLYBIRD: { discount: 500, description: '₹500 Early Bird Savings' },
-  TRAVEL1000: { discount: 1000, description: '₹1,000 Special Wanderlust savings' },
-  EXPLORE10: { discount: 1000, description: '₹1,000 Explorer promo code' },
-  WANDERLUST: { discount: 750, description: '₹750 Wanderlust discount' },
+  VIBE100: { discount: 100, description: '₹100 OFF' },
+  WANDER200: { discount: 200, description: '₹200 OFF' },
+  TREAT300: { discount: 300, description: '₹300 OFF' },
+  GOODVIBES400: { discount: 400, description: '₹400 OFF' },
+  TRIBECLUB: { discount: 500, description: '₹500 OFF' },
+  YOL0500: { discount: 500, description: '₹500 OFF' },
+  SOL0500: { discount: 500, description: '₹500 OFF' },
+  HIGHFIVE: { discount: 500, description: '₹500 OFF' },
+  WANDER600: { discount: 600, description: '₹600 OFF' },
+  BIGSAVE700: { discount: 700, description: '₹700 OFF' },
+  ADVENTURE700: { discount: 700, description: '₹700 OFF' },
+  TRIPMODE800: { discount: 800, description: '₹800 OFF' },
+  TRIBELOVE900: { discount: 900, description: '₹900 OFF' },
+  TRIBEFAM: { discount: 1000, description: '₹1,000 OFF' },
+  TRIBE1000: { discount: 1000, description: '₹1,000 OFF' },
 }
 
 /**
@@ -255,10 +270,13 @@ export function calculateBookingPricing(params: {
 
   const totalPerPerson = basePricePerPerson + doubleSharingAddonPerPerson
 
-  // 6. Subtotal & GST
+  // 6. Subtotal, GST & TCS (2% TCS exclusively on International trips)
   const subtotal = totalPerPerson * guests
   const gstAmount = Math.round(subtotal * GST_RATE)
-  const rawGrandTotal = subtotal + gstAmount
+  const isInternational = trip.region === 'International'
+  const tcsRate = isInternational ? INTERNATIONAL_TCS_RATE : 0
+  const tcsAmount = isInternational ? Math.round(subtotal * INTERNATIONAL_TCS_RATE) : 0
+  const rawGrandTotal = subtotal + gstAmount + tcsAmount
 
   // 7. Coupon Discount
   const couponValidation = validateCoupon(params.couponCode)
@@ -286,6 +304,7 @@ export function calculateBookingPricing(params: {
   return Object.freeze({
     tripSlug: trip.slug,
     tripTitle: trip.title,
+    isInternational,
     selectedDate,
     selectedPackageIndex,
     packageLabel,
@@ -296,7 +315,10 @@ export function calculateBookingPricing(params: {
     totalPerPerson,
     guests,
     subtotal,
+    gstRate: GST_RATE,
     gstAmount,
+    tcsRate,
+    tcsAmount,
     grandTotal,
     advancePerPerson,
     advanceTotal,

@@ -23,7 +23,7 @@ export function UpcomingTripsSection() {
       />
       <HorizontalRail label="Upcoming trips">
         {trips
-          .filter(t => !t.slug.startsWith('hampi') && isTripUpcoming(t))
+          .filter(t => !t.slug.startsWith('hampi') && t.slug !== 'spiti-valley-chandrataal' && isTripUpcoming(t))
           .map(t => (
             <TripCard key={t.slug} trip={t} featured />
           ))}

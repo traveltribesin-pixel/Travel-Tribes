@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { gallery, galleryRow1, galleryRow2 } from '@/lib/travel-data'
@@ -30,6 +30,194 @@ function GalleryPhotoCard({
         loading="lazy"
         className="object-cover object-balanced transition-transform duration-700 ease-out group-hover:scale-105"
       />
+    </div>
+  )
+}
+
+function SwipeableGalleryRow({
+  items,
+  direction = 'left',
+  baseIndex = 0,
+  onSelectPhoto,
+  speed = 0.65,
+}: {
+  items: GalleryItem[]
+  direction?: 'left' | 'right'
+  baseIndex?: number
+  onSelectPhoto: (index: number) => void
+  speed?: number
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const isInteractingRef = useRef(false)
+  const resumeTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const dragStartRef = useRef<{ x: number; scrollLeft: number } | null>(null)
+  const hasDraggedRef = useRef(false)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const duplicatedItems = [...items, ...items]
+
+  useEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+
+    // Initial position setup for smooth start
+    const halfWidth = container.scrollWidth / 2
+    if (direction === 'right') {
+      container.scrollLeft = halfWidth
+    } else {
+      container.scrollLeft = 10
+    }
+
+    let animationFrameId: number
+    let lastTime = performance.now()
+
+    const loop = (currentTime: number) => {
+      const delta = currentTime - lastTime
+      lastTime = currentTime
+
+      if (!isInteractingRef.current && container) {
+        const currentHalfWidth = container.scrollWidth / 2
+        const step = speed * (delta / 16.67)
+
+        if (direction === 'left') {
+          container.scrollLeft += step
+          if (container.scrollLeft >= currentHalfWidth) {
+            container.scrollLeft -= currentHalfWidth
+          } else if (container.scrollLeft <= 0) {
+            container.scrollLeft += currentHalfWidth
+          }
+        } else {
+          container.scrollLeft -= step
+          if (container.scrollLeft <= 5) {
+            container.scrollLeft += currentHalfWidth
+          } else if (container.scrollLeft >= currentHalfWidth * 1.95) {
+            container.scrollLeft -= currentHalfWidth
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(loop)
+    }
+
+    animationFrameId = requestAnimationFrame(loop)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    }
+  }, [direction, speed])
+
+  const handleScroll = () => {
+    const container = scrollRef.current
+    if (!container) return
+    const halfWidth = container.scrollWidth / 2
+    if (container.scrollLeft >= halfWidth * 1.85) {
+      container.scrollLeft -= halfWidth
+    } else if (container.scrollLeft <= 5) {
+      container.scrollLeft += halfWidth
+    }
+  }
+
+  // Touch handlers for mobile
+  const handleTouchStart = () => {
+    isInteractingRef.current = true
+    hasDraggedRef.current = false
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+  }
+
+  const handleTouchMove = () => {
+    hasDraggedRef.current = true
+  }
+
+  const handleTouchEnd = () => {
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false
+      hasDraggedRef.current = false
+    }, 2200)
+  }
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isInteractingRef.current = true
+    hasDraggedRef.current = false
+    setIsDragging(true)
+    dragStartRef.current = {
+      x: e.pageX,
+      scrollLeft: scrollRef.current?.scrollLeft || 0,
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!dragStartRef.current || !scrollRef.current) return
+    const dx = e.pageX - dragStartRef.current.x
+    if (Math.abs(dx) > 6) {
+      hasDraggedRef.current = true
+    }
+    scrollRef.current.scrollLeft = dragStartRef.current.scrollLeft - dx
+  }
+
+  const handleMouseUp = () => {
+    dragStartRef.current = null
+    setIsDragging(false)
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false
+      hasDraggedRef.current = false
+    }, 2200)
+  }
+
+  const handleMouseEnter = () => {
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+      isInteractingRef.current = true
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (dragStartRef.current) {
+      handleMouseUp()
+    } else {
+      isInteractingRef.current = false
+    }
+  }
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      <div
+        ref={scrollRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onScroll={handleScroll}
+        className={`flex gap-4 sm:gap-6 overflow-x-auto select-none py-1.5 ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          WebkitOverflowScrolling: 'touch',
+        }}
+      >
+        {duplicatedItems.map((item, idx) => {
+          const realIndex = baseIndex + (idx % items.length)
+          return (
+            <GalleryPhotoCard
+              key={`${direction}-item-${idx}`}
+              item={item}
+              index={realIndex}
+              onSelect={() => {
+                if (hasDraggedRef.current) return
+                onSelectPhoto(realIndex)
+              }}
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -64,7 +252,7 @@ export function GallerySection() {
             Postcards from the Tribe.
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-1.5 max-w-xl leading-relaxed">
-            Unfiltered memories, epic summit views, campfire jams, and genuine friendships. Hover over any photo to pause and explore.
+            Unfiltered memories, epic summit views, campfire jams, and genuine friendships. Swipe or tap any photo to explore.
           </p>
         </div>
       </div>
@@ -75,39 +263,23 @@ export function GallerySection() {
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 bg-gradient-to-r from-[var(--background)] to-transparent z-20" />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 bg-gradient-to-l from-[var(--background)] to-transparent z-20" />
 
-        {/* Row 1 (Top Row): Sliding Continuously to the Right */}
-        <div className="relative w-full overflow-hidden">
-          <div className="animate-marquee-right flex gap-4 sm:gap-6">
-            {[...galleryRow1, ...galleryRow1].map((item, idx) => {
-              const realIndex = idx % galleryRow1.length
-              return (
-                <GalleryPhotoCard
-                  key={`row1-${idx}`}
-                  item={item}
-                  index={realIndex}
-                  onSelect={setSelectedPhotoIndex}
-                />
-              )
-            })}
-          </div>
-        </div>
+        {/* Row 1 (Top Row): Sliding to the Right + Manual Swipe */}
+        <SwipeableGalleryRow
+          items={galleryRow1}
+          direction="right"
+          baseIndex={0}
+          onSelectPhoto={setSelectedPhotoIndex}
+          speed={0.65}
+        />
 
-        {/* Row 2 (Bottom Row): Sliding Continuously to the Left */}
-        <div className="relative w-full overflow-hidden">
-          <div className="animate-marquee-left flex gap-4 sm:gap-6">
-            {[...galleryRow2, ...galleryRow2].map((item, idx) => {
-              const realIndex = galleryRow1.length + (idx % galleryRow2.length)
-              return (
-                <GalleryPhotoCard
-                  key={`row2-${idx}`}
-                  item={item}
-                  index={realIndex}
-                  onSelect={setSelectedPhotoIndex}
-                />
-              )
-            })}
-          </div>
-        </div>
+        {/* Row 2 (Bottom Row): Sliding to the Left + Manual Swipe */}
+        <SwipeableGalleryRow
+          items={galleryRow2}
+          direction="left"
+          baseIndex={galleryRow1.length}
+          onSelectPhoto={setSelectedPhotoIndex}
+          speed={0.65}
+        />
       </div>
 
       {/* Clean Lightbox Modal */}

@@ -71,7 +71,14 @@ export function BookingContent() {
   const [guests, setGuests] = useState<number>(() => sanitizeGuests(guestsParam || 2))
 
   // Package options
-  const [selectedPackageIndex, setSelectedPackageIndex] = useState<number>(0)
+  const pkgParam = searchParams.get('pkg') || searchParams.get('package')
+  const [selectedPackageIndex, setSelectedPackageIndex] = useState<number>(() => {
+    if (pkgParam) {
+      const parsed = parseInt(pkgParam, 10)
+      if (!isNaN(parsed) && parsed >= 0) return parsed
+    }
+    return 0
+  })
   const [isDoubleSharing, setIsDoubleSharing] = useState<boolean>(false)
 
   // Payment choice: 'advance' or 'full'
@@ -159,7 +166,9 @@ export function BookingContent() {
   const {
     basePricePerPerson,
     subtotal,
+    isInternational,
     gstAmount,
+    tcsAmount,
     grandTotal,
     advanceTotal,
     fullPaymentDiscount,
@@ -170,6 +179,9 @@ export function BookingContent() {
     remainingBalance,
     isFullPayment
   } = pricing
+
+  const selectedPackage = pricing.availablePackages?.[selectedPackageIndex]
+
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault()
@@ -414,25 +426,25 @@ export function BookingContent() {
   }
 
   return (
-    <div className="bg-[#f7fbfd] min-h-screen py-8 pb-28 lg:py-14 lg:pb-14 text-slate-800">
-      <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#f7fbfd] min-h-screen py-5 pb-32 sm:py-8 lg:py-12 lg:pb-14 text-slate-800">
+      <div className="max-w-[1160px] mx-auto px-2.5 sm:px-6 lg:px-8">
 
         {/* Header Breadcrumb */}
-        <div className="flex items-center justify-between gap-4 mb-8">
+        <div className="flex items-center justify-between gap-3 mb-4 sm:mb-8">
           <div>
-            <div className="flex items-center gap-2 text-[11px] font-bold text-[var(--sky)] uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] font-bold text-[var(--sky)] uppercase tracking-wider mb-1 flex-wrap">
               <Link href="/" className="hover:underline">Home</Link>
               <span>/</span>
-              <Link href={`/itinerary/${selectedTrip.slug}`} className="hover:underline">{selectedTrip.title}</Link>
+              <Link href={`/itinerary/${selectedTrip.slug}`} className="hover:underline truncate max-w-[170px] sm:max-w-none inline-block align-bottom">{selectedTrip.title}</Link>
               <span>/</span>
               <span className="text-slate-400">Checkout</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--navy)]">
               {isBooked ? 'Booking Confirmed! 🎉' : 'Complete Your Booking'}
             </h1>
           </div>
-          <div className="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-2 rounded-full text-xs font-bold shadow-sm">
-            <ShieldCheck size={16} className="text-emerald-500" />
+          <div className="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-xs">
+            <ShieldCheck size={15} className="text-emerald-500" />
             <span>100% Safe & Verified</span>
           </div>
         </div>
@@ -442,24 +454,24 @@ export function BookingContent() {
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="max-w-2xl mx-auto bg-white rounded-3xl p-6 sm:p-10 border border-[var(--sky-pale)] shadow-[0_15px_40px_rgba(67,169,209,0.15)]"
+            className="max-w-2xl mx-auto bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-10 border border-[var(--sky-pale)] shadow-[0_15px_40px_rgba(67,169,209,0.15)]"
           >
-            <div className="text-center pb-6 border-b border-slate-100">
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <CheckCircle2 size={36} />
+            <div className="text-center pb-5 sm:pb-6 border-b border-slate-100">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-xs">
+                <CheckCircle2 size={32} className="sm:w-9 sm:h-9" />
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-2 mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[var(--sky)] bg-[var(--sky-pale)] px-3 py-1 rounded-full">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-2">
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--sky)] bg-[var(--sky-pale)] px-2.5 py-0.5 rounded-full">
                   Booking ID: {bookingId}
                 </span>
                 {paymentId && (
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1">
-                    <CheckCircle2 size={13} className="text-emerald-600" />
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                    <CheckCircle2 size={12} className="text-emerald-600" />
                     Payment ID: {paymentId}
                   </span>
                 )}
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--navy)] mt-3">
+              <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] mt-2 sm:mt-3">
                 Pack Your Bags, {(travellers[0]?.fullName || 'Traveller').split(' ')[0]}!
               </h2>
               <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
@@ -468,7 +480,7 @@ export function BookingContent() {
             </div>
 
             {/* Voucher Details Card */}
-            <div className="my-6 bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-3.5 text-xs sm:text-sm">
+            <div className="my-5 bg-slate-50 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 border border-slate-200/80 space-y-3 text-xs sm:text-sm">
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
                 <span className="text-slate-500">Trip Name</span>
                 <span className="font-bold text-[var(--navy)] text-right">{selectedTrip.title}</span>
@@ -513,14 +525,14 @@ export function BookingContent() {
               )}
               {couponDiscount > 0 && (
                 <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
-                  <span className="flex items-center gap-1.5"><Tag size={14} className="text-emerald-600" /> Promo Code ({couponCode})</span>
+                  <span className="flex items-center gap-1.5"><Tag size={13} className="text-emerald-600" /> Promo Code ({couponCode})</span>
                   <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
                 </div>
               )}
               {isFullPayment && (
                 <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
-                  <span className="flex items-center gap-1.5"><Sparkles size={14} className="text-emerald-600" /> Full Payment Discount</span>
-                  <span>-₹1,000</span>
+                  <span className="flex items-center gap-1.5"><Sparkles size={13} className="text-emerald-600" /> Full Payment Discount</span>
+                  <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
                 </div>
               )}
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
@@ -541,28 +553,28 @@ export function BookingContent() {
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-3 pt-2">
+            <div className="space-y-3 pt-1">
               <a
                 href={`https://wa.me/919975822023?text=${encodeURIComponent(
                   `Hi Travel Tribes! I just booked *${selectedTrip.title}* for *${selectedDate}* (${guests} Guests:\n${travellers.map((t, i) => `${i + 1}. ${t.fullName} (Age ${t.age})`).join('\n')}).\nBooking ID: *${bookingId}*${paymentId ? ` (Payment ID: ${paymentId})` : ''}. Payment Mode: ${isFullPayment ? `Full Payment (₹${amountToPayToday.toLocaleString('en-IN')})` : `Advance Payment (₹${amountToPayToday.toLocaleString('en-IN')})`}${couponDiscount > 0 ? ` [Coupon ${couponCode}: ₹${couponDiscount} off]` : ''}. Please share the group chat link and preparation guide!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-3.5 px-6 rounded-full font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
+                className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 sm:py-3.5 px-5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
               >
-                <Smartphone size={18} /> Connect on WhatsApp for Trip Updates
+                <Smartphone size={17} /> Connect on WhatsApp for Trip Updates
               </a>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                 <button
                   onClick={() => window.print()}
-                  className="py-3 px-4 border border-slate-200 rounded-full font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="py-2.5 sm:py-3 px-3 sm:px-4 border border-slate-200 rounded-full font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <Download size={15} /> Save Receipt
+                  <Download size={14} /> Save Receipt
                 </button>
                 <Link
                   href="/"
-                  className="py-3 px-4 bg-[var(--sky-pale)] text-[var(--sky)] rounded-full font-bold text-xs hover:bg-[var(--sky)] hover:text-white transition-colors flex items-center justify-center gap-1.5"
+                  className="py-2.5 sm:py-3 px-3 sm:px-4 bg-[var(--sky-pale)] text-[var(--sky)] rounded-full font-bold text-xs hover:bg-[var(--sky)] hover:text-white transition-colors flex items-center justify-center gap-1.5"
                 >
                   Explore More Trips
                 </Link>
@@ -570,36 +582,36 @@ export function BookingContent() {
             </div>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start">
 
             {/* LEFT COLUMN: Booking Config & Traveller Info (7 cols) */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-6">
 
               {/* Step 1: Trip & Departure Selection */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                  <span className="w-8 h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-bold text-sm flex items-center justify-center">
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 lg:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
+                <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-slate-100">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-extrabold text-xs sm:text-sm flex items-center justify-center shrink-0">
                     1
                   </span>
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--navy)]">Trip & Departure Details</h2>
-                    <p className="text-xs text-slate-400">Select your destination, batch date, and party size</p>
+                    <h2 className="text-base sm:text-lg font-bold text-[var(--navy)] leading-tight">Trip & Departure Details</h2>
+                    <p className="text-[11px] sm:text-xs text-slate-400">Select your destination, batch date, and party size</p>
                   </div>
                 </div>
 
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   {/* Selected Itinerary Trip (Read-only / Locked) */}
                   <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-xs font-bold text-slate-600">
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-[11px] sm:text-xs font-bold text-slate-700">
                         Destination Trip
                       </label>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 bg-slate-100 px-2.5 py-0.5 rounded-md">
+                      <span className="text-[9.5px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 bg-slate-100 px-2 py-0.5 rounded-md">
                         <Lock size={10} className="text-slate-400" /> Selected from Itinerary
                       </span>
                     </div>
-                    <div className="w-full bg-slate-50 border border-slate-200/90 rounded-xl px-4 py-3 text-sm text-[var(--navy)] font-bold flex items-center justify-between">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-full bg-slate-50 border border-slate-200/90 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-[var(--navy)] font-bold flex items-center justify-between">
+                      <div className="flex items-center gap-2 min-w-0">
                         <div className="w-2 h-2 rounded-full bg-[var(--sky)] shrink-0" />
                         <span className="truncate">{selectedTrip.title} ({selectedTrip.duration})</span>
                       </div>
@@ -608,10 +620,10 @@ export function BookingContent() {
                   </div>
 
                   {/* Date & Guests Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {/* Batch Date Dropdown */}
                     <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                      <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                         Departure Batch
                       </label>
                       <div className="relative">
@@ -621,7 +633,7 @@ export function BookingContent() {
                             setSelectedDate(e.target.value)
                             setSelectedPackageIndex(0)
                           }}
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-[var(--navy)] font-semibold focus:outline-none focus:border-[var(--sky)] focus:bg-white appearance-none cursor-pointer transition-all"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-[var(--navy)] font-semibold focus:outline-none focus:border-[var(--sky)] focus:bg-white appearance-none cursor-pointer transition-all"
                         >
                           {availableDates.map((d, i) => (
                             <option key={i} value={d}>
@@ -629,13 +641,13 @@ export function BookingContent() {
                             </option>
                           ))}
                         </select>
-                        <CalendarDays size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        <CalendarDays size={15} className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                       </div>
                     </div>
 
                     {/* Guest Counter */}
                     <div>
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                      <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                         Travellers Count
                       </label>
                       <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1 justify-between">
@@ -643,19 +655,19 @@ export function BookingContent() {
                           type="button"
                           onClick={() => updateGuests(guests - 1)}
                           disabled={guests <= MIN_GUESTS}
-                          className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 transition-colors cursor-pointer"
+                          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           -
                         </button>
-                        <div className="flex items-center gap-1.5 text-sm font-extrabold text-[var(--navy)]">
-                          <Users size={16} className="text-[var(--sky)]" />
+                        <div className="flex items-center gap-1.5 text-xs sm:text-sm font-extrabold text-[var(--navy)]">
+                          <Users size={15} className="text-[var(--sky)]" />
                           <span>{guests} {guests > 1 ? 'Guests' : 'Guest'}</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => updateGuests(guests + 1)}
                           disabled={guests >= MAX_GUESTS}
-                          className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 transition-colors cursor-pointer"
+                          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           +
                         </button>
@@ -665,7 +677,7 @@ export function BookingContent() {
 
                   {/* Batch Type Badge Indicator */}
                   {(pricing.isLongWeekend || pricing.isFestive) && (
-                    <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--sky-pale)]/70 border border-[var(--sky)]/30 text-xs font-bold text-[var(--navy)]">
+                    <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--sky-pale)]/70 border border-[var(--sky)]/30 text-[11.5px] sm:text-xs font-bold text-[var(--navy)]">
                       <Sparkles size={14} className="text-[var(--sky)] shrink-0" />
                       <span>
                         {pricing.isFestive
@@ -677,29 +689,29 @@ export function BookingContent() {
 
                   {/* Package Tier Options (e.g. Sleeper / 3AC / Quad / Triple) */}
                   {pricing.availablePackages && pricing.availablePackages.length > 0 && (
-                    <div className="pt-2">
-                      <label className="block text-xs font-bold text-slate-600 mb-2">
+                    <div className="pt-1">
+                      <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1.5">
                         Select Travel / Room Package
                       </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
                         {pricing.availablePackages.map((opt, idx) => {
                           const isSelected = selectedPackageIndex === idx
                           return (
                             <div
                               key={idx}
                               onClick={() => setSelectedPackageIndex(idx)}
-                              className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
+                              className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
                                 isSelected
-                                  ? 'border-[var(--sky)] bg-[var(--sky-pale)]/50 shadow-sm'
+                                  ? 'border-[var(--sky)] bg-[var(--sky-pale)]/50 shadow-xs'
                                   : 'border-slate-200 bg-slate-50/70 hover:bg-slate-100/80'
                               }`}
                             >
                               <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold text-[var(--navy)]">{opt.label}</span>
-                                {isSelected && <CheckCircle2 size={16} className="text-[var(--sky)]" />}
+                                {isSelected && <CheckCircle2 size={15} className="text-[var(--sky)] shrink-0" />}
                               </div>
-                              <div className="mt-2 flex items-baseline justify-between">
-                                <span className="text-sm font-extrabold text-[var(--navy)]">{opt.price}</span>
+                              <div className="mt-1.5 flex items-baseline justify-between">
+                                <span className="text-xs sm:text-sm font-extrabold text-[var(--navy)]">{opt.price}</span>
                                 {opt.note && <span className="text-[10px] text-slate-400 font-medium">{opt.note}</span>}
                               </div>
                             </div>
@@ -707,19 +719,19 @@ export function BookingContent() {
                         })}
                       </div>
 
-                      {/* Double Sharing Room Addon Checkbox (Only for trips where double sharing is an add-on, NOT already a package) */}
+                      {/* Double Sharing Room Addon Checkbox */}
                       {pricing.doubleSharingRate > 0 &&
                       !pricing.availablePackages.some((p) => p.label.toLowerCase().includes('double')) ? (
                         <div
-                          className="mt-3 p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-xl flex items-center justify-between cursor-pointer"
+                          className="mt-2.5 p-3 sm:p-3.5 bg-amber-50/70 border border-amber-200/80 rounded-xl flex items-center justify-between cursor-pointer"
                           onClick={() => setIsDoubleSharing(!isDoubleSharing)}
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2.5">
                             <input
                               type="checkbox"
                               checked={isDoubleSharing}
                               onChange={(e) => setIsDoubleSharing(e.target.checked)}
-                              className="w-4 h-4 accent-[var(--sky)] cursor-pointer"
+                              className="w-4 h-4 accent-[var(--sky)] cursor-pointer shrink-0"
                             />
                             <div>
                               <span className="text-xs font-bold text-amber-950">Add Double Sharing Room</span>
@@ -728,8 +740,8 @@ export function BookingContent() {
                               </p>
                             </div>
                           </div>
-                          <span className="text-xs font-bold text-amber-900">
-                            +₹{pricing.doubleSharingRate.toLocaleString('en-IN')} / person
+                          <span className="text-xs font-bold text-amber-900 shrink-0 ml-2">
+                            +₹{pricing.doubleSharingRate.toLocaleString('en-IN')}
                           </span>
                         </div>
                       ) : null}
@@ -740,35 +752,35 @@ export function BookingContent() {
               </div>
 
               {/* Step 2: Traveller Details Form */}
-              <form id="traveller-form" onSubmit={handleFormSubmit} className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                  <span className="w-8 h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-bold text-sm flex items-center justify-center">
+              <form id="traveller-form" onSubmit={handleFormSubmit} className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 lg:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
+                <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-slate-100">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-extrabold text-xs sm:text-sm flex items-center justify-center shrink-0">
                     2
                   </span>
                   <div>
-                    <h2 className="text-lg font-bold text-[var(--navy)]">
+                    <h2 className="text-base sm:text-lg font-bold text-[var(--navy)] leading-tight">
                       Traveller Details ({guests} {guests > 1 ? 'Travellers' : 'Traveller'})
                     </h2>
-                    <p className="text-xs text-slate-400">Fill details for all members travelling in your party</p>
+                    <p className="text-[11px] sm:text-xs text-slate-400">Fill details for all members travelling in your party</p>
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {travellers.map((traveller, index) => {
                     const isLead = index === 0
                     return (
                       <div
                         key={index}
-                        className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                        className={`p-3 sm:p-4.5 rounded-xl sm:rounded-2xl border transition-all ${
                           isLead
-                            ? 'bg-sky-50/30 border-[var(--sky-pale)] shadow-sm'
+                            ? 'bg-sky-50/30 border-[var(--sky-pale)] shadow-xs'
                             : 'bg-slate-50/60 border-slate-200/80'
-                        } space-y-3.5`}
+                        } space-y-3`}
                       >
-                        <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
-                          <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
+                          <div className="flex items-center gap-2 min-w-0">
                             <span
-                              className={`w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center ${
+                              className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold flex items-center justify-center shrink-0 ${
                                 isLead
                                   ? 'bg-[var(--sky)] text-white'
                                   : 'bg-slate-300 text-slate-700'
@@ -776,26 +788,26 @@ export function BookingContent() {
                             >
                               {index + 1}
                             </span>
-                            <span className="text-xs font-extrabold text-[var(--navy)]">
+                            <span className="text-xs sm:text-sm font-bold text-[var(--navy)] truncate">
                               {isLead
-                                ? 'Traveller 1 (Lead Traveller & Primary Contact)'
-                                : `Traveller ${index + 1} Details`}
+                                ? 'Lead Traveller'
+                                : `Traveller ${index + 1}`}
                             </span>
                           </div>
                           <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
                               isLead
                                 ? 'text-[var(--sky)] bg-[var(--sky-pale)]'
                                 : 'text-slate-500 bg-slate-200/60'
                             }`}
                           >
-                            {isLead ? 'Lead Traveller' : `Guest ${index + 1}`}
+                            {isLead ? 'Primary Contact' : `Guest ${index + 1}`}
                           </span>
                         </div>
 
                         {/* Name */}
                         <div>
-                          <label className="block text-xs font-bold text-slate-600 mb-1">
+                          <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                             Full Name <span className="text-rose-500">*</span>
                           </label>
                           <input
@@ -804,44 +816,44 @@ export function BookingContent() {
                             placeholder={isLead ? 'e.g. Rahul Sharma (Lead)' : `e.g. Guest ${index + 1} Full Name`}
                             value={traveller.fullName}
                             onChange={(e) => updateTraveller(index, 'fullName', e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
                           />
                         </div>
 
                         {/* WhatsApp Number & Email Address */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                           <div>
-                            <label className="block text-xs font-bold text-slate-600 mb-1">
-                              WhatsApp / Phone Number {isLead && <span className="text-rose-500">*</span>}
+                            <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
+                              WhatsApp / Phone {isLead && <span className="text-rose-500">*</span>}
                               {!isLead && <span className="text-slate-400 font-normal ml-1">(Optional)</span>}
                             </label>
                             <input
                               required={isLead}
                               type="tel"
-                              placeholder={isLead ? '+91 99758 22023' : `+91 Mobile / WhatsApp (Optional)`}
+                              placeholder={isLead ? '+91 99758 22023' : `+91 Mobile / WhatsApp`}
                               value={traveller.phone || ''}
                               onChange={(e) => updateTraveller(index, 'phone', e.target.value)}
-                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                            <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                               Email Address <span className="text-slate-400 font-normal ml-1">(Optional)</span>
                             </label>
                             <input
                               type="email"
-                              placeholder={isLead ? 'e.g. rahul@gmail.com (Optional)' : `guest${index + 1}@gmail.com (Optional)`}
+                              placeholder={isLead ? 'rahul@gmail.com' : `guest${index + 1}@gmail.com`}
                               value={traveller.email || ''}
                               onChange={(e) => updateTraveller(index, 'email', e.target.value)}
-                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
                             />
                           </div>
                         </div>
 
-                        {/* Age & Gender */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {/* Age & Gender side by side on mobile */}
+                        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                           <div>
-                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                            <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                               Age <span className="text-rose-500">*</span>
                             </label>
                             <input
@@ -852,17 +864,17 @@ export function BookingContent() {
                               placeholder="e.g. 24"
                               value={traveller.age}
                               onChange={(e) => updateTraveller(index, 'age', e.target.value)}
-                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] transition-all"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                            <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                               Gender <span className="text-rose-500">*</span>
                             </label>
                             <select
                               value={traveller.gender || 'Male'}
                               onChange={(e) => updateTraveller(index, 'gender', e.target.value)}
-                              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] focus:outline-none focus:border-[var(--sky)] transition-all cursor-pointer"
+                              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-[var(--navy)] focus:outline-none focus:border-[var(--sky)] transition-all cursor-pointer"
                             >
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
@@ -876,9 +888,9 @@ export function BookingContent() {
 
                   {/* General Details (City & Special Requests) */}
                   <div className="pt-2 border-t border-slate-100">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       <div>
-                        <label className="block text-xs font-bold text-slate-600 mb-1.5">
+                        <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
                           Departure City / Pickup Point
                         </label>
                         <input
@@ -886,19 +898,19 @@ export function BookingContent() {
                           placeholder="e.g. Mumbai / Pune / Delhi"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[var(--navy)] font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm text-[var(--navy)] font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                          Dietary / Special Requests (Optional)
+                        <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">
+                          Special Requests (Optional)
                         </label>
                         <input
                           type="text"
                           placeholder="e.g. Pure Veg, Jain, early check-in"
                           value={specialRequest}
                           onChange={(e) => setSpecialRequest(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[var(--navy)] font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm text-[var(--navy)] font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
                         />
                       </div>
                     </div>
@@ -907,18 +919,18 @@ export function BookingContent() {
 
                 {/* Error Banner */}
                 {errorMessage && (
-                  <div className="mt-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2.5 text-xs text-rose-700 font-semibold animate-in fade-in duration-200">
-                    <AlertCircle size={16} className="text-rose-600 shrink-0" />
+                  <div className="mt-4 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-xs text-rose-700 font-semibold animate-in fade-in duration-200">
+                    <AlertCircle size={15} className="text-rose-600 shrink-0" />
                     <span>{errorMessage}</span>
                   </div>
                 )}
 
                 {/* Mobile Pay CTA inside form */}
-                <div className="mt-8 pt-6 border-t border-slate-100 lg:hidden">
+                <div className="mt-5 pt-4 border-t border-slate-100 lg:hidden">
                   <button
                     type="submit"
                     disabled={isProcessing}
-                    className="glow-btn w-full py-4 rounded-full font-bold text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
+                    className="glow-btn w-full py-3.5 rounded-full font-bold text-sm flex items-center justify-center gap-2 shadow-md disabled:opacity-50 cursor-pointer"
                   >
                     {isProcessing ? (
                       <span className="inline-flex items-center gap-2">
@@ -926,7 +938,7 @@ export function BookingContent() {
                         Processing Secure Payment...
                       </span>
                     ) : (
-                      <>Pay Here • ₹{amountToPayToday.toLocaleString('en-IN')} <ArrowRight size={18} /></>
+                      <>Pay Now • ₹{amountToPayToday.toLocaleString('en-IN')} <ArrowRight size={16} /></>
                     )}
                   </button>
                 </div>
@@ -935,12 +947,12 @@ export function BookingContent() {
             </div>
 
             {/* RIGHT COLUMN: Summary & Payment Box (5 cols) */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-4 sm:space-y-6 lg:sticky lg:top-24">
 
               {/* Trip Overview Card */}
-              <div className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
-                <div className="flex gap-4 items-start pb-5 border-b border-slate-100">
-                  <div className="relative w-24 h-24 rounded-2xl overflow-hidden shrink-0 bg-slate-100">
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
+                <div className="flex gap-3 sm:gap-4 items-center sm:items-start pb-3.5 sm:pb-5 border-b border-slate-100">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-slate-100 shadow-xs">
                     <Image
                       src={selectedTrip.image}
                       alt={selectedTrip.alt}
@@ -948,74 +960,96 @@ export function BookingContent() {
                       className="object-cover"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <span className="text-[10px] font-bold text-[var(--sky)] uppercase tracking-wider flex items-center gap-1">
-                      <MapPin size={11} /> {selectedTrip.location.split(' · ')[0]}
+                      <MapPin size={11} className="shrink-0" /> <span className="truncate">{selectedTrip.location.split(' · ')[0]}</span>
                     </span>
-                    <h3 className="font-bold text-lg text-[var(--navy)] leading-snug mt-1">
+                    <h3 className="font-bold text-base sm:text-lg text-[var(--navy)] leading-snug mt-0.5 line-clamp-2">
                       {selectedTrip.title}
                     </h3>
-                    <div className="flex items-center gap-3 text-xs text-slate-500 mt-2 font-medium">
-                      <span className="flex items-center gap-1"><Clock3 size={13} className="text-[var(--sky)]" /> {selectedTrip.duration}</span>
+                    <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500 mt-1.5 font-medium">
+                      <span className="flex items-center gap-1"><Clock3 size={12} className="text-[var(--sky)] shrink-0" /> {selectedTrip.duration}</span>
                       <span>•</span>
                       <span>{selectedTrip.spots}</span>
                     </div>
                   </div>
                 </div>
 
+                {/* Trip Selected Info Quick Chips */}
+                <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <div className="bg-slate-100/90 text-slate-700 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
+                    <CalendarDays size={12} className="text-[var(--sky)] shrink-0" />
+                    <span className="truncate max-w-[140px] sm:max-w-none">{selectedDate}</span>
+                  </div>
+                  <div className="bg-slate-100/90 text-slate-700 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
+                    <Users size={12} className="text-[var(--sky)] shrink-0" />
+                    <span>{guests} {guests > 1 ? 'Guests' : 'Guest'}</span>
+                  </div>
+                  {selectedPackage && (
+                    <div className="bg-[var(--sky-pale)]/60 text-[var(--navy)] px-2.5 py-1 rounded-lg font-bold text-[10.5px]">
+                      {selectedPackage.label}
+                    </div>
+                  )}
+                </div>
+
                 {/* Payment Option Toggle: Advance vs Full */}
-                <div className="pt-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                <div className="pt-4 sm:pt-5">
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-2">
+                    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                       Payment Preference
                     </label>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <Sparkles size={11} className="text-emerald-600" /> ₹{(1000 * guests).toLocaleString('en-IN')} OFF (₹1,000/person) on Full Payment
+                    <span className="text-[10px] sm:text-[10.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(1000 * guests).toLocaleString('en-IN')} on Full Pay
                     </span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50/80 p-1.5 rounded-2xl border border-slate-200">
                     <button
                       type="button"
                       onClick={() => setPaymentType('advance')}
-                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between cursor-pointer ${
+                      className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between cursor-pointer ${
                         paymentType === 'advance'
-                          ? 'bg-[var(--sky)] text-white shadow-sm'
-                          : 'bg-white/70 hover:bg-white text-slate-600 hover:text-[var(--navy)] border border-transparent'
+                          ? 'bg-[var(--sky)] text-white shadow-xs'
+                          : 'bg-white/80 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-transparent'
                       }`}
                     >
                       <div className="flex items-center justify-between w-full">
                         <span className="text-xs font-bold">Pay Advance Only</span>
                         {paymentType === 'advance' && <CheckCircle2 size={15} className="text-white shrink-0" />}
                       </div>
-                      <span className={`text-[11px] mt-1 font-semibold ${paymentType === 'advance' ? 'text-sky-100' : 'text-slate-500'}`}>
-                        ₹{advanceTotal.toLocaleString('en-IN')}
-                      </span>
+                      <div className="mt-1 flex items-baseline justify-between">
+                        <span className={`text-xs font-extrabold ${paymentType === 'advance' ? 'text-white' : 'text-slate-800'}`}>
+                          ₹{advanceTotal.toLocaleString('en-IN')}
+                        </span>
+                        <span className={`text-[10px] ${paymentType === 'advance' ? 'text-sky-100' : 'text-slate-400'}`}>
+                          Slot Confirmed
+                        </span>
+                      </div>
                     </button>
                     <button
                       type="button"
                       onClick={() => setPaymentType('full')}
-                      className={`p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden cursor-pointer ${
+                      className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden cursor-pointer ${
                         paymentType === 'full'
-                          ? 'bg-emerald-600 text-white shadow-sm'
-                          : 'bg-white/70 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-emerald-200/80'
+                          ? 'bg-emerald-600 text-white shadow-xs'
+                          : 'bg-white/80 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-emerald-200/80'
                       }`}
                     >
                       <div className="flex items-center justify-between w-full">
                         <div className="flex items-center gap-1.5">
                           <span className="text-xs font-bold">Pay Full Amount</span>
-                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${
+                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded ${
                             paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
                           }`}>
-                            ₹{(1000 * guests).toLocaleString('en-IN')} OFF
+                            -₹{(1000 * guests).toLocaleString('en-IN')}
                           </span>
                         </div>
                         {paymentType === 'full' && <CheckCircle2 size={15} className="text-white shrink-0" />}
                       </div>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <span className={`text-[11px] line-through ${paymentType === 'full' ? 'text-emerald-200/80' : 'text-slate-400'}`}>
+                      <div className="flex items-baseline gap-1.5 mt-1">
+                        <span className={`text-[10px] line-through ${paymentType === 'full' ? 'text-emerald-200' : 'text-slate-400'}`}>
                           ₹{grandTotal.toLocaleString('en-IN')}
                         </span>
-                        <span className={`text-xs font-bold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
+                        <span className={`text-xs font-extrabold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
                           ₹{Math.max(0, grandTotal - (1000 * guests)).toLocaleString('en-IN')}
                         </span>
                       </div>
@@ -1024,45 +1058,45 @@ export function BookingContent() {
                 </div>
 
                 {/* DISCOUNT COUPON CODE SECTION */}
-                <div className="pt-5 mt-5 border-t border-slate-100">
+                <div className="pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-slate-100">
                   <div className="flex items-center justify-between mb-2">
                     <label className="text-xs font-bold text-[var(--navy)] flex items-center gap-1.5">
-                      <Tag size={13} className="text-[var(--sky)]" />
+                      <Tag size={13} className="text-[var(--sky)] shrink-0" />
                       <span>Have a Discount Coupon?</span>
                     </label>
                   </div>
 
                   {appliedCoupon ? (
-                    <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between animate-in fade-in duration-200">
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-xs">
+                    <div className="p-2.5 sm:p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between animate-in fade-in duration-200">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-xs shrink-0">
                           ✓
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                        <div className="min-w-0">
+                          <div className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 flex-wrap">
                             <span>{appliedCoupon}</span>
                             <span className="text-[10px] bg-emerald-200/80 text-emerald-800 px-1.5 py-0.2 rounded font-semibold">
-                              -₹{couponDiscount} OFF
+                              -₹{couponDiscount.toLocaleString('en-IN')} OFF
                             </span>
                           </div>
                           {couponDescription && (
-                            <p className="text-[10px] text-emerald-700">{couponDescription}</p>
+                            <p className="text-[10px] text-emerald-700 truncate">{couponDescription}</p>
                           )}
                         </div>
                       </div>
                       <button
                         type="button"
                         onClick={handleRemoveCoupon}
-                        className="text-xs text-slate-400 hover:text-rose-600 font-bold px-2 py-1 rounded hover:bg-rose-50 transition-colors flex items-center gap-1 cursor-pointer"
+                        className="text-xs text-slate-400 hover:text-rose-600 font-bold px-2 py-1 rounded hover:bg-rose-50 transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
                         title="Remove coupon"
                       >
-                        <X size={14} /> Remove
+                        <X size={13} /> Remove
                       </button>
                     </div>
                   ) : (
                     <form onSubmit={handleApplyCoupon} className="space-y-1.5">
                       <div className="flex gap-2">
-                        <div className="relative flex-1">
+                        <div className="relative flex-1 min-w-0">
                           <input
                             type="text"
                             placeholder="Enter coupon code"
@@ -1071,111 +1105,126 @@ export function BookingContent() {
                               setCouponInput(e.target.value)
                               if (couponError) setCouponError(null)
                             }}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3.5 pr-3 py-2.5 text-xs text-[var(--navy)] font-semibold uppercase placeholder:normal-case placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 sm:py-2.5 text-xs text-[var(--navy)] font-semibold uppercase placeholder:normal-case placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
                           />
                         </div>
                         <button
                           type="submit"
-                          className="px-4 py-2.5 rounded-xl bg-[var(--navy)] hover:bg-[var(--navy)]/90 text-white text-xs font-bold transition-colors cursor-pointer shadow-sm"
+                          className="px-4 py-2 sm:py-2.5 rounded-xl bg-[var(--navy)] hover:bg-[var(--navy)]/90 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs shrink-0"
                         >
                           Apply
                         </button>
                       </div>
 
                       {couponError && (
-                        <p className="text-[11px] text-rose-600 font-medium pl-1">{couponError}</p>
+                        <p className="text-[11px] text-rose-600 font-medium pl-1 flex items-center gap-1">
+                          <AlertCircle size={12} className="shrink-0" /> {couponError}
+                        </p>
                       )}
                     </form>
                   )}
                 </div>
 
                 {/* Price Breakdown */}
-                <div className="pt-5 space-y-2.5 text-xs text-slate-600 border-t border-slate-100 mt-5">
-                  <div className="flex justify-between">
-                    <span>Base Package (₹{basePricePerPerson.toLocaleString('en-IN')} × {guests})</span>
-                    <span className="font-semibold text-slate-800">₹{(basePricePerPerson * guests).toLocaleString('en-IN')}</span>
-                  </div>
-                  {isDoubleSharing && pricing.doubleSharingAddonPerPerson > 0 && (
-                    <div className="flex justify-between text-amber-700 font-medium">
-                      <span>Double Sharing Addon (₹{pricing.doubleSharingRate.toLocaleString('en-IN')} × {guests})</span>
-                      <span>+₹{(pricing.doubleSharingRate * guests).toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between">
-                    <span>GST (5%)</span>
-                    <span>₹{gstAmount.toLocaleString('en-IN')}</span>
+                <div className="pt-4 sm:pt-5 space-y-2 text-xs text-slate-600 border-t border-slate-100 mt-4 sm:mt-5">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-600">Base Package (₹{basePricePerPerson.toLocaleString('en-IN')} × {guests})</span>
+                    <span className="font-bold text-slate-800">₹{(basePricePerPerson * guests).toLocaleString('en-IN')}</span>
                   </div>
 
+                  {isDoubleSharing && pricing.doubleSharingAddonPerPerson > 0 && (
+                    <div className="flex justify-between items-center text-amber-800 font-medium">
+                      <span>Double Sharing Addon (₹{pricing.doubleSharingRate.toLocaleString('en-IN')} × {guests})</span>
+                      <span className="font-bold">+₹{(pricing.doubleSharingRate * guests).toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-600">GST (5%)</span>
+                    <span className="font-bold text-slate-800">₹{gstAmount.toLocaleString('en-IN')}</span>
+                  </div>
+
+                  {isInternational && tcsAmount > 0 && (
+                    <div className="flex justify-between items-center">
+                      <span className="flex items-center gap-1.5 text-slate-600">
+                        <span>TCS (2%)</span>
+                        <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded border border-sky-200">International</span>
+                      </span>
+                      <span className="font-bold text-slate-800">₹{tcsAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
                   {couponDiscount > 0 && (
-                    <div className="flex justify-between text-emerald-700 font-bold bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                    <div className="flex justify-between items-center text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
                       <span className="flex items-center gap-1"><Tag size={12} /> Coupon ({couponCode})</span>
                       <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
                     </div>
                   )}
 
-                  <div className="flex justify-between pt-1 border-t border-slate-100">
-                    <span className="text-slate-600">Total Price</span>
-                    <span className={`font-semibold ${isFullPayment ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                    <span className="text-slate-600 font-medium">Trip Subtotal</span>
+                    <span className={`font-bold ${isFullPayment ? 'line-through text-slate-400' : 'text-slate-800'}`}>
                       ₹{grandTotal.toLocaleString('en-IN')}
                     </span>
                   </div>
 
                   {isFullPayment && (
-                    <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-3 py-2 rounded-xl text-xs border border-emerald-200/80 animate-in fade-in duration-300">
+                    <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1.5 rounded-xl text-xs border border-emerald-200/80">
                       <span className="flex items-center gap-1.5">
-                        <Sparkles size={14} className="text-emerald-600 shrink-0" />
-                        Full Payment Instant Discount (₹1,000 × {guests} {guests > 1 ? 'guests' : 'guest'})
+                        <Sparkles size={13} className="text-emerald-600 shrink-0" />
+                        <span>Full Pay Discount (₹1,000 × {guests})</span>
                       </span>
                       <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
                     </div>
                   )}
 
-                  <div className="flex justify-between pt-2 border-t border-slate-100 text-sm">
-                    <span className="font-bold text-[var(--navy)]">
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-200 text-sm">
+                    <span className="font-extrabold text-[var(--navy)]">
                       {isFullPayment ? 'Final Total (After Discount)' : 'Total Trip Cost'}
                     </span>
-                    <span className="font-extrabold text-[var(--navy)]">
+                    <span className="font-black text-[var(--navy)] text-base">
                       ₹{(isFullPayment ? Math.max(0, grandTotal - fullPaymentDiscount) : grandTotal).toLocaleString('en-IN')}
                     </span>
                   </div>
                 </div>
 
                 {/* Amount to Pay Today Highlight Box */}
-                <div className={`mt-5 p-4 rounded-2xl border transition-all duration-300 ${
+                <div className={`mt-4 sm:mt-5 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-300 ${
                   isFullPayment
-                    ? 'bg-gradient-to-br from-emerald-50 via-teal-50/40 to-emerald-50/20 border-emerald-200 shadow-sm'
+                    ? 'bg-gradient-to-br from-emerald-50 via-teal-50/40 to-emerald-50/20 border-emerald-200 shadow-xs'
                     : 'bg-gradient-to-br from-sky-50 to-blue-50/60 border-[var(--sky-pale)]'
                 }`}>
                   <div className="flex justify-between items-baseline mb-1">
-                    <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Amount To Pay Now</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">Amount To Pay Now</span>
                     <div className="text-right">
                       {isFullPayment && (
-                        <span className="text-xs text-slate-400 line-through mr-2 font-medium">
+                        <span className="text-xs text-slate-400 line-through mr-1.5 font-medium">
                           ₹{grandTotal.toLocaleString('en-IN')}
                         </span>
                       )}
-                      <span className={`text-2xl font-black ${isFullPayment ? 'text-emerald-600' : 'text-[var(--sky)]'}`}>
+                      <span className={`text-xl sm:text-2xl font-black ${isFullPayment ? 'text-emerald-600' : 'text-[var(--sky)]'}`}>
                         ₹{amountToPayToday.toLocaleString('en-IN')}
                       </span>
                     </div>
                   </div>
+
                   {paymentType === 'advance' ? (
-                    <div className="space-y-1.5 mt-2">
-                      <p className="text-[11px] text-slate-500">
-                        Remaining ₹{remainingBalance.toLocaleString('en-IN')} can be paid before departure.
+                    <div className="space-y-1 mt-2 pt-2 border-t border-[var(--sky-pale)]/60">
+                      <p className="text-[11px] text-slate-600 font-medium">
+                        Remaining <span className="font-bold text-slate-800">₹{remainingBalance.toLocaleString('en-IN')}</span> payable before trip departure.
                       </p>
                       <button
                         type="button"
                         onClick={() => setPaymentType('full')}
                         className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
                       >
-                        <Sparkles size={12} className="text-emerald-600" /> Pay full amount & save ₹1,000 instantly!
+                        <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!
                       </button>
                     </div>
                   ) : (
-                    <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-3 rounded-lg border border-emerald-200">
+                    <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-2.5 rounded-lg border border-emerald-200">
                       <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
-                      <span>🎉 Flat ₹1,000 automatic discount applied!</span>
+                      <span>Flat ₹{(1000 * guests).toLocaleString('en-IN')} instant discount applied!</span>
                     </div>
                   )}
                 </div>
@@ -1211,28 +1260,28 @@ export function BookingContent() {
                 </div>
 
                 {/* Payment Methods Accepted Icons */}
-                <div className="mt-6 pt-5 border-t border-slate-100 text-center">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2.5">
+                <div className="mt-5 pt-4 border-t border-slate-100 text-center">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
                     Accepted Payment Methods
                   </span>
-                  <div className="flex items-center justify-center gap-3 text-xs text-slate-500 font-semibold flex-wrap">
-                    <span className="bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">UPI (GPay/PhonePe)</span>
-                    <span className="bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">Credit/Debit Cards</span>
-                    <span className="bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">NetBanking</span>
+                  <div className="flex items-center justify-center gap-2 text-xs text-slate-500 font-semibold flex-wrap">
+                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">UPI (GPay/PhonePe)</span>
+                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">Credit/Debit Cards</span>
+                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">NetBanking</span>
                   </div>
                 </div>
 
               </div>
 
               {/* Need Assistance card */}
-              <div className="bg-white rounded-3xl p-5 border border-slate-200/80 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] flex items-center justify-center shrink-0">
-                    <PhoneCall size={18} />
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-slate-200/80 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] flex items-center justify-center shrink-0">
+                    <PhoneCall size={16} />
                   </div>
                   <div>
                     <div className="text-xs font-bold text-[var(--navy)]">Have Questions Before Booking?</div>
-                    <div className="text-[11px] text-slate-400">Talk to our friendly trip coordinators</div>
+                    <div className="text-[10.5px] sm:text-[11px] text-slate-400">Talk to our friendly trip coordinators</div>
                   </div>
                 </div>
                 <a
@@ -1252,21 +1301,21 @@ export function BookingContent() {
 
       {/* MOBILE STICKY BOTTOM BAR (Matching Itinerary Details Page) */}
       {!isBooked && (
-        <div className="fixed bottom-0 left-0 right-0 top-auto w-full z-40 lg:hidden bg-white px-4 sm:px-6 py-3 sm:py-3.5 border-t border-[var(--border)] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] flex items-center justify-between gap-3">
+        <div className="fixed bottom-0 left-0 right-0 top-auto w-full z-40 lg:hidden bg-white/95 backdrop-blur-md px-3.5 sm:px-6 py-2.5 sm:py-3 border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center justify-between gap-3">
           <div className="flex flex-col min-w-0 leading-none">
-            <div className="flex items-center gap-1.5 mb-1 leading-none">
+            <div className="flex items-center gap-1 mb-1 leading-none">
               {isFullPayment ? (
                 <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide flex items-center gap-0.5">
-                  <Sparkles size={11} className="text-emerald-600" /> Full Pay (₹{fullPaymentDiscount.toLocaleString('en-IN')} off)
+                  <Sparkles size={10} className="text-emerald-600 shrink-0" /> Full Pay (₹{fullPaymentDiscount.toLocaleString('en-IN')} off)
                 </span>
               ) : (
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
-                  Advance to Pay
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">
+                  Advance To Pay
                 </span>
               )}
             </div>
             <div className="flex items-baseline gap-1.5 leading-none">
-              <span className="text-[20px] sm:text-2xl font-black text-[var(--navy)] tracking-tight leading-none">
+              <span className="text-xl sm:text-2xl font-black text-[var(--navy)] tracking-tight leading-none">
                 ₹{amountToPayToday.toLocaleString('en-IN')}
               </span>
               <span className="text-slate-500 font-bold text-[11px] leading-none">
@@ -1275,12 +1324,12 @@ export function BookingContent() {
             </div>
           </div>
 
-          <div className="w-[155px] sm:w-[170px] shrink-0">
+          <div className="w-[145px] sm:w-[170px] shrink-0">
             <button
               type="button"
               onClick={handleFormSubmit}
               disabled={isProcessing}
-              className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-bold text-[13px] sm:text-sm disabled:opacity-50 cursor-pointer shadow-md"
+              className="glow-btn w-full inline-flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm disabled:opacity-50 cursor-pointer shadow-md"
             >
               {isProcessing ? (
                 <span className="inline-flex items-center gap-1.5">
@@ -1288,7 +1337,7 @@ export function BookingContent() {
                   Processing...
                 </span>
               ) : (
-                <>Pay Now <ArrowRight size={15} /></>
+                <>Pay Now <ArrowRight size={14} /></>
               )}
             </button>
           </div>
@@ -1297,3 +1346,4 @@ export function BookingContent() {
     </div>
   )
 }
+

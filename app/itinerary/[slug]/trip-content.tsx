@@ -4,17 +4,17 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, ShieldAlert, Sparkles, Compass, Camera, Images, Maximize2, X, FileDown, Download, Check, Loader2, Phone, Mail, User } from 'lucide-react'
+import { MapPin, Clock3, CalendarDays, CheckCircle2, XCircle, Users, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, ShieldAlert, Sparkles, Compass, Camera, Images, Maximize2, X, FileDown, Download, Check, Loader2, Phone, Mail, User, AlertCircle } from 'lucide-react'
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
 import { useSearchParams } from 'next/navigation'
-import { getTripPrimaryDate, filterUpcomingDates, isFestiveDate } from '@/lib/date-utils'
+import { getTripPrimaryDate, filterUpcomingDates, isFestiveDate, isLongWeekendDate } from '@/lib/date-utils'
 import { TripCard } from '@/components/trip-card'
 import { ReviewCard } from '@/components/trip-components'
 import { generateItineraryPDF } from '@/lib/generate-itinerary-pdf'
 import { PicturePerfectGallery } from '@/components/picture-perfect-gallery'
 
-import { resolveTripDynamicPackages } from '@/lib/pricing-calculator'
+import { resolveTripDynamicPackages, parseNumericPrice } from '@/lib/pricing-calculator'
 
 /**
  * Calculates visual strikethrough price with +₹3,000 markup matching trip cards.
@@ -64,8 +64,30 @@ export function TripContent({ trip }: { trip: Trip }) {
 
   const [selectedDate, setSelectedDate] = useState(initialDate)
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false)
+  const [isMobileDateDropdownOpen, setIsMobileDateDropdownOpen] = useState(false)
+  const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showAllPhotos, setShowAllPhotos] = useState(false)
+  const [mobileHeroSlide, setMobileHeroSlide] = useState(0)
+  const mobileHeroScrollRef = useRef<HTMLDivElement>(null)
+
+  const handleMobileHeroScroll = () => {
+    if (!mobileHeroScrollRef.current) return
+    const { scrollLeft, clientWidth } = mobileHeroScrollRef.current
+    if (clientWidth > 0) {
+      const idx = Math.round(scrollLeft / clientWidth)
+      setMobileHeroSlide(Math.min(Math.max(0, idx), galleryImages.length - 1))
+    }
+  }
+
+  const scrollMobileHeroTo = (idx: number) => {
+    if (!mobileHeroScrollRef.current) return
+    const clientWidth = mobileHeroScrollRef.current.clientWidth
+    mobileHeroScrollRef.current.scrollTo({
+      left: idx * clientWidth,
+      behavior: 'smooth',
+    })
+  }
 
   useEffect(() => {
     setSelectedDate(initialDate)
@@ -112,13 +134,22 @@ export function TripContent({ trip }: { trip: Trip }) {
         })
       }).catch((err) => console.error('Lead error:', err))
 
-      // Generate & download PDF
-      await generateItineraryPDF(trip, { fullName: name, phone, email })
-      setPdfSuccess(true)
-      setTimeout(() => {
-        setIsPdfModalOpen(false)
-        setPdfSuccess(false)
-      }, 2000)
+      if (trip.pdfUrl) {
+        window.open(trip.pdfUrl, '_blank', 'noopener,noreferrer')
+        setPdfSuccess(true)
+        setTimeout(() => {
+          setIsPdfModalOpen(false)
+          setPdfSuccess(false)
+        }, 1200)
+      } else {
+        // Generate & download PDF dynamically
+        await generateItineraryPDF(trip, { fullName: name, phone, email })
+        setPdfSuccess(true)
+        setTimeout(() => {
+          setIsPdfModalOpen(false)
+          setPdfSuccess(false)
+        }, 2000)
+      }
     } catch (err) {
       console.error(err)
       setPdfError('Could not generate PDF. Please try again.')
@@ -127,19 +158,66 @@ export function TripContent({ trip }: { trip: Trip }) {
     }
   }
 
+  const handleDownloadPdfClick = () => {
+    if (trip.pdfUrl) {
+      window.open(trip.pdfUrl, '_blank', 'noopener,noreferrer')
+    } else {
+      setIsPdfModalOpen(true)
+    }
+  }
+
   // Authoritative dynamic price resolving based on selected departure date (Long Weekend, Xmas/NY, Regular)
   const dynamicPricingInfo = useMemo(() => {
     return resolveTripDynamicPackages(trip, selectedDate)
   }, [trip, selectedDate])
 
+  const displayPackages = useMemo(() => {
+    const pkgs = [...dynamicPricingInfo.packages]
+    const hasDouble = pkgs.some((p) => p.label.toLowerCase().includes('double'))
+    if (!hasDouble && dynamicPricingInfo.doubleSharingRate > 0 && pkgs.length > 0) {
+      const baseNum = parseNumericPrice(pkgs[0].price)
+      const doubleNum = baseNum + dynamicPricingInfo.doubleSharingRate
+      pkgs.push({
+        label: 'Double Sharing',
+        price: `₹${doubleNum.toLocaleString('en-IN')} / person`,
+        note: 'Double occupancy private room'
+      })
+    }
+    return pkgs.length > 0 ? pkgs : [{ label: 'Standard Package', price: trip.price }]
+  }, [dynamicPricingInfo, trip.price])
+
+  useEffect(() => {
+    if (selectedPackageIndex >= displayPackages.length) {
+      setSelectedPackageIndex(0)
+    }
+  }, [displayPackages.length, selectedPackageIndex])
+
+  const activePackage = displayPackages[selectedPackageIndex] || displayPackages[0]
+
   const displayPrice = useMemo(() => {
-    if (dynamicPricingInfo.packages && dynamicPricingInfo.packages.length > 0) {
-      const primaryPkg = dynamicPricingInfo.packages[0]
-      const priceText = primaryPkg.price.split(' ')[0]
+    if (activePackage) {
+      const priceText = activePackage.price.split(' ')[0]
       return priceText.startsWith('₹') ? priceText : `₹${priceText}`
     }
     return trip.price
-  }, [dynamicPricingInfo, trip.price])
+  }, [activePackage, trip.price])
+
+  // Close mobile date dropdown when clicking/tapping outside
+  useEffect(() => {
+    if (!isMobileDateDropdownOpen) return
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('.mobile-date-dropdown-container')) {
+        setIsMobileDateDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [isMobileDateDropdownOpen])
 
   const galleryImages = useMemo(() => {
     if (trip.gallery && trip.gallery.length > 0) return trip.gallery
@@ -198,16 +276,26 @@ export function TripContent({ trip }: { trip: Trip }) {
     return () => clearInterval(interval)
   }, [trip.reviews, isReviewsPaused, slideReviews])
 
-  // Find related trips prioritizing the same region/category
+  // Find related trips prioritizing the same region/category (excluding ended/no-upcoming trips like Hampi & Spiti Chandrataal)
   const relatedTrips = useMemo(() => {
-    const sameRegion = trips.filter((t) => t.slug !== trip.slug && t.region === trip.region)
-    const others = trips.filter((t) => t.slug !== trip.slug && t.region !== trip.region)
+    const isExcluded = (slug: string, dateStr?: string) => {
+      const s = slug.toLowerCase()
+      if (s.includes('hampi') || s === 'spiti-valley-chandrataal') return true
+      if (dateStr?.toLowerCase().includes('no upcoming')) return true
+      return false
+    }
+    const validTrips = trips.filter(
+      (t) => t.slug !== trip.slug && !isExcluded(t.slug, t.date)
+    )
+    const sameRegion = validTrips.filter((t) => t.region === trip.region)
+    const others = validTrips.filter((t) => t.region !== trip.region)
     return [...sameRegion, ...others].slice(0, 3)
   }, [trip.slug, trip.region])
 
   const availableTabs = [
     { id: 'overview', label: 'Overview' },
     ...(trip.itinerary && trip.itinerary.length > 0 ? [{ id: 'itinerary', label: 'Itinerary' }] : []),
+    { id: 'costing', label: 'Costing' },
     ...(trip.inclusions && trip.inclusions.length > 0 ? [{ id: 'inclusions', label: 'Inclusive/Exclusive' }] : []),
     ...(trip.policies && trip.policies.length > 0 ? [{ id: 'policy', label: 'Policy' }] : []),
     ...(galleryImages.length > 0 ? [{ id: 'gallery', label: 'Pictures Perfect Moments' }] : []),
@@ -262,20 +350,102 @@ export function TripContent({ trip }: { trip: Trip }) {
 
       {/* 1. Hero Gallery */}
       <section className="pt-4 lg:pt-4 pb-8 max-w-[1160px] mx-auto px-6 lg:px-8">
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-1 aspect-[3/2] md:aspect-[24/9] overflow-hidden rounded-3xl mb-8 group/hero">
+        {/* Mobile View: Swipeable Carousel with Image Counter & Chevrons */}
+        <div className="relative md:hidden w-full aspect-[3/2] overflow-hidden rounded-3xl mb-8 group/mobilehero">
+          <div
+            ref={mobileHeroScrollRef}
+            onScroll={handleMobileHeroScroll}
+            className="flex w-full h-full overflow-x-auto snap-x snap-mandatory no-scrollbar select-none"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {galleryImages.map((img, idx) => (
+              <div
+                key={idx}
+                onClick={() => setLightboxIndex(idx)}
+                className="relative w-full h-full shrink-0 snap-center cursor-pointer"
+              >
+                <Image
+                  src={img.image}
+                  alt={img.alt || trip.title}
+                  fill
+                  priority={idx === 0}
+                  sizes="100vw"
+                  className="object-cover object-balanced"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Left & Right Navigation Arrows for Mobile */}
+          {galleryImages.length > 1 && (
+            <>
+              {mobileHeroSlide > 0 && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    scrollMobileHeroTo(mobileHeroSlide - 1)
+                  }}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center border border-white/20 active:scale-90 transition-all shadow-md"
+                  aria-label="Previous photo"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+              )}
+              {mobileHeroSlide < galleryImages.length - 1 && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    scrollMobileHeroTo(mobileHeroSlide + 1)
+                  }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center border border-white/20 active:scale-90 transition-all shadow-md"
+                  aria-label="Next photo"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              )}
+            </>
+          )}
+
+          {/* Image Counter Badge ("1 / 8") */}
+          {galleryImages.length > 1 && (
+            <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10.5px] font-extrabold px-2.5 py-1 rounded-full border border-white/20 shadow-md z-10">
+              {mobileHeroSlide + 1} / {galleryImages.length}
+            </div>
+          )}
+
+          {/* Floating "View All Photos" Pill */}
+          <button
+            type="button"
+            onClick={() => setLightboxIndex(mobileHeroSlide)}
+            className="absolute bottom-3 right-3 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md text-white text-[10.5px] font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 border border-white/20 transition-all shadow-md active:scale-95 cursor-pointer z-10"
+          >
+            <Camera size={12} className="text-[var(--sun)] shrink-0" />
+            <span>View All Photos</span>
+          </button>
+        </div>
+
+        {/* Desktop View: Mosaic 4-column Grid */}
+        <div className="relative hidden md:grid md:grid-cols-4 gap-1 aspect-[24/9] overflow-hidden rounded-3xl mb-8 group/hero">
           <div
             onClick={() => setLightboxIndex(0)}
-            className="col-span-1 md:col-span-3 relative h-full group overflow-hidden cursor-pointer"
+            className="col-span-3 relative h-full group overflow-hidden cursor-pointer"
           >
             <Image
               src={trip.image}
               alt={trip.alt}
               fill
               priority
+              sizes="(max-width: 1200px) 75vw, 900px"
               className="object-cover object-balanced group-hover:scale-105 transition-transform duration-700"
             />
           </div>
-          <div className="hidden md:flex flex-col gap-1 col-span-1 h-full">
+          <div className="flex flex-col gap-1 col-span-1 h-full">
             {(galleryImages.length > 1 ? galleryImages.slice(1, 3) : galleryImages.slice(0, 2)).map((img, idx) => (
               <div
                 key={idx}
@@ -286,6 +456,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                   src={img.image}
                   alt={img.alt}
                   fill
+                  sizes="25vw"
                   className="object-cover object-balanced group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -296,10 +467,10 @@ export function TripContent({ trip }: { trip: Trip }) {
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}
-            className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md text-white text-[10.5px] sm:text-xs font-bold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl flex items-center gap-1.5 border border-white/20 transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer z-10"
+            className="absolute bottom-4 right-4 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 border border-white/20 transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer z-10"
           >
             <Camera size={13} className="text-[var(--sun)] shrink-0" />
-            <span>View All Photos</span>
+            <span>View All Photos ({galleryImages.length})</span>
           </button>
         </div>
 
@@ -335,7 +506,7 @@ export function TripContent({ trip }: { trip: Trip }) {
 
             <button
               type="button"
-              onClick={() => setIsPdfModalOpen(true)}
+              onClick={handleDownloadPdfClick}
               className="flex items-center justify-center gap-1.5 bg-[var(--sky-pale)] hover:bg-[var(--sky)] text-[var(--sky)] hover:text-white border border-sky-200 hover:border-[var(--sky)] px-3 py-2 rounded-xl text-[11.5px] sm:text-xs font-bold transition-all duration-200 shadow-xs cursor-pointer truncate"
             >
               <FileDown size={14} className="shrink-0" />
@@ -395,7 +566,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setIsPdfModalOpen(true)}
+                  onClick={handleDownloadPdfClick}
                   className="px-4 py-2.5 rounded-full bg-[var(--sky)] text-white font-bold text-xs hover:bg-[var(--navy)] transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
                 >
                   <Download size={14} /> Get Itinerary PDF
@@ -480,6 +651,233 @@ export function TripContent({ trip }: { trip: Trip }) {
                 </section>
               </>
             )}
+
+            {/* Costing, Sharing Options & Available Batches */}
+            <hr className="border-[var(--border)]" />
+            <section id="costing" className="itinerary-scroll-target space-y-7">
+              <div>
+                <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--navy)] mb-2">
+                  Costing & Available Batches
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500">
+                  Transparent pricing with verified inclusions. Choose your sharing preference and preferred departure date.
+                </p>
+              </div>
+
+              {/* Package Sharing Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                {displayPackages.map((pkg, idx) => {
+                  const rawPrice = parseNumericPrice(pkg.price)
+                  const savings = 3000
+                  const originalPrice = rawPrice + savings
+                  const discountPercent = Math.max(12, Math.round((savings / originalPrice) * 100))
+                  const isSelected = selectedPackageIndex === idx
+
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => setSelectedPackageIndex(idx)}
+                      className={`relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition-all duration-200 cursor-pointer ${
+                        isSelected
+                          ? 'border-2 border-[var(--sky)] shadow-[0_8px_25px_rgba(67,169,209,0.18)] bg-sky-50/10 ring-2 ring-[var(--sky)]/15'
+                          : 'border border-slate-200 hover:border-slate-300 hover:shadow-md'
+                      }`}
+                    >
+                      {/* Top: Package Title & Discount Badge */}
+                      <div className="flex items-start justify-between gap-3 mb-4">
+                        <div>
+                          <h3 className="text-base sm:text-lg font-black text-[var(--navy)]">
+                            {pkg.label}
+                          </h3>
+                          {pkg.note && (
+                            <p className="text-[11px] text-slate-400 mt-0.5">{pkg.note}</p>
+                          )}
+                        </div>
+                        <span className="bg-emerald-100/90 text-emerald-800 text-[11px] font-extrabold px-2.5 py-1 rounded-md shrink-0 uppercase tracking-wide">
+                          {discountPercent}% OFF
+                        </span>
+                      </div>
+
+                      {/* Price Rows */}
+                      <div className="space-y-2 text-xs sm:text-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500 font-medium">Original Price:</span>
+                          <span className="line-through text-slate-400 font-semibold decoration-rose-500/70">
+                            ₹{originalPrice.toLocaleString('en-IN')}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-700 font-bold">Discounted Price:</span>
+                          <span className="text-emerald-600 font-black text-base sm:text-lg">
+                            ₹{rawPrice.toLocaleString('en-IN')}
+                            <span className="text-[11px] font-semibold text-slate-400 ml-1">/ person</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="border-t border-slate-100 my-3.5" />
+
+                      {/* You Save */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-emerald-700 font-bold text-xs sm:text-sm">You Save:</span>
+                        <span className="text-emerald-700 font-black text-sm sm:text-base">
+                          ₹{savings.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+
+                      {/* Selection Indicator */}
+                      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                        <span className={`font-semibold ${isSelected ? 'text-[var(--sky)]' : 'text-slate-400'}`}>
+                          {isSelected ? '✓ Selected Sharing Option' : 'Tap to select this option'}
+                        </span>
+                        <div
+                          className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            isSelected ? 'border-[var(--sky)] bg-[var(--sky)]' : 'border-slate-300'
+                          }`}
+                        >
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Available Batches Dropdown Section */}
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg sm:text-2xl font-black text-[var(--navy)]">
+                    Available Batches
+                  </h3>
+                  <span className="text-[11px] font-bold text-slate-400">
+                    {upcomingDates.length} upcoming {upcomingDates.length === 1 ? 'batch' : 'batches'}
+                  </span>
+                </div>
+
+                <div className="mobile-date-dropdown-container relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (selectedDate !== 'No Upcoming Trips') {
+                        setIsMobileDateDropdownOpen((prev) => !prev)
+                      }
+                    }}
+                    className={`w-full bg-white border border-slate-300 hover:border-[var(--sky)] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex items-center justify-between transition-all duration-200 shadow-xs cursor-pointer group text-left ${
+                      isMobileDateDropdownOpen ? 'border-[var(--sky)] ring-3 ring-[var(--sky)]/15' : ''
+                    }`}
+                    aria-expanded={isMobileDateDropdownOpen}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-[var(--sky-pale)] text-[var(--sky)] flex items-center justify-center shrink-0">
+                        <CalendarDays size={20} />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">
+                          Selected Departure Date
+                        </div>
+                        <div className="text-sm sm:text-base font-extrabold text-[var(--navy)] truncate">
+                          {selectedDate}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      {selectedDate !== 'No Upcoming Trips' && (
+                        <span className="text-xs font-bold text-[var(--sky)]">
+                          {isMobileDateDropdownOpen ? 'Close' : 'Choose Date'}
+                        </span>
+                      )}
+                      <ChevronDown
+                        size={20}
+                        className={`text-slate-400 group-hover:text-[var(--sky)] transition-transform duration-200 ${
+                          isMobileDateDropdownOpen ? 'rotate-180 text-[var(--sky)]' : ''
+                        }`}
+                      />
+                    </div>
+                  </button>
+
+                  {/* Dropdown Menu of Dates */}
+                  <AnimatePresence>
+                    {isMobileDateDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -6, scale: 0.99 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -6, scale: 0.99 }}
+                        transition={{ duration: 0.18 }}
+                        className="mt-2 bg-white rounded-xl sm:rounded-2xl border border-slate-200 shadow-xl overflow-hidden z-30 divide-y divide-slate-100 max-h-72 overflow-y-auto"
+                      >
+                        {upcomingDates.map((d, i) => {
+                          const isSelected = selectedDate === d
+                          const isFestive = isFestiveDate(d)
+                          const isLW = isLongWeekendDate(d)
+                          return (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => {
+                                setSelectedDate(d)
+                                setIsMobileDateDropdownOpen(false)
+                              }}
+                              className={`w-full text-left px-4 sm:px-5 py-3.5 flex items-center justify-between transition-colors cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[var(--sky-pale)]/60 text-[var(--navy)] font-bold'
+                                  : 'hover:bg-slate-50 text-slate-700'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <div
+                                  className={`w-2 h-2 rounded-full shrink-0 ${
+                                    isSelected ? 'bg-[var(--sky)] ring-4 ring-sky-100' : 'bg-slate-300'
+                                  }`}
+                                />
+                                <span className="text-xs sm:text-sm font-semibold truncate">{d}</span>
+                                {isFestive && (
+                                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 shrink-0">
+                                    🎉 Festive
+                                  </span>
+                                )}
+                                {isLW && !isFestive && (
+                                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 shrink-0">
+                                    🏖️ Long Weekend
+                                  </span>
+                                )}
+                              </div>
+                              {isSelected && <Check size={16} className="text-[var(--sky)] shrink-0" />}
+                            </button>
+                          )
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Important Notes Box (Matching Reference Image) */}
+              <div className="bg-[#fffbeb] border-l-4 border-amber-400 border border-amber-200/80 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xs">
+                <h4 className="font-extrabold text-amber-950 text-sm sm:text-base mb-3 flex items-center gap-2">
+                  <AlertCircle size={18} className="text-amber-600 shrink-0" /> Important Notes
+                </h4>
+                <ul className="space-y-2.5 text-xs sm:text-[13px] text-amber-900/90 leading-relaxed">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span><strong>Age group for group departures:</strong> 18–35 years. Custom / private departures can be arranged for families and private groups of any age group.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span><strong>Dedicated Trip Captain:</strong> An experienced Travel Tribes captain or certified trek leader will accompany the group throughout the itinerary.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span><strong>Room Occupancy:</strong> Standard base package is on Triple sharing. Double sharing room upgrade available on request.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span><strong>Limited Batch Size:</strong> Every batch is capped at 12–15 travellers to preserve authentic bonding, safety, and comfort.</span>
+                  </li>
+                </ul>
+              </div>
+            </section>
 
             {/* 3. Inclusions & Exclusions */}
             {((trip.inclusions && trip.inclusions.length > 0) || (trip.exclusions && trip.exclusions.length > 0)) && (
@@ -634,7 +1032,7 @@ export function TripContent({ trip }: { trip: Trip }) {
               {/* Action Buttons */}
               <div className="w-[160px] lg:w-full space-y-2.5">
                 <Link
-                  href={`/book?trip=${trip.slug}&date=${encodeURIComponent(selectedDate)}&guests=${guests}`}
+                  href={`/book?trip=${trip.slug}&date=${encodeURIComponent(selectedDate)}&guests=${guests}&pkg=${selectedPackageIndex}`}
                   className="block w-full"
                 >
                   <button className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 lg:py-3.5 rounded-full font-bold text-[13px] lg:text-sm">
@@ -644,7 +1042,7 @@ export function TripContent({ trip }: { trip: Trip }) {
 
                 <button
                   type="button"
-                  onClick={() => setIsPdfModalOpen(true)}
+                  onClick={handleDownloadPdfClick}
                   className="hidden lg:inline-flex w-full items-center justify-center gap-2 py-2.5 rounded-full font-bold text-xs border border-slate-200 hover:border-[var(--sky)] hover:bg-[var(--sky-pale)] text-slate-700 hover:text-[var(--sky)] transition-colors cursor-pointer"
                 >
                   <FileDown size={15} /> Download Itinerary PDF
