@@ -116,9 +116,8 @@ export function Hero() {
             />
           </motion.div>
         </AnimatePresence>
-        {/* Dark readability overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/35" />
-        <div className="absolute inset-0 bg-primary/20 mix-blend-multiply" />
+        {/* Balanced readability overlay: keeps background imagery visible while text remains high contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/35" />
       </div>
 
       <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
@@ -151,49 +150,34 @@ export function Hero() {
               </span>
             </h1>
 
-            {/* Sub-Badges */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs md:text-sm font-bold text-accent-foreground mb-4 sm:mb-6 uppercase tracking-wider">
-              <span>GROUP TRIPS</span>
-              <span className="text-white/40">•</span>
-              <span>SOLO FRIENDLY</span>
-              <span className="text-white/40">•</span>
-              <span>REAL EXPERIENCES</span>
-            </div>
-
             {/* Client Headline and Sub-text */}
             <div className="mb-6 sm:mb-8 max-w-xl">
-              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 leading-snug">
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 leading-snug drop-shadow-sm">
                 Group trips for people who don&apos;t do boring.
               </h2>
-              <p className="text-xs sm:text-sm md:text-base text-white/85 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm md:text-base text-white/90 leading-relaxed font-normal drop-shadow-sm">
                 Meet new people, explore incredible places and make memories worth coming back for.
               </p>
             </div>
 
-            {/* Interactive Search Trigger Box */}
-            <div className="max-w-lg w-full relative z-40 mb-3 sm:mb-4">
+            {/* Compact Interactive Search Trigger Box */}
+            <div className="max-w-[360px] sm:max-w-md w-full relative z-40 mb-3 sm:mb-4">
               <button
                 type="button"
                 onClick={() => handleOpenSearch('')}
-                className="w-full flex items-center justify-between bg-white/95 hover:bg-white backdrop-blur-md rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.35)] p-1.5 sm:p-2 border-2 border-white/40 hover:border-[var(--sky)] transition-all duration-300 group cursor-pointer text-left"
+                className="w-full flex items-center justify-between bg-white/95 hover:bg-white backdrop-blur-md rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.25)] p-1 sm:p-1.5 border border-white/50 hover:border-[var(--sky)] transition-all duration-300 group cursor-pointer text-left"
               >
-                <div className="flex items-center flex-grow pl-3 sm:pl-4 min-w-0 gap-2.5 sm:gap-3">
-
+                <div className="flex items-center flex-grow pl-3 sm:pl-3.5 min-w-0 gap-2 sm:gap-2.5">
+                  <Search size={15} className="text-slate-400 shrink-0" />
                   <div className="flex flex-col min-w-0">
-                    <span className="text-slate-500 font-bold text-xs sm:text-sm md:text-[15px] truncate">
+                    <span className="text-slate-600 font-semibold text-xs sm:text-[13px] truncate">
                       Where do you want to go?
                     </span>
-                    {/* <span className="text-[10px] sm:text-xs text-slate-500 truncate hidden sm:block">
-                      Spiti, Bali, Vietnam, Gokarna, Meghalaya...
-                    </span> */}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  {/* <span className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-[10.5px] font-extrabold text-slate-400 bg-slate-100 rounded-lg border border-slate-200">
-                    <kbd className="font-mono">⌘K</kbd>
-                  </span> */}
-                  <div className="glow-btn inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-extrabold rounded-full shrink-0 shadow-md">
+                  <div className="glow-btn inline-flex items-center justify-center px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-extrabold rounded-full shrink-0 shadow-sm">
                     Search
                   </div>
                 </div>
