@@ -253,31 +253,31 @@ export function XmasNewYearSection() {
         <div className="absolute top-1/2 left-[20%] w-72 h-72 bg-rose-500/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-10 right-[15%] w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
 
-        {/* --- Fireworks Elements Placed Across the Sky --- */}
+        {/* --- Fireworks Elements Placed Across the Sky (Compact & Elegant) --- */}
 
-        {/* 1. Big Gold Firework (Top Left) */}
-        <div className="absolute -top-6 -left-6 sm:top-2 sm:left-4 w-48 sm:w-64 md:w-72 aspect-square anim-fw-burst opacity-85">
-          <FireworkGold className="w-full h-full drop-shadow-[0_0_20px_rgba(245,158,11,0.4)]" />
+        {/* 1. Gold Firework (Top Left) */}
+        <div className="absolute top-2 left-2 sm:top-4 sm:left-8 w-20 sm:w-28 md:w-36 aspect-square anim-fw-burst opacity-80">
+          <FireworkGold className="w-full h-full drop-shadow-[0_0_10px_rgba(245,158,11,0.35)]" />
         </div>
 
-        {/* 2. Big Cyan Firework (Top Right) */}
-        <div className="absolute -top-8 -right-6 sm:top-2 sm:right-6 w-48 sm:w-64 md:w-72 aspect-square anim-fw-burst-alt opacity-85">
-          <FireworkCyan className="w-full h-full drop-shadow-[0_0_20px_rgba(56,189,248,0.45)]" />
+        {/* 2. Cyan Firework (Top Right) */}
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-8 w-20 sm:w-28 md:w-36 aspect-square anim-fw-burst-alt opacity-80">
+          <FireworkCyan className="w-full h-full drop-shadow-[0_0_10px_rgba(56,189,248,0.35)]" />
         </div>
 
-        {/* 3. Rose Firework (Behind Heading Center-Right) */}
-        <div className="absolute top-6 left-1/2 -translate-x-1/2 sm:translate-x-32 w-36 sm:w-48 aspect-square anim-fw-burst opacity-60">
-          <FireworkRose className="w-full h-full drop-shadow-[0_0_15px_rgba(244,63,94,0.35)]" />
+        {/* 3. Subtle Rose Firework (Near Center Heading) */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 sm:translate-x-24 w-14 sm:w-20 md:w-24 aspect-square anim-fw-burst opacity-45">
+          <FireworkRose className="w-full h-full drop-shadow-[0_0_8px_rgba(244,63,94,0.25)]" />
         </div>
 
         {/* 4. Medium Cyan Firework (Mid Left) */}
-        <div className="absolute top-44 -left-10 sm:left-6 w-36 sm:w-48 aspect-square anim-fw-burst-alt opacity-55">
-          <FireworkCyan className="w-full h-full drop-shadow-[0_0_12px_rgba(56,189,248,0.3)]" />
+        <div className="absolute top-48 left-1 sm:left-4 w-16 sm:w-22 md:w-28 aspect-square anim-fw-burst-alt opacity-45">
+          <FireworkCyan className="w-full h-full drop-shadow-[0_0_8px_rgba(56,189,248,0.25)]" />
         </div>
 
         {/* 5. Medium Gold Firework (Mid / Bottom Right) */}
-        <div className="absolute top-48 -right-8 sm:right-10 w-40 sm:w-52 aspect-square anim-fw-burst opacity-65">
-          <FireworkGold className="w-full h-full drop-shadow-[0_0_15px_rgba(245,158,11,0.35)]" />
+        <div className="absolute top-52 right-1 sm:right-6 w-16 sm:w-24 md:w-30 aspect-square anim-fw-burst opacity-50">
+          <FireworkGold className="w-full h-full drop-shadow-[0_0_8px_rgba(245,158,11,0.25)]" />
         </div>
 
         {/* --- Floating Twinkling Sparkles --- */}
