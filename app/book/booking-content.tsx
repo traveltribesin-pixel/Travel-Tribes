@@ -68,7 +68,7 @@ export function BookingContent() {
   })
 
   // Guests - rigorously sanitized
-  const [guests, setGuests] = useState<number>(() => sanitizeGuests(guestsParam || 2))
+  const [guests, setGuests] = useState<number>(() => sanitizeGuests(guestsParam || 1))
 
   // Package options
   const pkgParam = searchParams.get('pkg') || searchParams.get('package')
@@ -92,7 +92,7 @@ export function BookingContent() {
 
   // Dynamic Multi-Traveller Form state
   const [travellers, setTravellers] = useState<TravellerInfo[]>(() => {
-    const initialCount = sanitizeGuests(guestsParam || 2)
+    const initialCount = sanitizeGuests(guestsParam || 1)
     return Array.from({ length: initialCount }, () => ({
       fullName: '',
       age: '',
@@ -584,8 +584,8 @@ export function BookingContent() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start">
 
-            {/* LEFT COLUMN: Booking Config & Traveller Info (7 cols) */}
-            <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+            {/* 1. Step 1: Trip & Departure Selection (Desktop: Col 1..7, Row 1; Mobile: 1st) */}
+            <div className="lg:col-span-7 lg:col-start-1 lg:row-start-1">
 
               {/* Step 1: Trip & Departure Selection */}
               <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 lg:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
@@ -750,8 +750,365 @@ export function BookingContent() {
 
                 </div>
               </div>
+            </div>
 
-              {/* Step 2: Traveller Details Form */}
+            {/* 2. Summary & Payment Box (Price Breakdown) (Desktop: Col 8..12, Row 1..2 Sticky; Mobile: 2nd, BEFORE Traveller Details) */}
+            <div className="lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-24 space-y-4 sm:space-y-6">
+
+              {/* Trip Overview Card */}
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
+                <div className="flex gap-3 sm:gap-4 items-center sm:items-start pb-3.5 sm:pb-5 border-b border-slate-100">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-slate-100 shadow-xs">
+                    <Image
+                      src={selectedTrip.image}
+                      alt={selectedTrip.alt}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] font-bold text-[var(--sky)] uppercase tracking-wider flex items-center gap-1">
+                      <MapPin size={11} className="shrink-0" /> <span className="truncate">{selectedTrip.location.split(' · ')[0]}</span>
+                    </span>
+                    <h3 className="font-bold text-base sm:text-lg text-[var(--navy)] leading-snug mt-0.5 line-clamp-2">
+                      {selectedTrip.title}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500 mt-1.5 font-medium">
+                      <span className="flex items-center gap-1"><Clock3 size={12} className="text-[var(--sky)] shrink-0" /> {selectedTrip.duration}</span>
+                      <span>•</span>
+                      <span>{selectedTrip.spots}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trip Selected Info Quick Chips */}
+                <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <div className="bg-slate-100/90 text-slate-700 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
+                    <CalendarDays size={12} className="text-[var(--sky)] shrink-0" />
+                    <span className="truncate max-w-[140px] sm:max-w-none">{selectedDate}</span>
+                  </div>
+                  <div className="bg-slate-100/90 text-slate-700 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
+                    <Users size={12} className="text-[var(--sky)] shrink-0" />
+                    <span>{guests} {guests > 1 ? 'Guests' : 'Guest'}</span>
+                  </div>
+                  {selectedPackage && (
+                    <div className="bg-[var(--sky-pale)]/60 text-[var(--navy)] px-2.5 py-1 rounded-lg font-bold text-[10.5px]">
+                      {selectedPackage.label}
+                    </div>
+                  )}
+                </div>
+
+                {/* Payment Option Toggle: Advance vs Full */}
+                <div className="pt-4 sm:pt-5">
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-2">
+                    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      Payment Preference
+                    </label>
+                    <span className="text-[10px] sm:text-[10.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(1000 * guests).toLocaleString('en-IN')} on Full Pay
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50/80 p-1.5 rounded-2xl border border-slate-200">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentType('advance')}
+                      className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between cursor-pointer ${
+                        paymentType === 'advance'
+                          ? 'bg-[var(--sky)] text-white shadow-xs'
+                          : 'bg-white/80 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-transparent'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-xs font-bold">Pay Advance Only</span>
+                        {paymentType === 'advance' && <CheckCircle2 size={15} className="text-white shrink-0" />}
+                      </div>
+                      <div className="mt-1 flex items-baseline justify-between">
+                        <span className={`text-xs font-extrabold ${paymentType === 'advance' ? 'text-white' : 'text-slate-800'}`}>
+                          ₹{advanceTotal.toLocaleString('en-IN')}
+                        </span>
+                        <span className={`text-[10px] ${paymentType === 'advance' ? 'text-sky-100' : 'text-slate-400'}`}>
+                          Slot Confirmed
+                        </span>
+                      </div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentType('full')}
+                      className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden cursor-pointer ${
+                        paymentType === 'full'
+                          ? 'bg-emerald-600 text-white shadow-xs'
+                          : 'bg-white/80 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-emerald-200/80'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-bold">Pay Full Amount</span>
+                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded ${
+                            paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
+                          }`}>
+                            -₹{(1000 * guests).toLocaleString('en-IN')}
+                          </span>
+                        </div>
+                        {paymentType === 'full' && <CheckCircle2 size={15} className="text-white shrink-0" />}
+                      </div>
+                      <div className="flex items-baseline gap-1.5 mt-1">
+                        <span className={`text-[10px] line-through ${paymentType === 'full' ? 'text-emerald-200' : 'text-slate-400'}`}>
+                          ₹{grandTotal.toLocaleString('en-IN')}
+                        </span>
+                        <span className={`text-xs font-extrabold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
+                          ₹{Math.max(0, grandTotal - (1000 * guests)).toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                {/* DISCOUNT COUPON CODE SECTION */}
+                <div className="pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-slate-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-xs font-bold text-[var(--navy)] flex items-center gap-1.5">
+                      <Tag size={13} className="text-[var(--sky)] shrink-0" />
+                      <span>Have a Discount Coupon?</span>
+                    </label>
+                  </div>
+
+                  {appliedCoupon ? (
+                    <div className="p-2.5 sm:p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between animate-in fade-in duration-200">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-xs shrink-0">
+                          ✓
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 flex-wrap">
+                            <span>{appliedCoupon}</span>
+                            <span className="text-[10px] bg-emerald-200/80 text-emerald-800 px-1.5 py-0.2 rounded font-semibold">
+                              -₹{couponDiscount.toLocaleString('en-IN')} OFF {guests > 1 ? `(₹${Math.round(couponDiscount / guests).toLocaleString('en-IN')}/person)` : ''}
+                            </span>
+                          </div>
+                          {couponDescription && (
+                            <p className="text-[10px] text-emerald-700 truncate">{couponDescription}</p>
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleRemoveCoupon}
+                        className="text-xs text-slate-400 hover:text-rose-600 font-bold px-2 py-1 rounded hover:bg-rose-50 transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
+                        title="Remove coupon"
+                      >
+                        <X size={13} /> Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleApplyCoupon} className="space-y-1.5">
+                      <div className="flex gap-2">
+                        <div className="relative flex-1 min-w-0">
+                          <input
+                            type="text"
+                            placeholder="Enter coupon code"
+                            value={couponInput}
+                            onChange={(e) => {
+                              setCouponInput(e.target.value)
+                              if (couponError) setCouponError(null)
+                            }}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 sm:py-2.5 text-xs text-[var(--navy)] font-semibold uppercase placeholder:normal-case placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 sm:py-2.5 rounded-xl bg-[var(--navy)] hover:bg-[var(--navy)]/90 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs shrink-0"
+                        >
+                          Apply
+                        </button>
+                      </div>
+
+                      {couponError && (
+                        <p className="text-[11px] text-rose-600 font-medium pl-1 flex items-center gap-1">
+                          <AlertCircle size={12} className="shrink-0" /> {couponError}
+                        </p>
+                      )}
+                    </form>
+                  )}
+                </div>
+
+                {/* Price Breakdown */}
+                <div className="pt-4 sm:pt-5 space-y-2 text-xs text-slate-600 border-t border-slate-100 mt-4 sm:mt-5">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-600">Base Package (₹{basePricePerPerson.toLocaleString('en-IN')} × {guests})</span>
+                    <span className="font-bold text-slate-800">₹{(basePricePerPerson * guests).toLocaleString('en-IN')}</span>
+                  </div>
+
+                  {isDoubleSharing && pricing.doubleSharingAddonPerPerson > 0 && (
+                    <div className="flex justify-between items-center text-amber-800 font-medium">
+                      <span>Double Sharing Addon (₹{pricing.doubleSharingRate.toLocaleString('en-IN')} × {guests})</span>
+                      <span className="font-bold">+₹{(pricing.doubleSharingRate * guests).toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-600">GST (5%)</span>
+                    <span className="font-bold text-slate-800">₹{gstAmount.toLocaleString('en-IN')}</span>
+                  </div>
+
+                  {isInternational && tcsAmount > 0 && (
+                    <div className="flex justify-between items-center">
+                      <span className="flex items-center gap-1.5 text-slate-600">
+                        <span>TCS (2%)</span>
+                        <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded border border-sky-200">International</span>
+                      </span>
+                      <span className="font-bold text-slate-800">₹{tcsAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
+                  {couponDiscount > 0 && (
+                    <div className="flex justify-between items-center text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
+                      <span className="flex items-center gap-1">
+                        <Tag size={12} /> Coupon ({couponCode})
+                        {guests > 1 && (
+                          <span className="text-[10.5px] text-emerald-600 font-medium ml-1">
+                            (₹{Math.round(couponDiscount / guests).toLocaleString('en-IN')} × {guests})
+                          </span>
+                        )}
+                      </span>
+                      <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                    <span className="text-slate-600 font-medium">Trip Subtotal</span>
+                    <span className={`font-bold ${isFullPayment ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+                      ₹{grandTotal.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+
+                  {isFullPayment && (
+                    <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1.5 rounded-xl text-xs border border-emerald-200/80">
+                      <span className="flex items-center gap-1.5">
+                        <Sparkles size={13} className="text-emerald-600 shrink-0" />
+                        <span>Full Pay Discount (₹1,000 × {guests})</span>
+                      </span>
+                      <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-200 text-sm">
+                    <span className="font-extrabold text-[var(--navy)]">
+                      {isFullPayment ? 'Final Total (After Discount)' : 'Total Trip Cost'}
+                    </span>
+                    <span className="font-black text-[var(--navy)] text-base">
+                      ₹{(isFullPayment ? Math.max(0, grandTotal - fullPaymentDiscount) : grandTotal).toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Amount to Pay Today Highlight Box */}
+                <div className={`mt-4 sm:mt-5 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-300 ${
+                  isFullPayment
+                    ? 'bg-gradient-to-br from-emerald-50 via-teal-50/40 to-emerald-50/20 border-emerald-200 shadow-xs'
+                    : 'bg-gradient-to-br from-sky-50 to-blue-50/60 border-[var(--sky-pale)]'
+                }`}>
+                  <div className="flex justify-between items-baseline mb-1">
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">Amount To Pay Now</span>
+                    <div className="text-right">
+                      {isFullPayment && (
+                        <span className="text-xs text-slate-400 line-through mr-1.5 font-medium">
+                          ₹{grandTotal.toLocaleString('en-IN')}
+                        </span>
+                      )}
+                      <span className={`text-xl sm:text-2xl font-black ${isFullPayment ? 'text-emerald-600' : 'text-[var(--sky)]'}`}>
+                        ₹{amountToPayToday.toLocaleString('en-IN')}
+                      </span>
+                    </div>
+                  </div>
+
+                  {paymentType === 'advance' ? (
+                    <div className="space-y-1 mt-2 pt-2 border-t border-[var(--sky-pale)]/60">
+                      <p className="text-[11px] text-slate-600 font-medium">
+                        Remaining <span className="font-bold text-slate-800">₹{remainingBalance.toLocaleString('en-IN')}</span> payable before trip departure.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setPaymentType('full')}
+                        className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
+                      >
+                        <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-2.5 rounded-lg border border-emerald-200">
+                      <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                      <span>Flat ₹{(1000 * guests).toLocaleString('en-IN')} instant discount applied!</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right Column Error Banner */}
+                {errorMessage && (
+                  <div className="mt-4 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-xs text-rose-700 font-semibold animate-in fade-in duration-200">
+                    <AlertCircle size={15} className="text-rose-600 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
+                {/* Desktop Pay Here Button */}
+                <div className="hidden lg:block mt-6">
+                  <button
+                    type="button"
+                    onClick={handleFormSubmit}
+                    disabled={isProcessing}
+                    className="glow-btn w-full py-4 rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
+                  >
+                    {isProcessing ? (
+                      <span className="inline-flex items-center gap-2">
+                        <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                        Processing Secure Payment...
+                      </span>
+                    ) : (
+                      <>Pay Here • ₹{amountToPayToday.toLocaleString('en-IN')} <ArrowRight size={18} /></>
+                    )}
+                  </button>
+                  <p className="text-center text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1.5">
+                    <Lock size={12} className="text-emerald-500" /> 256-Bit Bank-Grade SSL Encrypted
+                  </p>
+                </div>
+
+                {/* Payment Methods Accepted Icons */}
+                <div className="mt-5 pt-4 border-t border-slate-100 text-center">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                    Accepted Payment Methods
+                  </span>
+                  <div className="flex items-center justify-center gap-2 text-xs text-slate-500 font-semibold flex-wrap">
+                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">UPI (GPay/PhonePe)</span>
+                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">Credit/Debit Cards</span>
+                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">NetBanking</span>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Need Assistance card */}
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-slate-200/80 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] flex items-center justify-center shrink-0">
+                    <PhoneCall size={16} />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-[var(--navy)]">Have Questions Before Booking?</div>
+                    <div className="text-[10.5px] sm:text-[11px] text-slate-400">Talk to our friendly trip coordinators</div>
+                  </div>
+                </div>
+                <a
+                  href="tel:+919975822023"
+                  className="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-[var(--sky)] hover:text-white text-slate-700 text-xs font-bold transition-colors shrink-0"
+                >
+                  Call Now
+                </a>
+              </div>
+
+            </div>
+
+            {/* 3. Step 2: Traveller Details Form (Desktop: Col 1..7, Row 2; Mobile: 3rd, AFTER Price Breakdown) */}
+            <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2">
               <form id="traveller-form" onSubmit={handleFormSubmit} className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 lg:p-8 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
                 <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-slate-100">
                   <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] font-extrabold text-xs sm:text-sm flex items-center justify-center shrink-0">
@@ -943,355 +1300,6 @@ export function BookingContent() {
                   </button>
                 </div>
               </form>
-
-            </div>
-
-            {/* RIGHT COLUMN: Summary & Payment Box (5 cols) */}
-            <div className="lg:col-span-5 space-y-4 sm:space-y-6 lg:sticky lg:top-24">
-
-              {/* Trip Overview Card */}
-              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 border border-[var(--border)] shadow-[0_4px_20px_rgba(67,169,209,0.06)]">
-                <div className="flex gap-3 sm:gap-4 items-center sm:items-start pb-3.5 sm:pb-5 border-b border-slate-100">
-                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-slate-100 shadow-xs">
-                    <Image
-                      src={selectedTrip.image}
-                      alt={selectedTrip.alt}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="text-[10px] font-bold text-[var(--sky)] uppercase tracking-wider flex items-center gap-1">
-                      <MapPin size={11} className="shrink-0" /> <span className="truncate">{selectedTrip.location.split(' · ')[0]}</span>
-                    </span>
-                    <h3 className="font-bold text-base sm:text-lg text-[var(--navy)] leading-snug mt-0.5 line-clamp-2">
-                      {selectedTrip.title}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500 mt-1.5 font-medium">
-                      <span className="flex items-center gap-1"><Clock3 size={12} className="text-[var(--sky)] shrink-0" /> {selectedTrip.duration}</span>
-                      <span>•</span>
-                      <span>{selectedTrip.spots}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Trip Selected Info Quick Chips */}
-                <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-[11px]">
-                  <div className="bg-slate-100/90 text-slate-700 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
-                    <CalendarDays size={12} className="text-[var(--sky)] shrink-0" />
-                    <span className="truncate max-w-[140px] sm:max-w-none">{selectedDate}</span>
-                  </div>
-                  <div className="bg-slate-100/90 text-slate-700 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
-                    <Users size={12} className="text-[var(--sky)] shrink-0" />
-                    <span>{guests} {guests > 1 ? 'Guests' : 'Guest'}</span>
-                  </div>
-                  {selectedPackage && (
-                    <div className="bg-[var(--sky-pale)]/60 text-[var(--navy)] px-2.5 py-1 rounded-lg font-bold text-[10.5px]">
-                      {selectedPackage.label}
-                    </div>
-                  )}
-                </div>
-
-                {/* Payment Option Toggle: Advance vs Full */}
-                <div className="pt-4 sm:pt-5">
-                  <div className="flex flex-wrap items-center justify-between gap-1 mb-2">
-                    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      Payment Preference
-                    </label>
-                    <span className="text-[10px] sm:text-[10.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(1000 * guests).toLocaleString('en-IN')} on Full Pay
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50/80 p-1.5 rounded-2xl border border-slate-200">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentType('advance')}
-                      className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between cursor-pointer ${
-                        paymentType === 'advance'
-                          ? 'bg-[var(--sky)] text-white shadow-xs'
-                          : 'bg-white/80 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-transparent'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <span className="text-xs font-bold">Pay Advance Only</span>
-                        {paymentType === 'advance' && <CheckCircle2 size={15} className="text-white shrink-0" />}
-                      </div>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className={`text-xs font-extrabold ${paymentType === 'advance' ? 'text-white' : 'text-slate-800'}`}>
-                          ₹{advanceTotal.toLocaleString('en-IN')}
-                        </span>
-                        <span className={`text-[10px] ${paymentType === 'advance' ? 'text-sky-100' : 'text-slate-400'}`}>
-                          Slot Confirmed
-                        </span>
-                      </div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentType('full')}
-                      className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden cursor-pointer ${
-                        paymentType === 'full'
-                          ? 'bg-emerald-600 text-white shadow-xs'
-                          : 'bg-white/80 hover:bg-white text-slate-700 hover:text-[var(--navy)] border border-emerald-200/80'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-bold">Pay Full Amount</span>
-                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded ${
-                            paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
-                          }`}>
-                            -₹{(1000 * guests).toLocaleString('en-IN')}
-                          </span>
-                        </div>
-                        {paymentType === 'full' && <CheckCircle2 size={15} className="text-white shrink-0" />}
-                      </div>
-                      <div className="flex items-baseline gap-1.5 mt-1">
-                        <span className={`text-[10px] line-through ${paymentType === 'full' ? 'text-emerald-200' : 'text-slate-400'}`}>
-                          ₹{grandTotal.toLocaleString('en-IN')}
-                        </span>
-                        <span className={`text-xs font-extrabold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
-                          ₹{Math.max(0, grandTotal - (1000 * guests)).toLocaleString('en-IN')}
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-
-                {/* DISCOUNT COUPON CODE SECTION */}
-                <div className="pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-slate-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="text-xs font-bold text-[var(--navy)] flex items-center gap-1.5">
-                      <Tag size={13} className="text-[var(--sky)] shrink-0" />
-                      <span>Have a Discount Coupon?</span>
-                    </label>
-                  </div>
-
-                  {appliedCoupon ? (
-                    <div className="p-2.5 sm:p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between animate-in fade-in duration-200">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-xs shrink-0">
-                          ✓
-                        </div>
-                        <div className="min-w-0">
-                          <div className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 flex-wrap">
-                            <span>{appliedCoupon}</span>
-                            <span className="text-[10px] bg-emerald-200/80 text-emerald-800 px-1.5 py-0.2 rounded font-semibold">
-                              -₹{couponDiscount.toLocaleString('en-IN')} OFF
-                            </span>
-                          </div>
-                          {couponDescription && (
-                            <p className="text-[10px] text-emerald-700 truncate">{couponDescription}</p>
-                          )}
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={handleRemoveCoupon}
-                        className="text-xs text-slate-400 hover:text-rose-600 font-bold px-2 py-1 rounded hover:bg-rose-50 transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
-                        title="Remove coupon"
-                      >
-                        <X size={13} /> Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleApplyCoupon} className="space-y-1.5">
-                      <div className="flex gap-2">
-                        <div className="relative flex-1 min-w-0">
-                          <input
-                            type="text"
-                            placeholder="Enter coupon code"
-                            value={couponInput}
-                            onChange={(e) => {
-                              setCouponInput(e.target.value)
-                              if (couponError) setCouponError(null)
-                            }}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 sm:py-2.5 text-xs text-[var(--navy)] font-semibold uppercase placeholder:normal-case placeholder:text-slate-400 focus:outline-none focus:border-[var(--sky)] focus:bg-white transition-all"
-                          />
-                        </div>
-                        <button
-                          type="submit"
-                          className="px-4 py-2 sm:py-2.5 rounded-xl bg-[var(--navy)] hover:bg-[var(--navy)]/90 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs shrink-0"
-                        >
-                          Apply
-                        </button>
-                      </div>
-
-                      {couponError && (
-                        <p className="text-[11px] text-rose-600 font-medium pl-1 flex items-center gap-1">
-                          <AlertCircle size={12} className="shrink-0" /> {couponError}
-                        </p>
-                      )}
-                    </form>
-                  )}
-                </div>
-
-                {/* Price Breakdown */}
-                <div className="pt-4 sm:pt-5 space-y-2 text-xs text-slate-600 border-t border-slate-100 mt-4 sm:mt-5">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-600">Base Package (₹{basePricePerPerson.toLocaleString('en-IN')} × {guests})</span>
-                    <span className="font-bold text-slate-800">₹{(basePricePerPerson * guests).toLocaleString('en-IN')}</span>
-                  </div>
-
-                  {isDoubleSharing && pricing.doubleSharingAddonPerPerson > 0 && (
-                    <div className="flex justify-between items-center text-amber-800 font-medium">
-                      <span>Double Sharing Addon (₹{pricing.doubleSharingRate.toLocaleString('en-IN')} × {guests})</span>
-                      <span className="font-bold">+₹{(pricing.doubleSharingRate * guests).toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-600">GST (5%)</span>
-                    <span className="font-bold text-slate-800">₹{gstAmount.toLocaleString('en-IN')}</span>
-                  </div>
-
-                  {isInternational && tcsAmount > 0 && (
-                    <div className="flex justify-between items-center">
-                      <span className="flex items-center gap-1.5 text-slate-600">
-                        <span>TCS (2%)</span>
-                        <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded border border-sky-200">International</span>
-                      </span>
-                      <span className="font-bold text-slate-800">₹{tcsAmount.toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-
-                  {couponDiscount > 0 && (
-                    <div className="flex justify-between items-center text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
-                      <span className="flex items-center gap-1"><Tag size={12} /> Coupon ({couponCode})</span>
-                      <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between items-center pt-2 border-t border-slate-100">
-                    <span className="text-slate-600 font-medium">Trip Subtotal</span>
-                    <span className={`font-bold ${isFullPayment ? 'line-through text-slate-400' : 'text-slate-800'}`}>
-                      ₹{grandTotal.toLocaleString('en-IN')}
-                    </span>
-                  </div>
-
-                  {isFullPayment && (
-                    <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1.5 rounded-xl text-xs border border-emerald-200/80">
-                      <span className="flex items-center gap-1.5">
-                        <Sparkles size={13} className="text-emerald-600 shrink-0" />
-                        <span>Full Pay Discount (₹1,000 × {guests})</span>
-                      </span>
-                      <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between items-center pt-2 border-t border-slate-200 text-sm">
-                    <span className="font-extrabold text-[var(--navy)]">
-                      {isFullPayment ? 'Final Total (After Discount)' : 'Total Trip Cost'}
-                    </span>
-                    <span className="font-black text-[var(--navy)] text-base">
-                      ₹{(isFullPayment ? Math.max(0, grandTotal - fullPaymentDiscount) : grandTotal).toLocaleString('en-IN')}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Amount to Pay Today Highlight Box */}
-                <div className={`mt-4 sm:mt-5 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-300 ${
-                  isFullPayment
-                    ? 'bg-gradient-to-br from-emerald-50 via-teal-50/40 to-emerald-50/20 border-emerald-200 shadow-xs'
-                    : 'bg-gradient-to-br from-sky-50 to-blue-50/60 border-[var(--sky-pale)]'
-                }`}>
-                  <div className="flex justify-between items-baseline mb-1">
-                    <span className="text-[11px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">Amount To Pay Now</span>
-                    <div className="text-right">
-                      {isFullPayment && (
-                        <span className="text-xs text-slate-400 line-through mr-1.5 font-medium">
-                          ₹{grandTotal.toLocaleString('en-IN')}
-                        </span>
-                      )}
-                      <span className={`text-xl sm:text-2xl font-black ${isFullPayment ? 'text-emerald-600' : 'text-[var(--sky)]'}`}>
-                        ₹{amountToPayToday.toLocaleString('en-IN')}
-                      </span>
-                    </div>
-                  </div>
-
-                  {paymentType === 'advance' ? (
-                    <div className="space-y-1 mt-2 pt-2 border-t border-[var(--sky-pale)]/60">
-                      <p className="text-[11px] text-slate-600 font-medium">
-                        Remaining <span className="font-bold text-slate-800">₹{remainingBalance.toLocaleString('en-IN')}</span> payable before trip departure.
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => setPaymentType('full')}
-                        className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
-                      >
-                        <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-2.5 rounded-lg border border-emerald-200">
-                      <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
-                      <span>Flat ₹{(1000 * guests).toLocaleString('en-IN')} instant discount applied!</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Right Column Error Banner */}
-                {errorMessage && (
-                  <div className="mt-4 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-xs text-rose-700 font-semibold animate-in fade-in duration-200">
-                    <AlertCircle size={15} className="text-rose-600 shrink-0" />
-                    <span>{errorMessage}</span>
-                  </div>
-                )}
-
-                {/* Desktop Pay Here Button */}
-                <div className="hidden lg:block mt-6">
-                  <button
-                    type="button"
-                    onClick={handleFormSubmit}
-                    disabled={isProcessing}
-                    className="glow-btn w-full py-4 rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
-                  >
-                    {isProcessing ? (
-                      <span className="inline-flex items-center gap-2">
-                        <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
-                        Processing Secure Payment...
-                      </span>
-                    ) : (
-                      <>Pay Here • ₹{amountToPayToday.toLocaleString('en-IN')} <ArrowRight size={18} /></>
-                    )}
-                  </button>
-                  <p className="text-center text-[11px] text-slate-400 mt-3 flex items-center justify-center gap-1.5">
-                    <Lock size={12} className="text-emerald-500" /> 256-Bit Bank-Grade SSL Encrypted
-                  </p>
-                </div>
-
-                {/* Payment Methods Accepted Icons */}
-                <div className="mt-5 pt-4 border-t border-slate-100 text-center">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
-                    Accepted Payment Methods
-                  </span>
-                  <div className="flex items-center justify-center gap-2 text-xs text-slate-500 font-semibold flex-wrap">
-                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">UPI (GPay/PhonePe)</span>
-                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">Credit/Debit Cards</span>
-                    <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-[11px]">NetBanking</span>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Need Assistance card */}
-              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-slate-200/80 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5 sm:gap-3">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[var(--sky-pale)] text-[var(--sky)] flex items-center justify-center shrink-0">
-                    <PhoneCall size={16} />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-[var(--navy)]">Have Questions Before Booking?</div>
-                    <div className="text-[10.5px] sm:text-[11px] text-slate-400">Talk to our friendly trip coordinators</div>
-                  </div>
-                </div>
-                <a
-                  href="tel:+919975822023"
-                  className="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-[var(--sky)] hover:text-white text-slate-700 text-xs font-bold transition-colors shrink-0"
-                >
-                  Call Now
-                </a>
-              </div>
-
             </div>
 
           </div>

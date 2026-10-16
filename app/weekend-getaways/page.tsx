@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips, type Trip } from '@/lib/travel-data'
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
+  redirect('/upcoming-trips')
   const weekendTrips: Trip[] = trips.filter(
     (t) =>
       t.region === 'Weekend' ||

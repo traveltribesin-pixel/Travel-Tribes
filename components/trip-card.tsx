@@ -106,15 +106,7 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
       startEnd: 'Phu Quoc - Hanoi',
       fullRoute: 'Phu Quoc-Da Nang-Hoi An-Halong Bay-Hanoi',
     },
-    'vietnam-phu-quoc-xmas-new-year': {
-      startEnd: 'Phu Quoc - Hanoi',
-      fullRoute: 'Phu Quoc-Da Nang-Hoi An-Halong Bay-Hanoi',
-    },
     'vietnam-classic': {
-      startEnd: 'Ho Chi Minh - Hanoi',
-      fullRoute: 'Ho Chi Minh-Da Nang-Hoi An-Halong Bay-Hanoi',
-    },
-    'vietnam-classic-xmas-new-year': {
       startEnd: 'Ho Chi Minh - Hanoi',
       fullRoute: 'Ho Chi Minh-Da Nang-Hoi An-Halong Bay-Hanoi',
     },
@@ -122,15 +114,7 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
       startEnd: 'Ho Chi Minh - Hanoi',
       fullRoute: 'Ho Chi Minh-Da Nang-Hoi An-Halong Bay-Sapa-Hanoi',
     },
-    'vietnam-sapa-xmas-new-year': {
-      startEnd: 'Ho Chi Minh - Hanoi',
-      fullRoute: 'Ho Chi Minh-Da Nang-Hoi An-Halong Bay-Sapa-Hanoi',
-    },
     'konkan-coastal-roadtrip': {
-      startEnd: 'Mumbai - Mumbai',
-      fullRoute: 'Mumbai-Ratnagiri-Ganpatipule-Kasheli-Mumbai',
-    },
-    'konkan-coastal-roadtrip-xmas-new-year': {
       startEnd: 'Mumbai - Mumbai',
       fullRoute: 'Mumbai-Ratnagiri-Ganpatipule-Kasheli-Mumbai',
     },
@@ -147,10 +131,6 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
       fullRoute: 'Delhi-Shimla-Chitkul-Tabo-Kaza-Key-Kalpa-Delhi',
     },
     'jawai-leopard-safari': {
-      startEnd: 'Mumbai - Mumbai',
-      fullRoute: 'Mumbai-Jawai-Bera-Jawai Dam-Mumbai',
-    },
-    'jawai-leopard-safari-xmas-new-year': {
       startEnd: 'Mumbai - Mumbai',
       fullRoute: 'Mumbai-Jawai-Bera-Jawai Dam-Mumbai',
     },

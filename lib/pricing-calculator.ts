@@ -26,6 +26,7 @@ export interface PricingBreakdown {
   fullPaymentDiscount: number
   couponCode?: string
   couponDiscount: number
+  couponPerPersonDiscount?: number
   couponDescription?: string
   amountToPayToday: number
   remainingBalance: number
@@ -45,21 +46,21 @@ export const MIN_GUESTS = 1
 export const MAX_GUESTS = 50
 
 export const VALID_COUPONS: Record<string, { discount: number; description: string }> = {
-  VIBE100: { discount: 100, description: '₹100 OFF' },
-  WANDER200: { discount: 200, description: '₹200 OFF' },
-  TREAT300: { discount: 300, description: '₹300 OFF' },
-  GOODVIBES400: { discount: 400, description: '₹400 OFF' },
-  TRIBECLUB: { discount: 500, description: '₹500 OFF' },
-  YOL0500: { discount: 500, description: '₹500 OFF' },
-  SOL0500: { discount: 500, description: '₹500 OFF' },
-  HIGHFIVE: { discount: 500, description: '₹500 OFF' },
-  WANDER600: { discount: 600, description: '₹600 OFF' },
-  BIGSAVE700: { discount: 700, description: '₹700 OFF' },
-  ADVENTURE700: { discount: 700, description: '₹700 OFF' },
-  TRIPMODE800: { discount: 800, description: '₹800 OFF' },
-  TRIBELOVE900: { discount: 900, description: '₹900 OFF' },
-  TRIBEFAM: { discount: 1000, description: '₹1,000 OFF' },
-  TRIBE1000: { discount: 1000, description: '₹1,000 OFF' },
+  VIBE100: { discount: 100, description: '₹100 OFF / person' },
+  WANDER200: { discount: 200, description: '₹200 OFF / person' },
+  TREAT300: { discount: 300, description: '₹300 OFF / person' },
+  GOODVIBES400: { discount: 400, description: '₹400 OFF / person' },
+  TRIBECLUB: { discount: 500, description: '₹500 OFF / person' },
+  YOL0500: { discount: 500, description: '₹500 OFF / person' },
+  SOL0500: { discount: 500, description: '₹500 OFF / person' },
+  HIGHFIVE: { discount: 500, description: '₹500 OFF / person' },
+  WANDER600: { discount: 600, description: '₹600 OFF / person' },
+  BIGSAVE700: { discount: 700, description: '₹700 OFF / person' },
+  ADVENTURE700: { discount: 700, description: '₹700 OFF / person' },
+  TRIPMODE800: { discount: 800, description: '₹800 OFF / person' },
+  TRIBELOVE900: { discount: 900, description: '₹900 OFF / person' },
+  TRIBEFAM: { discount: 1000, description: '₹1,000 OFF / person' },
+  TRIBE1000: { discount: 1000, description: '₹1,000 OFF / person' },
 }
 
 /**
@@ -278,11 +279,17 @@ export function calculateBookingPricing(params: {
   const tcsAmount = isInternational ? Math.round(subtotal * INTERNATIONAL_TCS_RATE) : 0
   const rawGrandTotal = subtotal + gstAmount + tcsAmount
 
-  // 7. Coupon Discount
+  // 7. Coupon Discount (Discount is per person)
   const couponValidation = validateCoupon(params.couponCode)
-  const couponDiscount = couponValidation.valid ? Math.min(couponValidation.discount, rawGrandTotal) : 0
+  const couponPerPersonDiscount = couponValidation.valid ? couponValidation.discount : 0
+  const totalCouponDiscount = couponPerPersonDiscount * guests
+  const couponDiscount = couponValidation.valid ? Math.min(totalCouponDiscount, rawGrandTotal) : 0
   const couponCode = couponValidation.valid ? couponValidation.cleanCode : undefined
-  const couponDescription = couponValidation.valid ? couponValidation.description : undefined
+  const couponDescription = couponValidation.valid
+    ? guests > 1
+      ? `₹${couponPerPersonDiscount.toLocaleString('en-IN')} OFF / person (Total ₹${couponDiscount.toLocaleString('en-IN')})`
+      : `₹${couponPerPersonDiscount.toLocaleString('en-IN')} OFF / person`
+    : undefined
   const grandTotal = Math.max(0, rawGrandTotal - couponDiscount)
 
   // 8. Advance calculation
@@ -326,6 +333,7 @@ export function calculateBookingPricing(params: {
     fullPaymentDiscount,
     couponCode,
     couponDiscount,
+    couponPerPersonDiscount,
     couponDescription,
     amountToPayToday,
     remainingBalance,

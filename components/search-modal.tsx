@@ -22,7 +22,6 @@ const CATEGORIES = [
   { label: 'All Trips', value: 'All' },
   { label: 'Domestic', value: 'Domestic' },
   { label: 'International', value: 'International' },
-  { label: 'Weekend', value: 'Weekend' },
   { label: 'Xmas & New Year 🎉', value: 'Xmas & New Year' },
 ]
 

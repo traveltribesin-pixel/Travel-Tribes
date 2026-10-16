@@ -33,7 +33,7 @@ export function TripContent({ trip }: { trip: Trip }) {
   const searchParams = useSearchParams()
   const isFestiveParam = searchParams.get('festive') === '1' || searchParams.get('festive') === 'true'
   const [activeTab, setActiveTab] = useState('overview')
-  const [guests, setGuests] = useState(2)
+  const [guests, setGuests] = useState(1)
   const [openDay, setOpenDay] = useState<number | null>(1)
 
   // PDF Lead Capture Modal State
@@ -159,11 +159,7 @@ export function TripContent({ trip }: { trip: Trip }) {
   }
 
   const handleDownloadPdfClick = () => {
-    if (trip.pdfUrl) {
-      window.open(trip.pdfUrl, '_blank', 'noopener,noreferrer')
-    } else {
-      setIsPdfModalOpen(true)
-    }
+    setIsPdfModalOpen(true)
   }
 
   // Authoritative dynamic price resolving based on selected departure date (Long Weekend, Xmas/NY, Regular)
@@ -172,16 +168,33 @@ export function TripContent({ trip }: { trip: Trip }) {
   }, [trip, selectedDate])
 
   const displayPackages = useMemo(() => {
-    const pkgs = [...dynamicPricingInfo.packages]
-    const hasDouble = pkgs.some((p) => p.label.toLowerCase().includes('double'))
-    if (!hasDouble && dynamicPricingInfo.doubleSharingRate > 0 && pkgs.length > 0) {
-      const baseNum = parseNumericPrice(pkgs[0].price)
-      const doubleNum = baseNum + dynamicPricingInfo.doubleSharingRate
-      pkgs.push({
-        label: 'Double Sharing',
-        price: `₹${doubleNum.toLocaleString('en-IN')} / person`,
-        note: 'Double occupancy private room'
+    let pkgs = [...dynamicPricingInfo.packages]
+
+    // Check if this itinerary has train options (e.g. Non-AC Train, 3AC Train, Sleeper)
+    const hasTrainOption = pkgs.some((p) => {
+      const l = p.label.toLowerCase()
+      return l.includes('train') || l.includes('3ac') || l.includes('non-ac') || l.includes('sleeper') || l.includes('2ac')
+    })
+
+    if (hasTrainOption) {
+      // In itineraries with train options, do NOT show the sharing type box (e.g. Double Sharing)
+      // in the costing square boxes. Only show the train/transport choices (e.g. Ex-Gokarna, Non-AC, 3AC).
+      pkgs = pkgs.filter((p) => {
+        const l = p.label.toLowerCase()
+        return !l.includes('sharing') && !l.includes('occupancy') && !l.includes('double')
       })
+    } else {
+      // For itineraries without train options, display sharing packages or push Double Sharing if applicable
+      const hasDouble = pkgs.some((p) => p.label.toLowerCase().includes('double'))
+      if (!hasDouble && dynamicPricingInfo.doubleSharingRate > 0 && pkgs.length > 0) {
+        const baseNum = parseNumericPrice(pkgs[0].price)
+        const doubleNum = baseNum + dynamicPricingInfo.doubleSharingRate
+        pkgs.push({
+          label: 'Double Sharing',
+          price: `₹${doubleNum.toLocaleString('en-IN')} / person`,
+          note: 'Double occupancy private room'
+        })
+      }
     }
     return pkgs.length > 0 ? pkgs : [{ label: 'Standard Package', price: trip.price }]
   }, [dynamicPricingInfo, trip.price])
@@ -280,7 +293,7 @@ export function TripContent({ trip }: { trip: Trip }) {
   const relatedTrips = useMemo(() => {
     const isExcluded = (slug: string, dateStr?: string) => {
       const s = slug.toLowerCase()
-      if (s.includes('hampi') || s === 'spiti-valley-chandrataal') return true
+      if (s.includes('hampi') || s === 'spiti-valley-chandrataal' || s.includes('jawai')) return true
       if (dateStr?.toLowerCase().includes('no upcoming')) return true
       return false
     }
@@ -1018,7 +1031,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                 <div className="border border-[var(--border)] rounded-xl p-3.5 flex justify-between items-center">
                   <div>
                     <div className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Guests</div>
-                    <div className="font-medium text-[var(--navy)] text-xs">{guests} People</div>
+                    <div className="font-medium text-[var(--navy)] text-xs">{guests} {guests > 1 ? 'People' : 'Person'}</div>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <button onClick={() => setGuests(Math.max(1, guests - 1))} className="w-7 h-7 rounded-full bg-[var(--sky-pale)] flex items-center justify-center text-[var(--sky)] hover:bg-[var(--sky)] hover:text-white transition-colors text-sm font-bold">-</button>

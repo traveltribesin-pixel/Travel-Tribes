@@ -115,14 +115,8 @@ export function Navbar() {
           2. SECONDARY SUB-NAVBAR (Desktop Only - Hidden on Mobile)
       ========================================================================== */}
       <div className="hidden max-[920px]:hidden min-[921px]:block w-full bg-[#0b2940] text-white border-t border-white/10 shadow-[0_4px_16px_rgba(11,41,64,0.25)]">
-        <div className="max-w-[1240px] mx-auto px-3 sm:px-6 lg:px-8 h-11 sm:h-12 flex items-center justify-between gap-4">
+        <div className="max-w-[1240px] mx-auto px-3 sm:px-6 lg:px-8 h-11 sm:h-12 flex items-center justify-center gap-4">
           
-          {/* Left subtle indicator */}
-          <div className="flex items-center gap-2 text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-[#85cfe7] shrink-0">
-            <span className="w-2 h-2 rounded-full bg-[var(--sky)] animate-pulse shadow-[0_0_8px_var(--sky)]"></span>
-            <span>Featured Escapes</span>
-          </div>
-
           {/* Centered Professional Button Pills */}
           <nav className="flex items-center justify-center gap-3 text-[11.5px] font-bold tracking-tight uppercase mx-auto shrink-0">
             {subNavItems.map((item) => {
@@ -160,11 +154,6 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Right Micro Tagline */}
-          <div className="flex items-center gap-2 text-[10.5px] font-bold text-[#85cfe7] shrink-0 uppercase tracking-wider">
-            <span>Small Groups · Big Adventures</span>
-          </div>
-
         </div>
       </div>
 
@@ -197,14 +186,6 @@ export function Navbar() {
             className={`py-2.5 px-3 rounded-xl text-[14px] font-bold flex items-center justify-between transition-colors ${pathname === '/international-trips' ? 'bg-[var(--sky-pale)] text-[var(--sky)]' : 'text-slate-700 hover:bg-slate-100'}`}
           >
             <span>International</span>
-          </Link>
-
-          <Link
-            href="/weekend-getaways"
-            onClick={() => setOpen(false)}
-            className={`py-2.5 px-3 rounded-xl text-[14px] font-bold flex items-center justify-between transition-colors ${pathname === '/weekend-getaways' ? 'bg-[var(--sky-pale)] text-[var(--sky)]' : 'text-slate-700 hover:bg-slate-100'}`}
-          >
-            <span>Weekend getaways</span>
           </Link>
 
           <Link

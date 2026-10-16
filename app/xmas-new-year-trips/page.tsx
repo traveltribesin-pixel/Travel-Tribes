@@ -16,7 +16,6 @@ const categories = [
   { value: 'All', title: 'All' },
   { value: 'Domestic', title: 'Domestic' },
   { value: 'International', title: 'International' },
-  { value: 'Weekend', title: 'Weekend' },
 ]
 
 export default function Page() {

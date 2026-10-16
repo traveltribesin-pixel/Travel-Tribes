@@ -4773,18 +4773,8 @@ pricingOptions: [
     title: 'Jawai — The Land of Leopards',
     location: 'Jawai · Bera · Jawai Dam · Pali · Rajasthan',
     region: 'Domestic',
-    date: 'Oct 02–05, 2026',
-    dates: [
-      'Oct 02–05, 2026 (Long Weekend)',
-      'Oct 16–19, 2026',
-      'Oct 30–Nov 02, 2026',
-      'Nov 06–09, 2026 (Diwali / Long Weekend)',
-      'Nov 20–23, 2026',
-      'Dec 04–07, 2026',
-      'Dec 18–21, 2026',
-      'Dec 24–27, 2026 (Christmas Weekend)',
-      'Dec 30–Jan 02, 2027 (New Year Special)'
-    ],
+    date: 'No Upcoming Trips',
+    dates: ['No Upcoming Trips'],
     duration: '3N/4D',
     price: '₹11,499',
     image: img('photo-1456926631375-92c8ce872def'),
@@ -4955,7 +4945,6 @@ export const primaryNavItems = [
 ]
 
 export const subNavItems = [
-  { label: 'Weekend Getaways', href: '/weekend-getaways' },
   { label: 'Xmas & New Year', href: '/xmas-new-year-trips', badge: 'Festive' },
   { label: 'Corporate Trips', href: '/corporate-trips' }
 ]
@@ -5268,78 +5257,6 @@ const festiveDuplicateOverrides: {
     ]
   },
   {
-    origId: 'vietnam-phu-quoc',
-    id: 'vietnam-phu-quoc-xmas-new-year',
-    slug: 'vietnam-phu-quoc-xmas-new-year',
-    title: 'Vietnam with Phu Quoc — Xmas & New Year Special',
-    dates: [
-      'Dec 24–31, 2026 (Christmas Special - On Request)',
-      'Dec 28–Jan 04, 2027 (New Year Special - On Request)'
-    ],
-    price: '₹79,999',
-    regularPackages: [
-      { label: 'All-Inclusive Package (With 2 Internal Flights)', price: '₹79,999 / person' }
-    ],
-    pricingOptions: [
-      { label: 'Christmas & New Year Special Batch', price: '₹79,999 / person + 5% GST & 2% TCS' },
-      { label: 'Booking Advance', price: '₹20,000 / person' }
-    ]
-  },
-  {
-    origId: 'vietnam-classic',
-    id: 'vietnam-classic-xmas-new-year',
-    slug: 'vietnam-classic-xmas-new-year',
-    title: 'Vietnam — Xmas & New Year Special',
-    dates: [
-      'Dec 24–31, 2026 (Christmas Special - On Request)',
-      'Dec 28–Jan 04, 2027 (New Year Special - On Request)'
-    ],
-    price: '₹64,999',
-    regularPackages: [
-      { label: 'Land Package + 2 Domestic Flights', price: '₹64,999 / person' }
-    ],
-    pricingOptions: [
-      { label: 'Land Package + 2 Domestic Flights (Festive Batch)', price: '₹64,999 / person' },
-      { label: 'Booking Advance', price: '₹20,000 / person' }
-    ]
-  },
-  {
-    origId: 'vietnam-sapa',
-    id: 'vietnam-sapa-xmas-new-year',
-    slug: 'vietnam-sapa-xmas-new-year',
-    title: 'Vietnam with Sapa — Xmas & New Year Special',
-    dates: [
-      'Dec 24–Jan 01, 2027 (Christmas & New Year Special - On Request)'
-    ],
-    price: '₹74,999',
-    regularPackages: [
-      { label: 'Land Package + 2 Domestic Flights + Sapa', price: '₹74,999 / person' }
-    ],
-    pricingOptions: [
-      { label: 'Land Package + 2 Domestic Flights + Sapa (Festive Batch)', price: '₹74,999 / person' },
-      { label: 'Booking Advance', price: '₹20,000 / person' }
-    ]
-  },
-  {
-    origId: 'konkan-coastal-roadtrip',
-    id: 'konkan-coastal-roadtrip-xmas-new-year',
-    slug: 'konkan-coastal-roadtrip-xmas-new-year',
-    title: 'Coastal Maharashtra Road Trip — Xmas & New Year Special',
-    dates: [
-      'Dec 23–27, 2026 (Christmas Weekend)',
-      'Dec 29–Jan 02, 2027 (New Year Special)'
-    ],
-    price: '₹9,499',
-    regularPackages: [
-      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹9,499 / person' },
-      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹10,499 / person' }
-    ],
-    pricingOptions: [
-      { label: 'Ex-Mumbai & Pune (Triple Sharing AC Bus)', price: '₹9,499 / person' },
-      { label: 'Ex-Mumbai & Pune (Double Sharing Room)', price: '₹10,499 / person' }
-    ]
-  },
-  {
     origId: 'coorg-backpacking',
     id: 'coorg-backpacking-xmas-new-year',
     slug: 'coorg-backpacking-xmas-new-year',
@@ -5377,24 +5294,6 @@ const festiveDuplicateOverrides: {
     pricingOptions: [
       { label: 'Triple Sharing (Festive Batch)', price: '₹20,999 / person' },
       { label: 'Double Sharing (Festive Batch)', price: '₹23,999 / person' }
-    ]
-  },
-  {
-    origId: 'jawai-leopard-safari',
-    id: 'jawai-leopard-safari-xmas-new-year',
-    slug: 'jawai-leopard-safari-xmas-new-year',
-    title: 'Jawai — Xmas & New Year Special',
-    dates: [
-      'Dec 24–27, 2026 (Christmas Weekend)',
-      'Dec 30–Jan 02, 2027 (New Year Special)'
-    ],
-    price: '₹12,499',
-    regularPackages: [
-      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹12,499 / person' }
-    ],
-    pricingOptions: [
-      { label: 'Ex-Mumbai (3AC Train + Safari Package)', price: '₹12,499 / person' },
-      { label: 'Booking Advance', price: '₹4,000 / person' }
     ]
   }
 ]
@@ -5436,9 +5335,8 @@ export const TRIP_DRIVE_PDF_MAP: Record<string, string> = {
   // 4. Hampi
   'hampi-backpacking': 'https://drive.google.com/file/d/1J_UhMHJJC-VV1DtUBECx6OiZRIvO-0NQ/view',
 
-  // 5. Konkan Coastal Road Trip (Regular + Xmas/New Year fallback)
+  // 5. Konkan Coastal Road Trip
   'konkan-coastal-roadtrip': 'https://drive.google.com/file/d/1lRlVXizlLN2ok8Etx2gZlQLj3wq5wjlG/view',
-  'konkan-coastal-roadtrip-xmas-new-year': 'https://drive.google.com/file/d/1lRlVXizlLN2ok8Etx2gZlQLj3wq5wjlG/view',
 
   // 6. Meghalaya (Regular + Xmas/New Year fallback)
   'meghalaya-backpacking': 'https://drive.google.com/file/d/1JHG5ygrVG9qbzmFiLVm19WV2u6QT3cpc/view',

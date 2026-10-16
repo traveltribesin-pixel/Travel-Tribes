@@ -17,13 +17,12 @@ const categories = [
   { value: 'All', title: 'All' },
   { value: 'Domestic', title: 'Domestic' },
   { value: 'International', title: 'International' },
-  { value: 'Weekend', title: 'Weekend' },
   { value: 'Xmas & New Year', title: 'Xmas & New Year' },
 ]
 
 export default function Page() {
   const upcomingTrips = trips.filter(
-    (t) => !t.slug.startsWith('hampi') && t.slug !== 'spiti-valley-chandrataal' && isTripUpcoming(t)
+    (t) => !t.slug.startsWith('hampi') && !t.slug.startsWith('jawai') && t.slug !== 'spiti-valley-chandrataal' && isTripUpcoming(t)
   )
 
   return (

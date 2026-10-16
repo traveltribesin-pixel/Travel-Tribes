@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/upcoming-trips',
     '/domestic-trips',
     '/international-trips',
-    '/weekend-getaways',
     '/xmas-new-year-trips',
     '/corporate-trips',
     '/plan-a-trip',

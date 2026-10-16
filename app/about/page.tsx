@@ -99,13 +99,7 @@ export default function AboutPage() {
       title: 'International Group Trips',
       desc: 'New countries. New cultures. New stories.',
       link: '/international-trips'
-    },
-    {
-      emoji: '🌅',
-      title: 'Weekend Getaways',
-      desc: 'Because you don’t need two weeks of leave to escape.',
-      link: '/weekend-getaways'
-    },
+    }
   ]
 
   const philosophies = [

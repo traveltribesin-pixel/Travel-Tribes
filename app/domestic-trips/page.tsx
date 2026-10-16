@@ -14,22 +14,25 @@ export const metadata: Metadata = {
 
 const categories = [
   { value: 'All', title: 'All' },
-  { value: 'Weekend', title: 'Weekend' },
   { value: 'Xmas & New Year', title: 'Xmas & New Year' },
 ]
 
 export default function Page() {
+  const isJawai = (slug: string) => slug.toLowerCase().includes('jawai')
   const isEndedTrip = (slug: string) => {
     const s = slug.toLowerCase()
     return s.includes('hampi') || s === 'spiti-valley-chandrataal'
   }
   const activeDomesticTrips = trips.filter(
-    (t) => t.region !== 'International' && !isEndedTrip(t.slug)
+    (t) => t.region !== 'International' && !isEndedTrip(t.slug) && !isJawai(t.slug)
   )
   const endedDomesticTrips = trips.filter(
-    (t) => t.region !== 'International' && isEndedTrip(t.slug)
+    (t) => t.region !== 'International' && isEndedTrip(t.slug) && !isJawai(t.slug)
   )
-  const domesticTrips = [...activeDomesticTrips, ...endedDomesticTrips]
+  const jawaiTrips = trips.filter(
+    (t) => t.region !== 'International' && isJawai(t.slug)
+  )
+  const domesticTrips = [...activeDomesticTrips, ...endedDomesticTrips, ...jawaiTrips]
 
   return (
     <TripsPage

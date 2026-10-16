@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const isExcluded = (s?: string) => {
     if (!s) return true
     const lower = s.toLowerCase()
-    return lower.includes('hampi') || lower === 'spiti-valley-chandrataal'
+    return lower.includes('hampi') || lower === 'spiti-valley-chandrataal' || lower.includes('jawai')
   }
   const relatedTrip = (blog.relatedTripSlug && !isExcluded(blog.relatedTripSlug))
     ? trips.find((t) => t.slug === blog.relatedTripSlug && !t.date?.toLowerCase().includes('no upcoming'))
