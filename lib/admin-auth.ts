@@ -4,10 +4,10 @@ import crypto from 'crypto'
 const ADMIN_COOKIE_NAME = 'tt_admin_session'
 const SECRET_SALT = process.env.ADMIN_SECRET || 'traveltribes-super-secure-admin-key-2027'
 
-// Configurable admin credentials from environment or robust defaults
+// Configurable admin credentials from environment
 export const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USERNAME || 'admin@traveltribes.in',
-  password: process.env.ADMIN_PASSWORD || 'tribe@admin2027'
+  password: process.env.ADMIN_PASSWORD || ''
 }
 
 export function generateSessionToken(): string {

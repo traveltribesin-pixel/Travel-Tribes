@@ -10,8 +10,11 @@ export async function POST(req: NextRequest) {
 
     const { username, password } = body
 
-    const validUsername = String(username || '').trim().toLowerCase() === ADMIN_CREDENTIALS.username.toLowerCase() || String(username || '').trim().toLowerCase() === 'admin'
-    const validPassword = String(password || '') === ADMIN_CREDENTIALS.password
+    const validUsername = Boolean(ADMIN_CREDENTIALS.username) && (
+      String(username || '').trim().toLowerCase() === ADMIN_CREDENTIALS.username.toLowerCase() ||
+      String(username || '').trim().toLowerCase() === 'admin'
+    )
+    const validPassword = Boolean(ADMIN_CREDENTIALS.password) && String(password || '') === ADMIN_CREDENTIALS.password
 
     if (!validUsername || !validPassword) {
       return NextResponse.json(
