@@ -429,7 +429,7 @@ export async function POST(req: NextRequest) {
     tasks.push(
       appendToGoogleSheet({
         type: 'booking',
-        status: `PAID (Razorpay - ${paymentMethodUsed})`,
+        source: 'Online Booking (Razorpay)',
         bookingId,
         paymentId: razorpay_payment_id,
         orderId: razorpay_order_id,
@@ -439,14 +439,15 @@ export async function POST(req: NextRequest) {
         age: age || '',
         city: city || '',
         tripTitle,
-        date: travelDate,
+        travelDates: travelDate,
         packageLabel,
         guests: totalGuests,
         paymentType: isFullPayment ? 'Full Payment' : 'Advance Booking',
-        amountToPayToday: `₹${amountPaid.toLocaleString('en-IN')}`,
+        paymentStatus: `PAID (Razorpay - ${paymentMethodUsed})`,
+        amountPaid: `₹${amountPaid.toLocaleString('en-IN')}`,
         remainingBalance: `₹${remainingBalance.toLocaleString('en-IN')}`,
         grandTotal: `₹${grandTotal.toLocaleString('en-IN')}`,
-        specialRequest: specialRequest || '',
+        message: specialRequest || '',
         travellersRoster: travellersRoster
           .map((t: any, i: number) => `${i + 1}. ${t.fullName || 'Guest'} (${t.gender || 'N/A'}, Age: ${t.age || 'N/A'})`)
           .join('; '),

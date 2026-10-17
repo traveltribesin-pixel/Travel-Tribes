@@ -102,7 +102,10 @@ export async function POST(req: NextRequest) {
     tasks.push(
       appendToGoogleSheet({
         type: 'newsletter',
-        email: cleanEmail
+        source: 'Website Newsletter Subscription',
+        email: cleanEmail,
+        fullName: 'Subscriber',
+        message: 'Subscribed to Travel Tribes updates'
       }).catch((err) => {
         console.error('Newsletter Google Sheets sync failed:', err)
         return { success: false, error: err?.message }

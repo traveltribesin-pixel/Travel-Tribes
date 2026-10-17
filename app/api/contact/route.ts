@@ -139,10 +139,11 @@ export async function POST(req: NextRequest) {
     tasks.push(
       appendToGoogleSheet({
         type: 'contact',
-        firstName: cleanName,
+        source: sourceLabel || 'Contact Us Page',
+        fullName: cleanName,
         email: cleanEmail,
         phone: cleanPhone !== 'Not provided' ? cleanPhone : '',
-        trip: `${sourceLabel}: ${tripInterest}`,
+        tripTitle: tripInterest,
         message: cleanMessage
       }).catch((err) => {
         console.error('Contact Google Sheets sync failed:', err)

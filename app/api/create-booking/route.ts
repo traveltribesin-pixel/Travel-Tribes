@@ -312,6 +312,7 @@ export async function POST(req: NextRequest) {
     tasks.push(
       appendToGoogleSheet({
         type: 'booking',
+        source: sourceLabel || 'Website Booking Form',
         bookingId,
         fullName,
         email,
@@ -319,14 +320,15 @@ export async function POST(req: NextRequest) {
         age: age || '',
         city: city || '',
         tripTitle: pricing.tripTitle,
-        date: date || 'Selected Date',
+        travelDates: date || 'Selected Date',
         packageLabel: pricing.packageLabel,
         guests: pricing.guests,
         paymentType: pricing.isFullPayment ? 'Full Payment' : 'Advance Booking',
-        amountToPayToday: `₹${pricing.amountToPayToday.toLocaleString('en-IN')}`,
+        paymentStatus: 'Pending Payment',
+        amountPaid: `₹${pricing.amountToPayToday.toLocaleString('en-IN')}`,
         remainingBalance: `₹${pricing.remainingBalance.toLocaleString('en-IN')}`,
         grandTotal: `₹${pricing.grandTotal.toLocaleString('en-IN')}`,
-        specialRequest: specialRequest || ''
+        message: specialRequest || ''
       }).catch((err) => {
         console.error('Booking Google Sheets sync failed:', err)
         return { success: false, error: err?.message }

@@ -137,11 +137,13 @@ export async function POST(req: NextRequest) {
     tasks.push(
       appendToGoogleSheet({
         type: 'lead',
+        source: sourceLabel,
         fullName: cleanName,
         phone: cleanPhone,
         email: cleanEmail,
-        tripTitle: `${sourceLabel}: ${tripName}`,
-        tripSlug: tripSlug || ''
+        tripTitle: tripName,
+        tripSlug: tripSlug || '',
+        message: `Itinerary Download: ${tripName}`
       }).catch((err) => {
         console.error('Lead Google Sheets sync failed:', err)
         return { success: false, error: err?.message }

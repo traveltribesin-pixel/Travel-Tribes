@@ -235,12 +235,16 @@ export async function POST(req: NextRequest) {
     // 3. Sync to Google Sheets
     tasks.push(
       appendToGoogleSheet({
-        type: 'contact',
-        firstName: cleanName,
+        type: 'custom_trip',
+        source: sourceLabel || 'Custom Trip Builder',
+        fullName: cleanName,
         email: cleanEmail,
         phone: cleanPhone,
-        trip: `${sourceLabel}: ${cleanDestination} (${cleanGroupType})`,
-        message: `Dates: ${cleanDates} | Vibe: ${cleanTripVibe} | Source: ${sourceLabel} | Notes: ${cleanNotes}`
+        tripTitle: cleanDestination,
+        travelDates: cleanDates,
+        groupSize: cleanGroupType,
+        budget: cleanTripVibe,
+        message: `Vibe: ${cleanTripVibe} | Group: ${cleanGroupType} | Notes: ${cleanNotes}`
       }).catch((err) => {
         console.error('Custom trip Google Sheets sync failed:', err)
         return { success: false, error: err?.message }
