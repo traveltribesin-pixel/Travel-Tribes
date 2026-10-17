@@ -1,0 +1,585 @@
+{
+  "itineraries": [
+    {
+      "slug": "priya-sharma-bali",
+      "tripType": "customized",
+      "title": "Bali & Nusa Penida Island Escape",
+      "destination": "Bali, Indonesia",
+      "duration": "6 Days / 5 Nights",
+      "bannerImage": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=80",
+      "overview": "An exclusive bespoke tropical getaway crafted for Priya Sharma & Family. Featuring luxury boutique pool villas, scenic Nusa Penida island speedboat transfers, private chauffeur throughout Bali, and curated cafe hopping and cultural tours.",
+      "highlights": [
+        "Private 4★ Pool Villa Stay in Seminyak & Ubud",
+        "Exclusive Speedboat to Nusa Penida (Kelingking Cliff & Broken Beach)",
+        "Sunrise Mount Batur View & Floating Breakfast in Villa",
+        "Uluwatu Cliff Sunset & Traditional Kecak Dance Show",
+        "Dedicated Chauffeur & Private AC MPV throughout Bali"
+      ],
+      "hotels": [
+        {
+          "id": "h1",
+          "city": "Seminyak",
+          "hotelName": "The Kayana Luxury Villa & Spa",
+          "nights": "3 Nights",
+          "roomType": "Deluxe One-Bedroom Pool Villa with Breakfast",
+          "starRating": "4 Star Luxury",
+          "amenities": [
+            "Private Plunge Pool",
+            "Daily Floating Breakfast",
+            "Spa Access",
+            "24/7 Butler Service"
+          ]
+        },
+        {
+          "id": "h2",
+          "city": "Ubud",
+          "hotelName": "Alaya Resort Ubud",
+          "nights": "2 Nights",
+          "roomType": "Alaya Room overlooking Rice Terraces",
+          "starRating": "5 Star Resort",
+          "amenities": [
+            "Infinity Pool",
+            "Balinese Spa",
+            "Organic Breakfast Buffet",
+            "Yoga Pavilion"
+          ]
+        }
+      ],
+      "transport": {
+        "vehicleType": "Private AC Toyota Innova / Ertiga with Chauffeur",
+        "pickupDrop": "Denpasar International Airport (DPS) Pick-up & Drop",
+        "includedFeatures": [
+          "Dedicated English-speaking Driver / Guide",
+          "Fuel, Parking, Tolls & Intercity Transfers included",
+          "Return Speedboat tickets to Nusa Penida Island",
+          "Private island transfers in Nusa Penida"
+        ],
+        "note": "Driver will be available at your disposal for 10 hours daily for sightseeing."
+      },
+      "days": [
+        {
+          "day": 1,
+          "title": "Arrival in Bali — Seminyak Check-in & Echo Beach Sunset",
+          "description": "Warm Balinese welcome at Denpasar Airport with flower garland. Private transfer to your luxury villa in Seminyak. Unwind by your private pool and head out to Echo Beach for a stunning sunset and welcome dinner at La Brisa beach club.",
+          "meals": [
+            "Dinner"
+          ],
+          "stay": "Overnight in Seminyak Pool Villa",
+          "tags": [
+            "Airport Pickup",
+            "Private Villa",
+            "Sunset Vibe"
+          ]
+        },
+        {
+          "day": 2,
+          "title": "South Bali Highlights — Uluwatu Temple & Kecak Fire Dance",
+          "description": "Morning leisure and floating breakfast in your villa. Afternoon visit to dramatic Uluwatu Cliff Temple overlooking the Indian Ocean. Witness the world-famous Kecak Fire Dance at sunset, followed by a romantic candlelit seafood dinner at Jimbaran Bay.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stay": "Overnight in Seminyak Pool Villa",
+          "tags": [
+            "Uluwatu Temple",
+            "Kecak Dance",
+            "Jimbaran Seafood"
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Full Day Nusa Penida Island Expedition",
+          "description": "Board the fast boat to Nusa Penida. Visit the iconic T-Rex shaped Kelingking Beach cliff viewpoint, marvel at Broken Beach natural rock bridge, and dip your toes at Angel’s Billabong natural infinity pool. Return to Seminyak by evening.",
+          "meals": [
+            "Breakfast",
+            "Lunch"
+          ],
+          "stay": "Overnight in Seminyak Pool Villa",
+          "tags": [
+            "Speedboat",
+            "Kelingking Cliff",
+            "Island Wonders"
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Transfer to Ubud — Tegenungan Waterfall & Bali Swing",
+          "description": "Check out and drive inland towards cultural Ubud. Stop at Tegenungan Waterfall for scenic photography, visit an organic Balinese Luwak Coffee plantation, and experience the world-renowned Bali Jungle Swing overlooking lush emerald rice paddies.",
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Overnight at Alaya Resort Ubud",
+          "tags": [
+            "Jungle Swing",
+            "Coffee Plantation",
+            "Rice Terraces"
+          ]
+        },
+        {
+          "day": 5,
+          "title": "Mount Batur Volcano View, Hot Springs & Ubud Palace Crawl",
+          "description": "Early scenic drive to Kintamani overlooking Mount Batur active volcano and Lake Batur. Relax in the natural volcanic hot springs. Afternoon return to Ubud center to explore Ubud Art Market, Ubud Palace, and chic bohemian cafes.",
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Overnight at Alaya Resort Ubud",
+          "tags": [
+            "Volcano View",
+            "Hot Springs",
+            "Ubud Art Market"
+          ]
+        },
+        {
+          "day": 6,
+          "title": "Souvenir Shopping & Airport Departure with Sweet Memories",
+          "description": "Enjoy a gourmet breakfast at the resort. Free time for last-minute souvenir shopping at Krisna Oleh Oleh. Private chauffeur transfer to Denpasar Airport for your onward flight home with everlasting memories of Bali.",
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Trip Ends",
+          "tags": [
+            "Souvenir Shopping",
+            "Airport Drop",
+            "Farewell"
+          ]
+        }
+      ],
+      "inclusions": [
+        "5 Nights luxury accommodation (3 Nights Seminyak Villa + 2 Nights Ubud 5★)",
+        "Daily gourmet breakfast + 2 special dinners (Jimbaran seafood & Welcome dinner)",
+        "Private AC vehicle with dedicated driver throughout Bali",
+        "Return fast boat tickets to Nusa Penida Island with private island transport",
+        "All sightseeing entry tickets, permits & parking fees",
+        "Bali Jungle Swing pass at Tegallalang",
+        "24/7 dedicated Travel Tribes concierge assistance"
+      ],
+      "exclusions": [
+        "International / Domestic Airfare",
+        "Indonesia Visa on Arrival ($35 / ~₹2,900 per person)",
+        "Personal expenses, tips & shopping",
+        "Meals not specified in the itinerary",
+        "Travel Insurance & Medical Expenses"
+      ],
+      "quotation": {
+        "pricePerPerson": 42500,
+        "totalPackagePrice": 170000,
+        "numberOfGuests": "4 Adults",
+        "tripleSharingPrice": 22499,
+        "doubleSharingPrice": 24999,
+        "quadSharingPrice": 19999,
+        "advanceAmount": 30000,
+        "paymentTerms": "₹30,000 token to secure villas & driver. 50% 20 days prior, balance 10 days prior to travel.",
+        "validUntil": "Quote valid for 7 days"
+      },
+      "policies": {
+        "thingsToCarry": [
+          "Original Passport with minimum 6 months validity",
+          "Universal power travel adapter",
+          "Comfortable walking shoes & swimwear",
+          "Light cotton outfits & sunscreen"
+        ],
+        "cancellation": [
+          "Free cancellation up to 30 days before departure.",
+          "50% refund between 29 to 15 days before departure.",
+          "Non-refundable within 14 days of departure."
+        ]
+      },
+      "clientName": "Priya Sharma & Family",
+      "clientPhone": "+91 98201 12345",
+      "clientEmail": "priya.sharma@example.com",
+      "travelDates": "15 Nov 2026 – 20 Nov 2026",
+      "groupVibe": "Private Family Holiday (4 Pax)",
+      "id": "curated-94919187",
+      "createdAt": "2026-10-16T23:55:19.187Z",
+      "updatedAt": "2026-10-16T23:55:19.187Z"
+    },
+    {
+      "id": "canva-meghalaya-01",
+      "slug": "meghalaya-backpacking-trip",
+      "tripType": "group",
+      "title": "MEGHALAYA",
+      "subtitle": "BACKPACKING",
+      "destination": "Meghalaya, Northeast India",
+      "duration": "5N/6D",
+      "routeText": "Guwahati - Shillong - Cherrapunjee - Dawki",
+      "departureCity": "Guwahati Airport / Station",
+      "groupSizeLimit": "12 to 20 Travellers (Age 18-35)",
+      "tripCaptainIncluded": true,
+      "bannerImage": "/image/Meghalaya/IMG_0857.JPEG",
+      "overview": "Explore the Abode of Clouds with Travel Tribes. From crystal clear waters of Dawki and the majestic Nohkalikai Falls to the living root bridges of Nongriat and peaceful canyon sunsets.",
+      "batchDates": [
+        "Oct 02 – Oct 07, 2026 (Long Weekend)",
+        "Oct 16 – Oct 21, 2026",
+        "Nov 06 – Nov 11, 2026",
+        "Dec 24 – Dec 29, 2026 (Christmas Special)",
+        "Dec 29, 2026 – Jan 03, 2027 (New Year Special)"
+      ],
+      "highlightImages": [
+        "/image/Meghalaya/IMG_1033.JPEG",
+        "/image/Meghalaya/IMG_1124.JPEG",
+        "/image/Meghalaya/IMG_1192.JPEG"
+      ],
+      "highlights": [
+        "Visit Umiam Lake for scenic views and a peaceful boat ride.",
+        "Explore the Don Bosco Museum, a hub of Northeast culture.",
+        "Stroll through Lady Hydari Park and Ward’s Lake in Shillong.",
+        "Witness the stunning Laitlum Canyons, known as the “end of the world.”",
+        "Stop at Elephant Falls, one of Shillong’s iconic spots.",
+        "Admire panoramic views from Mawkdok Dympep Valley.",
+        "Discover the mysterious Arwah Caves and Garden of Caves.",
+        "Visit Wah-Kaba Falls and Mawsmai Caves for raw nature.",
+        "Marvel at Nohkalikai Falls, India’s tallest plunge waterfall.",
+        "Admire the grandeur of Seven Sisters Falls in Cherrapunji.",
+        "Trek to the Nongriat Double Decker Root Bridge and Rainbow Falls.",
+        "Enjoy the surreal beauty of the Blue Lagoons.",
+        "Stay in riverside camps at Dawki, famous for its clear water.",
+        "Enjoy a boat ride on the Umngot River at Shnongpdeng.",
+        "Visit Mawlynnong Village, Asia’s cleanest village.",
+        "Experience the beauty of Phe Phe Waterfall and Krang Suri Falls.",
+        "Stop by the India-Bangladesh Border for a unique viewpoint.",
+        "End the trip with blessings at Maa Kamakhya Temple in Guwahati."
+      ],
+      "locationGlimpses": [
+        {
+          "name": "Umiam Lake",
+          "image": "/image/Meghalaya/IMG_1034.JPEG"
+        },
+        {
+          "name": "Laitlum Canyons",
+          "image": "/image/Meghalaya/IMG_0884.JPEG"
+        },
+        {
+          "name": "Double Decker Bridge",
+          "image": "/image/Meghalaya/IMG_0857.JPEG"
+        },
+        {
+          "name": "Nohkalikai Falls",
+          "image": "/image/Meghalaya/IMG_1124.JPEG"
+        },
+        {
+          "name": "Mawsmai Caves",
+          "image": "/image/Meghalaya/IMG_1250.JPEG"
+        },
+        {
+          "name": "Rainbow Fall",
+          "image": "/image/Meghalaya/IMG_1156.JPEG"
+        },
+        {
+          "name": "Umngot River",
+          "image": "/image/Meghalaya/IMG_1043.JPEG"
+        },
+        {
+          "name": "Phe Phe Waterfall",
+          "image": "/image/Meghalaya/IMG_1192.JPEG"
+        },
+        {
+          "name": "Wei Sawdong Falls",
+          "image": "/image/Meghalaya/IMG_0865.JPEG"
+        },
+        {
+          "name": "Krang Suri Falls",
+          "image": "/image/Meghalaya/IMG_1048.JPEG"
+        },
+        {
+          "name": "Mawlynnong Village",
+          "image": "/image/Meghalaya/IMG_1266.JPEG"
+        },
+        {
+          "name": "Elephant Fall",
+          "image": "/image/Meghalaya/IMG_0974.JPEG"
+        }
+      ],
+      "hotels": [
+        {
+          "id": "h1",
+          "city": "Shillong",
+          "hotelName": "Comfortable Shillong Town Hotel (2 Nights)",
+          "nights": "2 Nights",
+          "roomType": "Deluxe Room with Breakfast",
+          "starRating": "3 Star Stay",
+          "amenities": [
+            "Geyser / Hot Water",
+            "Daily Wholesome Breakfast",
+            "Police Bazaar Proximity",
+            "Free WiFi"
+          ]
+        },
+        {
+          "id": "h2",
+          "city": "Cherrapunji",
+          "hotelName": "Sohra Valley Resort / Eco Resort (2 Nights)",
+          "nights": "2 Nights",
+          "roomType": "Valley View Rooms",
+          "starRating": "Eco Resort",
+          "amenities": [
+            "Hot Water",
+            "Scenic Valley Views",
+            "In-house Restaurant",
+            "Bonfire space"
+          ]
+        },
+        {
+          "id": "h3",
+          "city": "Dawki / Shnongpdeng",
+          "hotelName": "Riverside Swiss Tents / Homestay (1 Night)",
+          "nights": "1 Night",
+          "roomType": "Riverside Tents with Bedding",
+          "starRating": "Riverside Campsite",
+          "amenities": [
+            "Riverside View",
+            "Dinner Included",
+            "Bonfire & Music",
+            "Boating on Umngot River"
+          ]
+        }
+      ],
+      "transport": {
+        "vehicleType": "Tempo Traveller / SUV / Sedan (Group size dependent)",
+        "pickupDrop": "Guwahati Airport / Railway Station Pickup & Drop",
+        "includedFeatures": [
+          "Entire transportation as per the itinerary",
+          "Experienced local Meghalaya hill driver",
+          "All toll charges, parking fees, fuel & driver allowances included",
+          "30 minutes complimentary boating in Dawki River"
+        ],
+        "note": "Pick up and drop as per fixed timings (Airport arrival before 11:00 AM on Day 1)."
+      },
+      "days": [
+        {
+          "day": 1,
+          "title": "Arrival in Guwahati Transfer to Shillong",
+          "briefRoute": "ARRIVAL IN GUWAHATI | TRANSFER TO SHILLONG VIA UMIAM LAKE",
+          "points": [
+            "Arrive at Guwahati Airport before 11:00 AM.",
+            "Our representative will meet and greet you at the airport.",
+            "The group will depart for Shillong at 12:00 PM.",
+            "Enjoy a scenic 4-hour drive from Guwahati to Shillong.",
+            "On the way, stop at the beautiful Umiam Lake (Barapani) and capture its stunning views.",
+            "Arrive in Shillong and check in to the hotel.",
+            "In the evening, explore Police Bazaar.",
+            "Return to the hotel and enjoy an overnight stay in Shillong."
+          ],
+          "meals": [
+            "Not Including"
+          ],
+          "stay": "Overnight stay in Shillong",
+          "photos": [
+            "/image/Meghalaya/IMG_0884.JPEG",
+            "/image/Meghalaya/IMG_1034.JPEG",
+            "/image/Meghalaya/IMG_0974.JPEG"
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Shillong – Laitlum Canyons – Krang Suri – Phe Phe Falls – Dawki",
+          "briefRoute": "SHILLONG TO CHERRAPUNJI | EXPLORING ELEPHANT FALLS, LAITLUM CANYONS, WEI SAWDONG WATERFALL, MAWSMAI CAVES",
+          "points": [
+            "Enjoy a delicious breakfast at the hotel.",
+            "Check out and proceed towards Dawki/Shnongpdeng.",
+            "Visit the beautiful Laitlum Canyons.",
+            "Explore the stunning Krang Suri Waterfall.",
+            "Visit the scenic Phe Phe Falls.",
+            "Continue your journey towards Dawki/Shnongpdeng.",
+            "Check in to the campsite/homestay.",
+            "Enjoy the evening at leisure.",
+            "Overnight stay at Dawki/Shnongpdeng."
+          ],
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stay": "Overnight stay at Dawki/Shnongpdeng",
+          "photos": [
+            "/image/Meghalaya/IMG_1193.JPEG",
+            "/image/Meghalaya/IMG_1048.JPEG",
+            "/image/Meghalaya/IMG_1043.JPEG"
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Dawki / Shnongpdeng – Mawlynnong – Cherrapunjee",
+          "briefRoute": "CHERRAPUNJI SIGHTSEEING | NOHKALIKAI FALLS, SEVEN SISTERS FALLS & NONGRIAT ROOT BRIDGE",
+          "points": [
+            "Enjoy breakfast and check out from your stay.",
+            "Proceed towards Mawlynnong Village, known as one of the cleanest villages in Asia.",
+            "Visit the famous Bamboo Sky Walk and Single Decker Living Root Bridge.",
+            "Head to the beautiful Dawki River, where you can enjoy adventure activities and boating at your own cost.",
+            "Visit the Indo-Bangladesh Border.",
+            "Later, proceed towards Cherrapunjee.",
+            "Check in to your stay and relax.",
+            "Overnight stay in Cherrapunjee."
+          ],
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Overnight stay in Cherrapunjee",
+          "photos": [
+            "/image/Meghalaya/IMG_1124.JPEG",
+            "/image/Meghalaya/IMG_0857.JPEG",
+            "/image/Meghalaya/IMG_1156.JPEG"
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Cherrapunjee – Double Decker Living Root Bridge – Blue Lagoon",
+          "briefRoute": "CHERRAPUNJI TO DAWKI VIA MAWLYNNONG | UMNGOT RIVER & SHNONGPDENG VILLAGE",
+          "points": [
+            "Enjoy breakfast and depart for Tyrna Village.",
+            "Upon reaching Tyrna, begin your trek to the Single Decker Living Root Bridge.",
+            "Continue the trek to the famous Double Decker Living Root Bridge.",
+            "Visit the beautiful Blue Lagoon Waterfall and enjoy swimming in its crystal-clear natural pool.",
+            "Trek back to Tyrna Village. (The trek involves approximately 3,300 steps one way, making it around 6,600 steps in total.)",
+            "After completing the trek, proceed back to Cherrapunjee.",
+            "Overnight stay in Cherrapunjee."
+          ],
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Overnight stay in Cherrapunjee",
+          "photos": [
+            "/image/Meghalaya/IMG_1043.JPEG",
+            "/image/Meghalaya/IMG_1139.JPEG",
+            "/image/Meghalaya/IMG_1124.JPEG"
+          ]
+        },
+        {
+          "day": 5,
+          "title": "Cherrapunjee Sightseeing – Shillong",
+          "briefRoute": "DAWKI TO SHILLONG VIA JOWAI | INDIA-BANGLADESH BORDER, PHE PHE WATERFALL & KRANG SURI FALLS",
+          "points": [
+            "Enjoy breakfast and check out from your stay.",
+            "Visit the famous Mawsmai Cave and Arwah Cave.",
+            "Explore the beautiful Garden of Caves.",
+            "Witness the breathtaking Nohkalikai Falls and Seven Sisters Falls.",
+            "Visit Eco Park and enjoy the scenic views.",
+            "Later, proceed back to Shillong.",
+            "Check in to your stay and relax.",
+            "Overnight stay in Shillong."
+          ],
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Overnight stay in Shillong",
+          "photos": [
+            "/image/Meghalaya/IMG_0865.JPEG",
+            "/image/Meghalaya/IMG_1192.JPEG",
+            "/image/Meghalaya/IMG_0884.JPEG"
+          ]
+        },
+        {
+          "day": 6,
+          "title": "Shillong – Guwahati Airport | Departure",
+          "briefRoute": "DEPARTURE DAY | VISIT MAA KAMAKHYA TEMPLE & TRANSFER TO GUWAHATI",
+          "note": "Note: It is advised to spend a maximum of 25–40 minutes at each sightseeing location to cover all the places mentioned in the itinerary.",
+          "points": [
+            "Enjoy breakfast and check out from your stay.",
+            "Depart for Guwahati Airport around 9:00 AM.",
+            "The journey to the airport takes approximately 4–5 hours.",
+            "Expected arrival at the airport will be around 3:00 PM.",
+            "We recommend booking your return flight after 5:00 PM.",
+            "Bid farewell to your fellow travellers and take home beautiful memories from your incredible Meghalaya adventure. 💚"
+          ],
+          "meals": [
+            "Breakfast"
+          ],
+          "stay": "Trip Ends with Cherished Memories",
+          "photos": [
+            "/image/Meghalaya/IMG_1034.JPEG",
+            "/image/Meghalaya/IMG_0789.JPEG",
+            "/image/Meghalaya/IMG_0893.JPEG"
+          ]
+        }
+      ],
+      "inclusions": [
+        "Pickup and drop as per the fixed timings.",
+        "Entire transportation as per the itinerary by Tempo Traveller / SUV / Sedan, depending on the group size.",
+        "5 nights' accommodation: 2 nights in Shillong, 2 nights in Cherrapunjee, 1 night in Dawki/Shnongpdeng.",
+        "5 breakfasts and 1 dinner at Dawki.",
+        "Nongriat Trek guide for the Double Decker Living Root Bridge trek.",
+        "30 minutes complimentary boating in Dawki River (4 people sharing per boat).",
+        "All toll charges, parking fees, fuel and driver allowances.",
+        "24x7 on-call support from our executive.",
+        "Trip Leader throughout the trip."
+      ],
+      "exclusions": [
+        "Lunches and any meals not mentioned in the itinerary.",
+        "Flights are not included.",
+        "Travel insurance.",
+        "Any charges for additional activities not specified in the itinerary.",
+        "Boat ride fees on the Umngot River beyond complimentary ride.",
+        "Any kind of entry fees/ticket to attractions.",
+        "Airfare or rail fare.",
+        "Any personal expense like a tip to the driver, entry to monuments, camera/video camera charges, laundry, telephone bills, etc.",
+        "Any cost arising due to natural calamities like landslides, roadblocks etc. to be borne directly by the customer on the spot.",
+        "GST 5%"
+      ],
+      "quotation": {
+        "tripleSharingPrice": 20999,
+        "doubleSharingPrice": 22999,
+        "xmasTripleSharingPrice": 22999,
+        "xmasDoubleSharingPrice": 24499,
+        "advanceAmount": 5000,
+        "paymentTerms": "Confirm your booking with just ₹5,000/- and pay the rest later according to payment Policy.",
+        "validUntil": "Book Before 30 days of the departure and get Early Bird Discounts"
+      },
+      "pointsToBeNoted": [
+        "Book your trip before 30 days prior of the departure date to get confirm train/flight tickets.",
+        "The trip leader has all the rights to discard, skip or alter the sightseeing/itinerary if an emergency occurs, act of God or over unfavorable behavior of participants.",
+        "Triple Sharing Room: In triple-sharing rooms, an extra mattress is provided, but it should not be confused with an extra bed.",
+        "Any delay in time at particular sightseeing by participants will result in cancellations of further sightseeing.",
+        "Participants should coordinate, disciplined and align together as a team during the Trip.",
+        "No refund will be provided if the participant doesn’t show up on the day of the event.",
+        "Alcohol Consumption: The consumption and serving of alcohol in hotels/rooms are subject to the rules and regulations of the respective hotels.",
+        "Though we assure safety as a top priority, Event Organizers are not responsible for any severe injuries or fatal events.",
+        "Mandatory ID Requirement: As mandated by the Government, a valid photo ID for all members staying at the hotel is mandatory.",
+        "Itineraries might change a bit on public holidays/festivals.",
+        "Exclusive Vehicle Usage: The vehicle provided will be used exclusively as per the itinerary on a point-to-point basis and will not be available for personal use.",
+        "Travelers must take care of their luggage & belongings. The management shall not be accountable for missing items along the tour.",
+        "Due to any Special occasion/Public Holiday/long Weekend or Festivals, if any sightseeing will be close, Travel Tribes are not liable for that.",
+        "We do not provide any insurance policy to cover the expenditure on sickness or accidents or losses incurred due to theft or other reasons.",
+        "Water and Electricity Scarcity: In hilly areas, scarcity of water and electricity is a natural phenomenon. Some hotels have fixed schedules for supplying hot and cold water. Cooperation is appreciated despite the inconvenience caused.",
+        "Please do not expect luxury facilities in remote hamlets and appreciate being cooperative with fellow Participants.",
+        "Transportation and Logistics may vary depending on group size (Sumo, Tempo Traveller, Mini Bus) to ensure smooth travel operations.",
+        "We understand and appreciate physical intimacies (handshakes, hugs, etc.) but not at the cost of someone else's discomfort. TRAVEL TRIBES strictly stands against any form of harassment.",
+        "Individual who wishes to enroll in this plan must consume all Road, vehicle and nature related risks. The operating company/Trip leaders are not responsible for any harm/damage/loss of life.",
+        "AC Availability: AC will not be available in vehicles in hilly regions due to steep gradients.",
+        "Bus Breakdowns: In rare cases of vehicle breakdowns, on-ground replacements take standard operational time. Cooperation is required.",
+        "Predefined Bus Halts: The halts for lunch/dinner are predefined by the vendor and cannot be changed arbitrarily for personal convenience.",
+        "Refund will be done only in case of cancellation of plan from the company or organizers or if the plan is postponed.",
+        "You give consent and authority to TRAVEL TRIBES to use clicked pictures / videos from the trip for social media and marketing. All trip media remains the property of TRAVEL TRIBES."
+      ],
+      "whyTravelTribes": [
+        {
+          "title": "Community Travel",
+          "desc": "Travel with like-minded people. Travelling with a new group of people will change your definition of travel, from strangers to what feels like family."
+        },
+        {
+          "title": "Budget Friendly",
+          "desc": "Travel with us without hurting your pocket. No hidden costs, No extra surprise charges."
+        },
+        {
+          "title": "Trusted and Safest",
+          "desc": "Safe for solo female travellers & trusted by 2000+ female Travellers across India."
+        },
+        {
+          "title": "Trip Captain / Trip Buddies",
+          "desc": "We are a team of experienced individuals who prioritize loyalty, safety & customer satisfaction on every departure."
+        },
+        {
+          "title": "Group Size — 12 to 20",
+          "desc": "Carefully curated group sizes ensuring personalized care, great team bonding, and zero overcrowding."
+        },
+        {
+          "title": "Age Group — 18 to 35",
+          "desc": "Travel with a group of young, energetic travellers just like you, who are fun, adventurous, and easy to connect with."
+        },
+        {
+          "title": "Primarily for Solo Travelers & Friends",
+          "desc": "With us, you can join solo without hesitating even if your friends back out. You may leave with strangers, but you return with a family."
+        }
+      ],
+      "createdAt": "2026-10-16T23:52:30.593Z",
+      "updatedAt": "2026-10-16T23:52:30.594Z"
+    }
+  ]
+}

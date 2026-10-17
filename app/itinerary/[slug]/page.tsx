@@ -2,8 +2,12 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { trips } from '@/lib/travel-data'
+import { getCuratedItineraryBySlug } from '@/lib/curated-itineraries-store'
 import { TripContent } from './trip-content'
+import { CuratedItineraryView } from '@/components/curated-itinerary-view'
 import { PageFrame } from '@/components/site-shell'
+
+export const dynamicParams = true
 
 export function generateStaticParams() {
   return trips.map((trip) => ({
@@ -13,7 +17,47 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params
-  const trip = trips.find((t) => t.slug === resolvedParams.slug)
+  const slug = resolvedParams.slug
+
+  // 1. Check curated store first
+  const curated = getCuratedItineraryBySlug(slug)
+  if (curated) {
+    const isCustom = curated.tripType === 'customized'
+    const title = isCustom
+      ? `${curated.title} — Proposal for ${curated.clientName || 'Valued Traveller'} | Travel Tribes`
+      : `${curated.title} (${curated.duration}) | Travel Tribes`
+    const description = curated.overview
+      ? curated.overview.slice(0, 160)
+      : `Personalized travel itinerary for ${curated.destination}. Curated stays, transfers, and day-by-day plan by Travel Tribes.`
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: `https://traveltribes.in/itinerary/${curated.slug}`,
+        siteName: 'Travel Tribes',
+        images: [
+          {
+            url: curated.bannerImage || '/image/Logowithbg.png',
+            width: 1200,
+            height: 630,
+            alt: curated.title
+          }
+        ]
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [curated.bannerImage || '/image/Logowithbg.png']
+      }
+    }
+  }
+
+  // 2. Check standard travel data trips
+  const trip = trips.find((t) => t.slug === slug)
   if (!trip) return {}
 
   const title = `${trip.title} (${trip.duration}) | Travel Tribes`
@@ -48,9 +92,30 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export default async function ItineraryPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const trip = trips.find((t) => t.slug === resolvedParams.slug)
-  
+  const resolvedParams = await params
+  const slug = resolvedParams.slug
+
+  // 1. Check curated itineraries
+  const curated = getCuratedItineraryBySlug(slug)
+  if (curated) {
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-10 h-10 border-3 border-[#00b4d8] border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm font-semibold text-slate-400">Loading custom itinerary proposal...</p>
+            </div>
+          </div>
+        }
+      >
+        <CuratedItineraryView itinerary={curated} />
+      </Suspense>
+    )
+  }
+
+  // 2. Fall back to standard trips
+  const trip = trips.find((t) => t.slug === slug)
   if (!trip) {
     notFound()
   }
@@ -72,4 +137,3 @@ export default async function ItineraryPage({ params }: { params: Promise<{ slug
     </PageFrame>
   )
 }
-

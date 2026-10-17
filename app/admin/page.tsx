@@ -18,7 +18,8 @@ import {
   ChevronRight,
   Calendar,
   Compass,
-  DollarSign
+  DollarSign,
+  Sparkles
 } from 'lucide-react'
 import type { CRMLead, CRMBooking, CRMActivity } from '@/lib/crm-store'
 
@@ -150,6 +151,14 @@ export default function AdminDashboardPage() {
             <RefreshCw size={14} className={loading ? 'animate-spin text-[#00b4d8]' : ''} />
             <span>Refresh Data</span>
           </button>
+
+          <Link
+            href="/curate-itinerary"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:brightness-110 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-amber-400/20 transition-all cursor-pointer"
+          >
+            <Sparkles size={15} />
+            <span>Curate Itinerary ✨</span>
+          </Link>
 
           <Link
             href="/admin/leads"

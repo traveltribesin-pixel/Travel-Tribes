@@ -17,11 +17,13 @@ import {
   Menu,
   X,
   Compass,
-  Bell
+  Bell,
+  Sparkles
 } from 'lucide-react'
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
+  { href: '/curate-itinerary', label: 'Curate Itinerary ✨', icon: Sparkles },
   { href: '/admin/leads', label: 'Leads Pipeline', icon: Users },
   { href: '/admin/bookings', label: 'Bookings & Payments', icon: CreditCard },
   { href: '/admin/custom-trips', label: 'Corporate & Custom', icon: Building2 },

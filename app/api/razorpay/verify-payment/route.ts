@@ -3,6 +3,7 @@ import { verifyRazorpaySignature, getRazorpayInstance } from '@/lib/razorpay'
 import { calculateBookingPricing, sanitizeGuests } from '@/lib/pricing-calculator'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { addBooking, addLead } from '@/lib/crm-store'
 
 // In-memory ledger to prevent Replay / Double-Processing attacks
 const processedPayments = new Set<string>()
@@ -454,6 +455,52 @@ export async function POST(req: NextRequest) {
         return { success: false, error: err?.message }
       })
     )
+
+    // 7. Built-in CRM Store Sync (Record Confirmed Booking & Converted Lead)
+    try {
+      addBooking({
+        id: bookingId,
+        source: `Online Booking (Razorpay - ${paymentMethodUsed})`,
+        tripTitle,
+        tripSlug: tripSlug || tripTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        date: travelDate || 'Selected Batch',
+        fullName,
+        email,
+        phone,
+        age: age ? Number(age) : null,
+        city,
+        guests: totalGuests,
+        sharingType: packageLabel,
+        paymentType: isFullPayment ? 'full' : 'advance',
+        paymentStatus: isFullPayment ? 'PAID' : 'PARTIAL',
+        bookingStatus: 'CONFIRMED',
+        totalAmount: grandTotal,
+        paidAmount,
+        balanceDue: remainingBalance,
+        razorpayOrderId: razorpay_order_id,
+        razorpayPaymentId: razorpay_payment_id,
+        specialRequest: specialRequest || undefined,
+        couponCode: authoritativePricing.appliedCoupon || undefined,
+        note: `Online payment verified via Razorpay (${paymentMethodUsed} - ${razorpay_payment_id}). Paid ₹${amountPaid.toLocaleString('en-IN')}${remainingBalance > 0 ? `, Remaining balance: ₹${remainingBalance.toLocaleString('en-IN')}` : ''}.`
+      })
+
+      // Also register as converted lead in CRM pipeline
+      addLead({
+        fullName,
+        email,
+        phone,
+        source: 'Online Booking (Website)',
+        tripTitle,
+        tripSlug: tripSlug || tripTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        travelDates: travelDate,
+        groupSize: `${totalGuests} Travellers (${packageLabel})`,
+        budget: `₹${grandTotal.toLocaleString('en-IN')}`,
+        message: specialRequest ? `Special Request: ${specialRequest} (Booking ID: ${bookingId})` : `Confirmed Online Booking ${bookingId}`,
+        priority: 'HIGH'
+      })
+    } catch (crmErr) {
+      console.error('CRM sync failed during Razorpay verification:', crmErr)
+    }
 
     await Promise.allSettled(tasks)
 
