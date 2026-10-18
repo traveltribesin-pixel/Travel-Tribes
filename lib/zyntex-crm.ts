@@ -17,7 +17,7 @@ export interface ZyntexLeadInput {
   customFields?: Record<string, any>
 }
 
-const DEFAULT_API_KEY = 'zyn_live_650e6e860cd59079c84ae4b889e4c275'
+const DEFAULT_API_KEY = 'zyn_live_395987dcebb63e58836fd423f51abf3b'
 const DEFAULT_WEBHOOK_URL = 'https://crm-alpha-drab.vercel.app/api/v1/capture-lead'
 const ORGS_URL = 'https://crm-alpha-drab.vercel.app/api/organizations'
 

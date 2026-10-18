@@ -183,7 +183,7 @@ export default function SettingsPage() {
               <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md">Zoho-Style Auth</span>
             </div>
             <p className="font-mono text-cyan-300 font-bold break-all text-xs bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
-              zyn_live_650e6e860cd59079c84ae4b889e4c275
+              zyn_live_395987dcebb63e58836fd423f51abf3b
             </p>
             <p className="text-[10px] text-slate-500">Configured in <code>.env</code> as <code>ZYNTEX_CRM_API_KEY</code></p>
           </div>

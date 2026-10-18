@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { calculateBookingPricing, sanitizeGuests } from '@/lib/pricing-calculator'
 import { getRazorpayInstance, getRazorpayKeys } from '@/lib/razorpay'
+import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
 
 // In-memory IP rate limiter for DDoS and order-flooding prevention
 const requestCounts = new Map<string, { count: number; timestamp: number }>()
@@ -177,6 +178,19 @@ export async function POST(req: NextRequest) {
     }
 
     const order = await razorpay.orders.create(orderOptions)
+
+    // Push Lead to Zyntex CRM so sales team can follow up even if user drops before payment completion
+    sendLeadToZyntexCRM({
+      name: fullName,
+      phone,
+      email,
+      source: 'Online Booking Checkout (/book)',
+      tripTitle: pricing.tripTitle,
+      travelDates: date || 'Selected Batch',
+      groupSize: `${pricing.guests} Travellers (${pricing.packageLabel})`,
+      budget: `₹${pricing.grandTotal.toLocaleString('en-IN')}`,
+      message: `Checkout Initiated. Order: ${order.id}, Booking ID: ${bookingId}. Amount to pay: ₹${pricing.amountToPayToday.toLocaleString('en-IN')}${specialRequest ? `, Special Request: ${specialRequest}` : ''}`
+    }).catch((crmErr) => console.error('Zyntex CRM push error on order creation:', crmErr))
 
     return NextResponse.json({
       success: true,

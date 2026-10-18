@@ -1,6 +1,20 @@
 {
   "leads": [
     {
+      "id": "LEAD-185183",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "tripSlug": "meghalaya-backpacking",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-10-18T16:49:45.183Z",
+      "updatedAt": "2026-10-18T16:49:45.183Z"
+    },
+    {
       "id": "LEAD-757199",
       "source": "Custom Trip Builder",
       "fullName": "Vikramaditya Roy",
@@ -248,6 +262,15 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-1792342185183",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Amit testing (Meghalaya Backpacking Trip)",
+      "entityType": "lead",
+      "entityId": "LEAD-185183",
+      "createdAt": "2026-10-18T16:49:45.183Z"
+    },
     {
       "id": "act-1792330757199",
       "type": "LEAD_CREATED",
