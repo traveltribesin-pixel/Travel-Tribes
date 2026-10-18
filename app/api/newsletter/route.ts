@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
 
 export async function POST(req: NextRequest) {
   try {
@@ -108,6 +109,20 @@ export async function POST(req: NextRequest) {
         message: 'Subscribed to Travel Tribes updates'
       }).catch((err) => {
         console.error('Newsletter Google Sheets sync failed:', err)
+        return { success: false, error: err?.message }
+      })
+    )
+
+    // 4. Push Newsletter Subscriber to Zyntex CRM Platform
+    tasks.push(
+      sendLeadToZyntexCRM({
+        name: 'Newsletter Subscriber',
+        phone: '',
+        email: cleanEmail,
+        source: 'Website Newsletter Subscription',
+        message: 'Subscribed to Travel Tribes travel deals & updates'
+      }).catch((err) => {
+        console.error('Zyntex CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

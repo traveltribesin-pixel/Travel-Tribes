@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { calculateBookingPricing } from '@/lib/pricing-calculator'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
 import { addBooking, addLead } from '@/lib/crm-store'
 
 // Simple in-memory rate limiting map for basic DDoS/spam prevention
@@ -331,6 +332,24 @@ export async function POST(req: NextRequest) {
         message: specialRequest || ''
       }).catch((err) => {
         console.error('Booking Google Sheets sync failed:', err)
+        return { success: false, error: err?.message }
+      })
+    )
+
+    // Push Booking Customer directly to Zyntex CRM Platform
+    tasks.push(
+      sendLeadToZyntexCRM({
+        name: fullName,
+        phone,
+        email,
+        source: 'Direct Booking Form',
+        tripTitle: pricing.tripTitle,
+        travelDates: date || 'Selected Date',
+        groupSize: `${pricing.guests} Travellers`,
+        budget: `₹${pricing.grandTotal.toLocaleString('en-IN')}`,
+        message: `Booking Inquiry ID: ${bookingId}. Amount to pay: ₹${pricing.amountToPayToday}. Balance: ₹${pricing.remainingBalance}. ${specialRequest ? `Special Request: ${specialRequest}` : ''}`
+      }).catch((err) => {
+        console.error('Zyntex CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

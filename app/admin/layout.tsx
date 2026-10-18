@@ -154,7 +154,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </nav>
 
           {/* Quick Actions in Sidebar */}
-          <div className="px-3 pt-3">
+          <div className="px-3 pt-3 space-y-2">
+            {/* Zyntex CRM Cloud Quick Link */}
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/40 to-blue-950/40 border border-cyan-500/30 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] uppercase font-bold text-cyan-300 tracking-wider">Cloud CRM</span>
+                <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Live Sync
+                </span>
+              </div>
+              <div className="mt-2">
+                <a
+                  href="https://crm-alpha-drab.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 hover:text-white transition-all text-[11px] font-semibold border border-cyan-500/20"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles size={13} className="text-[#00b4d8]" />
+                    <span>Open Zyntex CRM</span>
+                  </span>
+                  <ExternalLink size={12} className="text-slate-400" />
+                </a>
+              </div>
+            </div>
+
             <div className="p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-xs">
               <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Quick Exports</span>
               <div className="mt-2 space-y-1.5">

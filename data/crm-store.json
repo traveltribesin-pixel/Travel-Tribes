@@ -1,6 +1,55 @@
 {
   "leads": [
     {
+      "id": "LEAD-757199",
+      "source": "Custom Trip Builder",
+      "fullName": "Vikramaditya Roy",
+      "email": "vikram@example.com",
+      "phone": "+91 99887 76655",
+      "tripTitle": "Kazakhstan & Almaty",
+      "travelDates": "Dec 2026",
+      "groupSize": "Group of 6",
+      "budget": "Snow & Adventure",
+      "message": "Please share package options with 4-star stays",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "meta": {
+        "tripVibe": "Snow & Adventure",
+        "isCorporate": false
+      },
+      "createdAt": "2026-10-18T13:39:17.199Z",
+      "updatedAt": "2026-10-18T13:39:17.199Z"
+    },
+    {
+      "id": "LEAD-745135",
+      "source": "Contact Us Form",
+      "fullName": "Ananya Singhania",
+      "email": "ananya@example.com",
+      "phone": "+91 98234 56789",
+      "tripTitle": "Bali with Gili Island",
+      "message": "Looking for a solo traveller slot in November batch!",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-10-18T13:39:05.135Z",
+      "updatedAt": "2026-10-18T13:39:05.135Z"
+    },
+    {
+      "id": "LEAD-737619",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Rohan Mehra",
+      "email": "rohan.mehra@example.com",
+      "phone": "+91 98765 43210",
+      "tripTitle": "Spiti Valley Winter Expedition",
+      "tripSlug": "spiti-valley-winter",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-10-18T13:38:57.619Z",
+      "updatedAt": "2026-10-18T13:38:57.619Z"
+    },
+    {
       "id": "LEAD-675052",
       "source": "Itinerary PDF Download Form",
       "fullName": "Test Traveller",
@@ -199,6 +248,33 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-1792330757199",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Vikramaditya Roy (Kazakhstan & Almaty)",
+      "entityType": "lead",
+      "entityId": "LEAD-757199",
+      "createdAt": "2026-10-18T13:39:17.199Z"
+    },
+    {
+      "id": "act-1792330745135",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Ananya Singhania (Bali with Gili Island)",
+      "entityType": "lead",
+      "entityId": "LEAD-745135",
+      "createdAt": "2026-10-18T13:39:05.135Z"
+    },
+    {
+      "id": "act-1792330737619",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Rohan Mehra (Spiti Valley Winter Expedition)",
+      "entityType": "lead",
+      "entityId": "LEAD-737619",
+      "createdAt": "2026-10-18T13:38:57.619Z"
+    },
     {
       "id": "act-1791015675052",
       "type": "LEAD_CREATED",

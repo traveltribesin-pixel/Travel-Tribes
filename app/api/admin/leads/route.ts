@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticatedAdmin } from '@/lib/admin-auth'
 import { getLeads, addLead } from '@/lib/crm-store'
+import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
 
 export async function GET(req: NextRequest) {
   const isAuth = await isAuthenticatedAdmin()
@@ -46,6 +47,19 @@ export async function POST(req: NextRequest) {
       message: body.message ? String(body.message).trim() : undefined,
       priority: body.priority || 'HIGH'
     })
+
+    // Also push manual entry to Zyntex CRM Platform
+    sendLeadToZyntexCRM({
+      name: lead.fullName,
+      phone: lead.phone,
+      email: lead.email,
+      source: lead.source,
+      tripTitle: lead.tripTitle,
+      travelDates: lead.travelDates,
+      groupSize: lead.groupSize,
+      budget: lead.budget,
+      message: lead.message
+    }).catch((err) => console.error('Zyntex CRM push error on admin manual lead:', err))
 
     return NextResponse.json({ success: true, lead })
   } catch (error) {

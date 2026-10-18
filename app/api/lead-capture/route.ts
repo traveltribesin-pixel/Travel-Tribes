@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
 import { addLead } from '@/lib/crm-store'
 
 export async function POST(req: NextRequest) {
@@ -146,6 +147,21 @@ export async function POST(req: NextRequest) {
         message: `Itinerary Download: ${tripName}`
       }).catch((err) => {
         console.error('Lead Google Sheets sync failed:', err)
+        return { success: false, error: err?.message }
+      })
+    )
+
+    // 4. Push Lead directly to Zyntex CRM Platform
+    tasks.push(
+      sendLeadToZyntexCRM({
+        name: cleanName,
+        phone: cleanPhone,
+        email: cleanEmail,
+        source: sourceLabel,
+        tripTitle: tripName,
+        message: `Downloaded Itinerary Brochure for ${tripName}`
+      }).catch((err) => {
+        console.error('Zyntex CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

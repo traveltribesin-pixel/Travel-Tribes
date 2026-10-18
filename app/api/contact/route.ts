@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
+import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
 import { addLead } from '@/lib/crm-store'
 
 export async function POST(req: NextRequest) {
@@ -147,6 +148,21 @@ export async function POST(req: NextRequest) {
         message: cleanMessage
       }).catch((err) => {
         console.error('Contact Google Sheets sync failed:', err)
+        return { success: false, error: err?.message }
+      })
+    )
+
+    // 4. Push Enquiry directly to Zyntex CRM Platform
+    tasks.push(
+      sendLeadToZyntexCRM({
+        name: cleanName,
+        phone: cleanPhone !== 'Not provided' ? cleanPhone : '',
+        email: cleanEmail,
+        source: sourceLabel || 'Contact Us Page',
+        tripTitle: tripInterest,
+        message: cleanMessage
+      }).catch((err) => {
+        console.error('Zyntex CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )
