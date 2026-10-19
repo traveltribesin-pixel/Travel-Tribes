@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -72,9 +73,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-0BTW5GX4DG'
+
   return (
     <html lang="en" className={plusJakarta.variable}>
       <body className="antialiased font-sans">
+        {/* Google tag (gtag.js) */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${gaId}');
+          `}
+        </Script>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

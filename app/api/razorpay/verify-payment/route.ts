@@ -495,12 +495,12 @@ export async function POST(req: NextRequest) {
         paymentStatus: isFullPayment ? 'PAID' : 'PARTIAL',
         bookingStatus: 'CONFIRMED',
         totalAmount: grandTotal,
-        paidAmount,
+        paidAmount: amountPaid,
         balanceDue: remainingBalance,
         razorpayOrderId: razorpay_order_id,
         razorpayPaymentId: razorpay_payment_id,
         specialRequest: specialRequest || undefined,
-        couponCode: authoritativePricing.appliedCoupon || undefined,
+        couponCode: authoritativePricing.couponCode || undefined,
         note: `Online payment verified via Razorpay (${paymentMethodUsed} - ${razorpay_payment_id}). Paid ₹${amountPaid.toLocaleString('en-IN')}${remainingBalance > 0 ? `, Remaining balance: ₹${remainingBalance.toLocaleString('en-IN')}` : ''}.`
       })
 

@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { trips } from '@/lib/travel-data'
+import { trips, blogs } from '@/lib/travel-data'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://traveltribes.in'
@@ -9,13 +9,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/upcoming-trips',
     '/domestic-trips',
     '/international-trips',
+    '/weekend-getaways',
     '/xmas-new-year-trips',
     '/corporate-trips',
     '/plan-a-trip',
     '/why-us',
     '/about',
     '/contact',
-    '/book'
+    '/book',
+    '/blog'
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -30,5 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9
   }))
 
-  return [...staticRoutes, ...itineraryRoutes]
+  const blogRoutes = blogs.map((blog) => ({
+    url: `${baseUrl}/blog/${blog.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7
+  }))
+
+  return [...staticRoutes, ...itineraryRoutes, ...blogRoutes]
 }

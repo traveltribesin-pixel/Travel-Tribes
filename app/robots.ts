@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin', '/admin/*', '/api/*']
+      disallow: ['/admin', '/admin/*', '/api/*', '/curate-itinerary', '/curate-itinerary/*']
     },
     sitemap: 'https://traveltribes.in/sitemap.xml'
   }
