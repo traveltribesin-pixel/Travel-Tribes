@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Travel Journal & Guides | Travel Tribes Blog',
     description: 'Read the latest travel stories, solo backpacking guides, trekking itineraries, and packing tips from Travel Tribes trip captains.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

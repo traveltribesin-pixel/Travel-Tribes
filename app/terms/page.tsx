@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms & Conditions | Travel Tribes',
     description: 'Terms & Conditions of Travel Tribes (Operated by Tribeify Experience LLP).',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

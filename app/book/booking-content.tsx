@@ -30,6 +30,7 @@ import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
 import { calculateBookingPricing, sanitizeGuests, validateCoupon, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
 import { getTripPrimaryDate, filterUpcomingDates, isDateUpcoming } from '@/lib/date-utils'
+import { fireCelebrationConfetti } from '@/lib/confetti'
 
 export type TravellerInfo = {
   fullName: string
@@ -89,6 +90,23 @@ export function BookingContent() {
   const [appliedCoupon, setAppliedCoupon] = useState<string>('')
   const [couponError, setCouponError] = useState<string | null>(null)
   const [couponSuccess, setCouponSuccess] = useState<string | null>(null)
+
+  // Celebration Toast Banner state
+  const [celebrationToast, setCelebrationToast] = useState<{
+    show: boolean
+    title: string
+    subtitle: string
+    discountAmount: number
+  } | null>(null)
+
+  useEffect(() => {
+    if (celebrationToast) {
+      const timer = setTimeout(() => {
+        setCelebrationToast(null)
+      }, 4500)
+      return () => clearTimeout(timer)
+    }
+  }, [celebrationToast])
 
   // Dynamic Multi-Traveller Form state
   const [travellers, setTravellers] = useState<TravellerInfo[]>(() => {
@@ -183,6 +201,22 @@ export function BookingContent() {
   const selectedPackage = pricing.availablePackages?.[selectedPackageIndex]
 
 
+  const handleSelectFullPayment = () => {
+    if (paymentType !== 'full') {
+      setPaymentType('full')
+      const fullDiscountTotal = 1000 * guests
+
+      // 🎉 Launch Celebration Animation & Toast
+      fireCelebrationConfetti({ particleCount: 140 })
+      setCelebrationToast({
+        show: true,
+        title: 'Full Payment Discount Unlocked!',
+        subtitle: `Woohoo! You saved flat ₹${fullDiscountTotal.toLocaleString('en-IN')} (₹1,000 x ${guests} ${guests > 1 ? 'guests' : 'guest'})!`,
+        discountAmount: fullDiscountTotal
+      })
+    }
+  }
+
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault()
     setCouponError(null)
@@ -195,8 +229,19 @@ export function BookingContent() {
     const res = validateCoupon(clean)
     if (res.valid) {
       setAppliedCoupon(res.cleanCode || clean)
-      setCouponSuccess(`Coupon ${res.cleanCode} applied! ₹${res.discount} discount savings.`)
+      const perPerson = res.discount
+      const totalDiscount = perPerson * guests
+      setCouponSuccess(`Coupon ${res.cleanCode} applied! ₹${perPerson.toLocaleString('en-IN')}/person (Total ₹${totalDiscount.toLocaleString('en-IN')}) discount savings.`)
       setCouponInput('')
+
+      // 🎉 Launch Celebration Animation & Toast
+      fireCelebrationConfetti({ particleCount: 150 })
+      setCelebrationToast({
+        show: true,
+        title: `Coupon ${res.cleanCode} Applied!`,
+        subtitle: `Awesome! You unlocked ₹${totalDiscount.toLocaleString('en-IN')} instant discount savings on your booking.`,
+        discountAmount: totalDiscount
+      })
     } else {
       setCouponError('Invalid coupon code. Please check and try again.')
     }
@@ -426,7 +471,52 @@ export function BookingContent() {
   }
 
   return (
-    <div className="bg-[#f7fbfd] min-h-screen py-5 pb-32 sm:py-8 lg:py-12 lg:pb-14 text-slate-800">
+    <div className="bg-[#f7fbfd] min-h-screen py-5 pb-32 sm:py-8 lg:py-12 lg:pb-14 text-slate-800 relative">
+      {/* Celebration Floating Toast Banner */}
+      <AnimatePresence>
+        {celebrationToast?.show && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.9, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
+            exit={{ opacity: 0, y: -30, scale: 0.95, x: '-50%' }}
+            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+            className="fixed top-20 sm:top-24 left-1/2 z-[99999] max-w-[92vw] sm:max-w-md w-full pointer-events-auto"
+          >
+            <div className="relative overflow-hidden bg-white text-slate-900 p-3.5 sm:p-4 rounded-2xl shadow-[0_20px_50px_rgba(11,41,64,0.22)] border-2 border-emerald-500">
+              <div className="relative flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center shrink-0 text-2xl shadow-xs">
+                  🎉
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <span className="text-[10px] uppercase font-black tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">
+                      Discount Applied
+                    </span>
+                    <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      Save ₹{celebrationToast.discountAmount.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div className="font-black text-sm sm:text-base text-slate-950 leading-tight truncate">
+                    {celebrationToast.title}
+                  </div>
+                  <div className="text-xs text-slate-700 font-semibold mt-1 leading-snug">
+                    {celebrationToast.subtitle}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setCelebrationToast(null)}
+                  className="text-slate-400 hover:text-slate-900 p-1.5 rounded-lg hover:bg-slate-100 transition-colors shrink-0 cursor-pointer"
+                  title="Close"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-[1160px] mx-auto px-2.5 sm:px-6 lg:px-8">
 
         {/* Header Breadcrumb */}
@@ -833,7 +923,7 @@ export function BookingContent() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setPaymentType('full')}
+                      onClick={handleSelectFullPayment}
                       className={`p-2.5 sm:p-3 rounded-xl text-left transition-all flex flex-col justify-between relative overflow-hidden cursor-pointer ${
                         paymentType === 'full'
                           ? 'bg-emerald-600 text-white shadow-xs'
@@ -1028,7 +1118,7 @@ export function BookingContent() {
                       </p>
                       <button
                         type="button"
-                        onClick={() => setPaymentType('full')}
+                        onClick={handleSelectFullPayment}
                         className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
                       >
                         <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!

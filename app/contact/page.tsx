@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Travel Tribes | 24/7 Travel Support & Inquiries',
     description: 'Get in touch with Travel Tribes. Call +91 99758 22023 or email hello@traveltribes.in for trip inquiries, batch bookings and custom travel planning.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

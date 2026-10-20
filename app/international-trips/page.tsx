@@ -8,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'International Group Tours & Backpacking Trips | Travel Tribes',
     description: 'Join epic international group trips to Vietnam, Bali, Thailand, Kazakhstan & Georgia. Hassle-free travel with verified stays, transfers and local captains.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/bali-group-trip.png']
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/image/bali-group-trip.png']
   }
 }
 

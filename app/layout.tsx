@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     description: 'Join Travel Tribes for unforgettable group trips, backpacking adventures and weekend getaways across India & beyond. Travel solo, meet new people and find your tribe.',
     images: [
       {
-        url: '/image/Logowithbg.png',
-        width: 800,
-        height: 800,
-        alt: 'Travel Tribes Logo'
+        url: '/image/travel-tribes-og-group.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Travel Tribes Community Group Trips'
       }
     ]
   },
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Travel Tribes | Group Trips, Backpacking & Weekend Getaways',
     description: 'Join Travel Tribes for unforgettable group trips, backpacking adventures and weekend getaways across India & beyond.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   },
   robots: {
     index: true,

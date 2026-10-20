@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Weekend Getaways & Short Trips from Mumbai & Pune | Travel Tribes',
     description: 'Quick 2-3 day weekend escapes from Mumbai and Pune. Explore Gokarna beach treks, Hampi heritage, Coorg coffee trails and Kolad rafting with Travel Tribes.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

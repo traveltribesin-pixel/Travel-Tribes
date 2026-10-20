@@ -1,6 +1,34 @@
 {
   "leads": [
     {
+      "id": "LEAD-030944",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "tripSlug": "coorg-mysore-new-year",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-10-20T17:57:10.944Z",
+      "updatedAt": "2026-10-20T17:57:10.944Z"
+    },
+    {
+      "id": "LEAD-537078",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "tripSlug": "coorg-mysore-new-year",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-10-20T17:48:57.078Z",
+      "updatedAt": "2026-10-20T17:48:57.078Z"
+    },
+    {
       "id": "LEAD-185183",
       "source": "Itinerary PDF Download Form",
       "fullName": "Amit testing",
@@ -262,6 +290,24 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-1792519030946",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Amit testing (Coorg with Mysore — New Year Special)",
+      "entityType": "lead",
+      "entityId": "LEAD-030944",
+      "createdAt": "2026-10-20T17:57:10.944Z"
+    },
+    {
+      "id": "act-1792518537078",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Amit testing (Coorg with Mysore — New Year Special)",
+      "entityType": "lead",
+      "entityId": "LEAD-537078",
+      "createdAt": "2026-10-20T17:48:57.078Z"
+    },
     {
       "id": "act-1792342185183",
       "type": "LEAD_CREATED",

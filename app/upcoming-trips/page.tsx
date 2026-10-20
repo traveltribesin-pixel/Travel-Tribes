@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Upcoming Group Trips in India and Abroad | Travel with Strangers | Travel Tribes',
     description: 'Join curated group trips across India and international with Travel Tribes. Meet like-minded travellers, explore amazing destinations and create unforgettable memories.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

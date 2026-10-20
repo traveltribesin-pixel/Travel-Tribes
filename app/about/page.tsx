@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Travel Tribes | India's Community Travel Brand",
     description: 'Travel Tribes is a Mumbai-based community travel brand creating group trips, backpacking adventures and meaningful travel experiences across India and beyond.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

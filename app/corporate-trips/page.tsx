@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Corporate Offsites, Team Retreats & Group Trips | Travel Tribes',
     description: 'Custom corporate offsites, team retreats and workations designed by Travel Tribes. Boost team bonding with adventure, stays, activities and seamless coordination.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

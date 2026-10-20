@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Xmas & New Year Trips 2026-2027 | Festive Group Escapes | Travel Tribes',
     description: 'Celebrate Christmas & New Year with Travel Tribes. Exclusive festive batches to Gokarna, Coorg, Hampi, Udaipur and Spiti with fireworks, beach countdowns and parties.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

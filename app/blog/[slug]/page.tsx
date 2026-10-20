@@ -18,6 +18,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const blog = blogs.find((b) => b.slug === resolvedParams.slug)
   if (!blog) return {}
 
+  const blogImage = blog.image
+    ? (blog.image.startsWith('http') ? blog.image : encodeURI(blog.image.startsWith('/') ? blog.image : `/${blog.image}`))
+    : '/image/travel-tribes-og-group.jpg'
+
   return {
     title: blog.metaTitle || `${blog.title} | Travel Tribes Journal`,
     description: blog.metaDescription || blog.excerpt,
@@ -28,9 +32,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: 'Travel Tribes',
       images: [
         {
-          url: '/image/Logowithbg.png',
-          width: 800,
-          height: 800,
+          url: blogImage,
+          width: 1200,
+          height: 630,
           alt: blog.title
         }
       ]
@@ -39,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title: blog.metaTitle || blog.title,
       description: blog.metaDescription || blog.excerpt,
-      images: ['/image/Logowithbg.png']
+      images: [blogImage]
     }
   }
 }

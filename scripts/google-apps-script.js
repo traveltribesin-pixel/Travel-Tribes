@@ -109,8 +109,7 @@ function logLeadOrInquiry(ss, timestamp, source, data) {
     data.message || data.notes || ""
   ];
 
-  sheet.appendRow(row);
-  formatLastRow(sheet);
+  insertRowAtTop(sheet, row);
 }
 
 // -------------------------------------------------------------
@@ -177,8 +176,7 @@ function logBooking(ss, timestamp, source, data) {
     data.travellersRoster || ""
   ];
 
-  sheet.appendRow(row);
-  formatLastRow(sheet);
+  insertRowAtTop(sheet, row);
 }
 
 // -------------------------------------------------------------
@@ -206,14 +204,13 @@ function logNewsletter(ss, timestamp, source, data) {
     "ACTIVE"
   ];
 
-  sheet.appendRow(row);
-  formatLastRow(sheet);
+  insertRowAtTop(sheet, row);
 }
 
 // -------------------------------------------------------------
 // 4. MASTER BACKUP LOG SHEET
 // -------------------------------------------------------------
-function logMaster(ss, timestamp, dataType, source, data) {
+function logToMaster(ss, timestamp, dataType, source, data) {
   var sheetName = "🗂️ All Master Log";
   var sheet = ss.getSheetByName(sheetName);
   var headers = [
@@ -243,8 +240,31 @@ function logMaster(ss, timestamp, dataType, source, data) {
     JSON.stringify(data)
   ];
 
-  sheet.appendRow(row);
-  formatLastRow(sheet);
+  insertRowAtTop(sheet, row);
+}
+
+// Alias for backwards compatibility
+function logMaster(ss, timestamp, dataType, source, data) {
+  return logToMaster(ss, timestamp, dataType, source, data);
+}
+
+// -------------------------------------------------------------
+// HELPER: INSERT ROW AT TOP (JUST BELOW HEADERS - ROW 2)
+// -------------------------------------------------------------
+function insertRowAtTop(sheet, row) {
+  // Insert a new blank row directly below header (Row 1), so new data appears at Row 2 (Top)
+  sheet.insertRowAfter(1);
+  var range = sheet.getRange(2, 1, 1, row.length);
+  range.setValues([row]);
+
+  // Clean, readable styling (prevents inheriting dark header background & bold font)
+  range.setFontFamily("Segoe UI");
+  range.setFontSize(10);
+  range.setFontWeight("normal");
+  range.setFontColor("#1E293B");
+  range.setBackground("#FFFFFF");
+  range.setVerticalAlignment("middle");
+  sheet.setRowHeight(2, 28);
 }
 
 // -------------------------------------------------------------

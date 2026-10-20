@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Domestic Group Trips & Backpacking in India | Travel Tribes',
     description: 'Explore the best of India with Travel Tribes. Curated group tours to Meghalaya, Spiti Valley, Gokarna, Kerala, Rajasthan and more with like-minded travellers.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 

@@ -30,6 +30,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ? curated.overview.slice(0, 160)
       : `Personalized travel itinerary for ${curated.destination}. Curated stays, transfers, and day-by-day plan by Travel Tribes.`
 
+    const curatedImage = curated.bannerImage
+      ? (curated.bannerImage.startsWith('http') ? curated.bannerImage : encodeURI(curated.bannerImage.startsWith('/') ? curated.bannerImage : `/${curated.bannerImage}`))
+      : '/image/travel-tribes-og-group.jpg'
+
     return {
       title,
       description,
@@ -40,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         siteName: 'Travel Tribes',
         images: [
           {
-            url: curated.bannerImage || '/image/Logowithbg.png',
+            url: curatedImage,
             width: 1200,
             height: 630,
             alt: curated.title
@@ -51,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         card: 'summary_large_image',
         title,
         description,
-        images: [curated.bannerImage || '/image/Logowithbg.png']
+        images: [curatedImage]
       }
     }
   }
@@ -65,6 +69,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ? trip.description.slice(0, 160)
     : `Join Travel Tribes for an epic ${trip.duration} group trip to ${trip.location}. Curated stays, transfers, guide & like-minded travellers.`
 
+  // Dynamically resolve the specific trip's group photo / hero image
+  const tripImage = trip.image
+    ? (trip.image.startsWith('http') ? trip.image : encodeURI(trip.image.startsWith('/') ? trip.image : `/${trip.image}`))
+    : '/image/travel-tribes-og-group.jpg'
+
   return {
     title,
     description,
@@ -75,10 +84,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: 'Travel Tribes',
       images: [
         {
-          url: '/image/Logowithbg.png',
-          width: 800,
-          height: 800,
-          alt: trip.title
+          url: tripImage,
+          width: 1200,
+          height: 630,
+          alt: `${trip.title} — Travel Tribes Group Trip`
         }
       ]
     },
@@ -86,7 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title,
       description,
-      images: ['/image/Logowithbg.png']
+      images: [tripImage]
     }
   }
 }

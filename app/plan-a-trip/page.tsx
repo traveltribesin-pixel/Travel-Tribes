@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Plan a Custom Trip | Tailored Group & Private Itineraries | Travel Tribes',
     description: 'Customize your dream vacation with Travel Tribes. Tell us your dates, group size and destinations for a personalized travel plan across India & abroad.',
-    images: ['/image/Logowithbg.png']
+    images: ['/image/travel-tribes-og-group.jpg']
   }
 }
 
