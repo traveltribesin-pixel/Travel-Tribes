@@ -126,6 +126,8 @@ export function CommunityBannerSection() {
                 >
                   <Link
                     href={slide.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block w-full h-full relative cursor-pointer group/link"
                   >
                     <Image

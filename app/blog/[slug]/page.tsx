@@ -206,6 +206,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
                 <Link
                   href={`/itinerary/${relatedTrip.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="glow-btn px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-wider whitespace-nowrap shrink-0 inline-flex items-center gap-2"
                 >
                   View Itinerary <ArrowRight size={14} />

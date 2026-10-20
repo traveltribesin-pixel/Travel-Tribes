@@ -173,6 +173,8 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
   return (
     <Link
       href={itineraryUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className="group relative bg-white rounded-3xl overflow-hidden border-2 border-[#72c3e4] hover:border-[var(--sky)] shadow-[0_4px_18px_rgba(67,169,209,0.12)] hover:shadow-[0_14px_32px_rgba(67,169,209,0.22)] transition-all duration-300 hover:-translate-y-1 flex flex-col w-full h-full block select-none"
     >
       {/* Image Container with tag overlay */}

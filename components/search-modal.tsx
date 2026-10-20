@@ -127,7 +127,7 @@ export function SearchModal({ isOpen, onClose, initialQuery = '' }: SearchModalP
             targetTrip.tag?.toLowerCase().includes('xmas') ||
             targetTrip.region === 'Xmas & New Year'
           )
-          router.push(`/itinerary/${targetTrip.slug}${isFestive ? '?festive=1' : ''}`)
+          window.open(`/itinerary/${targetTrip.slug}${isFestive ? '?festive=1' : ''}`, '_blank', 'noopener,noreferrer')
           onClose()
         }
       }
@@ -153,7 +153,7 @@ export function SearchModal({ isOpen, onClose, initialQuery = '' }: SearchModalP
       trip.tag?.toLowerCase().includes('xmas') ||
       trip.region === 'Xmas & New Year'
     )
-    router.push(`/itinerary/${trip.slug}${isFestive ? '?festive=1' : ''}`)
+    window.open(`/itinerary/${trip.slug}${isFestive ? '?festive=1' : ''}`, '_blank', 'noopener,noreferrer')
     onClose()
   }
 

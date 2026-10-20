@@ -525,7 +525,7 @@ export function BookingContent() {
             <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] font-bold text-[var(--sky)] uppercase tracking-wider mb-1 flex-wrap">
               <Link href="/" className="hover:underline">Home</Link>
               <span>/</span>
-              <Link href={`/itinerary/${selectedTrip.slug}`} className="hover:underline truncate max-w-[170px] sm:max-w-none inline-block align-bottom">{selectedTrip.title}</Link>
+              <Link href={`/itinerary/${selectedTrip.slug}`} target="_blank" rel="noopener noreferrer" className="hover:underline truncate max-w-[170px] sm:max-w-none inline-block align-bottom">{selectedTrip.title}</Link>
               <span>/</span>
               <span className="text-slate-400">Checkout</span>
             </div>
