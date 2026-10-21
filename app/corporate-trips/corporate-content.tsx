@@ -136,18 +136,6 @@ const TEAM_ACTIVITIES = [
   }
 ]
 
-// Trusted Logos
-const BRAND_LOGOS = [
-  'Google',
-  'AWS',
-  'Microsoft',
-  'dunzo',
-  'PhonePe',
-  'Swiggy',
-  'zepto',
-  'CRED'
-]
-
 export function CorporateContent() {
   const formRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
@@ -667,78 +655,6 @@ export function CorporateContent() {
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 7: WHAT TEAMS SAY (TESTIMONIALS)
-        ========================================================================== */}
-        <section className="w-full py-16 sm:py-20 bg-white border-b border-slate-200/80">
-          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-
-              {/* Left headline */}
-              <div className="lg:col-span-5 space-y-3">
-                <span className="text-xs font-black uppercase tracking-widest text-[var(--sky)] block">
-                  WHAT TEAMS SAY
-                </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--navy)] leading-tight tracking-tight">
-                  The best offsites create stronger teams.
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                  Here&apos;s what companies say about travelling with us.
-                </p>
-              </div>
-
-              {/* Right testimonial card */}
-              <div className="lg:col-span-7 bg-[#f7fbfd] p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center gap-6">
-                <div className="relative w-full sm:w-48 h-40 sm:h-44 rounded-2xl overflow-hidden shrink-0">
-                  <Image
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80"
-                    alt="Happy corporate team"
-                    fill
-                    className="object-cover object-center"
-                  />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed italic">
-                    “The best offsite we&apos;ve had in years. Everything was so well planned — from the stay and activities to the little details. Our team came back more connected, motivated and with a lot of great stories.”
-                  </p>
-                  <div className="flex items-center gap-3 pt-2 border-t border-slate-200">
-                    <div className="w-9 h-9 rounded-full bg-indigo-600 text-white font-black text-xs flex items-center justify-center">
-                      Z
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-extrabold text-[var(--navy)]">HR Team</h4>
-                      <p className="text-[11px] text-slate-500 font-bold">Zepto</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 8: TRUSTED BY AMAZING TEAMS
-        ========================================================================== */}
-        <section className="w-full py-12 bg-white border-b border-slate-200/80">
-          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <span className="text-[11px] font-black uppercase tracking-widest text-slate-400 block">
-              TRUSTED BY AMAZING TEAMS
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all">
-              {BRAND_LOGOS.map((brand, bIdx) => (
-                <span
-                  key={bIdx}
-                  className="text-lg sm:text-xl font-black tracking-tight text-slate-700 hover:text-[var(--navy)] transition-colors select-none"
-                >
-                  {brand}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* =========================================================================
             SECTION 9: BOTTOM HERO CTA & INTERACTIVE PROPOSAL FORM

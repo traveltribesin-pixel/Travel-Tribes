@@ -1,0 +1,1262 @@
+{
+  "leads": [
+    {
+      "id": "LEAD-SHT-33",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-31",
+          "text": "Synced from Google Sheet row #33 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 33,
+      "createdAt": "2026-10-20T23:18:57+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-32",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Naina",
+      "email": "nainamohnani168@gmail.com",
+      "phone": "8779351801",
+      "tripTitle": "Gokarna Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Gokarna Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-30",
+          "text": "Synced from Google Sheet row #32 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 32,
+      "createdAt": "2026-10-20T21:34:34+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-31",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Harshal",
+      "email": "jadhavharshal2025@gmail.con",
+      "phone": "8291471771",
+      "tripTitle": "Coastal Maharashtra Road Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coastal Maharashtra Road Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-29",
+          "text": "Synced from Google Sheet row #31 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 31,
+      "createdAt": "2026-10-20T21:23:28+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-30",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Purvi Tanawade",
+      "email": "purvi.tanawade09@gmail.com",
+      "phone": "9004229925",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-28",
+          "text": "Synced from Google Sheet row #30 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 30,
+      "createdAt": "2026-10-20T12:19:56+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-29",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "samir",
+      "email": "jjivasai@gmail.com",
+      "phone": "917249533125",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-27",
+          "text": "Synced from Google Sheet row #29 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 29,
+      "createdAt": "2026-10-20T11:05:11+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-28",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Sushil Chavhan",
+      "email": "sushiluc99@gmail.com",
+      "phone": "9075838535",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-26",
+          "text": "Synced from Google Sheet row #28 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 28,
+      "createdAt": "2026-10-20T09:33:53+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-27",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Harsh sheth",
+      "email": "harsh.sheth191003@gmail.com",
+      "phone": "9403273540",
+      "tripTitle": "Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-25",
+          "text": "Synced from Google Sheet row #27 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 27,
+      "createdAt": "2026-10-20T01:51:13+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-26",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Chirag Agrawal",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-24",
+          "text": "Synced from Google Sheet row #26 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 26,
+      "createdAt": "2026-10-19T20:47:56+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-25",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Yash Mehta",
+      "email": "ymehta597@gmail.com",
+      "phone": "7710945609",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-23",
+          "text": "Synced from Google Sheet row #25 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 25,
+      "createdAt": "2026-10-19T13:53:26+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-24",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Divya",
+      "email": "divya.shah1993@gmail.com",
+      "phone": "9970278305",
+      "tripTitle": "Bali with Gili — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Bali with Gili — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-22",
+          "text": "Synced from Google Sheet row #24 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 24,
+      "createdAt": "2026-10-19T09:10:59+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-23",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Esther",
+      "email": "esther24dsouza@gmail.com",
+      "phone": "9820985714",
+      "tripTitle": "Sri Lanka — The Island Escape",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Sri Lanka — The Island Escape",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-21",
+          "text": "Synced from Google Sheet row #23 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 23,
+      "createdAt": "2026-10-18T22:44:30+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-22",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya",
+      "email": "ehkfcsdbzcj@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya with Kaziranga — 6N/7D",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya with Kaziranga — 6N/7D",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-20",
+          "text": "Synced from Google Sheet row #22 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 22,
+      "createdAt": "2026-10-18T22:41:15+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-21",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-19",
+          "text": "Synced from Google Sheet row #21 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 21,
+      "createdAt": "2026-10-18T22:19:45+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-20",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya with Kaziranga — 6N/7D",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya with Kaziranga — 6N/7D",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-18",
+          "text": "Synced from Google Sheet row #20 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 20,
+      "createdAt": "2026-10-18T22:13:35+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-19",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Jainam",
+      "email": "phy.jainam@gmail.com",
+      "phone": "8291070871",
+      "tripTitle": "Bhutan — Land of the Thunder Dragon",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Bhutan — Land of the Thunder Dragon",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-17",
+          "text": "Synced from Google Sheet row #19 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 19,
+      "createdAt": "2026-10-18T22:13:07+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-18",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-16",
+          "text": "Synced from Google Sheet row #18 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 18,
+      "createdAt": "2026-10-18T22:12:17+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-17",
+      "source": "Plan a Trip Page",
+      "fullName": "Adil",
+      "email": "smartyadilkhan@gmail.com",
+      "phone": "9936362021",
+      "tripTitle": "Kashmir",
+      "travelDates": "Next month",
+      "groupSize": "3-5 People (Friends / Family) | Budget: Family Holiday",
+      "budget": "Family Holiday",
+      "message": "Vibe: Family Holiday | Group: 3-5 People (Friends / Family) | Notes: Requested via Plan a Trip page. Group size: 3-5 People (Friends / Family). Trip Vibe: Family Holiday",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-15",
+          "text": "Synced from Google Sheet row #17 (Plan a Trip Page)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 17,
+      "createdAt": "2026-10-18T20:46:10+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-16",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-14",
+          "text": "Synced from Google Sheet row #16 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 16,
+      "createdAt": "2026-10-18T19:49:57+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-15",
+      "source": "Custom Trip Builder",
+      "fullName": "Vikramaditya Roy",
+      "email": "vikram@example.com",
+      "phone": "",
+      "tripTitle": "Kazakhstan & Almaty",
+      "travelDates": "Dec 2026",
+      "groupSize": "Group of 6 | Budget: Snow & Adventure",
+      "budget": "Snow & Adventure",
+      "message": "Vibe: Snow & Adventure | Group: Group of 6 | Notes: Please share package options with 4-star stays",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-13",
+          "text": "Synced from Google Sheet row #15 (Custom Trip Builder)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 15,
+      "createdAt": "2026-10-18T19:09:17+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-14",
+      "source": "Contact Us Form",
+      "fullName": "Ananya Singhania",
+      "email": "ananya@example.com",
+      "phone": "",
+      "tripTitle": "Bali with Gili Island",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Looking for a solo traveller slot in November batch!",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-12",
+          "text": "Synced from Google Sheet row #14 (Contact Us Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 14,
+      "createdAt": "2026-10-18T19:09:05+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-13",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Rohan Mehra",
+      "email": "rohan.mehra@example.com",
+      "phone": "",
+      "tripTitle": "Spiti Valley Winter Expedition",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-11",
+          "text": "Synced from Google Sheet row #13 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 13,
+      "createdAt": "2026-10-18T19:08:57+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-12",
+      "source": "Contact Us Page Form",
+      "fullName": "Chirag",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Domestic trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "We are a group of 7 people interested in your spiti trip December package from 25th Dec to 02nd Jan. I have few question to ask, can you connect me with someone.",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-10",
+          "text": "Synced from Google Sheet row #12 (Contact Us Page Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 12,
+      "createdAt": "2026-10-18T17:49:26+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-11",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Chirag Agrawal",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-9",
+          "text": "Synced from Google Sheet row #11 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 11,
+      "createdAt": "2026-10-18T17:36:20+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-10",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Shristi Mimani",
+      "email": "mimani.shristi21@gmail.com",
+      "phone": "9830888702",
+      "tripTitle": "Coastal Maharashtra Road Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coastal Maharashtra Road Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-8",
+          "text": "Synced from Google Sheet row #10 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 10,
+      "createdAt": "2026-10-18T16:55:26+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-9",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Rahul",
+      "email": "rahul.nagubandi@gmail.com",
+      "phone": "9003877526",
+      "tripTitle": "Meghalaya with Kaziranga — 6N/7D",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya with Kaziranga — 6N/7D",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-7",
+          "text": "Synced from Google Sheet row #9 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 9,
+      "createdAt": "2026-10-18T12:37:23+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-8",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Shristi Mimani",
+      "email": "mimani.shristi21@gmail.com",
+      "phone": "9830888702",
+      "tripTitle": "Gokarna Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Gokarna Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-6",
+          "text": "Synced from Google Sheet row #8 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 8,
+      "createdAt": "2026-10-18T12:02:36+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-7",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Asmi Mayekar",
+      "email": "asmimayekar84@gmail.com",
+      "phone": "",
+      "tripTitle": "Udaipur Christmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Christmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-5",
+          "text": "Synced from Google Sheet row #7 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 7,
+      "createdAt": "2026-10-17T21:02:42+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-6",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit Maurya",
+      "email": "amitm.ury.22@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-4",
+          "text": "Synced from Google Sheet row #6 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 6,
+      "createdAt": "2026-10-17T15:38:19+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-5",
+      "source": "Website Itinerary Download",
+      "fullName": "Test Traveler",
+      "email": "traveler@traveltribes.in",
+      "phone": "9975822023",
+      "tripTitle": "Meghalaya Backpacking 2027",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Testing Google Sheet Auto-Sync",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-3",
+          "text": "Synced from Google Sheet row #5 (Website Itinerary Download)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 5,
+      "createdAt": "2026-10-17T15:31:12+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-4",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "CONVERTED",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-1792534926326",
+          "text": "🎉 CONVERTED TO BOOKING! Booking ID: TT-BK-2026-9807. Advance Paid: ₹5,000, Balance: ₹13,000",
+          "author": "System",
+          "createdAt": "2026-10-20T22:22:06.326Z"
+        },
+        {
+          "id": "note-sync-1792532991061-2",
+          "text": "Synced from Google Sheet row #4 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": true,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 4,
+      "createdAt": "2026-10-20T23:27:10+05:30",
+      "updatedAt": "2026-10-20T22:22:06.326Z",
+      "nextFollowUpDate": "2026-10-21",
+      "convertedBookingId": "TT-BK-2026-9807"
+    },
+    {
+      "id": "LEAD-SHT-3",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Hemanth P",
+      "email": "hemanthpatchikolla00@gmail.com",
+      "phone": "7075756916",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792532991061-1",
+          "text": "Synced from Google Sheet row #3 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 3,
+      "createdAt": "2026-10-21T01:37:58+05:30",
+      "updatedAt": "2026-10-20T21:49:51.061Z"
+    },
+    {
+      "id": "LEAD-SHT-2",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya testing",
+      "email": "amitmantra2@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-1792533017646",
+          "text": "🎉 CONVERTED TO BOOKING! Booking ID: TT-BK-2026-9230. Advance Paid: ₹5,000, Balance: ₹13,000",
+          "author": "System",
+          "createdAt": "2026-10-20T21:50:17.646Z"
+        },
+        {
+          "id": "note-sync-1792532991061-0",
+          "text": "Synced from Google Sheet row #2 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-20T21:49:51.061Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 2,
+      "createdAt": "2026-10-21T02:30:30+05:30",
+      "updatedAt": "2026-10-20T22:20:14.546Z",
+      "nextFollowUpDate": ""
+    }
+  ],
+  "bookings": [
+    {
+      "id": "TT-BK-2026-9807",
+      "leadId": "LEAD-SHT-4",
+      "source": "Converted from Lead (Itinerary PDF Download Form)",
+      "fullName": "Amit testing",
+      "phone": "9137290903",
+      "email": "maurya.amit7404@gmail.com",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "date": "Flexible",
+      "guests": 1,
+      "totalAmount": 18000,
+      "paidAmount": 5000,
+      "balanceDue": 13000,
+      "paymentMode": "UPI",
+      "paymentStatus": "PARTIAL",
+      "bookingStatus": "CONFIRMED",
+      "transactionRef": "",
+      "specialRequest": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "notes": [
+        {
+          "id": "bn-1792534926326",
+          "text": "Converted from lead. Advance received: ₹5,000. Mode: UPI. Ref: N/A. ",
+          "author": "Sales Agent",
+          "createdAt": "2026-10-20T22:22:06.326Z"
+        }
+      ],
+      "createdAt": "2026-10-20T22:22:06.326Z",
+      "updatedAt": "2026-10-20T22:22:06.326Z"
+    }
+  ],
+  "tasks": [],
+  "invoices": [
+    {
+      "id": "inv-1792534926327",
+      "invoiceNumber": "INV-2026-6850",
+      "leadId": "LEAD-SHT-4",
+      "bookingId": "TT-BK-2026-9807",
+      "customerName": "Amit testing",
+      "customerPhone": "9137290903",
+      "customerEmail": "maurya.amit7404@gmail.com",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "guests": 1,
+      "totalAmount": 18000,
+      "advancePaid": 5000,
+      "balanceDue": 13000,
+      "paymentStatus": "PARTIAL",
+      "paymentUpiId": "traveltribes@upi",
+      "bankDetails": "HDFC Bank — A/C: 50200088992211 — IFSC: HDFC0001234",
+      "notes": "",
+      "whatsappMessageText": "🧾 *TRAVEL TRIBES — TRIP INVOICE & BOOKING SUMMARY*\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n*Invoice No:* INV-2026-6850\n*Booking ID:* TT-BK-2026-9807\n*Date:* 21 Oct 2026\n*Customer:* Amit testing\n\n🏝️ *Trip:* Coorg with Mysore — New Year Special\n📅 *Travel Dates:* Flexible\n👥 *Total Travellers:* 1 Person(s)\n\n💰 *PAYMENT BREAKDOWN:*\n• Total Trip Cost: ₹18,000\n• Amount Paid / Received: ₹5,000\n• Remaining Balance: ₹13,000\n• Payment Status: *⏳ PARTIALLY PAID / ADVANCE*\n\n🏦 *PAYMENT DETAILS FOR REMAINING BALANCE:*\n• UPI ID: traveltribes@upi\n• Bank: HDFC Bank (A/C: 50200088992211, IFSC: HDFC0001234)\n(Please share payment screenshot once completed)\n\n🎒 *Inclusions:* Boutique stay, internal transfers, guided captain experiences & meals as per itinerary.\n━━━━━━━━━━━━━━━━━━━━━━━━━━\nNeed any assistance? Reply directly to this WhatsApp!\n_Tribe hai to vibe hai! 🚀_",
+      "whatsappUrl": "https://wa.me/919137290903?text=%F0%9F%A7%BE%20*TRAVEL%20TRIBES%20%E2%80%94%20TRIP%20INVOICE%20%26%20BOOKING%20SUMMARY*%0A%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%0A*Invoice%20No%3A*%20INV-2026-6850%0A*Booking%20ID%3A*%20TT-BK-2026-9807%0A*Date%3A*%2021%20Oct%202026%0A*Customer%3A*%20Amit%20testing%0A%0A%F0%9F%8F%9D%EF%B8%8F%20*Trip%3A*%20Coorg%20with%20Mysore%20%E2%80%94%20New%20Year%20Special%0A%F0%9F%93%85%20*Travel%20Dates%3A*%20Flexible%0A%F0%9F%91%A5%20*Total%20Travellers%3A*%201%20Person(s)%0A%0A%F0%9F%92%B0%20*PAYMENT%20BREAKDOWN%3A*%0A%E2%80%A2%20Total%20Trip%20Cost%3A%20%E2%82%B918%2C000%0A%E2%80%A2%20Amount%20Paid%20%2F%20Received%3A%20%E2%82%B95%2C000%0A%E2%80%A2%20Remaining%20Balance%3A%20%E2%82%B913%2C000%0A%E2%80%A2%20Payment%20Status%3A%20*%E2%8F%B3%20PARTIALLY%20PAID%20%2F%20ADVANCE*%0A%0A%F0%9F%8F%A6%20*PAYMENT%20DETAILS%20FOR%20REMAINING%20BALANCE%3A*%0A%E2%80%A2%20UPI%20ID%3A%20traveltribes%40upi%0A%E2%80%A2%20Bank%3A%20HDFC%20Bank%20(A%2FC%3A%2050200088992211%2C%20IFSC%3A%20HDFC0001234)%0A(Please%20share%20payment%20screenshot%20once%20completed)%0A%0A%F0%9F%8E%92%20*Inclusions%3A*%20Boutique%20stay%2C%20internal%20transfers%2C%20guided%20captain%20experiences%20%26%20meals%20as%20per%20itinerary.%0A%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%0ANeed%20any%20assistance%3F%20Reply%20directly%20to%20this%20WhatsApp!%0A_Tribe%20hai%20to%20vibe%20hai!%20%F0%9F%9A%80_",
+      "createdAt": "2026-10-20T22:22:06.326Z"
+    },
+    {
+      "id": "inv-1792534772571",
+      "invoiceNumber": "INV-2026-5053",
+      "leadId": "LEAD-SHT-2",
+      "customerName": "amit Maurya testing",
+      "customerPhone": "9137290903",
+      "customerEmail": "amitmantra2@gmail.com",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "guests": 1,
+      "totalAmount": 18000,
+      "advancePaid": 5000,
+      "balanceDue": 13000,
+      "paymentStatus": "PARTIAL",
+      "paymentUpiId": "traveltribes@upi",
+      "bankDetails": "HDFC Bank — A/C: 50200088992211 — IFSC: HDFC0001234",
+      "notes": "Itinerary Download: Meghalaya Backpacking Trip",
+      "whatsappMessageText": "🧾 *TRAVEL TRIBES — TRIP INVOICE & BOOKING SUMMARY*\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n*Invoice No:* INV-2026-5053\n*Booking ID:* CONFIRMED\n*Date:* 21 Oct 2026\n*Customer:* amit Maurya testing\n\n🏝️ *Trip:* Meghalaya Backpacking Trip\n📅 *Travel Dates:* Flexible\n👥 *Total Travellers:* 1 Person(s)\n\n💰 *PAYMENT BREAKDOWN:*\n• Total Trip Cost: ₹18,000\n• Amount Paid / Received: ₹5,000\n• Remaining Balance: ₹13,000\n• Payment Status: *⏳ PARTIALLY PAID / ADVANCE*\n\n🏦 *PAYMENT DETAILS FOR REMAINING BALANCE:*\n• UPI ID: traveltribes@upi\n• Bank: HDFC Bank (A/C: 50200088992211, IFSC: HDFC0001234)\n(Please share payment screenshot once completed)\n\n🎒 *Inclusions:* Boutique stay, internal transfers, guided captain experiences & meals as per itinerary.\n━━━━━━━━━━━━━━━━━━━━━━━━━━\nNeed any assistance? Reply directly to this WhatsApp!\n_Tribe hai to vibe hai! 🚀_",
+      "whatsappUrl": "https://wa.me/919137290903?text=%F0%9F%A7%BE%20*TRAVEL%20TRIBES%20%E2%80%94%20TRIP%20INVOICE%20%26%20BOOKING%20SUMMARY*%0A%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%0A*Invoice%20No%3A*%20INV-2026-5053%0A*Booking%20ID%3A*%20CONFIRMED%0A*Date%3A*%2021%20Oct%202026%0A*Customer%3A*%20amit%20Maurya%20testing%0A%0A%F0%9F%8F%9D%EF%B8%8F%20*Trip%3A*%20Meghalaya%20Backpacking%20Trip%0A%F0%9F%93%85%20*Travel%20Dates%3A*%20Flexible%0A%F0%9F%91%A5%20*Total%20Travellers%3A*%201%20Person(s)%0A%0A%F0%9F%92%B0%20*PAYMENT%20BREAKDOWN%3A*%0A%E2%80%A2%20Total%20Trip%20Cost%3A%20%E2%82%B918%2C000%0A%E2%80%A2%20Amount%20Paid%20%2F%20Received%3A%20%E2%82%B95%2C000%0A%E2%80%A2%20Remaining%20Balance%3A%20%E2%82%B913%2C000%0A%E2%80%A2%20Payment%20Status%3A%20*%E2%8F%B3%20PARTIALLY%20PAID%20%2F%20ADVANCE*%0A%0A%F0%9F%8F%A6%20*PAYMENT%20DETAILS%20FOR%20REMAINING%20BALANCE%3A*%0A%E2%80%A2%20UPI%20ID%3A%20traveltribes%40upi%0A%E2%80%A2%20Bank%3A%20HDFC%20Bank%20(A%2FC%3A%2050200088992211%2C%20IFSC%3A%20HDFC0001234)%0A(Please%20share%20payment%20screenshot%20once%20completed)%0A%0A%F0%9F%8E%92%20*Inclusions%3A*%20Boutique%20stay%2C%20internal%20transfers%2C%20guided%20captain%20experiences%20%26%20meals%20as%20per%20itinerary.%0A%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%0ANeed%20any%20assistance%3F%20Reply%20directly%20to%20this%20WhatsApp!%0A_Tribe%20hai%20to%20vibe%20hai!%20%F0%9F%9A%80_",
+      "createdAt": "2026-10-20T22:19:32.570Z"
+    },
+    {
+      "id": "inv-1792534756463",
+      "invoiceNumber": "INV-2026-4995",
+      "leadId": "LEAD-SHT-2",
+      "customerName": "amit Maurya testing",
+      "customerPhone": "9137290903",
+      "customerEmail": "amitmantra2@gmail.com",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "guests": 1,
+      "totalAmount": 18000,
+      "advancePaid": 5000,
+      "balanceDue": 13000,
+      "paymentStatus": "PARTIAL",
+      "paymentUpiId": "traveltribes@upi",
+      "bankDetails": "HDFC Bank — A/C: 50200088992211 — IFSC: HDFC0001234",
+      "notes": "Itinerary Download: Meghalaya Backpacking Trip",
+      "whatsappMessageText": "🧾 *TRAVEL TRIBES — TRIP INVOICE & BOOKING SUMMARY*\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n*Invoice No:* INV-2026-4995\n*Booking ID:* CONFIRMED\n*Date:* 21 Oct 2026\n*Customer:* amit Maurya testing\n\n🏝️ *Trip:* Meghalaya Backpacking Trip\n📅 *Travel Dates:* Flexible\n👥 *Total Travellers:* 1 Person(s)\n\n💰 *PAYMENT BREAKDOWN:*\n• Total Trip Cost: ₹18,000\n• Amount Paid / Received: ₹5,000\n• Remaining Balance: ₹13,000\n• Payment Status: *⏳ PARTIALLY PAID / ADVANCE*\n\n🏦 *PAYMENT DETAILS FOR REMAINING BALANCE:*\n• UPI ID: traveltribes@upi\n• Bank: HDFC Bank (A/C: 50200088992211, IFSC: HDFC0001234)\n(Please share payment screenshot once completed)\n\n🎒 *Inclusions:* Boutique stay, internal transfers, guided captain experiences & meals as per itinerary.\n━━━━━━━━━━━━━━━━━━━━━━━━━━\nNeed any assistance? Reply directly to this WhatsApp!\n_Tribe hai to vibe hai! 🚀_",
+      "whatsappUrl": "https://wa.me/919137290903?text=%F0%9F%A7%BE%20*TRAVEL%20TRIBES%20%E2%80%94%20TRIP%20INVOICE%20%26%20BOOKING%20SUMMARY*%0A%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%0A*Invoice%20No%3A*%20INV-2026-4995%0A*Booking%20ID%3A*%20CONFIRMED%0A*Date%3A*%2021%20Oct%202026%0A*Customer%3A*%20amit%20Maurya%20testing%0A%0A%F0%9F%8F%9D%EF%B8%8F%20*Trip%3A*%20Meghalaya%20Backpacking%20Trip%0A%F0%9F%93%85%20*Travel%20Dates%3A*%20Flexible%0A%F0%9F%91%A5%20*Total%20Travellers%3A*%201%20Person(s)%0A%0A%F0%9F%92%B0%20*PAYMENT%20BREAKDOWN%3A*%0A%E2%80%A2%20Total%20Trip%20Cost%3A%20%E2%82%B918%2C000%0A%E2%80%A2%20Amount%20Paid%20%2F%20Received%3A%20%E2%82%B95%2C000%0A%E2%80%A2%20Remaining%20Balance%3A%20%E2%82%B913%2C000%0A%E2%80%A2%20Payment%20Status%3A%20*%E2%8F%B3%20PARTIALLY%20PAID%20%2F%20ADVANCE*%0A%0A%F0%9F%8F%A6%20*PAYMENT%20DETAILS%20FOR%20REMAINING%20BALANCE%3A*%0A%E2%80%A2%20UPI%20ID%3A%20traveltribes%40upi%0A%E2%80%A2%20Bank%3A%20HDFC%20Bank%20(A%2FC%3A%2050200088992211%2C%20IFSC%3A%20HDFC0001234)%0A(Please%20share%20payment%20screenshot%20once%20completed)%0A%0A%F0%9F%8E%92%20*Inclusions%3A*%20Boutique%20stay%2C%20internal%20transfers%2C%20guided%20captain%20experiences%20%26%20meals%20as%20per%20itinerary.%0A%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%E2%94%81%0ANeed%20any%20assistance%3F%20Reply%20directly%20to%20this%20WhatsApp!%0A_Tribe%20hai%20to%20vibe%20hai!%20%F0%9F%9A%80_",
+      "createdAt": "2026-10-20T22:19:16.453Z"
+    }
+  ],
+  "activities": [
+    {
+      "id": "act-sync-1792534959585",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:22:39.585Z"
+    },
+    {
+      "id": "act-sync-1792534930054",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:22:10.054Z"
+    },
+    {
+      "id": "act-1792534926327",
+      "type": "LEAD_CONVERTED",
+      "title": "Lead Converted to Booking! 🎉",
+      "description": "Amit testing booked Coorg with Mysore — New Year Special (Booking ID: TT-BK-2026-9807) with ₹5,000 advance paid.",
+      "entityType": "booking",
+      "entityId": "TT-BK-2026-9807",
+      "createdAt": "2026-10-20T22:22:06.326Z"
+    },
+    {
+      "id": "act-1792534926327",
+      "type": "INVOICE_GENERATED",
+      "title": "Invoice Generated",
+      "description": "Invoice INV-2026-6850 created for Amit testing (Coorg with Mysore — New Year Special)",
+      "entityType": "invoice",
+      "entityId": "inv-1792534926327",
+      "createdAt": "2026-10-20T22:22:06.326Z"
+    },
+    {
+      "id": "act-sync-1792534901023",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:21:41.023Z"
+    },
+    {
+      "id": "act-sync-1792534843977",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:20:43.977Z"
+    },
+    {
+      "id": "act-1792534772571",
+      "type": "INVOICE_GENERATED",
+      "title": "Invoice Generated",
+      "description": "Invoice INV-2026-5053 created for amit Maurya testing (Meghalaya Backpacking Trip)",
+      "entityType": "invoice",
+      "entityId": "inv-1792534772571",
+      "createdAt": "2026-10-20T22:19:32.570Z"
+    },
+    {
+      "id": "act-1792534756463",
+      "type": "INVOICE_GENERATED",
+      "title": "Invoice Generated",
+      "description": "Invoice INV-2026-4995 created for amit Maurya testing (Meghalaya Backpacking Trip)",
+      "entityType": "invoice",
+      "entityId": "inv-1792534756463",
+      "createdAt": "2026-10-20T22:19:16.453Z"
+    },
+    {
+      "id": "act-sync-1792534720126",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:18:40.126Z"
+    },
+    {
+      "id": "act-sync-1792534688659",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:18:08.659Z"
+    },
+    {
+      "id": "act-sync-1792534628641",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:17:08.641Z"
+    },
+    {
+      "id": "act-sync-1792534568397",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:16:08.397Z"
+    },
+    {
+      "id": "act-sync-1792534513612",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:15:13.612Z"
+    },
+    {
+      "id": "act-sync-1792534482779",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:14:42.779Z"
+    },
+    {
+      "id": "act-sync-1792534452434",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:14:12.434Z"
+    },
+    {
+      "id": "act-sync-1792534422676",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:13:42.676Z"
+    },
+    {
+      "id": "act-sync-1792534392241",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:13:12.241Z"
+    },
+    {
+      "id": "act-sync-1792534362258",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:12:42.258Z"
+    },
+    {
+      "id": "act-sync-1792534332278",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:12:12.278Z"
+    },
+    {
+      "id": "act-sync-1792534301879",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:11:41.879Z"
+    },
+    {
+      "id": "act-sync-1792534276630",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:11:16.630Z"
+    },
+    {
+      "id": "act-sync-1792534224060",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:10:24.061Z"
+    },
+    {
+      "id": "act-sync-1792533952694",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T22:05:52.694Z"
+    },
+    {
+      "id": "act-sync-1792533069961",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T21:51:09.961Z"
+    },
+    {
+      "id": "act-sync-1792533025448",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T21:50:25.448Z"
+    },
+    {
+      "id": "act-1792533017647",
+      "type": "LEAD_CONVERTED",
+      "title": "Lead Converted to Booking! 🎉",
+      "description": "amit Maurya testing booked Meghalaya Backpacking Trip (Booking ID: TT-BK-2026-9230) with ₹5,000 advance paid.",
+      "entityType": "booking",
+      "entityId": "TT-BK-2026-9230",
+      "createdAt": "2026-10-20T21:50:17.646Z"
+    },
+    {
+      "id": "act-1792533017647",
+      "type": "INVOICE_GENERATED",
+      "title": "Invoice Generated",
+      "description": "Invoice INV-2026-7636 created for amit Maurya testing (Meghalaya Backpacking Trip)",
+      "entityType": "invoice",
+      "entityId": "inv-1792533017647",
+      "createdAt": "2026-10-20T21:50:17.646Z"
+    },
+    {
+      "id": "act-sync-1792533007599",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T21:50:07.599Z"
+    },
+    {
+      "id": "act-sync-1792532991508",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 32 new leads, updated 0. Total: 32 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-20T21:49:51.508Z"
+    }
+  ],
+  "lastSyncedAt": "2026-10-20T22:22:39.585Z",
+  "settings": {
+    "upiId": "traveltribes@upi",
+    "bankName": "HDFC Bank",
+    "accountNumber": "50200088992211",
+    "ifscCode": "HDFC0001234",
+    "accountHolder": "Travel Tribes Experiential Pvt Ltd",
+    "helplinePhone": "+91 99758 22023"
+  }
+}
