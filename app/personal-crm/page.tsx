@@ -184,7 +184,14 @@ export default function PersonalCRMPage() {
             setNewLeadNotification(`🎉 ${syncData.addedLeads} New Lead(s) Received from Google Sheets!`)
             setTimeout(() => setNewLeadNotification(null), 8000)
           }
-          // Silent refresh CRM data
+          if (Array.isArray(syncData.leads) && syncData.leads.length > 0) {
+            setLeads(syncData.leads)
+          }
+          if (syncData.stats) {
+            setStats(syncData.stats)
+          }
+          setLastSyncedTime(new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }))
+          // Silent refresh other modules (bookings, tasks, invoices)
           loadCRMData(false)
         }
       } catch (err) {
@@ -223,6 +230,12 @@ export default function PersonalCRMPage() {
         const syncRes = await fetch('/api/personal-crm/sync', { method: 'POST' })
         const syncData = await syncRes.json()
         if (syncData.success) {
+          if (Array.isArray(syncData.leads) && syncData.leads.length > 0) {
+            setLeads(syncData.leads)
+          }
+          if (syncData.stats) {
+            setStats(syncData.stats)
+          }
           setSyncMessage(
             `✅ Google Sheets Synced: +${syncData.addedLeads} new leads (${syncData.totalLeads} total in CRM)`
           )

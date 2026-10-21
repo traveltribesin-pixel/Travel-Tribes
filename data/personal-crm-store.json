@@ -1,6 +1,258 @@
 {
   "leads": [
     {
+      "id": "LEAD-SHT-42",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-40",
+          "text": "Synced from Google Sheet row #42 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 42,
+      "createdAt": "2026-10-20T23:18:57+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-41",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Naina",
+      "email": "nainamohnani168@gmail.com",
+      "phone": "8779351801",
+      "tripTitle": "Gokarna Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Gokarna Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-39",
+          "text": "Synced from Google Sheet row #41 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 41,
+      "createdAt": "2026-10-20T21:34:34+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-40",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Harshal",
+      "email": "jadhavharshal2025@gmail.con",
+      "phone": "8291471771",
+      "tripTitle": "Coastal Maharashtra Road Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coastal Maharashtra Road Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-38",
+          "text": "Synced from Google Sheet row #40 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 40,
+      "createdAt": "2026-10-20T21:23:28+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-39",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Purvi Tanawade",
+      "email": "purvi.tanawade09@gmail.com",
+      "phone": "9004229925",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-37",
+          "text": "Synced from Google Sheet row #39 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 39,
+      "createdAt": "2026-10-20T12:19:56+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-38",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "samir",
+      "email": "jjivasai@gmail.com",
+      "phone": "917249533125",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-36",
+          "text": "Synced from Google Sheet row #38 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 38,
+      "createdAt": "2026-10-20T11:05:11+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-37",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Sushil Chavhan",
+      "email": "sushiluc99@gmail.com",
+      "phone": "9075838535",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-35",
+          "text": "Synced from Google Sheet row #37 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 37,
+      "createdAt": "2026-10-20T09:33:53+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-36",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Harsh sheth",
+      "email": "harsh.sheth191003@gmail.com",
+      "phone": "9403273540",
+      "tripTitle": "Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-34",
+          "text": "Synced from Google Sheet row #36 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 36,
+      "createdAt": "2026-10-20T01:51:13+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-35",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Chirag Agrawal",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-33",
+          "text": "Synced from Google Sheet row #35 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 35,
+      "createdAt": "2026-10-19T20:47:56+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
+      "id": "LEAD-SHT-34",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Yash Mehta",
+      "email": "ymehta597@gmail.com",
+      "phone": "7710945609",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1792604689792-32",
+          "text": "Synced from Google Sheet row #34 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-21T17:44:49.792Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 34,
+      "createdAt": "2026-10-19T13:53:26+05:30",
+      "updatedAt": "2026-10-21T17:44:49.792Z"
+    },
+    {
       "id": "LEAD-SHT-33",
       "source": "Itinerary PDF Download Form",
       "fullName": "Amit testing",
@@ -204,7 +456,7 @@
       "phone": "9045743168",
       "tripTitle": "Spiti Valley Winter Expedition from Delhi",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "3-5 People (Friends / Family) | Budget: Family Holiday",
       "budget": "",
       "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
       "status": "NEW",
@@ -260,7 +512,7 @@
       "phone": "9970278305",
       "tripTitle": "Bali with Gili — Xmas & New Year Special",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "Group of 6 | Budget: Snow & Adventure",
       "budget": "",
       "message": "Itinerary Download: Bali with Gili — Xmas & New Year Special",
       "status": "NEW",
@@ -820,7 +1072,7 @@
       "phone": "9137290903",
       "tripTitle": "Coorg with Mysore — New Year Special",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "Corporate (25-50 People) | Budget: Weekend Offsite",
       "budget": "",
       "message": "Itinerary Download: Coorg with Mysore — New Year Special",
       "status": "CONVERTED",
@@ -1011,6 +1263,126 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-sync-1792605713066",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T18:01:53.066Z"
+    },
+    {
+      "id": "act-sync-1792605698451",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T18:01:38.451Z"
+    },
+    {
+      "id": "act-sync-1792605182690",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:53:02.690Z"
+    },
+    {
+      "id": "act-sync-1792605125882",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:52:05.882Z"
+    },
+    {
+      "id": "act-sync-1792605062541",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:51:02.541Z"
+    },
+    {
+      "id": "act-sync-1792605002605",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:50:02.605Z"
+    },
+    {
+      "id": "act-sync-1792604942437",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:49:02.437Z"
+    },
+    {
+      "id": "act-sync-1792604902469",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:48:22.469Z"
+    },
+    {
+      "id": "act-sync-1792604872424",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:47:52.424Z"
+    },
+    {
+      "id": "act-sync-1792604842396",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:47:22.396Z"
+    },
+    {
+      "id": "act-sync-1792604812397",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:46:52.397Z"
+    },
+    {
+      "id": "act-sync-1792604782395",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:46:22.395Z"
+    },
+    {
+      "id": "act-sync-1792604753149",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:45:53.149Z"
+    },
+    {
+      "id": "act-sync-1792604722394",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:45:22.394Z"
+    },
+    {
+      "id": "act-sync-1792604690339",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 9 new leads, updated 3. Total: 41 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-21T17:44:50.339Z"
+    },
     {
       "id": "act-sync-1792534959585",
       "type": "SHEET_SYNC",
@@ -1250,7 +1622,7 @@
       "createdAt": "2026-10-20T21:49:51.508Z"
     }
   ],
-  "lastSyncedAt": "2026-10-20T22:22:39.585Z",
+  "lastSyncedAt": "2026-10-21T18:01:53.066Z",
   "settings": {
     "upiId": "traveltribes@upi",
     "bankName": "HDFC Bank",

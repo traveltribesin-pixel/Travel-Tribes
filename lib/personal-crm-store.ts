@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import os from 'os'
 
 export type LeadStatus =
   | 'NEW'
@@ -149,6 +150,7 @@ export interface PersonalCRMStoreData {
 
 const DATA_DIR = path.join(process.cwd(), 'data')
 const CRM_STORE_FILE = path.join(DATA_DIR, 'personal-crm-store.json')
+const TMP_CRM_STORE_FILE = path.join(os.tmpdir(), 'traveltribes-personal-crm-store.json')
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Up6p6IhT3Qd7kBM6iOihVOFKUUVxP-rs9KJ6_V-GgPI'
 
 const DEFAULT_SETTINGS = {
@@ -168,45 +170,82 @@ function ensureDirectory() {
       fs.mkdirSync(DATA_DIR, { recursive: true })
     }
   } catch (err) {
-    console.error('Failed to create data dir:', err)
+    // Expected on read-only serverless filesystems
+  }
+}
+
+function sanitizeStoreData(parsed: any): PersonalCRMStoreData {
+  if (!parsed || typeof parsed !== 'object') {
+    return {
+      leads: [],
+      bookings: [],
+      tasks: [],
+      invoices: [],
+      activities: [],
+      settings: DEFAULT_SETTINGS
+    }
+  }
+
+  return {
+    leads: Array.isArray(parsed.leads)
+      ? parsed.leads.filter(
+          (l: any) =>
+            l && (l.syncedFromSheet === true || l.source?.includes('Manual') || l.id?.startsWith('LEAD-'))
+        )
+      : [],
+    bookings: Array.isArray(parsed.bookings)
+      ? parsed.bookings.filter(
+          (b: any) =>
+            b &&
+            !b.fullName?.toLowerCase().includes('demo') &&
+            !b.id?.startsWith('TT-2026-')
+        )
+      : [],
+    tasks: Array.isArray(parsed.tasks)
+      ? parsed.tasks.filter(
+          (t: any) => t && t.id !== 'task-1' && t.id !== 'task-2'
+        )
+      : [],
+    invoices: Array.isArray(parsed.invoices) ? parsed.invoices : [],
+    activities: Array.isArray(parsed.activities) ? parsed.activities : [],
+    lastSyncedAt: parsed.lastSyncedAt || undefined,
+    settings: {
+      ...DEFAULT_SETTINGS,
+      ...(parsed.settings || {})
+    }
   }
 }
 
 export function loadPersonalCRMStore(): PersonalCRMStoreData {
-  ensureDirectory()
+  if (cachedStore) {
+    return cachedStore
+  }
 
+  // 1. Try reading from TMP_CRM_STORE_FILE (writable and preserved across warm serverless requests)
+  try {
+    if (fs.existsSync(TMP_CRM_STORE_FILE)) {
+      const raw = fs.readFileSync(TMP_CRM_STORE_FILE, 'utf-8')
+      const parsed = JSON.parse(raw)
+      cachedStore = sanitizeStoreData(parsed)
+      return cachedStore
+    }
+  } catch (err) {
+    console.warn('Could not read from tmp CRM store:', err)
+  }
+
+  // 2. Fallback to bundled repo data file
   try {
     if (fs.existsSync(CRM_STORE_FILE)) {
       const raw = fs.readFileSync(CRM_STORE_FILE, 'utf-8')
       const parsed = JSON.parse(raw)
-      const data: PersonalCRMStoreData = {
-        leads: (parsed.leads || []).filter(
-          (l: any) =>
-            l.syncedFromSheet === true || l.source === 'Manual Personal CRM'
-        ),
-        bookings: (parsed.bookings || []).filter(
-          (b: any) =>
-            !b.fullName?.toLowerCase().includes('demo') &&
-            !b.id?.startsWith('TT-2026-')
-        ),
-        tasks: (parsed.tasks || []).filter(
-          (t: any) => t.id !== 'task-1' && t.id !== 'task-2'
-        ),
-        invoices: parsed.invoices || [],
-        activities: parsed.activities || [],
-        lastSyncedAt: parsed.lastSyncedAt || undefined,
-        settings: {
-          ...DEFAULT_SETTINGS,
-          ...(parsed.settings || {})
-        }
-      }
-      return data
+      cachedStore = sanitizeStoreData(parsed)
+      return cachedStore
     }
   } catch (err) {
-    console.error('Error reading personal CRM store file:', err)
+    console.warn('Could not read from bundled CRM store file:', err)
   }
 
-  // Clean store initialization with zero dummy data
+  // 3. Clean store initialization with zero dummy data
   const cleanStore: PersonalCRMStoreData = {
     leads: [],
     bookings: [],
@@ -216,30 +255,49 @@ export function loadPersonalCRMStore(): PersonalCRMStoreData {
     settings: DEFAULT_SETTINGS
   }
 
+  cachedStore = cleanStore
   savePersonalCRMStore(cleanStore)
   return cleanStore
 }
 
 export function savePersonalCRMStore(data: PersonalCRMStoreData): boolean {
-  ensureDirectory()
+  cachedStore = data
+  let saved = false
+
+  // 1. Write to /tmp (always writable in AWS Lambda / Vercel Serverless & Local)
   try {
-    cachedStore = data
-    fs.writeFileSync(CRM_STORE_FILE, JSON.stringify(data, null, 2), 'utf-8')
-    return true
+    fs.writeFileSync(TMP_CRM_STORE_FILE, JSON.stringify(data, null, 2), 'utf-8')
+    saved = true
   } catch (err) {
-    console.error('Failed to save personal CRM store:', err)
-    return false
+    console.warn('Failed to save to tmp CRM store:', err)
   }
+
+  // 2. Also attempt writing to project data/ directory if writable (e.g. localhost)
+  try {
+    ensureDirectory()
+    fs.writeFileSync(CRM_STORE_FILE, JSON.stringify(data, null, 2), 'utf-8')
+    saved = true
+  } catch (err) {
+    // Safely ignore on read-only serverless filesystems
+  }
+
+  return saved
 }
 
 // -------------------------------------------------------------
 // GOOGLE SHEETS LIVE SYNC ENGINE
 // -------------------------------------------------------------
 
+function sanitizeString(val: any, maxLen = 1000): string {
+  if (val === null || val === undefined) return ''
+  const str = String(val).trim()
+  return str.replace(/[\u0000-\u0008\u000B-\u000C\u000E-\u001F]/g, '').slice(0, maxLen)
+}
+
 function cleanPhone(raw: any): string {
   if (!raw) return ''
   const str = String(raw).trim()
-  return str.replace(/[^\d+]/g, '')
+  return str.replace(/[^\d+]/g, '').slice(0, 25)
 }
 
 function parseSheetDate(rawFormatted?: string, rawValue?: string): string {
@@ -289,7 +347,10 @@ export async function syncFromGoogleSheet(): Promise<{
       '📋 Leads & Inquiries'
     )}`
 
-    const response = await fetch(leadsUrl, { cache: 'no-store' })
+    const response = await fetch(leadsUrl, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(10000)
+    })
     if (!response.ok) {
       throw new Error(`Google Sheet returned HTTP ${response.status}`)
     }
@@ -311,14 +372,14 @@ export async function syncFromGoogleSheet(): Promise<{
       const c = row.c
       const dateFormatted = c[0]?.f
       const dateRaw = c[0]?.v
-      const source = c[1]?.v ? String(c[1].v).trim() : 'Website Form'
-      const fullName = c[2]?.v ? String(c[2].v).trim() : ''
+      const source = sanitizeString(c[1]?.v || 'Website Form', 120)
+      const fullName = sanitizeString(c[2]?.v || '', 120)
       const phone = cleanPhone(c[3]?.v)
-      const email = c[5]?.v ? String(c[5].v).trim().toLowerCase() : ''
-      const tripTitle = c[6]?.v ? String(c[6].v).trim() : ''
-      const travelDates = c[7]?.v ? String(c[7].v).trim() : ''
-      const groupOrBudget = c[8]?.v ? String(c[8].v).trim() : ''
-      const message = c[9]?.v ? String(c[9].v).trim() : ''
+      const email = sanitizeString(c[5]?.v || '', 150).toLowerCase()
+      const tripTitle = sanitizeString(c[6]?.v || '', 200)
+      const travelDates = sanitizeString(c[7]?.v || 'Flexible', 120)
+      const groupOrBudget = sanitizeString(c[8]?.v || '', 150)
+      const message = sanitizeString(c[9]?.v || '', 2000)
 
       if (!fullName && !phone && !email) continue
 
@@ -389,7 +450,10 @@ export async function syncFromGoogleSheet(): Promise<{
       const bookingsUrl = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(
         '💳 Bookings & Payments'
       )}`
-      const bRes = await fetch(bookingsUrl, { cache: 'no-store' })
+      const bRes = await fetch(bookingsUrl, {
+        cache: 'no-store',
+        signal: AbortSignal.timeout(10000)
+      })
       if (bRes.ok) {
         const bText = await bRes.text()
         const bStart = bText.indexOf('{')
@@ -489,6 +553,67 @@ export async function syncFromGoogleSheet(): Promise<{
       error: err?.message || 'Sync failed'
     }
   }
+}
+
+let lastSyncTimestamp = 0
+let activeSyncPromise: Promise<{
+  success: boolean
+  addedLeads: number
+  updatedLeads: number
+  totalLeads: number
+  totalBookings: number
+  error?: string
+}> | null = null
+
+export async function syncFromGoogleSheetIfNeeded(thresholdMs = 15000): Promise<{
+  success: boolean
+  addedLeads: number
+  updatedLeads: number
+  totalLeads: number
+  totalBookings: number
+  error?: string
+}> {
+  const now = Date.now()
+  const store = loadPersonalCRMStore()
+
+  // If already synced recently and store has leads, return current state
+  if (store.leads.length > 0 && now - lastSyncTimestamp < thresholdMs) {
+    return {
+      success: true,
+      addedLeads: 0,
+      updatedLeads: 0,
+      totalLeads: store.leads.length,
+      totalBookings: store.bookings.length
+    }
+  }
+
+  // Deduplicate concurrent sync calls
+  if (activeSyncPromise) {
+    return await activeSyncPromise
+  }
+
+  activeSyncPromise = (async () => {
+    try {
+      const res = await syncFromGoogleSheet()
+      lastSyncTimestamp = Date.now()
+      return res
+    } catch (err: any) {
+      console.warn('Google Sheet auto-sync warning:', err?.message || err)
+      const currentStore = loadPersonalCRMStore()
+      return {
+        success: false,
+        addedLeads: 0,
+        updatedLeads: 0,
+        totalLeads: currentStore.leads.length,
+        totalBookings: currentStore.bookings.length,
+        error: err?.message || 'Sync failed'
+      }
+    } finally {
+      activeSyncPromise = null
+    }
+  })()
+
+  return await activeSyncPromise
 }
 
 // -------------------------------------------------------------

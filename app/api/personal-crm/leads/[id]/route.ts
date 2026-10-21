@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import {
   getPersonalCRMLeadById,
   updatePersonalCRMLead,
-  deletePersonalCRMLead
+  deletePersonalCRMLead,
+  syncFromGoogleSheetIfNeeded
 } from '@/lib/personal-crm-store'
 
 export async function GET(
@@ -11,7 +12,11 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const lead = getPersonalCRMLeadById(id)
+    let lead = getPersonalCRMLeadById(id)
+    if (!lead) {
+      await syncFromGoogleSheetIfNeeded(0).catch(() => null)
+      lead = getPersonalCRMLeadById(id)
+    }
     if (!lead) {
       return NextResponse.json({ success: false, error: 'Lead not found' }, { status: 404 })
     }

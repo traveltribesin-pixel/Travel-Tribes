@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getPersonalCRMLeads, addPersonalCRMLead, syncFromGoogleSheet } from '@/lib/personal-crm-store'
+import {
+  getPersonalCRMLeads,
+  addPersonalCRMLead,
+  syncFromGoogleSheet,
+  syncFromGoogleSheetIfNeeded
+} from '@/lib/personal-crm-store'
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,10 +14,14 @@ export async function GET(req: NextRequest) {
     const source = searchParams.get('source') || undefined
     const search = searchParams.get('search') || undefined
     const includeConverted = searchParams.get('includeConverted') === 'true'
-    const autoSync = searchParams.get('autoSync') === 'true'
+    const forceSync = searchParams.get('autoSync') === 'true' || searchParams.get('sync') === 'true'
 
-    if (autoSync) {
-      await syncFromGoogleSheet().catch((e) => console.warn('Auto sync warning:', e))
+    // Live Google Sheets Auto-Sync:
+    // If forceSync is requested, perform full sync; otherwise check if sync is needed (15s throttle)
+    if (forceSync) {
+      await syncFromGoogleSheet().catch((e) => console.warn('Force sync warning:', e))
+    } else {
+      await syncFromGoogleSheetIfNeeded(15000).catch((e) => console.warn('Auto sync check warning:', e))
     }
 
     const leads = getPersonalCRMLeads({
