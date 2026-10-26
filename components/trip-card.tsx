@@ -215,16 +215,23 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
           loading="lazy"
           className="object-cover object-balanced transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Featured Tag (top left) */}
-        {trip.tag && (
-          <span className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm border border-slate-100">
-            {trip.tag}
-          </span>
-        )}
+        {/* Featured Tag & Mobile Weekend Pill (top left) */}
+        <div className="absolute top-3.5 sm:top-4 left-3.5 sm:left-4 z-10 flex flex-col items-start gap-1.5">
+          {trip.tag && (
+            <span className="bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm border border-slate-100">
+              {trip.tag}
+            </span>
+          )}
+          {isWeekend && (
+            <span className="sm:hidden bg-[var(--sky)] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
+              Every Saturday
+            </span>
+          )}
+        </div>
 
-        {/* Weekend Departure Pill (top right) */}
+        {/* Weekend Departure Pill (top right on desktop only) */}
         {isWeekend && (
-          <span className="absolute top-4 right-4 z-10 bg-[var(--sky)] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
+          <span className="hidden sm:inline-block absolute top-4 right-4 z-10 bg-[var(--sky)] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
             Every Saturday
           </span>
         )}
