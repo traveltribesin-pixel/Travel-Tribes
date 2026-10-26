@@ -65,9 +65,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!trip) return {}
 
   const title = `${trip.title} (${trip.duration}) | Travel Tribes`
-  const description = trip.description
-    ? trip.description.slice(0, 160)
-    : `Join Travel Tribes for an epic ${trip.duration} group trip to ${trip.location}. Curated stays, transfers, guide & like-minded travellers.`
+  const description = trip.seoDescription
+    ? trip.seoDescription
+    : (trip.description
+      ? trip.description.slice(0, 160)
+      : `Join Travel Tribes for an epic ${trip.duration} group trip to ${trip.location}. Curated stays, transfers, guide & like-minded travellers.`)
+
+  const keywords = trip.seoKeywords && trip.seoKeywords.length > 0
+    ? trip.seoKeywords
+    : [trip.title, `${trip.location} tour`, 'group trip', 'Travel Tribes']
 
   // Dynamically resolve the specific trip's group photo / hero image
   const tripImage = trip.image
@@ -77,6 +83,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,
@@ -129,8 +136,36 @@ export default async function ItineraryPage({ params }: { params: Promise<{ slug
     notFound()
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TouristTrip',
+    name: trip.title,
+    description: trip.seoDescription || trip.description,
+    touristType: ['Solo Travellers', 'Couples', 'Groups'],
+    offers: {
+      '@type': 'Offer',
+      price: trip.price.replace(/[^\d]/g, '') || '0',
+      priceCurrency: 'INR',
+      availability: 'https://schema.org/InStock',
+      url: `https://traveltribes.in/itinerary/${trip.slug}`
+    },
+    itinerary: {
+      '@type': 'ItemList',
+      itemListElement: trip.itinerary?.map((day, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: day.title,
+        description: day.activities.join(' ')
+      })) || []
+    }
+  }
+
   return (
     <PageFrame>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Suspense
         fallback={
           <div className="min-h-screen bg-[#f7fbfd] flex items-center justify-center">

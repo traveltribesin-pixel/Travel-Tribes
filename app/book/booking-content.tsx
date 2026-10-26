@@ -204,16 +204,18 @@ export function BookingContent() {
   const handleSelectFullPayment = () => {
     if (paymentType !== 'full') {
       setPaymentType('full')
-      const fullDiscountTotal = 1000 * guests
+      const fullDiscountTotal = pricing.isFullPaymentDiscountEligible ? 1000 * guests : 0
 
-      // 🎉 Launch Celebration Animation & Toast
-      fireCelebrationConfetti({ particleCount: 140 })
-      setCelebrationToast({
-        show: true,
-        title: 'Full Payment Discount Unlocked!',
-        subtitle: `Woohoo! You saved flat ₹${fullDiscountTotal.toLocaleString('en-IN')} (₹1,000 x ${guests} ${guests > 1 ? 'guests' : 'guest'})!`,
-        discountAmount: fullDiscountTotal
-      })
+      if (fullDiscountTotal > 0) {
+        // 🎉 Launch Celebration Animation & Toast
+        fireCelebrationConfetti({ particleCount: 140 })
+        setCelebrationToast({
+          show: true,
+          title: 'Full Payment Discount Unlocked!',
+          subtitle: `Woohoo! You saved flat ₹${fullDiscountTotal.toLocaleString('en-IN')} (₹1,000 x ${guests} ${guests > 1 ? 'guests' : 'guest'})!`,
+          discountAmount: fullDiscountTotal
+        })
+      }
     }
   }
 
@@ -474,7 +476,7 @@ export function BookingContent() {
     <div className="bg-[#f7fbfd] min-h-screen py-5 pb-32 sm:py-8 lg:py-12 lg:pb-14 text-slate-800 relative">
       {/* Celebration Floating Toast Banner */}
       <AnimatePresence>
-        {celebrationToast?.show && (
+        {celebrationToast?.show && celebrationToast.discountAmount > 0 && (
           <motion.div
             initial={{ opacity: 0, y: -50, scale: 0.9, x: '-50%' }}
             animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
@@ -604,7 +606,7 @@ export function BookingContent() {
               <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
                 <span className="text-slate-500">Payment Option</span>
                 <span className="font-bold text-[var(--navy)]">
-                  {isFullPayment ? 'Full Payment (Discount Applied)' : 'Advance Booking'}
+                  {isFullPayment ? (fullPaymentDiscount > 0 ? 'Full Payment (Discount Applied)' : 'Full Payment') : 'Advance Booking'}
                 </span>
               </div>
               {paymentId && (
@@ -619,7 +621,7 @@ export function BookingContent() {
                   <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
                 </div>
               )}
-              {isFullPayment && (
+              {isFullPayment && fullPaymentDiscount > 0 && (
                 <div className="flex justify-between items-center py-1 border-b border-slate-200/60 text-emerald-700 font-semibold">
                   <span className="flex items-center gap-1.5"><Sparkles size={13} className="text-emerald-600" /> Full Payment Discount</span>
                   <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
@@ -894,9 +896,11 @@ export function BookingContent() {
                     <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                       Payment Preference
                     </label>
-                    <span className="text-[10px] sm:text-[10.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(1000 * guests).toLocaleString('en-IN')} on Full Pay
-                    </span>
+                    {pricing.isFullPaymentDiscountEligible && (
+                      <span className="text-[10px] sm:text-[10.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(1000 * guests).toLocaleString('en-IN')} on Full Pay
+                      </span>
+                    )}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50/80 p-1.5 rounded-2xl border border-slate-200">
                     <button
@@ -933,20 +937,24 @@ export function BookingContent() {
                       <div className="flex items-center justify-between w-full">
                         <div className="flex items-center gap-1.5">
                           <span className="text-xs font-bold">Pay Full Amount</span>
-                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded ${
-                            paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
-                          }`}>
-                            -₹{(1000 * guests).toLocaleString('en-IN')}
-                          </span>
+                          {pricing.isFullPaymentDiscountEligible && (
+                            <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded ${
+                              paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
+                            }`}>
+                              -₹{(1000 * guests).toLocaleString('en-IN')}
+                            </span>
+                          )}
                         </div>
                         {paymentType === 'full' && <CheckCircle2 size={15} className="text-white shrink-0" />}
                       </div>
                       <div className="flex items-baseline gap-1.5 mt-1">
-                        <span className={`text-[10px] line-through ${paymentType === 'full' ? 'text-emerald-200' : 'text-slate-400'}`}>
-                          ₹{grandTotal.toLocaleString('en-IN')}
-                        </span>
+                        {pricing.isFullPaymentDiscountEligible && (
+                          <span className={`text-[10px] line-through ${paymentType === 'full' ? 'text-emerald-200' : 'text-slate-400'}`}>
+                            ₹{grandTotal.toLocaleString('en-IN')}
+                          </span>
+                        )}
                         <span className={`text-xs font-extrabold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
-                          ₹{Math.max(0, grandTotal - (1000 * guests)).toLocaleString('en-IN')}
+                          ₹{Math.max(0, grandTotal - (pricing.isFullPaymentDiscountEligible ? 1000 * guests : 0)).toLocaleString('en-IN')}
                         </span>
                       </div>
                     </button>
@@ -1071,7 +1079,7 @@ export function BookingContent() {
                     </span>
                   </div>
 
-                  {isFullPayment && (
+                  {isFullPayment && fullPaymentDiscount > 0 && (
                     <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1.5 rounded-xl text-xs border border-emerald-200/80">
                       <span className="flex items-center gap-1.5">
                         <Sparkles size={13} className="text-emerald-600 shrink-0" />
@@ -1083,7 +1091,7 @@ export function BookingContent() {
 
                   <div className="flex justify-between items-center pt-2 border-t border-slate-200 text-sm">
                     <span className="font-extrabold text-[var(--navy)]">
-                      {isFullPayment ? 'Final Total (After Discount)' : 'Total Trip Cost'}
+                      {isFullPayment && fullPaymentDiscount > 0 ? 'Final Total (After Discount)' : 'Total Trip Cost'}
                     </span>
                     <span className="font-black text-[var(--navy)] text-base">
                       ₹{(isFullPayment ? Math.max(0, grandTotal - fullPaymentDiscount) : grandTotal).toLocaleString('en-IN')}
@@ -1100,7 +1108,7 @@ export function BookingContent() {
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="text-[11px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">Amount To Pay Now</span>
                     <div className="text-right">
-                      {isFullPayment && (
+                      {isFullPayment && fullPaymentDiscount > 0 && (
                         <span className="text-xs text-slate-400 line-through mr-1.5 font-medium">
                           ₹{grandTotal.toLocaleString('en-IN')}
                         </span>
@@ -1116,19 +1124,23 @@ export function BookingContent() {
                       <p className="text-[11px] text-slate-600 font-medium">
                         Remaining <span className="font-bold text-slate-800">₹{remainingBalance.toLocaleString('en-IN')}</span> payable before trip departure.
                       </p>
-                      <button
-                        type="button"
-                        onClick={handleSelectFullPayment}
-                        className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
-                      >
-                        <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!
-                      </button>
+                      {pricing.isFullPaymentDiscountEligible && (
+                        <button
+                          type="button"
+                          onClick={handleSelectFullPayment}
+                          className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
+                        >
+                          <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!
+                        </button>
+                      )}
                     </div>
                   ) : (
-                    <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-2.5 rounded-lg border border-emerald-200">
-                      <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
-                      <span>Flat ₹{(1000 * guests).toLocaleString('en-IN')} instant discount applied!</span>
-                    </div>
+                    pricing.isFullPaymentDiscountEligible && (
+                      <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-2.5 rounded-lg border border-emerald-200">
+                        <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                        <span>Flat ₹{(1000 * guests).toLocaleString('en-IN')} instant discount applied!</span>
+                      </div>
+                    )
                   )}
                 </div>
 
@@ -1403,9 +1415,15 @@ export function BookingContent() {
           <div className="flex flex-col min-w-0 leading-none">
             <div className="flex items-center gap-1 mb-1 leading-none">
               {isFullPayment ? (
-                <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide flex items-center gap-0.5">
-                  <Sparkles size={10} className="text-emerald-600 shrink-0" /> Full Pay (₹{fullPaymentDiscount.toLocaleString('en-IN')} off)
-                </span>
+                fullPaymentDiscount > 0 ? (
+                  <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide flex items-center gap-0.5">
+                    <Sparkles size={10} className="text-emerald-600 shrink-0" /> Full Pay (₹{fullPaymentDiscount.toLocaleString('en-IN')} off)
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide">
+                    Full Payment
+                  </span>
+                )
               ) : (
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">
                   Advance To Pay

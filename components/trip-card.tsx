@@ -134,6 +134,30 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
       startEnd: 'Mumbai - Mumbai',
       fullRoute: 'Mumbai-Jawai-Bera-Jawai Dam-Mumbai',
     },
+    'rajasthan-new-year-special': {
+      startEnd: 'Mumbai - Mumbai',
+      fullRoute: 'Mumbai – Jodhpur – Jaisalmer – Jaipur – Kishangarh – Udaipur – Mumbai',
+    },
+    'himachal-new-year-special': {
+      startEnd: 'Mumbai - Mumbai',
+      fullRoute: 'Mumbai – Chandigarh – Shimla – Manali – Kasol – Amritsar – Mumbai',
+    },
+    'thailand-full-moon-party-new-year-special': {
+      startEnd: 'Phuket - Krabi',
+      fullRoute: 'Phuket – Koh Samui – Koh Phangan – Krabi',
+    },
+    'bhandardara-lakeside-camping': {
+      startEnd: 'Mumbai / Kasara - Bhandardara',
+      fullRoute: 'Mumbai / Kasara – Arthur Lake Campsite',
+    },
+    'alibaug-private-beach-camping': {
+      startEnd: 'Mumbai / Mandwa - Alibaug',
+      fullRoute: 'Mumbai / Mandwa – Revdanda Beach Campsite',
+    },
+    'stargazing-and-camping-in-sandhan-valley': {
+      startEnd: 'Mumbai / Kasara - Sandhan Valley',
+      fullRoute: 'Mumbai / Kasara – Samrad (Sandhan Valley)',
+    },
   }
 
   if (ROUTE_MAP[slug]) {
@@ -142,15 +166,15 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
 
   // Fallback: Parse from trip.location
   if (trip.location) {
-    const parts = trip.location.split(/[·\-,]/).map((s) => s.trim()).filter(Boolean)
+    const parts = trip.location.split(/[·\-\u2013\u2014,]/).map((s) => s.trim()).filter(Boolean)
     if (parts.length >= 2) {
       return {
         startEnd: `${parts[0]} - ${parts[parts.length - 1]}`,
-        fullRoute: parts.join('-'),
+        fullRoute: parts.join(' – '),
       }
     }
     return {
-      startEnd: `${parts[0]} - ${parts[0]}`,
+      startEnd: `${parts[0]}`,
       fullRoute: trip.location,
     }
   }

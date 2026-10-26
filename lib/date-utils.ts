@@ -51,27 +51,26 @@ export function parseTripDate(dateStr?: string): ParsedTripDate | null {
 
   const currentYear = new Date().getFullYear()
 
-  // 1. Cross-month or cross-year range: "Oct 29–Nov 02, 2026" or "Dec 28–Jan 02, 2027 (New Year Special)"
+  // 1. Cross-month or cross-year range: "Oct 29–Nov 02, 2026" or "Dec 29, 2026 – Jan 04, 2027 (New Year Special)"
   const crossMonthMatch = cleaned.match(
-    /([A-Za-z]+)\s*(\d{1,2})\s*[-–—]\s*([A-Za-z]+)\s*(\d{1,2})(?:,\s*(\d{4}))?/i
+    /([A-Za-z]+)\s*(\d{1,2})(?:,\s*(\d{4}))?\s*[-–—]\s*([A-Za-z]+)\s*(\d{1,2})(?:,\s*(\d{4}))?/i
   )
   if (crossMonthMatch) {
     const m1Str = crossMonthMatch[1].toLowerCase()
     const d1 = parseInt(crossMonthMatch[2], 10)
-    const m2Str = crossMonthMatch[3].toLowerCase()
-    const d2 = parseInt(crossMonthMatch[4], 10)
-    const yearParsed = crossMonthMatch[5] ? parseInt(crossMonthMatch[5], 10) : currentYear
+    const m2Str = crossMonthMatch[4].toLowerCase()
+    const d2 = parseInt(crossMonthMatch[5], 10)
+    const endYearParsed = crossMonthMatch[6] ? parseInt(crossMonthMatch[6], 10) : currentYear
+    const startYearParsed = crossMonthMatch[3]
+      ? parseInt(crossMonthMatch[3], 10)
+      : (m1Str in MONTH_MAP && m2Str in MONTH_MAP && MONTH_MAP[m1Str] > MONTH_MAP[m2Str] ? endYearParsed - 1 : endYearParsed)
 
     if (m1Str in MONTH_MAP && m2Str in MONTH_MAP) {
       const m1 = MONTH_MAP[m1Str]
       const m2 = MONTH_MAP[m2Str]
 
-      // If span crosses Dec -> Jan (e.g., Dec 28 - Jan 02, 2027)
-      const startYear = m1 > m2 ? yearParsed - 1 : yearParsed
-      const endYear = yearParsed
-
-      const startDate = new Date(startYear, m1, d1, 0, 0, 0, 0)
-      const endDate = new Date(endYear, m2, d2, 23, 59, 59, 999)
+      const startDate = new Date(startYearParsed, m1, d1, 0, 0, 0, 0)
+      const endDate = new Date(endYearParsed, m2, d2, 23, 59, 59, 999)
 
       if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
         return { startDate, endDate, raw: cleaned }
@@ -131,7 +130,7 @@ export function isDateUpcoming(dateStr?: string, referenceDate?: Date): boolean 
   const parsed = parseTripDate(dateStr)
   if (!parsed) return true // Fallback to true if unparseable
 
-  const now = referenceDate || new Date()
+  const now = referenceDate instanceof Date ? referenceDate : new Date()
   const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
 
   // Returns true only if trip departure is today or in the future

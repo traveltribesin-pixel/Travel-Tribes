@@ -173,6 +173,14 @@ export function Navbar() {
           </Link>
 
           <Link
+            href="/weekend-getaways"
+            onClick={() => setOpen(false)}
+            className={`py-2.5 px-3 rounded-xl text-[14px] font-bold flex items-center justify-between transition-colors ${pathname === '/weekend-getaways' ? 'bg-[var(--sky-pale)] text-[var(--sky)]' : 'text-slate-700 hover:bg-slate-100'}`}
+          >
+            <span>Weekend Getaways</span>
+          </Link>
+
+          <Link
             href="/domestic-trips"
             onClick={() => setOpen(false)}
             className={`py-2.5 px-3 rounded-xl text-[14px] font-bold flex items-center justify-between transition-colors ${pathname === '/domestic-trips' ? 'bg-[var(--sky-pale)] text-[var(--sky)]' : 'text-slate-700 hover:bg-slate-100'}`}

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useMemo, useRef, useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight, CalendarDays, Clock3, Compass, MapPin, Search, Star, ChevronDown, RotateCcw } from 'lucide-react'
 import { filterUpcomingDates, getTripPrimaryDate } from '@/lib/date-utils'
-import { toFestiveTrip, isFestiveTripTitle, type Trip } from '@/lib/travel-data'
+import { toFestiveTrip, isFestiveTripTitle, isWeekendTrip, type Trip } from '@/lib/travel-data'
 
 export function HorizontalRail({ children, label = 'Scrollable content' }: { children: React.ReactNode; label?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -64,6 +64,7 @@ export { TripCard }
 
 const defaultCategories = [
   { value: 'All', title: 'All' },
+  { value: 'Weekend', title: 'Weekend Getaways' },
   { value: 'Domestic', title: 'Domestic' },
   { value: 'International', title: 'International' },
   { value: 'Xmas & New Year', title: 'Xmas & New Year' },
@@ -111,7 +112,11 @@ export function TripExplorer({
       // 1. Category Filter
       let matchesCategory = true;
       if (filter !== 'All' && filter !== 'Xmas & New Year') {
-        matchesCategory = t.region === filter;
+        if (filter === 'Weekend') {
+          matchesCategory = isWeekendTrip(t);
+        } else {
+          matchesCategory = t.region === filter;
+        }
       }
 
       // 2. Month Filter (matches any upcoming date for this trip in that month)

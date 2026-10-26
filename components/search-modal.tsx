@@ -94,8 +94,10 @@ export function SearchModal({ isOpen, onClose, initialQuery = '' }: SearchModalP
       const tagMatch = trip.tag ? trip.tag.toLowerCase().includes(trimmed) : false
       const descMatch = trip.description ? trip.description.toLowerCase().includes(trimmed) : false
       const highlightMatch = trip.highlights ? trip.highlights.some(h => h.toLowerCase().includes(trimmed)) : false
+      const seoDescMatch = trip.seoDescription ? trip.seoDescription.toLowerCase().includes(trimmed) : false
+      const keywordMatch = trip.seoKeywords ? trip.seoKeywords.some(k => k.toLowerCase().includes(trimmed)) : false
 
-      return titleMatch || locationMatch || regionMatch || tagMatch || descMatch || highlightMatch
+      return titleMatch || locationMatch || regionMatch || tagMatch || descMatch || highlightMatch || seoDescMatch || keywordMatch
     })
   }, [query, selectedCategory])
 

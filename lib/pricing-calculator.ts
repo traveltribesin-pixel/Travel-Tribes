@@ -1,4 +1,4 @@
-import { trips, type Trip, type TripPricingOption } from '@/lib/travel-data'
+import { trips, type Trip, type TripPricingOption, isWeekendTrip } from '@/lib/travel-data'
 import { isLongWeekendDate, isFestiveDate } from '@/lib/date-utils'
 
 export interface PricingBreakdown {
@@ -24,6 +24,7 @@ export interface PricingBreakdown {
   advanceTotal: number
   paymentType: 'advance' | 'full'
   fullPaymentDiscount: number
+  isFullPaymentDiscountEligible: boolean
   couponCode?: string
   couponDiscount: number
   couponPerPersonDiscount?: number
@@ -297,11 +298,15 @@ export function calculateBookingPricing(params: {
   const rawAdvanceTotal = advancePerPerson * guests
   const advanceTotal = Math.min(rawAdvanceTotal, grandTotal)
 
-  // 9. Payment Type & Discount (₹1,000 off per person strictly for full payment)
+  // 9. Payment Type & Discount (₹1,000 off per person strictly for full payment on eligible non-weekend trips)
+  // CRITICAL BUSINESS RULE: Trips that are Weekend Getaways are strictly NOT eligible for the ₹1,000 full payment discount anywhere!
+  const isWeekend = isWeekendTrip(trip)
+  const isFullPaymentDiscountEligible = !isWeekend
+
   const paymentType: 'advance' | 'full' = params.paymentType === 'full' ? 'full' : 'advance'
   const isFullPayment = paymentType === 'full'
 
-  const totalFullPaymentDiscount = FULL_PAYMENT_DISCOUNT_PER_PERSON * guests
+  const totalFullPaymentDiscount = isFullPaymentDiscountEligible ? FULL_PAYMENT_DISCOUNT_PER_PERSON * guests : 0
   const fullPaymentDiscount = isFullPayment ? Math.min(totalFullPaymentDiscount, grandTotal) : 0
   const fullPaymentTotal = Math.max(0, grandTotal - fullPaymentDiscount)
 
@@ -331,6 +336,7 @@ export function calculateBookingPricing(params: {
     advanceTotal,
     paymentType,
     fullPaymentDiscount,
+    isFullPaymentDiscountEligible,
     couponCode,
     couponDiscount,
     couponPerPersonDiscount,

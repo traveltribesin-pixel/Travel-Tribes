@@ -51,11 +51,1056 @@ export type Trip = {
   bookingAmount?: string
   reviews?: TripReview[]
   pdfUrl?: string
+  isWeekend?: boolean
+  seoDescription?: string
+  seoKeywords?: string[]
+}
+
+export function isWeekendTrip(trip?: Trip | null | string): boolean {
+  if (!trip) return false
+  if (typeof trip === 'string') {
+    const slugOrId = trip.toLowerCase()
+    return (
+      slugOrId.includes('bhandardara') ||
+      slugOrId.includes('alibaug') ||
+      slugOrId.includes('sandhan') ||
+      slugOrId.includes('weekend') ||
+      slugOrId.includes('kolad') ||
+      slugOrId.includes('pawna')
+    )
+  }
+  return Boolean(
+    trip.isWeekend ||
+    trip.region === 'Weekend' ||
+    trip.tag?.toLowerCase().includes('weekend') ||
+    trip.slug?.toLowerCase().includes('bhandardara') ||
+    trip.slug?.toLowerCase().includes('alibaug') ||
+    trip.slug?.toLowerCase().includes('sandhan') ||
+    trip.slug?.toLowerCase().includes('weekend')
+  )
 }
 
 const img = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=88`
 
 const baseTrips: Trip[] = [
+  {
+    id: 'bhandardara-lakeside-camping',
+    slug: 'bhandardara-lakeside-camping',
+    title: 'Bhandardara Lakeside Camping',
+    location: 'Bhandardara · Arthur Lake · Kasara · Maharashtra',
+    region: 'Weekend',
+    isWeekend: true,
+    date: 'Nov 07–08, 2026',
+    dates: [
+      'Nov 07–08, 2026',
+      'Nov 14–15, 2026',
+      'Nov 21–22, 2026',
+      'Nov 28–29, 2026',
+      'Dec 05–06, 2026',
+      'Dec 12–13, 2026',
+      'Dec 19–20, 2026',
+      'Dec 26–27, 2026',
+      'Jan 02–03, 2027',
+      'Jan 09–10, 2027',
+      'Jan 16–17, 2027',
+      'Jan 23–24, 2027',
+      'Jan 30–31, 2027',
+      'Feb 06–07, 2027',
+      'Feb 13–14, 2027',
+      'Feb 20–21, 2027',
+      'Feb 27–28, 2027'
+    ],
+    duration: '2D/1N',
+    price: '₹1,299',
+    image: '/image/Bhandardara/arthur_lake_sunset.jpg',
+    alt: 'Bhandardara Lakeside Camping — Arthur Lake Sunset Views, Tents & Bonfire',
+    tag: 'Weekend Escape',
+    seoDescription: 'Escape to Bhandardara Lakeside Camping with Travel Tribes. Enjoy a scenic lakeside tent stay, boating, sunset views, BBQ starters, bonfire, live music, games, dinner, and breakfast. Choose the Kasara pickup-and-drop package or travel directly to the campsite for a relaxing weekend surrounded by nature.',
+    seoKeywords: [
+      'Bhandardara camping',
+      'Bhandardara lakeside camping',
+      'Bhandardara camping package',
+      'camping near Mumbai',
+      'Bhandardara weekend getaway',
+      'Kasara to Bhandardara camping',
+      'lakeside tent stay Maharashtra',
+      'Bhandardara boating',
+      'group camping near Mumbai',
+      'Travel Tribes camping'
+    ],
+    description: 'Experience the perfect weekend escape with Travel Tribes at Bhandardara Lakeside Camping! Stay at a beautiful lakefront campsite with stunning sunset views, peaceful surroundings, and mountains all around. Enjoy a relaxing lakeside experience with boating, a refreshing lake dip, delicious homely meals, BBQ starters, and a cozy bonfire under the stars. Spend the evening enjoying live music, fun engagement activities, indoor games, and conversations with fellow travellers. Whether you’re travelling solo, with your partner, or with friends, Bhandardara Lakeside Camping is the perfect way to unwind, connect with nature, and find your tribe.',
+    spots: '14 spots left',
+    gallery: [
+      { image: '/image/Bhandardara/arthur_lake_sunset.jpg', alt: 'Sunset View over Arthur Lake, Bhandardara' },
+      { image: '/image/Bhandardara/arthur_lake_panoramic.jpg', alt: 'Arthur Lake Waterfront & Mountains' },
+      { image: '/image/Bhandardara/lake_shore.jpg', alt: 'Lakeside Camping Tents by Arthur Lake' },
+      { image: '/image/Bhandardara/bhandardara_sunrise.jpg', alt: 'Sunrise over Bhandardara Backwaters' },
+      { image: '/image/Bhandardara/arthur_lake_waters.jpg', alt: 'Boating and Waters of Arthur Lake' },
+      { image: '/image/Bhandardara/bonfire.jpg', alt: 'Bonfire & Acoustic Jamming Under the Stars' },
+      { image: '/image/Bhandardara/bhandardara_landscape.jpg', alt: 'Scenic Sahyadri Mountains at Bhandardara' }
+    ],
+    highlights: [
+      'Beautiful lakeside campsite with scenic sunset views',
+      'Comfortable tent stay with bedding',
+      'Boating experience at Bhandardara Lake',
+      'Lake dip in designated safe areas',
+      'Evening hi-tea and snacks',
+      'Veg and non-veg BBQ starters',
+      'Unlimited dinner and breakfast',
+      'Bonfire under the stars',
+      'Live music and group engagement activities',
+      'Indoor games and board games',
+      'Clean washrooms at the campsite',
+      'Solo-traveller-friendly community experience',
+      'Kasara station pickup and drop option',
+      'Free parking for direct travellers'
+    ],
+    itinerary: [
+      {
+        id: 'bhandardara-day-1',
+        day: 1,
+        title: 'Arrival at Bhandardara | Sunset | BBQ | Bonfire Night',
+        activities: [
+          'For Kasara Pickup Participants: Board a local train 11:42 AM towards Kasara from your nearest convenient station.',
+          'Reach Kasara Station between approximately 2:00 PM. Meet the Travel Tribes team at Kasara Station.',
+          'Transfer to the campsite by private vehicle.',
+          'For Direct-to-Campsite Participants: Reach the campsite directly by approximately 5:00 PM. Exact location details will be shared after booking.',
+          '5:00 PM: Welcome hi-tea and snacks by the lake.',
+          '6:30 PM: Enjoy the sunset with relaxing music and scenic views.',
+          '8:00 PM: Enjoy BBQ starters, music, fun games, and group activities.',
+          '9:30 PM: Relish a delicious, unlimited dinner.',
+          '10:30 PM onwards: Unwind around the bonfire with live music, conversations, and stargazing.',
+          'Spend the night in a lakeside tent with bedding.',
+          'Meals: Evening hi-tea and snacks, BBQ starters, and dinner.'
+        ]
+      },
+      {
+        id: 'bhandardara-day-2',
+        day: 2,
+        title: 'Morning by the Lake | Boating | Departure',
+        activities: [
+          '6:30 AM: Wake up to the peaceful morning atmosphere and mountain views.',
+          '7:30 AM: Enjoy breakfast by the lakeside.',
+          '8:00 AM: Experience boating on Bhandardara Lake and enjoy a lake dip in designated safe areas, with a life jacket.',
+          '9:30 AM: Pack up, check out, and click group pictures.',
+          'For Kasara Pickup Participants: 11:00 AM: Transfer to Kasara Station.',
+          'Board the 11:14 AM Kasara–CSMT train, with an expected arrival at CSMT around 1:25 PM.',
+          'For Direct-to-Campsite Participants: Depart from the campsite independently. Return home with beautiful memories and new friendships.',
+          'Meals: Breakfast.'
+        ]
+      }
+    ],
+    inclusions: [
+      'Kasara Station to campsite and return transportation for Kasara package participants',
+      'Lakeside tent accommodation on a double-sharing basis',
+      'Foam mattress, and blanket',
+      'Evening hi-tea and snacks',
+      'Veg/non-veg BBQ starters',
+      'Unlimited veg/non-veg dinner',
+      'Breakfast',
+      'Boating experience at Bhandardara Lake',
+      'Bonfire session under the stars',
+      'Group engagement activities and icebreakers',
+      'Clean washrooms at the campsite',
+      'Lakefront campsite with scenic sunset views',
+      'Expert coordinators and support team throughout the trip',
+      'Free parking for direct travellers',
+      'Lakeside Swimming with Life Jacket'
+    ],
+    exclusions: [
+      'Travel expenses to and from the campsite for direct-to-campsite participants',
+      'Lunch on Day 1 and Day 2',
+      'Personal purchases, including snacks, bottled water, and soft drinks',
+      'Additional boating or adventure activities not mentioned in the inclusions',
+      'Medical or emergency expenses',
+      'Extra bedding or private tent requests, where additional charges apply',
+      'Personal insurance',
+      'GST 5%',
+      'Anything not specifically mentioned under inclusions'
+    ],
+    thingsToCarry: [
+      'Valid government-issued photo ID',
+      'Extra clothes',
+      'A jacket or hoodie',
+      'A towel and toiletries',
+      'Personal medicines',
+      'Power bank'
+    ],
+    policies: [
+      'Carry valid government-issued photo ID.',
+      'Tent accommodation is on a sharing basis. Private tent requests are subject to availability and may incur additional charges.',
+      'Extra bedding may be chargeable.',
+      'Boating, bonfire, music, and other activities are subject to weather conditions and local permissions.',
+      'Lake dipping is permitted only in designated safe areas and with coordinator guidance.',
+      'Carry extra clothes, a jacket or hoodie, a towel, toiletries, personal medicines, and a power bank.',
+      'Network connectivity may be limited at the campsite.',
+      'Participants booking the Kasara package must report on time. Missing the pickup may be treated as a no-show without a refund.',
+      'The itinerary may change due to weather, safety, or operational requirements.',
+      'In case of rain, the activity plan may change; the trip may be rescheduled in such circumstances.',
+      'Alcohol is permitted only for participants aged 21 and above and must be consumed responsibly. Misbehaviour under the influence may lead to removal without a refund.',
+      'Participants are responsible for their personal belongings.',
+      'Any damage to campsite property may be chargeable.'
+    ],
+    regularPackages: [
+      { label: 'Direct to Campsite', price: '₹1,299 / person' },
+      { label: 'Kasara Pickup and Drop', price: '₹1,899 / person' },
+      { label: 'Mumbai to Mumbai', price: '₹2,699 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Direct to Campsite', price: '₹1,299 / person' },
+      { label: 'Kasara Pickup and Drop', price: '₹1,899 / person' },
+      { label: 'Mumbai to Mumbai', price: '₹2,699 / person' }
+    ],
+    doubleSharingRate: 0,
+    bookingAmount: '₹999 / person'
+  },
+  {
+    id: 'alibaug-private-beach-camping',
+    slug: 'alibaug-private-beach-camping',
+    title: 'Alibaug Private Beach Camping',
+    location: 'Alibaug · Revdanda Beach · Mandwa · Maharashtra',
+    region: 'Weekend',
+    isWeekend: true,
+    date: 'Nov 07–08, 2026',
+    dates: [
+      'Nov 07–08, 2026',
+      'Nov 14–15, 2026',
+      'Nov 21–22, 2026',
+      'Nov 28–29, 2026',
+      'Dec 05–06, 2026',
+      'Dec 12–13, 2026',
+      'Dec 19–20, 2026',
+      'Dec 26–27, 2026',
+      'Jan 02–03, 2027',
+      'Jan 09–10, 2027',
+      'Jan 16–17, 2027',
+      'Jan 23–24, 2027',
+      'Jan 30–31, 2027',
+      'Feb 06–07, 2027',
+      'Feb 13–14, 2027',
+      'Feb 20–21, 2027',
+      'Feb 27–28, 2027'
+    ],
+    duration: '2D/1N',
+    price: '₹1,299',
+    image: '/image/Alibaug/alibaug_sunset_sea.jpg',
+    alt: 'Alibaug Private Beach Camping — Revdanda Beach Sunset, Tents & Bonfire',
+    tag: 'Beach Camping',
+    seoDescription: 'Experience Alibaug Private Beach Camping with Travel Tribes at Alibaug Beach. Enjoy a comfortable tent stay, sunset views, live music, Bollywood DJ night, bonfire, open-sky movie screening, BBQ, dinner, breakfast, and beachside fun.',
+    seoKeywords: [
+      'Alibaug beach camping',
+      'private beach camping Alibaug',
+      'Revdanda Beach camping',
+      'Alibaug camping package',
+      'beach camping near Mumbai',
+      'Mumbai to Alibaug camping',
+      'Alibaug weekend getaway',
+      'Alibaug tent stay',
+      'DJ night beach camping',
+      'Travel Tribes Alibaug'
+    ],
+    description: "Escape the city and experience a memorable beachside getaway with Travel Tribes at Alibaug Private Beach Camping. Enjoy golden sands, calming waves, beautiful sunsets, and a peaceful stay close to nature.\n\nSpend your evening with live music, a Bollywood DJ night, an open-sky movie screening, a bonfire, and fun group activities. Enjoy freshly prepared meals with separate vegetarian and non-vegetarian food counters, along with comfortable tents and clean washroom facilities.\n\nWhether you're travelling solo, with friends, or with your partner, this experience is all about relaxing by the beach, meeting like-minded travellers, and turning strangers into friends.",
+    spots: '16 spots left',
+    gallery: [
+      { image: '/image/Alibaug/alibaug_sunset_sea.jpg', alt: 'Alibaug Beach Sunset over Arabian Sea' },
+      { image: '/image/Alibaug/revdanda_fort_beach1.jpg', alt: 'Historic Revdanda Beach & Fort Outer Walls' },
+      { image: '/image/Alibaug/alibaug_coastline.jpg', alt: 'Golden Sand Coastline at Alibaug' },
+      { image: '/image/Alibaug/alibaug_beach_wide.jpg', alt: 'Peaceful Shoreline & Gentle Ocean Waves' },
+      { image: '/image/Alibaug/beach_bonfire.jpg', alt: 'Beachside Bonfire & DJ Jamming Night' },
+      { image: '/image/Alibaug/revdanda_fort_beach2.jpg', alt: 'Revdanda Seashore Fort Heritage' },
+      { image: '/image/Alibaug/alibaug_golden_sand.jpg', alt: 'Cozy Beach Tents on Golden Sand' }
+    ],
+    highlights: [
+      'Private beach camping experience at Alibaug',
+      'Scenic sunset and relaxing beach walks',
+      'Comfortable tent accommodation with mattresses, pillows, and blankets',
+      'Live music session by the beach',
+      'Bollywood DJ night under the stars',
+      'Open-sky movie screening',
+      'Bonfire and jamming session',
+      'Veg and non-veg BBQ starters',
+      'Freshly cooked meals with separate food counters',
+      'Fun icebreakers, group activities, and board games',
+      'Beachside relaxation and games',
+      'Clean, separate male and female washrooms with shower facilities',
+      'Solo-traveller-friendly community experience'
+    ],
+    itinerary: [
+      {
+        id: 'alibaug-day-1',
+        day: 1,
+        title: 'Arrival at Alibaug | Beach Time | Music & DJ Night',
+        activities: [
+          'For Mandwa-to-Mandwa Travellers: 2:00 PM: Meet the group at Mandwa Jetty. Transfer to the campsite with the Travel Tribes team.',
+          'For Direct-to-Campsite Travellers: 4:00 PM: Arrive at the campsite and get your tent allotted.',
+          'Beachside Experience:',
+          '5:00 PM: Explore the beach, play games, enjoy volleyball, or relax by the sea.',
+          '5:30 PM: Enjoy the sunset, beach walks, cool sea breeze, and evening tea or coffee with snacks.',
+          '6:30 PM: Join the icebreaking session, introductions, tug of war, and fun group activities.',
+          '8:00 PM: Enjoy a live music session by the beach with BBQ starters.',
+          '9:30 PM: Relish an unlimited buffet dinner.',
+          '10:00 PM: Dance the night away at the Bollywood DJ session.',
+          '12:00 AM: Wind down with an open-sky movie screening and bonfire jamming session.',
+          'Retire to your comfortable tent for the night.',
+          'Meals: Evening hi-tea and snacks, BBQ starters, and dinner.'
+        ]
+      },
+      {
+        id: 'alibaug-day-2',
+        day: 2,
+        title: 'Morning by the Beach | Breakfast | Departure',
+        activities: [
+          '7:00 AM: Wake up, freshen up, and enjoy breakfast.',
+          '9:00 AM: Relax by the beach, play games, take a dip, or explore available water sports at your own expense.',
+          '10:00 AM: Check out and prepare for departure.',
+          'For Mandwa-to-Mandwa Travellers: Return transfer to Mandwa Jetty is included.',
+          'For Direct-to-Campsite Travellers: Depart independently.',
+          'Meals: Breakfast.'
+        ]
+      }
+    ],
+    inclusions: [
+      'One-night tent accommodation on a two-person sharing basis',
+      'Mattresses, blankets, bedsheets, and pillows',
+      'Four meal servings: evening hi-tea and snacks, BBQ starters, dinner, and breakfast',
+      'Live music session',
+      'Bollywood DJ night',
+      'Outdoor movie screening',
+      'Campfire session',
+      'Board games and engagement activities',
+      'Western toilets and drinking water',
+      'Transportation, only for participants booking a transportation package'
+    ],
+    exclusions: [
+      'Personal expenses',
+      'Travel and transportation for direct-to-campsite participants',
+      'Personal insurance of any kind',
+      'Medical expenses, hospitalisation, evacuation, and related costs',
+      'Water sports or other activities not specifically included',
+      'Any item not mentioned in the inclusions',
+      '5% GST'
+    ],
+    thingsToCarry: [
+      'Valid government-issued photo ID',
+      'Extra clothes',
+      'A towel and toiletries',
+      'Sunscreen and a cap',
+      'Personal medicines',
+      'Power bank'
+    ],
+    policies: [
+      'Carry a valid government-issued photo ID.',
+      'Tent accommodation is on a two-person sharing basis. Special requests are subject to availability.',
+      'Separate male and female Western washrooms with shower facilities are available.',
+      'Participants booking transportation packages must report on time. Delays may result in missing the ferry, without a refund.',
+      'Live music, DJ sessions, movie screenings, and other activities are subject to weather conditions.',
+      'Follow the instructions provided by the Travel Tribes team.',
+      'Keep the beach and campsite clean and dispose of waste in designated bins.',
+      'Participants are responsible for their personal belongings.',
+      'Alcohol is permitted only for guests aged 21 and above and must be consumed responsibly. Misbehaviour may lead to removal without a refund.',
+      'In unavoidable circumstances, including adverse weather or government restrictions, the itinerary may be altered for safety.',
+      'The event is generally suitable for adults aged 18 and above. Families with children can join subject to the accommodation arrangements.',
+      'Full payment must be completed before the 48-hour cutoff specified in the booking terms.',
+      'Cancellations made within 48 hours of the event are non-refundable.',
+      'No refunds are provided for no-shows or last-minute cancellations on the day of departure.',
+      'Advance payments are non-refundable but may be transferred to a future batch, subject to the stated terms.'
+    ],
+    regularPackages: [
+      { label: 'Direct-to-Campsite Package', price: '₹1,299 / person' },
+      { label: 'Mandwa Jetty to Mandwa Jetty Package', price: '₹1,599 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Direct-to-Campsite Package', price: '₹1,299 / person' },
+      { label: 'Mandwa Jetty to Mandwa Jetty Package', price: '₹1,599 / person' }
+    ],
+    doubleSharingRate: 0,
+    bookingAmount: '₹999 / person'
+  },
+  {
+    id: 'stargazing-and-camping-in-sandhan-valley',
+    slug: 'stargazing-and-camping-in-sandhan-valley',
+    title: 'Stargazing and Camping in Sandhan Valley',
+    location: 'Sandhan Valley · Samrad · Kasara · Maharashtra',
+    region: 'Weekend',
+    isWeekend: true,
+    date: 'Nov 07–08, 2026',
+    dates: [
+      'Nov 07–08, 2026',
+      'Nov 14–15, 2026',
+      'Nov 21–22, 2026',
+      'Nov 28–29, 2026',
+      'Dec 05–06, 2026',
+      'Dec 12–13, 2026',
+      'Dec 19–20, 2026',
+      'Dec 26–27, 2026',
+      'Jan 02–03, 2027',
+      'Jan 09–10, 2027',
+      'Jan 16–17, 2027',
+      'Jan 23–24, 2027',
+      'Jan 30–31, 2027',
+      'Feb 06–07, 2027',
+      'Feb 13–14, 2027',
+      'Feb 20–21, 2027',
+      'Feb 27–28, 2027'
+    ],
+    duration: '2D/1N',
+    price: '₹1,899',
+    image: '/image/Sandhan/sandhan_valley_gorge.jpg',
+    alt: 'Stargazing and Camping in Sandhan Valley — Valley of Shadows & Kokankada',
+    tag: 'Stargazing & Camping',
+    seoDescription: 'Experience Stargazing and Camping in Sandhan Valley with Travel Tribes. Enjoy an overnight tent stay, an astrophysicist-led stargazing session, a bonfire, scenic surroundings, and a memorable outdoor adventure. Choose from Mumbai, Kasara, or Base Village travel packages.',
+    seoKeywords: [
+      'Sandhan Valley camping',
+      'Sandhan Valley stargazing',
+      'camping near Mumbai',
+      'Sandhan Valley camping package',
+      'astrophysicist stargazing session',
+      'Maharashtra camping trips',
+      'overnight camping near Mumbai',
+      'Sandhan Valley adventure',
+      'Kasara camping trip',
+      'stargazing experience Maharashtra'
+    ],
+    description: 'Escape city life with an unforgettable stargazing and camping experience in Sandhan Valley, the famous “Valley of Shadows.” Camp under the open sky, enjoy a bonfire, and explore the night sky during a guided session led by an astrophysicist. Perfect for adventure lovers, nature enthusiasts, and solo travellers looking to connect with nature and meet new people.',
+    spots: '14 spots left',
+    gallery: [
+      { image: '/image/Sandhan/sandhan_valley_gorge.jpg', alt: 'Sandhan Valley Deep Rock Gorge — Valley of Shadows' },
+      { image: '/image/Sandhan/kokankada_cliff_real.jpg', alt: 'Kokankada Massive Natural Cliff Formation' },
+      { image: '/image/Sandhan/stargazing_telescope.jpg', alt: 'Guided Stargazing Session with Telescope by Astrophysicist' },
+      { image: '/image/Sandhan/starry_campsite.jpg', alt: 'Camping Under the Open Starry Night Sky' },
+      { image: '/image/Sandhan/kokankada_view_dusk.jpg', alt: 'Sunset and Dusk Panoramic View from Kokankada' },
+      { image: '/image/Sandhan/valley_of_shadows_real.jpg', alt: 'Sandhan Valley Canyon Trail at Samrad' },
+      { image: '/image/Sandhan/bonfire_night.jpg', alt: 'Bonfire Experience Under the Stars' }
+    ],
+    highlights: [
+      'Stargazing session led by an astrophysicist with telescope',
+      'Camping under the open night sky',
+      'Scenic journey to Sandhan Valley\'s base village',
+      'Bonfire experience under the stars',
+      'Optional second stargazing session',
+      'Overnight tent accommodation',
+      'Morning sightseeing around the surrounding area',
+      'Meals during the trip as specified',
+      'Forest and land fees included',
+      'Trip leader assistance throughout the experience',
+      'Opportunity to connect with fellow travellers'
+    ],
+    itinerary: [
+      {
+        id: 'sandhan-day-1',
+        day: 1,
+        title: 'Journey to Sandhan Valley | Camping & Stargazing',
+        activities: [
+          'Departure and Journey:',
+          'Begin your journey with a morning train ride to Kasara.',
+          'Meet the trip leader at Kasara Station.',
+          'Continue the journey towards the base village.',
+          'Arrive at the base village and enjoy light snacks before settling in.',
+          'Settle into the campsite and experience the night sky away from city lights.',
+          'Join a stargazing session led by an astrophysicist with telescope.',
+          'Enjoy a warm dinner at the campsite.',
+          'Spend the evening around the bonfire, connecting with fellow travellers.',
+          'Participate in an optional second stargazing session or relax around the bonfire.',
+          'Overnight stay in tents.',
+          'Meals: Snacks and dinner.'
+        ]
+      },
+      {
+        id: 'sandhan-day-2',
+        day: 2,
+        title: 'Morning Sightseeing | Lunch & Return Journey',
+        activities: [
+          'Wake up and enjoy breakfast at the campsite.',
+          'Get ready to explore the beautiful surroundings during the morning sightseeing experience of Kokankada and Sandhan Valley (Rappling Optional).',
+          'Return for lunch before beginning the journey back.',
+          'Depart with memories of a night spent camping beneath the stars.',
+          'Meals: Breakfast and lunch.'
+        ]
+      }
+    ],
+    inclusions: [
+      'Travel as per the selected package',
+      'Meals : Evening snacks, Dinner, Breakfast',
+      'Day 2 lunch',
+      'Trip leader assistance',
+      'Stargazing session led by an astrophysicist',
+      'Tent accommodation',
+      'Forest fees',
+      'Land fees'
+    ],
+    exclusions: [
+      'Day 1 lunch',
+      'Personal expenses',
+      'Medical expenses and emergency evacuation',
+      'Rappelling charges (additional ₹300)',
+      'Any service or expense not specifically mentioned under inclusions'
+    ],
+    thingsToCarry: [
+      'Carry a valid government-issued photo ID',
+      'Warm clothes or jacket (nights can get cold in the valley)',
+      'Extra pair of comfortable clothes',
+      'Personal medicines',
+      'Power bank',
+      'Flashlight or torch'
+    ],
+    policies: [
+      'Carry a valid government-issued photo ID.',
+      'Follow the instructions given by the trip leader throughout the experience.',
+      'Camping and outdoor activities involve inherent risks.',
+      'Inform the organiser in advance about any relevant physical limitations or medical concerns.',
+      'Keep your personal belongings and valuables safe.',
+      'Respect fellow travellers, local communities, and the natural environment.',
+      'Littering and irresponsible behaviour are not permitted.',
+      'The itinerary, route, timings, and activities may change due to weather, local conditions, or safety concerns.',
+      'Rappelling is not included in the package and costs an additional ₹300.',
+      'Full payment must be completed before the 48-hour cutoff specified in the booking terms.',
+      'Cancellations made within 48 hours of the event are non-refundable.',
+      'No refunds are provided for no-shows or last-minute cancellations on the day of departure.',
+      'Advance payments are non-refundable but may be transferred to a future batch, subject to the stated terms.',
+      'In case of bad weather, government restrictions, or unavoidable circumstances, the event may be rescheduled.'
+    ],
+    regularPackages: [
+      { label: 'Base Village to Base Village', price: '₹1,899 / person' },
+      { label: 'Kasara to Kasara', price: '₹2,499 / person' },
+      { label: 'Mumbai to Mumbai', price: '₹2,799 / person' }
+    ],
+    pricingOptions: [
+      { label: 'Base Village to Base Village', price: '₹1,899 / person' },
+      { label: 'Kasara to Kasara', price: '₹2,499 / person' },
+      { label: 'Mumbai to Mumbai', price: '₹2,799 / person' }
+    ],
+    doubleSharingRate: 0,
+    bookingAmount: '₹999 / person'
+  },
+  {
+    id: 'rajasthan-new-year-special',
+    slug: 'rajasthan-new-year-special',
+    title: 'Rajasthan New Year Special',
+    location: 'Mumbai – Jodhpur – Jaisalmer – Jaipur – Kishangarh – Udaipur – Mumbai',
+    region: 'Domestic',
+    date: 'Dec 27, 2026 – Jan 04, 2027',
+    dates: [
+      'Dec 27, 2026 – Jan 04, 2027 (New Year Special)'
+    ],
+    duration: '8N/9D',
+    price: '₹21,999',
+    image: '/new-year-trip-images/3.png',
+    alt: 'Rajasthan New Year Special — Jaipur Hawa Mahal Fireworks & Royal Forts',
+    tag: 'New Year Special',
+    seoDescription: 'Experience royal Rajasthan this New Year with Travel Tribes! 9-day group tour covering Jodhpur Blue City, Jaisalmer Sam Sand Dunes camping, Jaipur rooftop New Year DJ party & fireworks, Kishangarh & Udaipur lakes.',
+    seoKeywords: [
+      'Rajasthan New Year trip',
+      'Rajasthan New Year group tour',
+      'Rajasthan tour from Mumbai',
+      'Jaipur New Year party',
+      'Jaisalmer desert camping',
+      'camel safari Rajasthan',
+      'jeep safari Jaisalmer',
+      'Jodhpur Blue City tour',
+      'Udaipur group tour',
+      'Rajasthan 8 nights 9 days package'
+    ],
+    description: "Experience the royal charm of Rajasthan with our New Year Special Group Tour! Discover Jodhpur’s iconic blue streets, the golden sands of Jaisalmer, Jaipur’s magnificent palaces, and the beautiful lakes of Udaipur.\n\nEnjoy a desert camping experience with camel and jeep safaris, explore historic forts and colourful local markets, and celebrate New Year’s Eve in Jaipur with a rooftop party, gala dinner, DJ night, and fireworks.\n\nJoin fellow travellers for a memorable journey filled with royal heritage, desert adventures, cultural experiences, and festive celebrations.",
+    spots: '16 spots left',
+    gallery: [
+      { image: '/image/Rajasthan/rajasthan_main_hawa_mahal.jpg', alt: 'Hawa Mahal Palace of Winds in Jaipur' },
+      { image: '/image/Rajasthan/jaisalmer_sam_sand_dunes.jpg', alt: 'Sam Sand Dunes Camel Safari in Jaisalmer' },
+      { image: '/image/Rajasthan/jodhpur_blue_city_mehrangarh.jpg', alt: 'Jodhpur Blue City & Mehrangarh Fort' },
+      { image: '/image/Rajasthan/jaipur_amer_fort.jpg', alt: 'Majestic Amer Fort in Jaipur' },
+      { image: '/image/Rajasthan/udaipur_city_palace_pichola.jpg', alt: 'Udaipur City Palace and Lake Pichola' },
+      { image: '/image/Rajasthan/jaisalmer_golden_fort.jpg', alt: 'Jaisalmer Golden Fort & Patwon Ki Haveli' },
+      { image: '/image/Rajasthan/desert_camping_bonfire.jpg', alt: 'Desert Camping, Bonfire & Folk Dance at Sam' },
+      { image: '/image/Rajasthan/jaipur_jal_mahal.jpg', alt: 'Jal Mahal Water Palace in Jaipur' }
+    ],
+    highlights: [
+      'Explore Jodhpur’s Blue City and Mehrangarh Fort.',
+      'Visit Jaswant Thada and Sardar Market.',
+      'Experience desert camping at Sam Sand Dunes, Jaisalmer.',
+      'Enjoy camel safari and jeep safari in the desert.',
+      'Experience traditional dance, DJ night, and desert camp dinner.',
+      'Explore Jaisalmer Fort, Patwon Ki Haveli, and Gadisar Lake.',
+      'Celebrate New Year in Jaipur with a rooftop DJ party, gala dinner, and fireworks.',
+      'Visit Hawa Mahal, City Palace, and Jantar Mantar.',
+      'Explore Amer Fort, Jal Mahal, and Birla Temple.',
+      'Stop at Kishangarh Snow Yard en route to Udaipur.',
+      'Visit Nathdwara’s Statue of Belief and enjoy the light and sound show.',
+      'Explore Udaipur’s City Palace, Lake Pichola, and local markets.'
+    ],
+    itinerary: [
+      {
+        id: 'rajasthan-day-1',
+        day: 1,
+        title: 'Day 1: Mumbai to Jodhpur – Journey Begins',
+        activities: [
+          'Meet your tour guide and fellow travellers at Dadar Railway Station at 2:00 PM.',
+          'Board train 20484 DDR BGKT SF and begin your journey towards Rajasthan.',
+          'Enjoy scenic views of mountains and lakes along the way.',
+          'Interact with fellow travellers and enjoy group games such as UNO and housie.',
+          'Overnight journey by train.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-2',
+        day: 2,
+        title: 'Day 2: Jodhpur – Blue City Tour',
+        activities: [
+          'Arrive in Jodhpur at approximately 7:20 AM.',
+          'Transfer your luggage to the tour bus.',
+          'Check in to the hotel, enjoy breakfast, and take some time to relax.',
+          'Explore Mehrangarh Fort and Jaswant Thada.',
+          'Visit the Blue Corridor at your own expense, if time permits.',
+          'In the evening, stroll around the Clock Tower area and explore Sardar Market.',
+          'Enjoy dinner and an overnight stay in Jodhpur.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-3',
+        day: 3,
+        title: 'Day 3: Jodhpur to Jaisalmer – Golden Sands & Desert Camping',
+        activities: [
+          'Enjoy breakfast and begin your journey to Jaisalmer, approximately 5 hours away.',
+          'Stop at the abandoned village of Kuldhara en route.',
+          'Continue to Sam Village and check in to the desert camp.',
+          'Experience a camel ride and jeep safari across the desert.',
+          'Enjoy traditional dance performances and a DJ night at the camp.',
+          'Relish dinner and spend the night under the desert sky.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-4',
+        day: 4,
+        title: 'Day 4: Jaisalmer – Golden City Exploration',
+        activities: [
+          'Enjoy breakfast at the desert camp.',
+          'Explore Jaisalmer’s famous attractions, including Patwon Ki Haveli and Jaisalmer Fort.',
+          'Visit Gadisar Lake and admire the surrounding architecture.',
+          'Enjoy an optional boat ride at Gadisar Lake at your own expense.',
+          'Have dinner organised by the tour operator.',
+          'Begin the overnight journey to Jaipur, approximately 10 hours.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-5',
+        day: 5,
+        title: 'Day 5: Jaipur – Pink City & New Year Celebration',
+        activities: [
+          'Arrive in Jaipur early in the morning.',
+          'Check in to the hotel, freshen up, and enjoy breakfast.',
+          'Rest and prepare for a day of exploring the Pink City.',
+          'Visit the magnificent Hawa Mahal, also known as the Palace of Winds.',
+          'Explore City Palace, showcasing Rajasthani and Mughal architecture.',
+          'Visit Jantar Mantar, the historic astronomical observatory.',
+          'Return to the hotel and get ready for the New Year celebration.',
+          'Enjoy a rooftop party featuring a gala dinner, DJ night, and fireworks.',
+          'Celebrate the New Year with music, festive vibes, and fellow travellers.',
+          'Overnight stay in Jaipur.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-6',
+        day: 6,
+        title: 'Day 6: Jaipur – Forts, Palaces & Local Markets',
+        activities: [
+          'Enjoy breakfast and begin another day of Jaipur sightseeing.',
+          'Visit the majestic Amer Fort, located on a hilltop.',
+          'Stop at Jal Mahal, the beautiful Water Palace situated in Man Sagar Lake.',
+          'Visit Birla Temple.',
+          'Explore the exterior of Albert Museum Hall.',
+          'If time permits, shop at Bapu Bazaar.',
+          'Enjoy dinner and an overnight stay in Jaipur.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-7',
+        day: 7,
+        title: 'Day 7: Jaipur to Udaipur – Kishangarh & Nathdwara',
+        activities: [
+          'Begin the journey to Udaipur, approximately 8 hours away.',
+          'Stop at Kishangarh Snow Yard, a photogenic attraction in Rajasthan.',
+          'Visit Nathdwara and see the famous Statue of Belief.',
+          'Enjoy the light and sound show at Nathdwara.',
+          'Arrive in Udaipur and check in to the hotel.',
+          'Enjoy dinner and an overnight stay in Udaipur.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-8',
+        day: 8,
+        title: 'Day 8: Udaipur – City Tour & Return Journey',
+        activities: [
+          'Enjoy breakfast and check out from the hotel.',
+          'Visit Karni Mata Mandir via ropeway.',
+          'Enjoy views of Lake Pichola and opt for boating at your own expense.',
+          'Explore City Palace and its museum.',
+          'Have lunch at a café near Lake Pichola at your own expense.',
+          'Visit Gangaur Ghat.',
+          'Explore Jagdish Temple and Hathipole Market.',
+          'Visit Saheliyon Ki Badi if time permits.',
+          'Proceed to Udaipur Railway Station and board train 22902 towards Mumbai.',
+          'Overnight journey by train.'
+        ]
+      },
+      {
+        id: 'rajasthan-day-9',
+        day: 9,
+        title: 'Day 9: Return to Mumbai',
+        activities: [
+          'Arrive at Mumbai Bandra Terminus at approximately 1:25 PM.',
+          'Conclude your Rajasthan New Year Special journey with wonderful memories and new friendships.',
+          'Trip ends with a heart full of memories!'
+        ]
+      }
+    ],
+    inclusions: [
+      'Mumbai–Rajasthan–Mumbai train tickets in Sleeper Class. (Confirm or RAC)',
+      'AC bus for internal transfers.',
+      'Accommodation in 3-star hotels.',
+      'Breakfast and dinner at hotels, as specified.',
+      'Rooftop New Year party with gala dinner and celebration.',
+      'Desert camp stay at Jaisalmer.',
+      'Jeep safari and camel safari at Jaisalmer.',
+      'Professional Trip Captain.',
+      'One 1-litre water bottle daily.'
+    ],
+    exclusions: [
+      'Lunch and train meals.',
+      'Meals not specifically mentioned in the itinerary.',
+      'Entry fees for sightseeing attractions throughout the tour.',
+      'Activities not mentioned in the inclusions.',
+      'Auto-rickshaw and minor local transport charges.',
+      'Shopping, laundry, room service, and personal expenses.',
+      'Anything not specifically mentioned under inclusions.'
+    ],
+    thingsToCarry: [
+      'Valid Government Photo ID (Aadhaar / Passport / Voter ID) — Mandatory',
+      'Comfortable walking shoes + sandals/slippers',
+      'Warm woollens, thermals, fleece jacket, gloves and shawls (desert nights & December Rajasthan get very cold)',
+      'Casual comfortable outfits + party outfit for New Year rooftop DJ night',
+      'Sunscreen (SPF 50+), sunglasses, and sunhat for daytime fort exploration',
+      'Personal medical kit (Band-aids, motion sickness tablets, ORS, pain relief spray)',
+      'Power bank, camera, and chargers',
+      'Reusable water bottle'
+    ],
+    policies: [
+      'Booking is confirmed only after the booking amount is received.',
+      'Valid ID proof, such as Aadhaar, PAN, passport, or voter ID, must be shared at the time of booking.',
+      'Full payment must be completed before departure according to the payment timeline provided by the operator.',
+      'Triple- and quad-sharing packages use an extra mattress; an additional bed is not provided.',
+      'The package price is based on triple/quad sharing unless specified otherwise.',
+      'Hotels and rooms are subject to availability; similar-category accommodation may be provided if required.',
+      'Sightseeing may be rearranged due to weather, local conditions, or operational reasons.',
+      'Guests should be punctual for all departures. Missing a sightseeing activity or transport due to delays may not qualify for a refund.',
+      'Additional expenses arising from natural calamities, political unrest, strikes, or unforeseen circumstances are payable by the guest.',
+      'Alcohol consumption and unlawful activities are prohibited during the tour.',
+      'Please avoid littering and respect local culture and traditions.',
+      'Disputes arising during the tour are subject to the jurisdiction of Mumbai courts.',
+      'Cancellation up to 30 days before departure: Batch shifting is permitted as per the supplier’s policy. The booking amount is handled through a credit note, and the remaining amount is refundable subject to the stated conditions.',
+      'Cancellation 29–21 days before departure: No refund.',
+      'Cancellation 21–15 days before departure: No refund.',
+      'Cancellation 14 days or less before departure: No refund.',
+      'Please confirm the exact applicable cancellation terms with the operator before booking.'
+    ],
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹21,999 / person' },
+      { label: 'Double Sharing', price: '₹23,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹21,999 / person' },
+      { label: 'Double Sharing', price: '₹23,999 / person' }
+    ],
+    doubleSharingRate: 0,
+    pricingOptions: [
+      { label: 'Triple Sharing', price: '₹21,999 / person' },
+      { label: 'Double Sharing', price: '₹23,999 / person' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    reviews: [
+      {
+        name: 'Rohan Mehta',
+        role: 'Verified Traveller',
+        detail: 'Rajasthan Royal Expedition',
+        rating: 5,
+        quote: 'Celebrating New Year in Jaipur with Travel Tribes was magical! The rooftop DJ party, Jaisalmer dunes camel safari, and Jodhpur Mehrangarh Fort were unforgettable.'
+      },
+      {
+        name: 'Ananya Sharma',
+        role: 'Solo Traveller',
+        detail: 'Rajasthan Heritage & New Year Tour',
+        rating: 5,
+        quote: 'As a solo traveller, this trip was pure comfort and fun. Great hotels, seamless train & bus transfers, delicious food, and a fantastic group vibe!'
+      }
+    ]
+  },
+  {
+    id: 'himachal-new-year-special',
+    slug: 'himachal-new-year-special',
+    title: 'Himachal New Year Special',
+    location: 'Mumbai – Chandigarh – Shimla – Manali – Kasol – Amritsar – Mumbai',
+    region: 'Domestic',
+    date: 'Dec 27, 2026 – Jan 04, 2027',
+    dates: [
+      'Dec 27, 2026 – Jan 04, 2027 (New Year Special)'
+    ],
+    duration: '8N/9D',
+    price: '₹17,999',
+    image: '/new-year-trip-images/5.png',
+    alt: 'Himachal New Year Special — Snowy Manali Promenade & New Year Fireworks',
+    tag: 'New Year Special',
+    seoDescription: 'Celebrate New Year in Himachal Pradesh with a 9-day, 8-night group tour from Mumbai covering Shimla, Manali, Kasol, and Amritsar. Enjoy river rafting, mountain sightseeing, a New Year gala dinner and DJ night, local culture, and the iconic Golden Temple.',
+    seoKeywords: [
+      'Himachal New Year trip',
+      'Himachal Pradesh New Year Special',
+      'Manali New Year group tour',
+      'Shimla Manali Kasol trip from Mumbai',
+      'New Year party in Manali',
+      'Himachal group tour package',
+      'Kasol camping',
+      'Kullu river rafting',
+      'Amritsar Golden Temple tour',
+      'Himachal 9 days 8 nights package'
+    ],
+    description: "Welcome the New Year amidst the beautiful mountains of Himachal Pradesh! From Shimla’s colonial charm and Manali’s snow-covered landscapes to Kasol’s riverside vibes and Amritsar’s iconic Golden Temple, this group trip brings together mountain adventures, scenic road journeys, cultural experiences, and festive celebrations.\n\nEnjoy river rafting in Kullu, explore the charming streets of Shimla and Kasol, experience Manali’s winter atmosphere, and celebrate New Year’s Eve with a gala dinner, DJ night, and fireworks.\n\nTravel with like-minded people, make new friends, and begin the New Year with unforgettable memories in the mountains.",
+    spots: '18 spots left',
+    gallery: [
+      { image: '/image/Himachal/manali_snow_mountains.jpg', alt: 'Manali Snow-Covered Mountains & Winter Landscapes' },
+      { image: '/image/Himachal/shimla_christ_church_mall_road.jpg', alt: 'Shimla Mall Road & Christ Church' },
+      { image: '/image/Himachal/kasol_parvati_valley_river.jpg', alt: 'Kasol Riverside Vibes & Parvati Valley' },
+      { image: '/image/Himachal/kullu_river_rafting.jpg', alt: 'White Water River Rafting in Kullu' },
+      { image: '/image/Himachal/hidimba_temple_manali.jpg', alt: 'Historic Hidimba Devi Temple in Manali' },
+      { image: '/image/Himachal/solang_valley_snow_activities.jpg', alt: 'Solang Valley & Sissu Snow Adventures' },
+      { image: '/image/Himachal/golden_temple_amritsar.jpg', alt: 'Illuminated Golden Temple in Amritsar' },
+      { image: '/image/Himachal/manali_new_year_bonfire.jpg', alt: 'New Year Eve Celebration Gala Dinner & DJ Night' }
+    ],
+    highlights: [
+      'Explore Shimla’s Mall Road, Scandal Point, and Christ Church.',
+      'Visit Kufri and enjoy optional adventure activities.',
+      'Experience river rafting in Kullu.',
+      'Explore Manali’s Hidimba Devi Temple, Van Vihar, Mall Road, and Tibetan Monastery.',
+      'Celebrate New Year in Manali with a gala dinner, DJ night, and fireworks.',
+      'Visit Solang Valley or Sissu, subject to permissions and road conditions.',
+      'Enjoy optional snow activities such as skiing, snow biking, and tube rides at your own expense.',
+      'Explore Kasol’s riverside scenery, cafés, and local market.',
+      'Visit Manikaran Sahib Gurudwara and Temple.',
+      'Enjoy a DJ night at the Kasol camp.',
+      'Visit the Golden Temple, Jallianwala Bagh, and Wagah Attari Border.',
+      'Experience a memorable group journey with a professional tour manager.'
+    ],
+    itinerary: [
+      {
+        id: 'himachal-day-1',
+        day: 1,
+        title: 'Day 1: Mumbai to Chandigarh – The Journey Begins',
+        activities: [
+          'Meet your tour guide and fellow travellers at the railway station by 10:00 AM.',
+          'Board the 12925 Paschim Express towards Amritsar.',
+          'Settle in for your train journey and enjoy the changing landscapes along the way.',
+          'Get to know your fellow travellers and participate in indoor games such as UNO, housie, and dumb charades.',
+          'Enjoy an overnight journey by train towards Amritsar.'
+        ]
+      },
+      {
+        id: 'himachal-day-2',
+        day: 2,
+        title: 'Day 2: Chandigarh to Shimla – Into the Mountains',
+        activities: [
+          'Arrive at Chandigarh Railway Station in the afternoon.',
+          'Transfer your luggage to the private tour bus.',
+          'Begin your scenic road journey towards Shimla, approximately 4 hours away.',
+          'Enjoy views of winding mountain roads, pine forests, and the Himalayan foothills.',
+          'Arrive in Shimla and check in to your hotel.',
+          'Freshen up and enjoy dinner.',
+          'Relax and prepare for the adventures ahead.',
+          'Overnight stay: Shimla'
+        ]
+      },
+      {
+        id: 'himachal-day-3',
+        day: 3,
+        title: 'Day 3: Shimla Sightseeing & Overnight Journey to Manali',
+        activities: [
+          'Wake up early, enjoy breakfast, and check out from the hotel.',
+          'Head to Kufri, where you can enjoy optional horse riding and other adventure activities, subject to availability.',
+          'Return towards Shimla and visit Jakhoo Temple, known for its hilltop location.',
+          'Visit the iconic Christ Church and enjoy the surrounding heritage area.',
+          'Spend time exploring Mall Road and Scandal Point, popular spots for shopping, cafés, and photographs.',
+          'Return to the hotel for dinner.',
+          'Board the bus for the overnight journey to Manali, approximately 8 hours away.'
+        ]
+      },
+      {
+        id: 'himachal-day-4',
+        day: 4,
+        title: 'Day 4: River Rafting & Manali Local Tour',
+        activities: [
+          'Arrive in the Kullu region early in the morning.',
+          'Experience river rafting, included in the package, subject to operational and safety conditions.',
+          'Paragliding may be available at an additional cost, depending on weather conditions.',
+          'Continue towards Manali and check in to the hotel.',
+          'Freshen up and take some time to relax.',
+          'Begin the local sightseeing tour of Manali.',
+          'Visit Hidimba Devi Temple, surrounded by cedar forests.',
+          'Explore Van Vihar and enjoy the peaceful natural surroundings.',
+          'Visit Mall Road for shopping, cafés, and local experiences.',
+          'Explore the Tibetan Monastery.',
+          'Return to the hotel for dinner and an overnight stay.',
+          'Overnight stay: Manali'
+        ]
+      },
+      {
+        id: 'himachal-day-5',
+        day: 5,
+        title: 'Day 5: Snow Point & New Year Celebration in Manali',
+        activities: [
+          'Enjoy breakfast at the hotel and get ready for a day in the mountains.',
+          'Head towards Solang Valley or Sissu, depending on permissions, road conditions, and operational feasibility.',
+          'Enjoy the Himalayan scenery and capture memorable photographs.',
+          'Participate in optional snow activities such as ziplining, yak rides, snow biking, tube rides, and skiing at your own expense, subject to availability.',
+          'Return to the hotel and prepare for the New Year celebration.',
+          'Celebrate New Year’s Eve with a gala dinner, DJ night, music, and fireworks.',
+          'Welcome the New Year with your fellow travellers in a festive mountain atmosphere.',
+          'Enjoy dinner and an overnight stay in Manali.',
+          'Overnight stay: Manali',
+          'Note: Snowfall is weather-dependent and cannot be guaranteed. Additional charges may apply for Sissu/Rohtang access.'
+        ]
+      },
+      {
+        id: 'himachal-day-6',
+        day: 6,
+        title: 'Day 6: Kasol Sightseeing & Overnight Journey to Amritsar',
+        activities: [
+          'Wake up to the first morning of the New Year in Manali.',
+          'Enjoy breakfast and check out from the hotel.',
+          'Begin the journey towards Kasol, approximately 3 hours away.',
+          'Visit Manikaran Sahib Gurudwara and the Manikaran Temple.',
+          'Explore the charming streets and local market of Kasol.',
+          'Discover local cafés and try Himachali food at your own expense.',
+          'Enjoy the scenic riverside atmosphere and spend time exploring with your fellow travellers.',
+          'Head to the Kasol camp and enjoy a DJ night.',
+          'Get ready for the overnight journey towards Amritsar, approximately 8 hours away.'
+        ]
+      },
+      {
+        id: 'himachal-day-7',
+        day: 7,
+        title: 'Day 7: Amritsar City Tour – Heritage & Culture',
+        activities: [
+          'Arrive in Amritsar in the morning and transfer to the hotel.',
+          'Early check-in is subject to availability.',
+          'Enjoy breakfast and take some time to rest.',
+          'Get ready to explore the historic city of Amritsar.',
+          'Visit Jallianwala Bagh, a significant site in India’s history.',
+          'Visit the magnificent Golden Temple and experience its peaceful atmosphere.',
+          'Proceed to the Wagah Attari Border to witness the famous border ceremony, subject to schedule and access.',
+          'In the evening, enjoy the illuminated Golden Temple and explore the local markets.',
+          'Sample Amritsari street food at your own expense.',
+          'Return to the hotel for dinner and an overnight stay.',
+          'Overnight stay: Amritsar'
+        ]
+      },
+      {
+        id: 'himachal-day-8',
+        day: 8,
+        title: 'Day 8: Amritsar to Mumbai – Return Journey',
+        activities: [
+          'Enjoy breakfast and check out from the hotel early in the morning.',
+          'Transfer to Amritsar Railway Station.',
+          'Board the Paschim Express/Amritsar Express towards Mumbai, as arranged by the tour operator.',
+          'Enjoy the overnight train journey and reminisce about the trip with your fellow travellers.'
+        ]
+      },
+      {
+        id: 'himachal-day-9',
+        day: 9,
+        title: 'Day 9: Arrival in Mumbai – Until the Next Adventure!',
+        activities: [
+          'Arrive in Mumbai by evening, as per the train schedule.',
+          'Say goodbye to your fellow travellers and the mountains.',
+          'Return home with wonderful memories of Himachal Pradesh, New Year celebrations, and new friendships.',
+          'Trip ends with a heart full of memories!'
+        ]
+      }
+    ],
+    inclusions: [
+      'Mumbai–Amritsar–Mumbai train tickets in non-AC Sleeper Class (RAC or Confirm)',
+      'Private bus transfers throughout the tour.',
+      'Accommodation in 3–4-star hotels, as specified.',
+      'Meals as per the itinerary, with vegetarian, non-vegetarian, and Jain options.',
+      'Entry fees as per the itinerary.',
+      'River rafting in Kullu, subject to operational and safety conditions.',
+      'New Year celebration with gala dinner.',
+      'DJ night in Manali and Kasol.',
+      'Professional Trip Leader',
+      'One 1-litre water bottle daily.'
+    ],
+    exclusions: [
+      'Meals and water during train journeys.',
+      'Lunch throughout the tour.',
+      'Laundry, room service, shopping, and personal expenses.',
+      'Snow clothing and boots, including dangri suits.',
+      'Room or tent heaters.',
+      'Paragliding and snow activities not specifically included in the itinerary.',
+      'Expenses arising from natural calamities, medical issues, or other unforeseen circumstances.',
+      'Charges for Sissu/Rohtang access, where applicable.',
+      'Anything not specifically mentioned under inclusions.'
+    ],
+    thingsToCarry: [
+      'Valid Government Photo ID (Aadhaar / Passport / Voter ID) — Mandatory',
+      'Heavy woollens, thermal inners, down jacket, gloves, woollen cap, and muffler',
+      'Waterproof trekking shoes / snow boots + extra warm socks',
+      'Lip balm, cold cream, and moisturiser for cold mountain winds',
+      'Sunscreen (SPF 50+) and UV sunglasses for snow reflection',
+      'Personal medical kit (altitude sickness, motion sickness, cold/cough, band-aids)',
+      'Power bank and extra camera batteries (batteries discharge fast in cold weather)',
+      'Reusable insulated water bottle / thermos flask'
+    ],
+    policies: [
+      'Sightseeing activities are subject to availability. If a location is closed, the tour manager may offer an alternative.',
+      'Snowfall is not guaranteed and depends on weather conditions.',
+      'Paragliding and other optional activities are payable separately unless specifically included.',
+      'Train tickets are subject to confirmed, RAC, or waiting-list status. Tatkal tickets may be arranged at an additional fare.',
+      'Train delays and traffic conditions are beyond the tour operator’s control.',
+      'Medical emergency expenses must be borne by the traveller.',
+      'Quad/triple sharing provides one king-size bed and an extra mattress.',
+      'Travellers are responsible for their personal belongings.',
+      'Early hotel check-in is subject to availability.',
+      'The tour operator reserves the right to modify the itinerary when required for operational or safety reasons.',
+      'Cancellation up to 30 days before departure: Batch shifting is permitted as per the supplier’s policy. The booking amount is handled through a credit note, and the remaining amount is refundable subject to the stated conditions.',
+      'Cancellation 29–21 days before departure: No refund.',
+      'Cancellation 21–15 days before departure: No refund.',
+      'Cancellation 14 days or less before departure: No refund.',
+      'Please confirm the applicable refund calculation and cancellation terms before booking.'
+    ],
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹17,999 / person' },
+      { label: 'Double Sharing', price: '₹19,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹17,999 / person' },
+      { label: 'Double Sharing', price: '₹19,999 / person' }
+    ],
+    doubleSharingRate: 0,
+    pricingOptions: [
+      { label: 'Triple Sharing', price: '₹17,999 / person' },
+      { label: 'Double Sharing', price: '₹19,999 / person' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    reviews: [
+      {
+        name: 'Varun Grover',
+        role: 'Verified Traveller',
+        detail: 'Himachal Snow & New Year Tour',
+        rating: 5,
+        quote: 'Welcoming 2027 in snowy Manali with gala dinner and fireworks was unmatched! River rafting in Kullu and Kasol riverside were incredible highlights.'
+      },
+      {
+        name: 'Kritika Sen',
+        role: 'Solo Traveller',
+        detail: 'Himachal & Golden Temple Expedition',
+        rating: 5,
+        quote: 'Loved every single bit of this trip! Stays in Manali and Shimla were cosy, our trip leader took care of everything, and finishing at the Golden Temple in Amritsar was so peaceful.'
+      }
+    ]
+  },
   {
     id: 'hampi-backpacking',
     slug: 'hampi-backpacking',
@@ -69,6 +1114,18 @@ const baseTrips: Trip[] = [
     image: '/image/Hampi/hampi_img.jpeg',
     alt: 'Hampi Backpacking Trip — Vijayanagara Ruins & Boulder Sunsets',
     tag: 'City of Ruins',
+    seoDescription: "Explore Hampi with Travel Tribes on a 5-day backpacking trip from Mumbai & Pune. Discover UNESCO ruins, Vittala Temple, Sanapur Lake cliff jumping, and sunsets.",
+    seoKeywords: [
+          "Hampi backpacking trip",
+          "Hampi tour from Mumbai",
+          "Hampi trip from Pune",
+          "Hampi group tour package",
+          "Sanapur Lake cliff jumping",
+          "Hampi itinerary 5 days",
+          "Vijayanagara ruins tour",
+          "Hampi backpackers group",
+          "Travel Tribes Hampi"
+    ],
     description: 'Step back in time to the majestic 14th-century Vijayanagara Empire with our Hampi Backpacking Trip from Mumbai & Pune. Discover the UNESCO World Heritage ruins, the iconic Vittala Stone Chariot, the living Virupaksha Temple, thrilling cliff jumping and coracle boating at Sanapur Lake, and a mystical sunrise at Lord Hanuman’s birthplace (Anjaneya Hill). Explore boulder-strewn landscapes, vibrant hippie cafés, and create lifelong bonds with fellow travellers. Come solo or with friends — find your tribe in the City of Ruins.',
     spots: '6 spots left',
     gallery: [
@@ -267,9 +1324,20 @@ pricingOptions: [
     ],
     duration: '5N/6D',
     price: '₹13,499',
-    image: '/image/Coorg/IMG_8960.JPEG',
-    alt: 'Coorg and Mysore New Year Special — Coffee Plantations, Abbey Falls and Mysore Palace Fireworks',
+    image: '/new-year-trip-images/1.png',
+    alt: 'Coorg with Mysore New Year Special — Mysore Palace Illuminated with Fireworks',
     tag: 'New Year Special',
+    seoDescription: "Celebrate New Year in Coorg & Mysore with Travel Tribes! 6-day group trip from Mumbai covering coffee plantations, Abbey Falls, and royal Mysore Palace fireworks.",
+    seoKeywords: [
+          "Coorg Mysore New Year trip",
+          "Coorg New Year group tour",
+          "Mysore Palace New Year fireworks",
+          "Coorg trip from Mumbai",
+          "Coorg Mysore tour package",
+          "Mandalpatti jeep safari Coorg",
+          "New Year group travel India",
+          "Travel Tribes Coorg"
+    ],
     description: 'Looking for the perfect New Year trip from Mumbai? Join Travel Tribes for a 5N/6D Coorg & Mysore New Year Special packed with lush coffee plantations, misty hills, Abbey Falls, Mandalpatti, elephant encounters and the beautiful Namdroling Monastery. End the year with a one-of-a-kind New Year celebration at Mysore Palace, featuring fireworks and a royal show. Come solo. Meet strangers. Explore Coorg. Celebrate like royalty. Find your tribe.',
     spots: '6 spots left',
     gallery: [
@@ -513,6 +1581,17 @@ pricingOptions: [
     image: '/Card Image/meghalaya_6_days.jpg',
     alt: 'Nongriat Double Decker Living Root Bridge and lush rainforest of Meghalaya',
     tag: 'Abode of Clouds',
+    seoDescription: "Explore Meghalaya on a 6-day backpacking trip from Guwahati with Travel Tribes. Trek the Double Decker Root Bridge, boat on crystal Dawki & see Cherrapunjee falls.",
+    seoKeywords: [
+          "Meghalaya backpacking trip",
+          "Meghalaya group tour from Guwahati",
+          "Double Decker Living Root Bridge trek",
+          "Dawki river boating tour",
+          "Cherrapunjee tour package",
+          "Shillong Meghalaya itinerary",
+          "Northeast India backpacking",
+          "Travel Tribes Meghalaya"
+    ],
     description: 'Immerse yourself in the mystical beauty of Northeast India with our 6-day Meghalaya Backpacking group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, stay by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Explore Meghalaya with fellow curious wanderers and find your tribe.',
     spots: '5 spots left',
     gallery: [
@@ -746,6 +1825,17 @@ pricingOptions: [
     image: '/Card Image/meghalaya_with_Kaziranga.png',
     alt: 'Nongriat Double Decker Living Root Bridge and Kaziranga wildlife safari in Meghalaya & Assam',
     tag: 'Abode of Clouds & Safari',
+    seoDescription: "Explore Meghalaya & Kaziranga on a 7-day trip from Guwahati with Travel Tribes. Double Decker Root Bridge, Dawki boating, Cherrapunjee & Kaziranga rhino jeep safari.",
+    seoKeywords: [
+          "Meghalaya with Kaziranga tour",
+          "Meghalaya Kaziranga group trip",
+          "Kaziranga rhino safari package",
+          "Guwahati to Meghalaya tour",
+          "Double Decker living root bridge",
+          "Dawki and Kaziranga trip",
+          "Northeast India group tour",
+          "Travel Tribes Kaziranga"
+    ],
     description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, stay by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife jeep safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, wild elephants, and rich wildlife in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
     spots: '5 spots left',
     gallery: [
@@ -963,6 +2053,251 @@ pricingOptions: [
     ]
   },
   {
+    id: 'thailand-full-moon-party-new-year-special',
+    slug: 'thailand-full-moon-party-new-year-special',
+    title: 'Thailand Full Moon Party – New Year Special',
+    location: 'Phuket · Koh Samui · Koh Phangan · Krabi · Thailand',
+    region: 'International',
+    date: 'Dec 29, 2026 – Jan 04, 2027',
+    dates: [
+      'Dec 29, 2026 – Jan 04, 2027 (New Year Special)'
+    ],
+    duration: '7D/6N',
+    price: '₹57,999',
+    image: '/new-year-trip-images/9.png',
+    alt: 'Thailand Full Moon Party New Year Special — Koh Phangan Beach Party & Neon Fireworks',
+    tag: 'New Year Special',
+    seoDescription: 'Celebrate the New Year in Thailand with Travel Tribes on a 7-day, 6-night group trip covering Phuket, Koh Samui, Koh Phangan, and Krabi. Experience the Full Moon Party, Phi Phi Islands, tropical beaches, nightlife, and Krabi’s famous 4 Islands tour.',
+    seoKeywords: [
+      'Thailand New Year trip',
+      'Thailand Full Moon Party New Year Special',
+      'Thailand group tour from India',
+      'Phuket Koh Samui Krabi package',
+      'Koh Phangan Full Moon Party trip',
+      'Phi Phi Islands tour',
+      'Krabi 4 Islands tour',
+      'Thailand New Year group trip',
+      'Thailand community travel',
+      'Thailand island hopping package'
+    ],
+    description: "Get ready to welcome the New Year in Thailand with an unforgettable island-hopping adventure! From Phuket’s buzzing nightlife and the turquoise waters of Phi Phi Islands to the legendary Full Moon Party at Koh Phangan, this trip is packed with amazing beaches, thrilling adventures, music, nightlife, and incredible group experiences.\n\nCelebrate the New Year with your Travel Tribes crew, dance under the moonlit sky, explore breathtaking islands, and meet like-minded travellers from across the country.\n\nWhether you're travelling solo or with friends, this is your chance to end the year with unforgettable memories and begin the next one with a bang!",
+    spots: '20 spots only',
+    gallery: [
+      { image: '/Card Image/Full_Moon_Party_Trip.webp', alt: 'Thailand Full Moon Party New Year Celebration' },
+      { image: '/image/Thailand/phi_phi_maya_bay.jpg', alt: 'Phi Phi Islands & Iconic Maya Bay' },
+      { image: '/image/Thailand/pileh_lagoon_krabi.jpg', alt: 'Emerald Waters of Pileh Lagoon' },
+      { image: '/image/Thailand/full_moon_party_beach.jpg', alt: 'Legendary Full Moon Beach Party Koh Phangan' },
+      { image: '/image/Thailand/phuket_patong_beach.jpg', alt: 'Phuket Patong Beach & Bangla Walking Street' },
+      { image: '/image/Thailand/koh_samui_beach.jpg', alt: 'Relaxing Tropical Beach Vibes at Koh Samui' },
+      { image: '/image/Thailand/krabi_four_islands.jpg', alt: 'Krabi 4 Islands Speedboat Excursion' },
+      { image: '/image/Thailand/phra_nang_cave_beach.jpg', alt: 'Phra Nang Cave Beach with Limestone Cliffs' },
+      { image: '/image/Thailand/speedboat_snorkeling.jpg', alt: 'Snorkeling and Tropical Reef Adventures' }
+    ],
+    highlights: [
+      'Celebrate the New Year at the legendary Full Moon Party at Koh Phangan, subject to the event schedule for your batch.',
+      'Explore Phuket’s famous Patong Beach and Bangla Walking Street.',
+      'Discover the stunning Phi Phi Islands on a speedboat tour.',
+      'Visit the iconic Maya Bay and picturesque Phi Leh Lagoon.',
+      'Enjoy snorkelling and tropical island scenery.',
+      'Experience Koh Samui’s relaxed beach vibes.',
+      'Explore Krabi Town, local markets, and nightlife.',
+      'Discover Krabi’s famous 4 Islands by speedboat.',
+      'Visit Koh Poda, Chicken Island, Tup Island, and Phra Nang Cave Beach.',
+      'Enjoy group experiences, island adventures, and new friendships.',
+      'Stay in comfortable 3/4-star properties on double sharing.'
+    ],
+    itinerary: [
+      {
+        id: 'thailand-day-1',
+        day: 1,
+        title: 'Day 1: Welcome to Phuket – Beach Vibes & Nightlife',
+        activities: [
+          'Arrive in Phuket and meet the Travel Tribes team and fellow travellers.',
+          'Transfer to the hotel and complete check-in.',
+          'Freshen up and get ready to explore Phuket.',
+          'Visit the famous Patong Beach and enjoy the tropical atmosphere.',
+          'Explore Bangla Walking Street, known for its neon lights, music, street performances, and energetic nightlife.',
+          'Spend the evening bonding with your fellow travellers and kick-start your Thailand adventure.',
+          'Overnight stay: Phuket'
+        ]
+      },
+      {
+        id: 'thailand-day-2',
+        day: 2,
+        title: 'Day 2: Phi Phi Islands – Turquoise Waters & Tropical Adventures',
+        activities: [
+          'Enjoy breakfast at the hotel.',
+          'Head out for a full-day speedboat excursion to the beautiful Phi Phi Islands.',
+          'Visit the iconic Maya Bay and admire its breathtaking natural scenery.',
+          'Explore the spectacular Phi Leh Lagoon, surrounded by dramatic limestone cliffs.',
+          'Enjoy snorkelling and discover the underwater world, subject to sea and weather conditions.',
+          'Capture stunning photographs of crystal-clear waters and tropical landscapes.',
+          'Enjoy a beachside Indian lunch during the excursion.',
+          'Return to Phuket after a fun-filled day of island exploration.',
+          'Overnight stay: Phuket'
+        ]
+      },
+      {
+        id: 'thailand-day-3',
+        day: 3,
+        title: 'Day 3: Koh Samui & New Year Celebration at the Legendary Full Moon Party',
+        activities: [
+          'Enjoy breakfast and check out from the Phuket hotel.',
+          'Begin your journey to Koh Samui by land and ferry.',
+          'Arrive in Koh Samui and check in to the hotel.',
+          'Get some time to freshen up and prepare for the biggest celebration of the trip.',
+          'Take the speedboat transfer to Koh Phangan for the world-famous Full Moon Party.',
+          'Experience an electrifying beach party with music, dancing, colourful lights, and travellers from around the world.',
+          'Celebrate the New Year with your Travel Tribes crew in a vibrant tropical party atmosphere.',
+          'Enjoy the festive energy, dance on the beach, and create unforgettable memories as you welcome the year ahead.',
+          'Overnight stay: Koh Samui',
+          'Note: Full Moon Party entry tickets are payable separately (Approx 200 THB)'
+        ]
+      },
+      {
+        id: 'thailand-day-4',
+        day: 4,
+        title: 'Day 4: Koh Samui – Relax, Recharge & Island Life',
+        activities: [
+          'Enjoy a relaxed morning after the previous night\'s celebrations.',
+          'Have breakfast at the hotel.',
+          'Spend the day at leisure and recharge at your own pace.',
+          'Relax by the hotel pool or enjoy Koh Samui’s beautiful beaches.',
+          'Explore the island independently or spend quality time with your fellow travellers.',
+          'Optionally visit Ark Bar for a lively beachfront atmosphere and nightlife.',
+          'Enjoy a laid-back evening on this beautiful tropical island.',
+          'Overnight stay: Koh Samui'
+        ]
+      },
+      {
+        id: 'thailand-day-5',
+        day: 5,
+        title: 'Day 5: Journey to Krabi – Local Exploration & Nightlife',
+        activities: [
+          'Enjoy breakfast and check out from the hotel.',
+          'Transfer from Koh Samui to Krabi via ferry and van.',
+          'Arrive in Krabi and check in to the hotel.',
+          'Freshen up and take some time to relax.',
+          'Explore Krabi Town and browse the local markets.',
+          'Discover local street-food spots and enjoy the lively evening atmosphere.',
+          'Join the group for a fun pub crawl and experience Krabi’s nightlife.',
+          'Return to the hotel after an exciting evening.',
+          'Overnight stay: Krabi'
+        ]
+      },
+      {
+        id: 'thailand-day-6',
+        day: 6,
+        title: 'Day 6: Krabi 4 Islands Tour – Beaches, Blue Waters & Island Hopping',
+        activities: [
+          'Enjoy breakfast at the hotel.',
+          'Head out for the exciting Krabi 4 Islands speedboat tour.',
+          'Visit Koh Poda and enjoy its beautiful tropical beach scenery.',
+          'Explore Chicken Island and admire its distinctive limestone formation.',
+          'Visit Tup Island, famous for its sandbar when tide and sea conditions permit.',
+          'Discover Phra Nang Cave Beach, surrounded by towering limestone cliffs and clear blue waters.',
+          'Enjoy time for swimming, snorkelling where conditions permit, photography, and relaxing by the sea.',
+          'Enjoy an Indian lunch during the island tour.',
+          'Return to Krabi after a memorable day of island hopping.',
+          'Spend your final evening relaxing with the group and reminiscing about your Thailand adventures.',
+          'Overnight stay: Krabi'
+        ]
+      },
+      {
+        id: 'thailand-day-7',
+        day: 7,
+        title: 'Day 7: Departure – Until the Next Adventure!',
+        activities: [
+          'Enjoy breakfast at the hotel.',
+          'Complete the check-out formalities.',
+          'Transfer to the airport for your onward journey.',
+          'Say goodbye to your fellow travellers with unforgettable memories of Thailand’s beaches, islands, nightlife, and adventures.',
+          'Trip ends with a heart full of memories!'
+        ]
+      }
+    ],
+    inclusions: [
+      '6 nights’ accommodation on double sharing in 3/4-star properties: 2 nights in Phuket, 2 nights in Koh Samui, 2 nights in Krabi.',
+      '6 breakfasts and 2 lunches.',
+      'Airport, hotel, and sightseeing transfers as per the itinerary.',
+      'Land, ferry, and speedboat transfers as specified.',
+      'Phi Phi Islands speedboat tour.',
+      'Krabi 4 Islands speedboat tour.',
+      'Full Moon Party transfers.',
+      'Trip coordination and assistance.'
+    ],
+    exclusions: [
+      'International and domestic flight tickets.',
+      'National Park fee: 400 THB per person, payable on the spot.',
+      'Full Moon Party entry: 200 THB per person, payable on the spot.',
+      '5% GST and applicable 2% TCS.',
+      'National Park fees and Full Moon Party entry fee.',
+      'Meals and beverages not specifically mentioned under inclusions.',
+      'Personal expenses, shopping, laundry, minibar, and other incidental expenses.',
+      'Compulsory guide and driver tips.',
+      'Travel insurance.',
+      'Airport taxes, if applicable, and porter services.',
+      'Optional activities and experiences not mentioned under inclusions.',
+      'Anything not specifically mentioned under inclusions.'
+    ],
+    thingsToCarry: [
+      'Original Passport with minimum 6 months validity from departure date — Mandatory',
+      'Flight tickets & return journey itinerary printouts / e-tickets',
+      'Sufficient Thai Baht (THB) cash + international debit/credit cards',
+      'Light breathable cotton & linen clothing, beachwear, swimwear & quick-dry t-shirts',
+      'Comfortable walking shoes + beach flip-flops / slip-ons',
+      'Sunscreen (SPF 50+), UV-protection sunglasses, and sunhat',
+      'Waterproof phone case and dry bag for island speedboat excursions',
+      'Universal travel adapter and high-capacity power bank',
+      'Personal medical kit including motion sickness tablets for ferry/speedboat rides'
+    ],
+    policies: [
+      'A valid passport and applicable travel documents are required.',
+      'The itinerary and transfer arrangements may change due to weather, sea conditions, ferry schedules, local restrictions, or safety requirements.',
+      'Island tours and water activities are subject to weather and operational conditions.',
+      'Full Moon Party entry fees and National Park fees are payable separately.',
+      'The New Year celebration at the Full Moon Party depends on the event schedule for the selected batch. Please confirm the event date before booking.',
+      'Accommodation is on double sharing unless otherwise specified.',
+      'Booking is confirmed only after receipt of the required payment.',
+      'Please review the cancellation policy before confirming your booking.',
+      'Booking amount: ₹15,000 per person (non-refundable).',
+      'The remaining balance must be paid 15 days before departure.',
+      'Applicable taxes and TCS are additional as specified above.',
+      'Cancellation up to 30 days before departure: Batch shifting is permitted as per the supplier’s policy. The booking amount is handled through a credit note, and the remaining amount is refundable subject to the stated conditions.',
+      'Cancellation 29–21 days before departure: No refund.',
+      'Cancellation 21–15 days before departure: No refund.',
+      'Cancellation 14 days or less before departure: No refund.',
+      'Please confirm the applicable batch-shifting and refund terms before booking.'
+    ],
+    regularPackages: [
+      { label: 'Double Sharing (3/4-Star Hotels)', price: '₹57,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Double Sharing (New Year Special)', price: '₹57,999 / person' }
+    ],
+    doubleSharingRate: 0,
+    pricingOptions: [
+      { label: 'Double Sharing (3/4-Star Hotels)', price: '₹57,999 / person', note: 'Dec 29, 2026 – Jan 04, 2027 batch' }
+    ],
+    bookingAmount: '₹15,000 / person',
+    reviews: [
+      {
+        name: 'Aakash Verma',
+        role: 'Verified Traveller',
+        detail: 'Thailand Full Moon Party Expedition',
+        rating: 5,
+        quote: 'Welcoming the New Year at Koh Phangan Full Moon Party with Travel Tribes was hands down the best celebration of my life! Maya Bay and Phi Phi Islands were stunning, and our group of 20 turned into lifelong friends!'
+      },
+      {
+        name: 'Simran Kaur',
+        role: 'Solo Traveller',
+        detail: 'Thailand New Year Island Escape',
+        rating: 5,
+        quote: 'As a solo female traveller, I was looking for a fun yet super safe group. Travel Tribes delivered beyond expectations — 4-star stays, seamless transfers, amazing nightlife, and an incredible tribe vibe!'
+      }
+    ]
+  },
+  {
     id: 'sri-lanka-island-escape',
     slug: 'sri-lanka-island-escape',
     title: 'Sri Lanka — The Island Escape',
@@ -981,6 +2316,17 @@ pricingOptions: [
     image: '/Card Image/srilanka.png',
     alt: 'Sri Lanka iconic Nine Arch Bridge surrounded by lush tea hills in Ella',
     tag: 'International Island Escape',
+    seoDescription: "Discover Sri Lanka on an 8-day island group trip with Travel Tribes. Explore Sigiriya Lion Rock, scenic Ella train, Nuwara Eliya tea hills, and Mirissa beach vibes.",
+    seoKeywords: [
+          "Sri Lanka island tour",
+          "Sri Lanka group trip from India",
+          "Sri Lanka backpacking package",
+          "Sigiriya Lion Rock tour",
+          "Ella scenic train ride",
+          "Mirissa beach Sri Lanka",
+          "Sri Lanka 8 days itinerary",
+          "Travel Tribes Sri Lanka"
+    ],
     description: 'Discover the pure magic of Sri Lanka on an 8-day tropical island group escape with Travel Tribes designed for 18–40 year old wanderers. From sun-kissed palm beaches in Mirissa and ocean surfing in Weligama to the misty emerald tea hills of Nuwara Eliya and Ella. Climb the ancient Sigiriya Lion Rock Fortress, explore sacred Dambulla cave temples, feed gentle giants at Pinnawala, and experience the world’s most iconic scenic blue train journey from Nanu Oya to Ella. Stay in premium 4-star hotels, watch whales in the Indian Ocean, and create unforgettable bonds with your tribe.',
     spots: '6 spots left',
     gallery: [
@@ -1227,6 +2573,17 @@ pricingOptions: [
     image: '/Card Image/bali_with_gili.png',
     alt: 'Bali and Gili Islands — Tropical Beaches, Kelingking Cliff, Mount Batur Jeep Safari and Ubud Culture',
     tag: 'Island of Vibe',
+    seoDescription: "Experience Bali & Gili on a 9-day group tour with Travel Tribes. Explore Nusa Penida cliffs, snorkel with turtles in Gili Trawangan, Ubud waterfalls & beach clubs.",
+    seoKeywords: [
+          "Bali with Gili group tour",
+          "Bali tour package from India",
+          "Nusa Penida Kelingking trip",
+          "Gili Trawangan turtle snorkeling",
+          "Bali backpacking itinerary",
+          "Mount Batur sunrise trek",
+          "Bali island hopping tour",
+          "Travel Tribes Bali"
+    ],
     description: 'Get ready for Bali magic — lush jungles, hike majestic volcanoes, dance your heart out at beach clubs, explore tropical beaches, and soak in endless island vibes with your tribe! Curated exclusively for 18–40 year olds, this 8 Nights / 9 Days expedition takes you across Seminyak, Kuta, the dramatic coastal cliffs of Nusa Penida, the turquoise waters of Gili Trawangan, and the cultural highlands of Ubud. From an epic 4x4 Mount Batur Sunrise Jeep Safari and thrilling Jungle ATV adventure to sunset Kecak Fire Dance at Uluwatu, swimming under Tegenungan Waterfall, partying at Omma Day Club, and snorkelling with wild sea turtles in Gili T. Premium stays, island-to-jungle transfers, and lifelong tribe memories await.',
     spots: '6 spots left',
     gallery: [
@@ -1494,6 +2851,17 @@ pricingOptions: [
     image: '/Card Image/Bhutan.png',
     alt: 'Bhutan Taktsang Tiger’s Nest Monastery, Punakha Dzong and Himalayan Valleys',
     tag: 'Land of the Thunder Dragon',
+    seoDescription: "Explore Bhutan on a 7-day group trip from Bagdogra with Travel Tribes. Hike to the iconic Tiger’s Nest, visit Punakha Dzong, Dochula Pass, and experience Paro valley.",
+    seoKeywords: [
+          "Bhutan backpacking trip",
+          "Bhutan group tour from India",
+          "Tigers Nest monastery hike",
+          "Bhutan tour from Bagdogra",
+          "Punakha Dzong tour package",
+          "Thimphu Paro itinerary",
+          "Bhutan 7 days package",
+          "Travel Tribes Bhutan"
+    ],
     description: 'Get ready for Bhutan magic — drive through breathtaking Himalayan valleys, explore majestic 17th-century dzongs, hike to the world-famous Tiger’s Nest monastery perched on a cliff, witness panoramic mountain vistas at Dochula Pass, and soak in the peaceful spiritual vibes of the Land of the Thunder Dragon with your tribe! Curated for 18–40 year olds, this 7-day backpacking journey takes you through Phuentsholing, Thimphu, Punakha, and Paro. Experience authentic Bhutanese living culture at Simply Bhutan, traditional archery, a royal Gho & Kira costume photoshoot, thrilling suspension bridges, and unforgettable mountain bonding.',
     spots: '6 spots left',
     gallery: [
@@ -1737,6 +3105,16 @@ pricingOptions: [
     image: img('photo-1544735716-392fe2489ffa'),
     alt: 'Bhutan Tshechu Festival Masked Cham Dances, Punakha Dzong and Tiger’s Nest Paro',
     tag: 'Tshechu Festival Special',
+    seoDescription: "Witness the sacred Bhutan Tshechu Festival on a 7-day group tour with Travel Tribes. Experience vibrant masked cham dances, Punakha Dzong & hike to Tiger’s Nest.",
+    seoKeywords: [
+          "Bhutan Tshechu festival tour",
+          "Thimphu Tshechu festival package",
+          "Bhutan cultural festival trip",
+          "Tigers Nest hike Bhutan",
+          "Bhutan masked dance festival",
+          "Bhutan group tour from India",
+          "Travel Tribes Bhutan festival"
+    ],
     description: 'Experience vibrant masked dances, ancient Buddhist traditions, Himalayan magic & unforgettable memories with your tribe! Curated exclusively for 18–40 year olds, this 6 Nights / 7 Days festival expedition takes you to the heart of the sacred Thimphu / Punakha Tshechu Festival. Witness dramatic Cham masked dances, colorful silk costumes, trumpet fanfares, and spiritual blessings. Journey through Phuentsholing, Thimphu, the 108 stupas of Dochula Pass (3,050m), the majestic Punakha Dzong, and hike to the world-famous cliffside Tiger’s Nest Monastery (Paro Taktsang). 3-star handpicked stays, cultural living museum, and traditional photoshoot included.',
     spots: '4 spots left',
     gallery: [
@@ -1961,6 +3339,17 @@ pricingOptions: [
     image: img('photo-1507525428034-b723cf961d3e'),
     alt: 'Golden Bridge Ba Na Hills and Halong Bay Limestone Karsts in Vietnam',
     tag: 'Tropical Island & Heritage',
+    seoDescription: "Discover Vietnam on an 8-day group tour with Travel Tribes covering Phu Quoc islands, Da Nang Golden Bridge, Hoi An lantern streets, Hanoi & Halong Bay cruise.",
+    seoKeywords: [
+          "Vietnam with Phu Quoc tour",
+          "Vietnam group tour from India",
+          "Phu Quoc island package",
+          "Da Nang Golden Bridge trip",
+          "Hoi An lantern town tour",
+          "Halong Bay cruise itinerary",
+          "Vietnam 8 days package",
+          "Travel Tribes Vietnam"
+    ],
     description: 'Experience Vietnam in 8 days with an unforgettable group trip covering Phu Quoc, Da Nang, Hoi An, Hanoi and Halong Bay. Explore tropical islands, ride Vietnam’s famous cable car, discover Grand World, enjoy a basket boat ride in Hoi An, walk across the iconic Golden Bridge at Ba Na Hills, explore Hanoi’s Old Quarter and Train Street, and cruise through the breathtaking landscapes of Halong Bay. This Vietnam group trip from India combines adventure, culture, nightlife, scenic experiences and community travel into one exciting journey. Join solo, meet fellow travellers and explore Vietnam with your tribe.',
     spots: '6 spots left',
     gallery: [
@@ -2221,6 +3610,17 @@ pricingOptions: [
     image: '/Card Image/vietnam.png',
     alt: 'Vietnam 7N 8D Halong Bay, Golden Bridge Ba Na Hills, Cu Chi Tunnels and Hoi An',
     tag: 'Classic Vietnam Circuit',
+    seoDescription: "Explore Vietnam on an 8-day classic group trip with Travel Tribes. Ho Chi Minh Cu Chi Tunnels, Hoi An ancient town, Da Nang Golden Bridge, Halong Bay & Ninh Binh.",
+    seoKeywords: [
+          "Vietnam classic group tour",
+          "Vietnam tour package from India",
+          "Cu Chi Tunnels Ho Chi Minh",
+          "Hoi An basket boat ride",
+          "Da Nang Ba Na Hills Golden Bridge",
+          "Halong Bay cruise package",
+          "Ninh Binh Trang An tour",
+          "Travel Tribes Vietnam"
+    ],
     description: 'Explore Vietnam in 8 days with a complete group trip covering Ho Chi Minh City, Da Nang, Hoi An, Hanoi, Halong Bay and Ninh Binh. Discover the historic Cu Chi Tunnels, experience a traditional basket boat ride in Hoi An, walk across the iconic Golden Bridge at Ba Na Hills, explore Hanoi’s Old Quarter and Train Street, cruise through Halong Bay and enjoy the scenic Trang An boat ride in Ninh Binh. This Vietnam group tour from India combines culture, adventure, iconic sightseeing and unique local experiences into one action-packed 7N/8D Vietnam itinerary. Join solo or with friends, meet fellow travellers and experience Vietnam with your tribe.',
     spots: '6 spots left',
     gallery: [
@@ -2492,6 +3892,17 @@ pricingOptions: [
     image: img('photo-1544644181-1484b3fdfc62'),
     alt: 'Vietnam with Sapa Fansipan Peak, Golden Bridge Ba Na Hills and Halong Bay',
     tag: 'Highlands & Indochina Peak',
+    seoDescription: "Explore Vietnam & Sapa on a 9-day group tour with Travel Tribes. From Ho Chi Minh and Hoi An to Halong Bay cruise and Fansipan Peak mountain valleys in Sapa.",
+    seoKeywords: [
+          "Vietnam with Sapa tour",
+          "Sapa Fansipan peak trip",
+          "Vietnam group tour from India",
+          "Sapa rice terraces trekking",
+          "Da Nang Golden Bridge package",
+          "Halong Bay cruise tour",
+          "Vietnam 9 days itinerary",
+          "Travel Tribes Vietnam"
+    ],
     description: "Experience Vietnam in 8 nights and 9 days with a group trip covering Ho Chi Minh City, Da Nang, Hoi An, Hanoi, Halong Bay and Sapa. Explore the historic Cu Chi Tunnels, enjoy a traditional basket boat ride in Hoi An, discover the iconic Golden Bridge at Ba Na Hills, walk through Hanoi's Old Quarter and Train Street, cruise through the limestone landscapes of Halong Bay and ride the cable car to Fansipan, the Roof of Indochina. This Vietnam group trip from India combines culture, adventure, scenic landscapes and authentic local experiences across some of Vietnam's most popular destinations.",
     spots: '6 spots left',
     gallery: [
@@ -2763,6 +4174,17 @@ pricingOptions: [
     image: '/Card Image/kokan.png',
     alt: 'Coastal Maharashtra Road Trip — Ganpatipule Beach, Aare Ware Coastal Road and Ratnadurg Fort',
     tag: 'Coastal Roadtrip',
+    seoDescription: "Drive along coastal Konkan on a 5-day road trip from Mumbai & Pune with Travel Tribes. Pristine beaches, Ganpatipule temple, sea forts, and Aare Ware coastal drive.",
+    seoKeywords: [
+          "Coastal Maharashtra road trip",
+          "Konkan coastal road trip",
+          "Ganpatipule trip from Mumbai",
+          "Ratnagiri tour package",
+          "Aare Ware beach road drive",
+          "Konkan road trip from Pune",
+          "Maharashtra coastal road trip",
+          "Travel Tribes Konkan"
+    ],
     description: 'Hit the open road along Maharashtra’s most scenic Arabian Sea coastline with Travel Tribes on a 4N/5D Coastal Maharashtra Road Trip from Mumbai & Pune! From the 400-year-old seaside Ganpatipule Ganesha Temple and pristine golden sands to driving along the famous cliffside Aare-Ware coastal road with India’s first sea-facing zipline. Explore the historic Ratnadurg sea fort, seek blessings at Bhagwati Temple, catch panoramic sunset vistas at Table Point and Ratnagiri Lighthouse, and discover the hidden paradise of Devghali (Kasheli) Beach. Curated for 18–40 year old wanderers with AC bus travel, stays, meals, and unforgettable tribe bonding.',
     spots: '8 spots left',
     gallery: [
@@ -2974,6 +4396,17 @@ pricingOptions: [
     image: '/Card Image/Gokarna.jpg',
     alt: 'Gokarna Beach and scenic coastline',
     tag: 'Backpacking Trip',
+    seoDescription: "Join Travel Tribes on a 5-day Gokarna backpacking trip from Mumbai & Pune. Trek 5 scenic beaches, visit Murdeshwar temple, Honnavar backwaters & Yana Caves.",
+    seoKeywords: [
+          "Gokarna backpacking trip",
+          "Gokarna trip from Mumbai",
+          "Gokarna beach trek package",
+          "Honnavar mangrove boat ride",
+          "Murdeshwar temple tour",
+          "Yana caves trek",
+          "Gokarna group tour from Pune",
+          "Travel Tribes Gokarna"
+    ],
     description: 'Looking for the perfect Gokarna trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This Gokarna group trip combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and plenty of opportunities to meet fellow travellers. From the Gokarna beach trek covering Belekan, Paradise, Half Moon and Om Beach to the iconic Murdeshwar Shiva Statue, Honnavar backwaters and Yana Caves — this is a backpacking trip from Mumbai designed around experiences, exploration and the Travel Tribes community. Come solo. Meet strangers. Explore Gokarna. Find your tribe.',
     spots: '8 spots left',
     gallery: [
@@ -3265,7 +4698,7 @@ pricingOptions: [
   {
     id: 'gokarna-xmas-new-year',
     slug: 'gokarna-xmas-new-year',
-    title: 'Gokarna — X-Mas & New Year Special',
+    title: 'Gokarna — Xmas & New Year Special',
     location: 'Murdeshwar · Honnavar · Gokarna · Karnataka',
     region: 'Domestic',
     date: 'Dec 24–28, 2026 (XMAS Special)',
@@ -3275,9 +4708,19 @@ pricingOptions: [
     ],
     duration: '4N/5D',
     price: '₹9,999',
-    image: '/Card Image/gokarna_newyear.png',
-    alt: 'Gokarna Christmas and New Year Special Beach Party and Fireworks',
+    image: '/new-year-trip-images/7.png',
+    alt: 'Gokarna Christmas and New Year Special Beach Shacks & Fireworks by the Sea',
     tag: 'Xmas & New Year Special',
+    seoDescription: "Celebrate New Year in Gokarna with Travel Tribes! 5-day festive group trip from Mumbai & Pune with beach countdown, fireworks, beach trek, Honnavar & Murdeshwar.",
+    seoKeywords: [
+          "Gokarna New Year trip",
+          "Gokarna New Year party package",
+          "Gokarna beach New Year celebration",
+          "Gokarna trip from Mumbai New Year",
+          "Gokarna Christmas group tour",
+          "Gokarna beach trek New Year",
+          "Travel Tribes Gokarna New Year"
+    ],
     description: 'Looking for the perfect Gokarna New Year Trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This New Year Special combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and an unforgettable New Year celebration by the beach with fireworks and a beach party. Come solo. Meet strangers. Explore Gokarna. Celebrate the New Year. Find your tribe.',
     spots: '6 spots left',
     gallery: [
@@ -3520,6 +4963,17 @@ pricingOptions: [
     image: '/Card Image/coorg.jpg',
     alt: 'Misty hills and lush coffee plantations of Coorg',
     tag: 'Scotland of India',
+    seoDescription: "Escape to the Scotland of India on a 5-day Coorg backpacking trip from Mumbai with Travel Tribes. Lush coffee estates, Mandalpatti sunrise, waterfalls & bonfire.",
+    seoKeywords: [
+          "Coorg backpacking trip",
+          "Coorg trip from Mumbai",
+          "Coorg group tour package",
+          "Mandalpatti sunrise jeep safari",
+          "Coorg coffee plantation tour",
+          "Abbey Falls Coorg",
+          "Coorg itinerary 5 days",
+          "Travel Tribes Coorg"
+    ],
     description: 'Looking for a Coorg trip from Mumbai, a Coorg backpacking trip, or a fun Coorg group trip with strangers? Join Travel Tribes for an unforgettable journey to Coorg, the Scotland of India, and explore misty hills, lush coffee plantations, waterfalls, viewpoints, monasteries and scenic landscapes. This Coorg backpacking trip from Mumbai takes you through some of the best experiences in Coorg, including Abbey Falls, Mandalpatti Peak, Raja’s Seat, Chiklihole Dam, Namdroling Monastery (Golden Temple), Elephant Camp, Nisargadhama, Coffee Plantations, Madikeri Fort and Omkareshwar Temple. Travel by train from Mumbai to Mangalore, continue towards Coorg with your tribe, explore the beautiful Western Ghats and return with a camera full of memories and a bunch of new travel buddies. Come solo. Meet strangers. Explore Coorg. Find your tribe.',
     spots: '6 spots left',
     gallery: [
@@ -3778,6 +5232,17 @@ pricingOptions: [
     image: '/Card Image/udaipur.jpg',
     alt: 'Majestic City Palace overlooking Lake Pichola in Udaipur',
     tag: 'City of Lakes',
+    seoDescription: "Explore Udaipur on a 5-day backpacking trip from Mumbai with Travel Tribes. City Palace, Lake Pichola sunset, Bahubali Hills sunrise, and vibrant Rajasthani markets.",
+    seoKeywords: [
+          "Udaipur backpacking trip",
+          "Udaipur trip from Mumbai",
+          "Udaipur group tour package",
+          "Lake Pichola sunset boat ride",
+          "Bahubali Hills sunrise Udaipur",
+          "City Palace Udaipur tour",
+          "Udaipur itinerary 5 days",
+          "Travel Tribes Udaipur"
+    ],
     description: 'Looking for a Udaipur trip from Mumbai, a Udaipur backpacking trip, or a fun Udaipur group trip with strangers? Join Travel Tribes for a 5-day backpacking adventure to the City of Lakes — Udaipur. Explore magnificent palaces, beautiful lakes, historic ghats, vibrant markets, cultural performances and some of the best viewpoints in the city. From the iconic City Palace and Lake Pichola to the sunset at Sajjangarh Monsoon Palace, the Bahubali Hills sunrise, Karni Mata cable car ride, Bagore Ki Haveli cultural show and local street-food trails — this Udaipur group trip is designed to experience the city beyond the usual tourist checklist. Travel from Mumbai to Udaipur by train, explore the city with your tribe and return home with new memories, countless photographs and new travel buddies. Come solo. Meet strangers. Explore Udaipur. Find your tribe.',
     spots: '7 spots left',
     gallery: [
@@ -4023,7 +5488,7 @@ pricingOptions: [
   {
     id: 'udaipur-xmas-new-year',
     slug: 'udaipur-xmas-new-year',
-    title: 'Udaipur Christmas & New Year Special',
+    title: 'Udaipur — Xmas & New Year Special',
     location: 'Udaipur · Rajasthan · Lake Pichola · City Palace · Sajjangarh · Bahubali Hills',
     region: 'Domestic',
     date: 'Dec 24–28, 2026 (XMAS Special)',
@@ -4033,9 +5498,19 @@ pricingOptions: [
     ],
     duration: '4N/5D',
     price: '₹10,999',
-    image: '/image/Udaipur/IMG_3859.jpg',
-    alt: 'Udaipur Christmas and New Year Special Celebration at Lake Pichola and City Palace',
+    image: '/new-year-trip-images/10.png',
+    alt: 'Udaipur Christmas & New Year Special — Lake Pichola & City Palace Fireworks',
     tag: 'Xmas & New Year Special',
+    seoDescription: "Ring in the New Year in Udaipur with Travel Tribes! 5-day group trip from Mumbai featuring Lake Pichola celebrations, City Palace, Bahubali Hills sunrise & parties.",
+    seoKeywords: [
+          "Udaipur New Year trip",
+          "Udaipur New Year party package",
+          "Udaipur New Year group tour",
+          "Udaipur trip from Mumbai New Year",
+          "Lake Pichola New Year fireworks",
+          "Udaipur Christmas Special",
+          "Travel Tribes Udaipur New Year"
+    ],
     description: 'Celebrate Christmas & New Year in Udaipur with Travel Tribes, and experience the magic of Rajasthan’s City of Lakes with a fun-filled 5-day backpacking trip from Mumbai. Explore City Palace, Jag Mandir, Fateh Sagar Lake, Bagore Ki Haveli, Monsoon Palace and Udaipur’s vibrant local markets. Enjoy stunning sunsets, cultural experiences, Rajasthani street food and a special 31st Night New Year celebration near the ghats. Come solo, meet new people and make your festive season unforgettable with your travel tribe.',
     spots: '6 spots left',
     gallery: [
@@ -4244,6 +5719,17 @@ pricingOptions: [
     image: '/Card Image/Spiti_with_chandrataal.png',
     alt: 'High-altitude Himalayan desert and snow peaks of Spiti Valley',
     tag: 'Himalayan Expedition',
+    seoDescription: "Experience the ultimate 9-day Spiti Valley & Chandrataal trip from Delhi with Travel Tribes. Chitkul, Kaza, Key Monastery, Hikkim, and starlit Chandrataal camping.",
+    seoKeywords: [
+          "Spiti Valley trip from Delhi",
+          "Chandrataal lake camping tour",
+          "Spiti Valley backpacking package",
+          "Kaza Langza Hikkim tour",
+          "Key Monastery Spiti",
+          "Chitkul to Spiti road trip",
+          "Spiti Valley 9 days itinerary",
+          "Travel Tribes Spiti"
+    ],
     description: 'Looking for a Spiti Valley trip from Delhi, a Spiti backpacking trip, or an unforgettable Spiti Valley group trip? Travel Tribes takes you on an epic Himalayan road trip through Shimla, Chitkul, Tabo, Dhankar, Kaza, Langza, Hikkim, Komic, Kibber, Chicham Bridge, Chandrataal and Manali. From the remote landscapes of Chitkul to the ancient Tabo Monastery, dramatic Dhankar Monastery, high-altitude villages of Langza, Hikkim and Komic, and the breathtaking Chandrataal Lake, this is a journey through some of the most incredible landscapes of Himachal Pradesh. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.',
     spots: '5 spots left',
     gallery: [
@@ -4539,6 +6025,17 @@ pricingOptions: [
     image: '/Card Image/winter_spiti.png',
     alt: 'Snow-covered winter wonderland of Spiti Valley and Key Monastery in white',
     tag: 'Winter Expedition',
+    seoDescription: "Join the 9-day Spiti Valley Winter Expedition from Delhi with Travel Tribes. Explore white snow-covered Spiti, frozen waterfalls, ancient Key Monastery, and Kaza.",
+    seoKeywords: [
+          "Spiti Valley winter expedition",
+          "Winter Spiti trip from Delhi",
+          "White Spiti tour package",
+          "frozen waterfall Spiti",
+          "Key Monastery in snow",
+          "Kaza winter trip",
+          "Spiti winter group tour",
+          "Travel Tribes Spiti Winter"
+    ],
     description: "Snow-covered mountains, frozen landscapes, remote Himalayan villages, ancient monasteries and some of the most dramatic roads in Himachal Pradesh — welcome to the Spiti Valley Winter Expedition. Travel from Delhi to Spiti Valley with Travel Tribes and explore the cold desert landscape of the Himalayas with a group of fellow travellers. From Chitkul, the last inhabited village before the Indo-China border, to the ancient Tabo Monastery, high-altitude villages of Hikkim, Komic and Langza, the iconic Key Monastery, Chicham Bridge, Kibber Village and the stunning landscapes of Kalpa, this is a true winter Himalayan adventure. This is more than a Spiti Valley trip from Delhi — it's an expedition through some of the most remote and beautiful corners of Himachal. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.",
     spots: '4 spots left',
     gallery: [
@@ -4780,6 +6277,17 @@ pricingOptions: [
     image: img('photo-1456926631375-92c8ce872def'),
     alt: 'Wild Leopard on Granite Hills in Jawai Rajasthan',
     tag: 'Wildlife & Leopard Safari',
+    seoDescription: "Experience Jawai leopard safaris on a 4-day wildlife trip from Mumbai with Travel Tribes. Two 4x4 Jeep safaris, granite hill tracking, Jawai Dam & crocodiles.",
+    seoKeywords: [
+          "Jawai leopard safari package",
+          "Jawai trip from Mumbai",
+          "Jawai Bera leopard tour",
+          "Jawai Dam crocodile spotting",
+          "Rajasthan wildlife safari tour",
+          "Jawai 4x4 jeep safari",
+          "Jawai group trip",
+          "Travel Tribes Jawai"
+    ],
     description: 'Experience Jawai, the Land of Leopards, with Travel Tribes on a 3N/4D experiential wildlife trip from Mumbai. Go beyond a regular weekend getaway with two Jeep safaris — a dramatic sunset leopard safari and an early-morning sunrise safari — while exploring the rugged Jawai landscape, Jawai Dam and its crocodile habitat. Add a wilderness stay, a Tribe Vibe evening with stories, music and new friends, and a scenic train journey from Mumbai to Mumbai. This Jawai leopard safari group trip is designed for travellers looking for wildlife, nature, adventure and meaningful travel experiences.',
     spots: '8 spots left',
     gallery: [
@@ -4938,6 +6446,7 @@ pricingOptions: [
 
 export const primaryNavItems = [
   { label: 'Upcoming trips', href: '/upcoming-trips' },
+  { label: 'Weekend Getaways', href: '/weekend-getaways' },
   { label: 'Domestic', href: '/domestic-trips' },
   { label: 'International', href: '/international-trips' },
   { label: 'Why Us', href: '/why-us' },
@@ -5180,6 +6689,10 @@ const festiveDuplicateOverrides: {
   title: string
   dates: string[]
   price: string
+  image?: string
+  alt?: string
+  seoDescription?: string
+  seoKeywords?: string[]
   regularPackages?: TripPricingOption[]
   pricingOptions?: TripPricingOption[]
 }[] = [
@@ -5188,6 +6701,18 @@ const festiveDuplicateOverrides: {
     id: 'meghalaya-backpacking-xmas-new-year',
     slug: 'meghalaya-backpacking-xmas-new-year',
     title: 'Meghalaya Backpacking — Xmas & New Year Special',
+    image: '/new-year-trip-images/11.png',
+    alt: 'Meghalaya Backpacking Xmas & New Year Special Hillside Lake Celebration',
+    seoDescription: 'Celebrate Christmas & New Year in Meghalaya with Travel Tribes! 6-day trip from Guwahati to Double Decker Living Root Bridge, crystal Dawki river & Shillong.',
+    seoKeywords: [
+      'Meghalaya New Year trip',
+      'Meghalaya Christmas group tour',
+      'Shillong New Year celebration',
+      'Dawki river New Year',
+      'Double Decker living root bridge',
+      'Northeast India New Year package',
+      'Travel Tribes Meghalaya New Year'
+    ],
     dates: [
       'Dec 24–30, 2026 (Christmas Special)',
       'Dec 27–Jan 01, 2027 (New Year Special)'
@@ -5207,6 +6732,15 @@ const festiveDuplicateOverrides: {
     id: 'meghalaya-with-kaziranga-xmas-new-year',
     slug: 'meghalaya-with-kaziranga-xmas-new-year',
     title: 'Meghalaya with Kaziranga — Xmas & New Year Special',
+    seoDescription: 'Celebrate New Year in Meghalaya & Kaziranga on a 7-day trip from Guwahati with Travel Tribes. Double Decker Root Bridge, Dawki boating & Kaziranga rhino safari.',
+    seoKeywords: [
+      'Meghalaya Kaziranga New Year tour',
+      'Kaziranga rhino safari New Year',
+      'Meghalaya Christmas package',
+      'Dawki Kaziranga group trip',
+      'Northeast New Year group tour',
+      'Travel Tribes Kaziranga New Year'
+    ],
     dates: [
       'Dec 24–31, 2026 (Christmas Special)',
       'Dec 27–Jan 02, 2027 (New Year Special)'
@@ -5226,6 +6760,18 @@ const festiveDuplicateOverrides: {
     id: 'sri-lanka-island-escape-xmas-new-year',
     slug: 'sri-lanka-island-escape-xmas-new-year',
     title: 'Sri Lanka — Xmas & New Year Special',
+    image: '/new-year-trip-images/2.png',
+    alt: 'Sri Lanka Xmas & New Year Special Mirissa Beach Fireworks Countdown',
+    seoDescription: 'Welcome the New Year in Sri Lanka on an 8-day island escape with Travel Tribes. Sigiriya Lion Rock, scenic Ella train, Nuwara Eliya hills & Mirissa beach countdown.',
+    seoKeywords: [
+      'Sri Lanka New Year trip',
+      'Sri Lanka New Year group tour',
+      'Mirissa beach New Year fireworks',
+      'Sri Lanka Christmas package',
+      'Sigiriya Lion Rock tour',
+      'Ella train New Year trip',
+      'Travel Tribes Sri Lanka New Year'
+    ],
     dates: [
       'Dec 19–26, 2026 (Christmas Special)',
       'Dec 27–Jan 03, 2027 (New Year Special)'
@@ -5244,6 +6790,18 @@ const festiveDuplicateOverrides: {
     id: 'bali-gili-islands-xmas-new-year',
     slug: 'bali-gili-islands-xmas-new-year',
     title: 'Bali with Gili — Xmas & New Year Special',
+    image: '/new-year-trip-images/8.png',
+    alt: 'Bali with Gili Xmas & New Year Special Beach Club Pool Party',
+    seoDescription: 'Celebrate New Year in Bali & Gili with Travel Tribes! 9-day island group trip with luxury beach club countdown, Nusa Penida cliffs & turtle snorkeling in Gili.',
+    seoKeywords: [
+      'Bali New Year trip',
+      'Bali New Year party package',
+      'Gili Trawangan New Year',
+      'Nusa Penida New Year group tour',
+      'Bali beach club New Year celebration',
+      'Bali Christmas group trip',
+      'Travel Tribes Bali New Year'
+    ],
     dates: [
       'Dec 19–27, 2026 (Christmas Special)',
       'Dec 27–Jan 04, 2027 (New Year Special)'
@@ -5261,6 +6819,17 @@ const festiveDuplicateOverrides: {
     id: 'coorg-backpacking-xmas-new-year',
     slug: 'coorg-backpacking-xmas-new-year',
     title: 'Coorg Backpacking — Xmas & New Year Special',
+    image: '/new-year-trip-images/6.png',
+    alt: 'Coorg Backpacking Xmas & New Year Special Coffee Estate Bonfire Evening',
+    seoDescription: 'Celebrate Christmas & New Year in Coorg with Travel Tribes! 5-day backpacking trip from Mumbai with coffee estate bonfire, Mandalpatti sunrise & Abbey Falls.',
+    seoKeywords: [
+      'Coorg New Year trip',
+      'Coorg Christmas backpacking trip',
+      'Coorg New Year group tour from Mumbai',
+      'Mandalpatti sunrise New Year',
+      'Coorg coffee estate bonfire',
+      'Travel Tribes Coorg New Year'
+    ],
     dates: [
       'Dec 24–28, 2026 (Christmas Special)'
     ],
@@ -5280,6 +6849,17 @@ const festiveDuplicateOverrides: {
     id: 'spiti-winter-expedition-xmas-new-year',
     slug: 'spiti-winter-expedition-xmas-new-year',
     title: 'Spiti Valley Winter Expedition — Xmas & New Year Special',
+    image: '/new-year-trip-images/4.png',
+    alt: 'Spiti Valley Winter Expedition New Year Bonfire & Langza Buddha Statue',
+    seoDescription: 'Celebrate New Year amidst snow-covered mountains on the Spiti Winter Expedition from Delhi. Key Monastery in snow, frozen waterfalls, bonfire & stargazing in Kaza.',
+    seoKeywords: [
+      'Spiti Valley New Year trip',
+      'Winter Spiti New Year expedition',
+      'Spiti New Year celebration in snow',
+      'Key Monastery winter tour',
+      'White Spiti New Year package from Delhi',
+      'Travel Tribes Spiti New Year'
+    ],
     dates: [
       'Dec 19–27, 2026 (Christmas Special)',
       'Dec 25–Jan 02, 2027 (New Year Special)',
@@ -5310,6 +6890,10 @@ const duplicateTrips: Trip[] = festiveDuplicateOverrides.map((override) => {
     dates: override.dates,
     price: override.price,
     tag: 'Xmas & New Year Special',
+    ...(override.image ? { image: override.image } : {}),
+    ...(override.alt ? { alt: override.alt } : {}),
+    ...(override.seoDescription ? { seoDescription: override.seoDescription } : {}),
+    ...(override.seoKeywords ? { seoKeywords: override.seoKeywords } : {}),
     ...(override.regularPackages ? { regularPackages: override.regularPackages } : {}),
     ...(override.pricingOptions ? { pricingOptions: override.pricingOptions } : {}),
   }

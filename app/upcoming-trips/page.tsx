@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const categories = [
   { value: 'All', title: 'All' },
+  { value: 'Weekend', title: 'Weekend Getaways' },
   { value: 'Domestic', title: 'Domestic' },
   { value: 'International', title: 'International' },
   { value: 'Xmas & New Year', title: 'Xmas & New Year' },
