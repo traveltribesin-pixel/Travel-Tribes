@@ -1323,7 +1323,7 @@ pricingOptions: [
       'Dec 28–Jan 02, 2027 (New Year Special)'
     ],
     duration: '5N/6D',
-    price: '₹13,499',
+    price: '₹13,999',
     image: '/new-year-trip-images/1.png',
     alt: 'Coorg with Mysore New Year Special — Mysore Palace Illuminated with Fireworks',
     tag: 'New Year Special',
@@ -1509,17 +1509,17 @@ pricingOptions: [
       "Cancellation by Travel Tribes: 100% full refund within 4–7 business days if the trip is cancelled by the operator."
     ],
         regularPackages: [
-      { label: 'Non-AC Train', price: '₹13,499 / person' },
-      { label: '3AC Train', price: '₹15,499 / person' }
+      { label: 'Non-AC Train', price: '₹13,999 / person' },
+      { label: '3AC Train', price: '₹15,999 / person' }
     ],
     festivePackages: [
-      { label: 'Non-AC Train', price: '₹13,499 / person' },
-      { label: '3AC Train', price: '₹15,499 / person' }
+      { label: 'Non-AC Train', price: '₹13,999 / person' },
+      { label: '3AC Train', price: '₹15,999 / person' }
     ],
     doubleSharingRate: 1500,
 pricingOptions: [
-      { label: 'Non-AC Train (New Year Special)', price: '₹13,499 / person' },
-      { label: '3AC Train (New Year Special)', price: '₹15,499 / person' },
+      { label: 'Non-AC Train (New Year Special)', price: '₹13,999 / person' },
+      { label: '3AC Train (New Year Special)', price: '₹15,999 / person' },
       { label: 'Double Sharing', price: '+₹1,500 / person' }
     ],
     bookingAmount: '₹5,000 / person',
@@ -5151,8 +5151,9 @@ pricingOptions: [
       { label: '3AC Train', price: '₹12,999 / person' }
     ],
     festivePackages: [
-      { label: 'Non-AC Train', price: '₹11,499 / person' },
-      { label: '3AC Train', price: '₹13,999 / person' }
+      { label: 'Ex-Mangalore', price: '₹10,999 / person' },
+      { label: 'Non-AC Train', price: '₹11,999 / person' },
+      { label: '3AC Train', price: '₹14,499 / person' }
     ],
     doubleSharingRate: 1500,
 pricingOptions: [
@@ -5161,8 +5162,9 @@ pricingOptions: [
       { label: '3AC Train', price: '₹11,999 / person' },
       { label: 'Double Sharing', price: '+₹1,500 / person' },
       { label: 'Long Weekend (LW)', price: '+₹1,000 / person', note: 'Applicable on LW batches' },
-      { label: 'XMAS Batch (Non-AC Train)', price: '₹11,499 / person', note: 'Dec 24–28 departure' },
-      { label: 'XMAS Batch (3AC Train)', price: '₹13,999 / person', note: 'Dec 24–28 departure' }
+      { label: 'XMAS Batch (Ex-Mangalore)', price: '₹10,999 / person', note: 'Dec 24–28 departure' },
+      { label: 'XMAS Batch (Non-AC Train)', price: '₹11,999 / person', note: 'Dec 24–28 departure' },
+      { label: 'XMAS Batch (3AC Train)', price: '₹14,499 / person', note: 'Dec 24–28 departure' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -5422,9 +5424,9 @@ pricingOptions: [
       { label: '3AC Train', price: '₹12,999 / person' }
     ],
     festivePackages: [
-      { label: 'Ex-Udaipur', price: '₹10,999 / person' },
-      { label: 'Non-AC Sleeper Train', price: '₹11,999 / person' },
-      { label: '3AC Train', price: '₹13,999 / person' }
+      { label: 'Ex-Udaipur', price: '₹11,499 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹12,999 / person' },
+      { label: '3AC Train', price: '₹14,999 / person' }
     ],
     doubleSharingRate: 1000,
     festiveDoubleSharingRate: 1500,
@@ -5434,9 +5436,9 @@ pricingOptions: [
       { label: '3AC Train', price: '₹11,999 / person' },
       { label: 'Double Sharing', price: '+₹1,000 / person' },
       { label: 'Long Weekend (LW)', price: '+₹1,000 / person', note: 'Applicable on LW batches' },
-      { label: 'XMAS & NY (Ex-Udaipur)', price: '₹10,999 / person', note: 'Festive batch' },
-      { label: 'XMAS & NY (Non-AC Sleeper)', price: '₹11,999 / person', note: 'Festive batch' },
-      { label: 'XMAS & NY (3AC Train)', price: '₹13,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (Ex-Udaipur)', price: '₹11,499 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (Non-AC Sleeper)', price: '₹12,999 / person', note: 'Festive batch' },
+      { label: 'XMAS & NY (3AC Train)', price: '₹14,999 / person', note: 'Festive batch' },
       { label: 'XMAS & NY Double Sharing', price: '+₹1,500 / person', note: 'Festive double sharing' }
     ],
     bookingAmount: '₹4,000 / person',
@@ -5497,7 +5499,7 @@ pricingOptions: [
       'Dec 29–Jan 02, 2027 (New Year Special)'
     ],
     duration: '4N/5D',
-    price: '₹10,999',
+    price: '₹11,499',
     image: '/new-year-trip-images/10.png',
     alt: 'Udaipur Christmas & New Year Special — Lake Pichola & City Palace Fireworks',
     tag: 'Xmas & New Year Special',
@@ -5669,20 +5671,20 @@ pricingOptions: [
       "Cancellation by Travel Tribes: If the trip is cancelled by the operator, the booking/advance amount will be fully refundable within 4–7 business days."
     ],
         regularPackages: [
-      { label: 'Ex-Udaipur', price: '₹10,999 / person' },
-      { label: 'Non-AC Sleeper Train', price: '₹11,999 / person' },
-      { label: '3AC Train', price: '₹13,999 / person' }
+      { label: 'Ex-Udaipur', price: '₹11,499 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹12,999 / person' },
+      { label: '3AC Train', price: '₹14,999 / person' }
     ],
     festivePackages: [
-      { label: 'Ex-Udaipur', price: '₹10,999 / person' },
-      { label: 'Non-AC Sleeper Train', price: '₹11,999 / person' },
-      { label: '3AC Train', price: '₹13,999 / person' }
+      { label: 'Ex-Udaipur', price: '₹11,499 / person' },
+      { label: 'Non-AC Sleeper Train', price: '₹12,999 / person' },
+      { label: '3AC Train', price: '₹14,999 / person' }
     ],
     doubleSharingRate: 1500,
 pricingOptions: [
-      { label: 'Ex-Udaipur (XMAS & NY)', price: '₹10,999 / person' },
-      { label: 'Non-AC Sleeper (XMAS & NY)', price: '₹11,999 / person' },
-      { label: '3AC Train (XMAS & NY)', price: '₹13,999 / person' },
+      { label: 'Ex-Udaipur (XMAS & NY)', price: '₹11,499 / person' },
+      { label: 'Non-AC Sleeper (XMAS & NY)', price: '₹12,999 / person' },
+      { label: '3AC Train (XMAS & NY)', price: '₹14,999 / person' },
       { label: 'Double Sharing', price: '+₹1,500 / person' }
     ],
     bookingAmount: '₹4,000 / person',
@@ -6833,14 +6835,16 @@ const festiveDuplicateOverrides: {
     dates: [
       'Dec 24–28, 2026 (Christmas Special)'
     ],
-    price: '₹11,499',
+    price: '₹10,999',
     regularPackages: [
-      { label: 'Non-AC Train', price: '₹11,499 / person' },
-      { label: '3AC Train', price: '₹13,999 / person' }
+      { label: 'Ex-Mangalore', price: '₹10,999 / person' },
+      { label: 'Non-AC Train', price: '₹11,999 / person' },
+      { label: '3AC Train', price: '₹14,499 / person' }
     ],
     pricingOptions: [
-      { label: 'Non-AC Train (Christmas Special)', price: '₹11,499 / person' },
-      { label: '3AC Train (Christmas Special)', price: '₹13,999 / person' },
+      { label: 'Ex-Mangalore (Christmas Special)', price: '₹10,999 / person' },
+      { label: 'Non-AC Train (Christmas Special)', price: '₹11,999 / person' },
+      { label: '3AC Train (Christmas Special)', price: '₹14,499 / person' },
       { label: 'Double Sharing', price: '+₹1,500 / person' }
     ]
   },
