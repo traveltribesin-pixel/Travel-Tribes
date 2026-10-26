@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Bus, CalendarDays, Camera, Clock3, Hotel, MapPin, UserCheck, Utensils } from 'lucide-react'
-import type { Trip } from '@/lib/travel-data'
+import { isWeekendTrip, type Trip } from '@/lib/travel-data'
 import { getTripPrimaryDate } from '@/lib/date-utils'
 
 /**
@@ -186,6 +186,7 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
 }
 
 export function TripCard({ trip, featured = false }: { trip: Trip; featured?: boolean }) {
+  const isWeekend = isWeekendTrip(trip)
   const isFestive = Boolean(
     trip.tag?.toLowerCase().includes('new year') ||
     trip.tag?.toLowerCase().includes('xmas') ||
@@ -193,6 +194,8 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
   )
   const itineraryUrl = `/itinerary/${trip.slug}${isFestive ? '?festive=1' : ''}`
   const routeInfo = getTripRouteInfo(trip)
+  const primaryDate = getTripPrimaryDate(trip)
+  const displayDate = isWeekend ? 'Every Saturday' : primaryDate
 
   return (
     <Link
@@ -216,6 +219,13 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
         {trip.tag && (
           <span className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm border border-slate-100">
             {trip.tag}
+          </span>
+        )}
+
+        {/* Weekend Departure Pill (top right) */}
+        {isWeekend && (
+          <span className="absolute top-4 right-4 z-10 bg-[var(--sky)] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
+            Every Saturday
           </span>
         )}
       </div>
@@ -278,9 +288,24 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
         {/* Calendar and Clock Meta details */}
         <div className="flex items-center justify-between text-slate-500 text-[11.5px] font-medium mb-3 gap-2">
           <span className="flex items-center gap-1.5 truncate">
-            <CalendarDays size={14} className={getTripPrimaryDate(trip) === 'No Upcoming Trips' ? 'text-amber-500 shrink-0' : 'text-[var(--sky)] shrink-0'} />
-            <span className={`truncate ${getTripPrimaryDate(trip) === 'No Upcoming Trips' ? 'text-amber-600 font-bold' : ''}`}>
-              {getTripPrimaryDate(trip)}
+            <CalendarDays
+              size={14}
+              className={
+                !isWeekend && primaryDate === 'No Upcoming Trips'
+                  ? 'text-amber-500 shrink-0'
+                  : 'text-[var(--sky)] shrink-0'
+              }
+            />
+            <span
+              className={`truncate ${
+                isWeekend
+                  ? 'text-slate-800 font-bold'
+                  : primaryDate === 'No Upcoming Trips'
+                  ? 'text-amber-600 font-bold'
+                  : ''
+              }`}
+            >
+              {displayDate}
             </span>
           </span>
           <span className="flex items-center gap-1 shrink-0 font-bold text-slate-500">

@@ -15,7 +15,7 @@ import {
   Clock3, 
   ArrowRight 
 } from 'lucide-react'
-import { trips, type Trip } from '@/lib/travel-data'
+import { trips, isWeekendTrip, type Trip } from '@/lib/travel-data'
 import { getTripPrimaryDate } from '@/lib/date-utils'
 
 const CATEGORIES = [
@@ -333,8 +333,10 @@ export function SearchModal({ isOpen, onClose, initialQuery = '' }: SearchModalP
                                 <span className="hidden sm:inline-block text-slate-300">•</span>
 
                                 <span className="hidden sm:inline-flex items-center gap-1 text-slate-500 shrink-0">
-                                  <CalendarDays size={11} className="text-slate-400 shrink-0" />
-                                  {getTripPrimaryDate(trip)}
+                                  <CalendarDays size={11} className={isWeekendTrip(trip) ? 'text-[var(--sky)] shrink-0' : 'text-slate-400 shrink-0'} />
+                                  <span className={isWeekendTrip(trip) ? 'text-slate-800 font-bold' : ''}>
+                                    {isWeekendTrip(trip) ? 'Every Saturday' : getTripPrimaryDate(trip)}
+                                  </span>
                                 </span>
                               </div>
                             </div>

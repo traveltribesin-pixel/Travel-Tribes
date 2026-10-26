@@ -131,7 +131,7 @@ export function TripExplorer({
       let matchesQuery = true;
       if (query.trim() !== '') {
         const q = query.toLowerCase();
-        const primaryDate = getTripPrimaryDate(t);
+        const primaryDate = isWeekendTrip(t) ? 'Every Saturday' : getTripPrimaryDate(t);
         matchesQuery = Boolean(
           `${t.title} ${t.location} ${t.tag || ''} ${t.region || ''} ${primaryDate}`
             .toLowerCase()
