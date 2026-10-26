@@ -4,6 +4,7 @@ import { HeroSection } from '@/components/hero-section'
 import { BrandValuesSection } from '@/components/brand-values-section'
 import { FeaturedRecognitionSection } from '@/components/featured-recognition-section'
 import { UpcomingTripsSection } from '@/components/upcoming-trips-section'
+import { ExploreCategoriesSection } from '@/components/explore-categories-section'
 import { XmasNewYearSection } from '@/components/xmas-new-year-section'
 import { DomesticJourneysSection } from '@/components/domestic-journeys-section'
 import { CommunityBannerSection } from '@/components/community-banner-section'
@@ -26,6 +27,9 @@ export default function Home() {
 
         {/* 2. Upcoming Trips (All Itineraries) */}
         <UpcomingTripsSection />
+
+        {/* Explore Categories Rail */}
+        <ExploreCategoriesSection />
 
         {/* 3. Xmas & New Year Specials */}
         <XmasNewYearSection />
