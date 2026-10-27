@@ -4956,7 +4956,7 @@ pricingOptions: [
       'Dec 03–07, 2026',
       'Dec 10–14, 2026',
       'Dec 17–21, 2026',
-      'Dec 24–28, 2026 (Christmas Special)'
+      'Dec 25–29, 2026 (Christmas Special)'
     ],
     duration: '4N/5D',
     price: '₹8,499',
@@ -5162,9 +5162,9 @@ pricingOptions: [
       { label: '3AC Train', price: '₹11,999 / person' },
       { label: 'Double Sharing', price: '+₹1,500 / person' },
       { label: 'Long Weekend (LW)', price: '+₹1,000 / person', note: 'Applicable on LW batches' },
-      { label: 'XMAS Batch (Ex-Mangalore)', price: '₹10,999 / person', note: 'Dec 24–28 departure' },
-      { label: 'XMAS Batch (Non-AC Train)', price: '₹11,999 / person', note: 'Dec 24–28 departure' },
-      { label: 'XMAS Batch (3AC Train)', price: '₹14,499 / person', note: 'Dec 24–28 departure' }
+      { label: 'XMAS Batch (Ex-Mangalore)', price: '₹10,999 / person', note: 'Dec 25–29 departure' },
+      { label: 'XMAS Batch (Non-AC Train)', price: '₹11,999 / person', note: 'Dec 25–29 departure' },
+      { label: 'XMAS Batch (3AC Train)', price: '₹14,499 / person', note: 'Dec 25–29 departure' }
     ],
     bookingAmount: '₹4,000 / person',
     reviews: [
@@ -6833,7 +6833,7 @@ const festiveDuplicateOverrides: {
       'Travel Tribes Coorg New Year'
     ],
     dates: [
-      'Dec 24–28, 2026 (Christmas Special)'
+      'Dec 25–29, 2026 (Christmas Special)'
     ],
     price: '₹10,999',
     regularPackages: [
