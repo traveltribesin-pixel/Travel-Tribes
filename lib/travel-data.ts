@@ -1316,6 +1316,7 @@ pricingOptions: [
     id: 'coorg-mysore-new-year',
     slug: 'coorg-mysore-new-year',
     title: 'Coorg with Mysore — New Year Special',
+    pdfUrl: 'https://drive.google.com/file/d/15EHsa5venVaymi70d_D3DOzcU0Z7Gm-T/view?usp=drive_link',
     location: 'Mumbai · Mangalore · Coorg · Mysore · Mumbai',
     region: 'Domestic',
     date: 'Dec 28–Jan 02, 2027 (New Year Special)',
@@ -6936,7 +6937,7 @@ export const TRIP_DRIVE_PDF_MAP: Record<string, string> = {
 
   // 8. Coorg (Regular & New Year)
   'coorg-backpacking': 'https://drive.google.com/file/d/1fhnrIig4B9W2mh4x9ZUtigUmydzgKQOw/view',
-  'coorg-mysore-new-year': 'https://drive.google.com/file/d/1Z523jdVfPpGvV3yupKak9tC8SgPGMsAB/view',
+  'coorg-mysore-new-year': 'https://drive.google.com/file/d/15EHsa5venVaymi70d_D3DOzcU0Z7Gm-T/view?usp=drive_link',
   'coorg-backpacking-xmas-new-year': 'https://drive.google.com/file/d/1Z523jdVfPpGvV3yupKak9tC8SgPGMsAB/view',
 
   // 9. Gokarna (Regular & New Year)

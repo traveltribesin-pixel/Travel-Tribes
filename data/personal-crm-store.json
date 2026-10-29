@@ -1,6 +1,1294 @@
 {
   "leads": [
     {
+      "id": "LEAD-SHT-88",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-86",
+          "text": "Synced from Google Sheet row #88 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 88,
+      "createdAt": "2026-10-20T23:18:57+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-87",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Naina",
+      "email": "nainamohnani168@gmail.com",
+      "phone": "8779351801",
+      "tripTitle": "Gokarna Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Gokarna Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-85",
+          "text": "Synced from Google Sheet row #87 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 87,
+      "createdAt": "2026-10-20T21:34:34+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-86",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Harshal",
+      "email": "jadhavharshal2025@gmail.con",
+      "phone": "8291471771",
+      "tripTitle": "Coastal Maharashtra Road Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coastal Maharashtra Road Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-84",
+          "text": "Synced from Google Sheet row #86 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 86,
+      "createdAt": "2026-10-20T21:23:28+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-85",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Purvi Tanawade",
+      "email": "purvi.tanawade09@gmail.com",
+      "phone": "9004229925",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-83",
+          "text": "Synced from Google Sheet row #85 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 85,
+      "createdAt": "2026-10-20T12:19:56+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-84",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "samir",
+      "email": "jjivasai@gmail.com",
+      "phone": "917249533125",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-82",
+          "text": "Synced from Google Sheet row #84 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 84,
+      "createdAt": "2026-10-20T11:05:11+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-83",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Sushil Chavhan",
+      "email": "sushiluc99@gmail.com",
+      "phone": "9075838535",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-81",
+          "text": "Synced from Google Sheet row #83 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 83,
+      "createdAt": "2026-10-20T09:33:53+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-82",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Harsh sheth",
+      "email": "harsh.sheth191003@gmail.com",
+      "phone": "9403273540",
+      "tripTitle": "Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-80",
+          "text": "Synced from Google Sheet row #82 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 82,
+      "createdAt": "2026-10-20T01:51:13+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-81",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Chirag Agrawal",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-79",
+          "text": "Synced from Google Sheet row #81 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 81,
+      "createdAt": "2026-10-19T20:47:56+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-80",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Yash Mehta",
+      "email": "ymehta597@gmail.com",
+      "phone": "7710945609",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-78",
+          "text": "Synced from Google Sheet row #80 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 80,
+      "createdAt": "2026-10-19T13:53:26+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-79",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Divya",
+      "email": "divya.shah1993@gmail.com",
+      "phone": "9970278305",
+      "tripTitle": "Bali with Gili — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Bali with Gili — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-77",
+          "text": "Synced from Google Sheet row #79 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 79,
+      "createdAt": "2026-10-19T09:10:59+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-78",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Esther",
+      "email": "esther24dsouza@gmail.com",
+      "phone": "9820985714",
+      "tripTitle": "Sri Lanka — The Island Escape",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Sri Lanka — The Island Escape",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-76",
+          "text": "Synced from Google Sheet row #78 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 78,
+      "createdAt": "2026-10-18T22:44:30+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-77",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya",
+      "email": "ehkfcsdbzcj@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya with Kaziranga — 6N/7D",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya with Kaziranga — 6N/7D",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-75",
+          "text": "Synced from Google Sheet row #77 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 77,
+      "createdAt": "2026-10-18T22:41:15+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-76",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-74",
+          "text": "Synced from Google Sheet row #76 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 76,
+      "createdAt": "2026-10-18T22:19:45+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-75",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya with Kaziranga — 6N/7D",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya with Kaziranga — 6N/7D",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-73",
+          "text": "Synced from Google Sheet row #75 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 75,
+      "createdAt": "2026-10-18T22:13:35+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-74",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Jainam",
+      "email": "phy.jainam@gmail.com",
+      "phone": "8291070871",
+      "tripTitle": "Bhutan — Land of the Thunder Dragon",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Bhutan — Land of the Thunder Dragon",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-72",
+          "text": "Synced from Google Sheet row #74 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 74,
+      "createdAt": "2026-10-18T22:13:07+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-73",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-71",
+          "text": "Synced from Google Sheet row #73 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 73,
+      "createdAt": "2026-10-18T22:12:17+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-72",
+      "source": "Plan a Trip Page",
+      "fullName": "Adil",
+      "email": "smartyadilkhan@gmail.com",
+      "phone": "9936362021",
+      "tripTitle": "Kashmir",
+      "travelDates": "Next month",
+      "groupSize": "3-5 People (Friends / Family) | Budget: Family Holiday",
+      "budget": "Family Holiday",
+      "message": "Vibe: Family Holiday | Group: 3-5 People (Friends / Family) | Notes: Requested via Plan a Trip page. Group size: 3-5 People (Friends / Family). Trip Vibe: Family Holiday",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-70",
+          "text": "Synced from Google Sheet row #72 (Plan a Trip Page)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 72,
+      "createdAt": "2026-10-18T20:46:10+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-71",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-69",
+          "text": "Synced from Google Sheet row #71 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 71,
+      "createdAt": "2026-10-18T19:49:57+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-70",
+      "source": "Custom Trip Builder",
+      "fullName": "Vikramaditya Roy",
+      "email": "vikram@example.com",
+      "phone": "",
+      "tripTitle": "Kazakhstan & Almaty",
+      "travelDates": "Dec 2026",
+      "groupSize": "Group of 6 | Budget: Snow & Adventure",
+      "budget": "Snow & Adventure",
+      "message": "Vibe: Snow & Adventure | Group: Group of 6 | Notes: Please share package options with 4-star stays",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-68",
+          "text": "Synced from Google Sheet row #70 (Custom Trip Builder)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 70,
+      "createdAt": "2026-10-18T19:09:17+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-69",
+      "source": "Contact Us Form",
+      "fullName": "Ananya Singhania",
+      "email": "ananya@example.com",
+      "phone": "",
+      "tripTitle": "Bali with Gili Island",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Looking for a solo traveller slot in November batch!",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881094-67",
+          "text": "Synced from Google Sheet row #69 (Contact Us Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.094Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 69,
+      "createdAt": "2026-10-18T19:09:05+05:30",
+      "updatedAt": "2026-10-27T21:51:21.094Z"
+    },
+    {
+      "id": "LEAD-SHT-68",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Rohan Mehra",
+      "email": "rohan.mehra@example.com",
+      "phone": "",
+      "tripTitle": "Spiti Valley Winter Expedition",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-66",
+          "text": "Synced from Google Sheet row #68 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 68,
+      "createdAt": "2026-10-18T19:08:57+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-67",
+      "source": "Contact Us Page Form",
+      "fullName": "Chirag",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Domestic trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "We are a group of 7 people interested in your spiti trip December package from 25th Dec to 02nd Jan. I have few question to ask, can you connect me with someone.",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-65",
+          "text": "Synced from Google Sheet row #67 (Contact Us Page Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 67,
+      "createdAt": "2026-10-18T17:49:26+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-66",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Chirag Agrawal",
+      "email": "cagrawal081200@gmail.com",
+      "phone": "9045743168",
+      "tripTitle": "Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-64",
+          "text": "Synced from Google Sheet row #66 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 66,
+      "createdAt": "2026-10-18T17:36:20+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-65",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Shristi Mimani",
+      "email": "mimani.shristi21@gmail.com",
+      "phone": "9830888702",
+      "tripTitle": "Coastal Maharashtra Road Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coastal Maharashtra Road Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-63",
+          "text": "Synced from Google Sheet row #65 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 65,
+      "createdAt": "2026-10-18T16:55:26+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-64",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Rahul",
+      "email": "rahul.nagubandi@gmail.com",
+      "phone": "9003877526",
+      "tripTitle": "Meghalaya with Kaziranga — 6N/7D",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya with Kaziranga — 6N/7D",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-62",
+          "text": "Synced from Google Sheet row #64 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 64,
+      "createdAt": "2026-10-18T12:37:23+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-63",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Shristi Mimani",
+      "email": "mimani.shristi21@gmail.com",
+      "phone": "9830888702",
+      "tripTitle": "Gokarna Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Gokarna Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-61",
+          "text": "Synced from Google Sheet row #63 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 63,
+      "createdAt": "2026-10-18T12:02:36+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-62",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Asmi Mayekar",
+      "email": "asmimayekar84@gmail.com",
+      "phone": "",
+      "tripTitle": "Udaipur Christmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Christmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-60",
+          "text": "Synced from Google Sheet row #62 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 62,
+      "createdAt": "2026-10-17T21:02:42+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-61",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit Maurya",
+      "email": "amitm.ury.22@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-59",
+          "text": "Synced from Google Sheet row #61 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 61,
+      "createdAt": "2026-10-17T15:38:19+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-60",
+      "source": "Website Itinerary Download",
+      "fullName": "Test Traveler",
+      "email": "traveler@traveltribes.in",
+      "phone": "9975822023",
+      "tripTitle": "Meghalaya Backpacking 2027",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Testing Google Sheet Auto-Sync",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-58",
+          "text": "Synced from Google Sheet row #60 (Website Itinerary Download)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 60,
+      "createdAt": "2026-10-17T15:31:12+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-59",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit testing",
+      "email": "maurya.amit7404@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-57",
+          "text": "Synced from Google Sheet row #59 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 59,
+      "createdAt": "2026-10-20T23:27:10+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-58",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Hemanth P",
+      "email": "hemanthpatchikolla00@gmail.com",
+      "phone": "7075756916",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-56",
+          "text": "Synced from Google Sheet row #58 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 58,
+      "createdAt": "2026-10-21T01:37:58+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-57",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "amit Maurya testing",
+      "email": "amitmantra2@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-55",
+          "text": "Synced from Google Sheet row #57 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 57,
+      "createdAt": "2026-10-21T02:30:30+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-56",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Suhani shah",
+      "email": "suhanishah03111995@gmail.com",
+      "phone": "9920970146",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-54",
+          "text": "Synced from Google Sheet row #56 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 56,
+      "createdAt": "2026-10-21T08:41:53+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-55",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Gurinder",
+      "email": "sonu221998@gmail.com",
+      "phone": "8879098418",
+      "tripTitle": "Sri Lanka — The Island Escape",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Sri Lanka — The Island Escape",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-53",
+          "text": "Synced from Google Sheet row #55 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 55,
+      "createdAt": "2026-10-21T10:40:36+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-54",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Jyoti Jetwani",
+      "email": "jetwanij2016@gmail.com",
+      "phone": "8469896825",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-52",
+          "text": "Synced from Google Sheet row #54 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 54,
+      "createdAt": "2026-10-21T11:34:05+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-53",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Adit Rathod",
+      "email": "aditrathod3@gmail.com",
+      "phone": "9930432887",
+      "tripTitle": "Meghalaya Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Meghalaya Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-51",
+          "text": "Synced from Google Sheet row #53 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 53,
+      "createdAt": "2026-10-21T13:32:49+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-52",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Adit Rathod",
+      "email": "aditrathod3@gmail.com",
+      "phone": "9930432887",
+      "tripTitle": "Coorg Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-50",
+          "text": "Synced from Google Sheet row #52 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 52,
+      "createdAt": "2026-10-21T13:35:09+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-51",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Adit Rathod",
+      "email": "aditrathod3@gmail.com",
+      "phone": "9930432887",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-49",
+          "text": "Synced from Google Sheet row #51 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 51,
+      "createdAt": "2026-10-21T13:35:34+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-50",
+      "source": "Corporate Offsite Proposal Form",
+      "fullName": "Sejal (Birdi Systems)",
+      "email": "sparmar@birdi-inc.com",
+      "phone": "9082860116",
+      "tripTitle": "Hi, we’re looking for a short weekend getaway from Mumbai, leaving on Saturday and returning on Sunday.  We’d prefer a nearby destination so we don’t spend too much time travelling. We’re not interest",
+      "travelDates": "19-20th Dec",
+      "groupSize": "Corporate (25-50 People) | Budget: Weekend Offsite",
+      "budget": "Weekend Offsite",
+      "message": "Vibe: Weekend Offsite | Group: Corporate (25-50 People) | Notes: Corporate Offsite Request: Company: Birdi Systems. Contact: Sejal. Team Size: 25-50 People. Trip Type: Weekend Offsite. Preferred Destination: Hi, we’re looking for a short weekend getaway from Mumbai, leaving on Saturday and returning on Sunday.  We’d prefer a nearby destination so we don’t spend too much time travelling. We’re not interested in camping; instead, we’d like a comfortable stay at a good resort or hotel, along with some fun activities and things to do.  Please suggest suitable packages that include a comfortable stay, activities, and meals, if possible, for a relaxing yet enjoyable weekend trip.",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-48",
+          "text": "Synced from Google Sheet row #50 (Corporate Offsite Proposal Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 50,
+      "createdAt": "2026-10-21T15:21:01+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-49",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Hency patel",
+      "email": "patelhency79@gmail.com",
+      "phone": "9724445702",
+      "tripTitle": "Coorg with Mysore — New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg with Mysore — New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-47",
+          "text": "Synced from Google Sheet row #49 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 49,
+      "createdAt": "2026-10-21T17:07:19+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-48",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Shravani Sontakke",
+      "email": "shravanisontakke02@gmail.com",
+      "phone": "9763535974",
+      "tripTitle": "Sri Lanka — Xmas & New Year Special",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Sri Lanka — Xmas & New Year Special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-46",
+          "text": "Synced from Google Sheet row #48 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 48,
+      "createdAt": "2026-10-21T19:40:24+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-47",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Saba",
+      "email": "saba.khan0805@gmail.com",
+      "phone": "8693833267",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-45",
+          "text": "Synced from Google Sheet row #47 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 47,
+      "createdAt": "2026-10-22T11:55:03+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-46",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Saba",
+      "email": "saba.khan0805@gmail.com",
+      "phone": "8693833267",
+      "tripTitle": "Udaipur Backpacking Trip from Mumbai",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Udaipur Backpacking Trip from Mumbai",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-44",
+          "text": "Synced from Google Sheet row #46 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 46,
+      "createdAt": "2026-10-22T11:55:21+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-45",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Kundan",
+      "email": "kolikundan04@gmail.com",
+      "phone": "7400211400",
+      "tripTitle": "Vietnam with Phu Quoc",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Vietnam with Phu Quoc",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-43",
+          "text": "Synced from Google Sheet row #45 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 45,
+      "createdAt": "2026-10-22T16:50:19+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-44",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Yukta",
+      "email": "yuktakhadkikar@gmail.com",
+      "phone": "7768875609",
+      "tripTitle": "Spiti Valley Winter Expedition from Delhi",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-42",
+          "text": "Synced from Google Sheet row #44 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 44,
+      "createdAt": "2026-10-22T19:00:48+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
+      "id": "LEAD-SHT-43",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Trisha",
+      "email": "trishadalwadi350@gmail.com",
+      "phone": "7778950911",
+      "tripTitle": "Coorg Backpacking Trip",
+      "travelDates": "Flexible",
+      "groupSize": "",
+      "budget": "",
+      "message": "Itinerary Download: Coorg Backpacking Trip",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [
+        {
+          "id": "note-sync-1793137881093-41",
+          "text": "Synced from Google Sheet row #43 (Itinerary PDF Download Form)",
+          "author": "Google Sheet Sync",
+          "createdAt": "2026-10-27T21:51:21.093Z"
+        }
+      ],
+      "customFields": {},
+      "isMovedToBooking": false,
+      "syncedFromSheet": true,
+      "sheetRowIndex": 43,
+      "createdAt": "2026-10-22T19:40:30+05:30",
+      "updatedAt": "2026-10-27T21:51:21.093Z"
+    },
+    {
       "id": "LEAD-SHT-42",
       "source": "Itinerary PDF Download Form",
       "fullName": "Amit testing",
@@ -36,7 +1324,7 @@
       "phone": "8779351801",
       "tripTitle": "Gokarna Backpacking Trip",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "Friends | Budget: Mixed",
       "budget": "",
       "message": "Itinerary Download: Gokarna Backpacking Trip",
       "status": "NEW",
@@ -876,7 +2164,7 @@
       "phone": "9045743168",
       "tripTitle": "Spiti Valley Winter Expedition — Xmas & New Year Special",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "Couple | Budget: Mixed",
       "budget": "",
       "message": "Itinerary Download: Spiti Valley Winter Expedition — Xmas & New Year Special",
       "status": "NEW",
@@ -904,7 +2192,7 @@
       "phone": "9830888702",
       "tripTitle": "Coastal Maharashtra Road Trip",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "10+ People (Large Group / Corporate) | Budget: Solo Trip",
       "budget": "",
       "message": "Itinerary Download: Coastal Maharashtra Road Trip",
       "status": "NEW",
@@ -1016,7 +2304,7 @@
       "phone": "9137290903",
       "tripTitle": "Coorg with Mysore — New Year Special",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "Friends | Budget: Adventure",
       "budget": "",
       "message": "Itinerary Download: Coorg with Mysore — New Year Special",
       "status": "NEW",
@@ -1108,7 +2396,7 @@
       "phone": "7075756916",
       "tripTitle": "Spiti Valley Winter Expedition from Delhi",
       "travelDates": "Flexible",
-      "groupSize": "",
+      "groupSize": "2 (Couple / Duo) | Budget: Friends Trip",
       "budget": "",
       "message": "Itinerary Download: Spiti Valley Winter Expedition from Delhi",
       "status": "NEW",
@@ -1165,6 +2453,26 @@
     }
   ],
   "bookings": [
+    {
+      "id": "TT-2026-5586",
+      "source": "Google Sheet (Bookings Tab)",
+      "fullName": "Tanmayi Vaidya",
+      "phone": "8208133728",
+      "email": "tanmayivaidya3090@gmail.com",
+      "tripTitle": "Udaipur — Xmas & New Year Special",
+      "date": "Dec 29–Jan 02, 2027 New Year Special",
+      "guests": 1,
+      "totalAmount": 15749,
+      "paidAmount": 4000,
+      "balanceDue": 11749,
+      "paymentMode": "UPI",
+      "paymentStatus": "PARTIAL",
+      "bookingStatus": "CONFIRMED",
+      "transactionRef": "pay_TsstXDX0WE4lwm",
+      "notes": [],
+      "createdAt": "2026-10-27T15:03:52+05:30",
+      "updatedAt": "2026-10-27T21:51:21.510Z"
+    },
     {
       "id": "TT-BK-2026-9807",
       "leadId": "LEAD-SHT-4",
@@ -1263,6 +2571,30 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-sync-1793137883585",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 87 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-27T21:51:23.585Z"
+    },
+    {
+      "id": "act-sync-1793137881605",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 0 new leads, updated 0. Total: 87 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-27T21:51:21.605Z"
+    },
+    {
+      "id": "act-sync-1793137881511",
+      "type": "SHEET_SYNC",
+      "title": "Google Sheet Synced",
+      "description": "Synced with Google Sheet. Added 46 new leads, updated 5. Total: 87 leads.",
+      "entityType": "system",
+      "createdAt": "2026-10-27T21:51:21.511Z"
+    },
     {
       "id": "act-sync-1792605713066",
       "type": "SHEET_SYNC",
@@ -1622,7 +2954,7 @@
       "createdAt": "2026-10-20T21:49:51.508Z"
     }
   ],
-  "lastSyncedAt": "2026-10-21T18:01:53.066Z",
+  "lastSyncedAt": "2026-10-27T21:51:23.585Z",
   "settings": {
     "upiId": "traveltribes@upi",
     "bankName": "HDFC Bank",

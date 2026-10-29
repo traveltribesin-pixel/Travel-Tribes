@@ -1,6 +1,439 @@
 {
   "itineraries": [
     {
+      "id": "sheet-1793140467551",
+      "slug": "amit-maurya-rajasthan-2d",
+      "createdAt": "2026-10-27T22:34:27.801Z",
+      "updatedAt": "2026-10-27T22:34:27.801Z",
+      "tripType": "customized",
+      "title": "RAJASTHAN BESPOKE ESCAPE",
+      "subtitle": "PRIVATE BESPOKE EXPERIENCE",
+      "destination": "Rajasthan",
+      "duration": "2 Days / 1 Nights",
+      "routeText": "Jaipur",
+      "bannerImage": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=80",
+      "overview": "A private bespoke 2 Days / 1 Nights journey handcrafted exclusively for Amit Maurya. Featuring handpicked accommodations, private dedicated transfers with AC Ertiga, and curated local experiences across Rajasthan.",
+      "highlights": [
+        "Private transfers in dedicated AC Ertiga with professional chauffeur for all transfers & sightseeing",
+        "Accommodations in verified properties across Jaipur",
+        "Curated daily dining arrangement on All Meals plan",
+        "Private custom itinerary crafted for 2 Adults (Double Sharing)",
+        "Includes top landmark visits: scbfhfjcc, cbjjjjhhhh, Hawa Mahal"
+      ],
+      "highlightImages": [
+        "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1609137144822-0d12795ec254?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80"
+      ],
+      "locationGlimpses": [
+        {
+          "name": "Scenic Highlight 1",
+          "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "name": "Scenic Highlight 2",
+          "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "name": "Scenic Highlight 3",
+          "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "name": "Scenic Highlight 4",
+          "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      "cityWiseStay": [
+        {
+          "city": "Jaipur",
+          "nights": "1 Night"
+        }
+      ],
+      "clientName": "Amit Maurya",
+      "clientPhone": "+919137290903",
+      "clientEmail": "",
+      "inquiryId": "TT-466878",
+      "travelDates": "2026-10-30 to 2026-10-31",
+      "groupVibe": "Family Trip",
+      "mealPlan": "All Meals",
+      "specialRequirements": "",
+      "hotels": [
+        {
+          "id": "hotel-1",
+          "city": "Jaipur",
+          "hotelName": "Heritage Luxury ",
+          "nights": "1 Night",
+          "stayDates": "30 Oct - 31 Oct (1 Nts)",
+          "roomType": "Deluxe Room",
+          "starRating": "Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        }
+      ],
+      "transport": {
+        "vehicleType": "AC Ertiga",
+        "pickupDrop": "Mumbai Pickup & Drop Included",
+        "includedFeatures": [
+          "All toll taxes, parking fees, state border permits and fuel included",
+          "Dedicated experienced driver for entire tour duration",
+          "Point-to-point sightseeing & inter-city transit as per itinerary"
+        ]
+      },
+      "days": [
+        {
+          "day": 1,
+          "title": "Sightseeing & Heritage Exploration in Jaipur",
+          "date": "30 Oct 2026",
+          "guidedTour": false,
+          "enRouteStop": "hawa mahal city",
+          "points": [
+            "En-Route Spot: hawa mahal city",
+            "scbfhfjcc — Delightful boat cruise on Lake Pichola past historic ghats, Jag Mandir, and the floating Lake Palace.",
+            "cbjjjjhhhh — Explore the magnificent City Palace and discover Jaipur’s royal heritage through its grand courtyards, museums, and traditional architecture."
+          ],
+          "description": "En-Route Spot: hawa mahal city • scbfhfjcc — Delightful boat cruise on Lake Pichola past historic ghats, Jag Mandir, and the floating Lake Palace. • cbjjjjhhhh — Explore the magnificent City Palace and discover Jaipur’s royal heritage through its grand courtyards, museums, and traditional architecture.",
+          "meals": [
+            "Lunch",
+            "Dinner"
+          ],
+          "stayCity": "Jaipur",
+          "stayHotel": "Heritage Luxury ",
+          "stay": "Heritage Luxury , Jaipur",
+          "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "day": 2,
+          "title": "Sightseeing & Heritage Exploration in Jaipur",
+          "date": "31 Oct 2026",
+          "guidedTour": false,
+          "points": [
+            "Hawa Mahal — Marvel at the iconic Palace of Winds with its 953 honeycombed windows built for royal women to observe city life."
+          ],
+          "description": "Hawa Mahal — Marvel at the iconic Palace of Winds with its 953 honeycombed windows built for royal women to observe city life.",
+          "meals": [
+            "Breakfast",
+            "Lunch"
+          ],
+          "stayCity": "Jaipur",
+          "stayHotel": "Heritage Luxury ",
+          "stay": "Heritage Luxury , Jaipur",
+          "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      "inclusions": [
+        "Private AC Ertiga for the complete Rajasthan itinerary and Airport / Station Transfers.",
+        "Accommodation in verified Deluxe Room Properties For 1 Nights.",
+        "Meals All Meals (Breakfast, Lunch & Dinner as per itinerary schedule).",
+        "Driver allowance, fuel charges, state permits, toll taxes and parking charges.",
+        "All transfers and sightseeing tours as per the day-wise itinerary schedule.",
+        "En-route: hawa mahal city",
+        "scbfhfjcc",
+        "cbjjjjhhhh",
+        "Hawa Mahal",
+        "Assistance during hotel check-in and check-out.",
+        "Applicable hotel taxes included in the quoted package."
+      ],
+      "exclusions": [
+        "5% GST (unless explicitly included in pricing breakdown).",
+        "Early check-in (before 2:00 PM) & late check-out (after 11:00 AM) at hotels.",
+        "Airfare or Train fare other than specifically mentioned in inclusions.",
+        "Monument entry tickets, camera fees, or audio guides during sightseeing.",
+        "Personal expenses (room service, laundry, telephone calls, tips & alcoholic drinks).",
+        "Any lunch or additional meals not mentioned in the Package Inclusions.",
+        "Unforeseen costs due to flight delays, weather conditions, landslides or roadblocks."
+      ],
+      "quotation": {
+        "totalPackagePrice": 14112,
+        "pricePerPerson": 7056,
+        "balancePendingAmount": 14112,
+        "numberOfGuests": "2 Adults (Double Sharing) • Family Trip",
+        "paymentTerms": "Advance: ₹NaN, Balance pending: ₹14,112"
+      }
+    },
+    {
+      "id": "sheet-1793140336885",
+      "slug": "rajesh-malhotra-rajasthan-6d",
+      "createdAt": "2026-10-27T22:32:16.899Z",
+      "updatedAt": "2026-10-27T22:32:16.899Z",
+      "tripType": "customized",
+      "title": "RAJASTHAN BESPOKE ESCAPE",
+      "subtitle": "6 DAYS / 5 NIGHTS • PRIVATE BESPOKE EXPERIENCE",
+      "destination": "Rajasthan",
+      "duration": "6 Days / 5 Nights",
+      "routeText": "Jaipur ➔ Jodhpur ➔ Udaipur",
+      "bannerImage": "/image/rajasthan/IMG_8742.JPEG",
+      "overview": "A private bespoke 6 Days / 5 Nights journey handcrafted exclusively for Rajesh Malhotra. Featuring handpicked accommodations, private dedicated transfers with Innova Crysta AC, and curated local experiences across Rajasthan.",
+      "highlights": [
+        "Private transfers in dedicated Innova Crysta AC with professional chauffeur for all transfers & sightseeing",
+        "Accommodations in verified properties across Jaipur, Jodhpur, Udaipur",
+        "Curated daily dining arrangement on Breakfast & Dinner (MAP) plan",
+        "Private custom itinerary crafted for 4 Adults & 2 Children (Double Sharing)",
+        "Dedicated local guide assistance for key heritage monuments & cultural walks",
+        "Includes top landmark visits: City Palace, Hawa Mahal, Pink City Heritage Bazaar Walk, Amber Fort, Nahargarh Sunset Point"
+      ],
+      "highlightImages": [
+        "/image/rajasthan/IMG_8742.JPEG",
+        "/image/rajasthan/IMG_8743.JPEG",
+        "/image/rajasthan/IMG_8744.JPEG",
+        "/image/rajasthan/IMG_8745.JPEG"
+      ],
+      "locationGlimpses": [
+        {
+          "name": "Scenic Highlight 1",
+          "image": "/image/rajasthan/IMG_8742.JPEG"
+        },
+        {
+          "name": "Scenic Highlight 2",
+          "image": "/image/rajasthan/IMG_8743.JPEG"
+        },
+        {
+          "name": "Scenic Highlight 3",
+          "image": "/image/rajasthan/IMG_8744.JPEG"
+        },
+        {
+          "name": "Scenic Highlight 4",
+          "image": "/image/rajasthan/IMG_8745.JPEG"
+        }
+      ],
+      "cityWiseStay": [
+        {
+          "city": "Jaipur",
+          "nights": "2 Nights"
+        },
+        {
+          "city": "Jodhpur",
+          "nights": "1 Night"
+        },
+        {
+          "city": "Udaipur",
+          "nights": "2 Nights"
+        }
+      ],
+      "clientName": "Rajesh Malhotra",
+      "clientPhone": "+91 9876543210",
+      "clientEmail": "rajesh@example.com",
+      "inquiryId": "TT-778899",
+      "travelDates": "2024-11-20 to 2024-11-25",
+      "groupVibe": "Family Royal Vacation",
+      "mealPlan": "Breakfast & Dinner (MAP)",
+      "specialRequirements": "Interconnected rooms requested at Jaipur & Udaipur. Baby cot needed for younger child.",
+      "hotels": [
+        {
+          "id": "hotel-1",
+          "city": "Jaipur",
+          "hotelName": "ITC Rajputana, A Luxury Collection",
+          "nights": "2 Nights",
+          "stayDates": "20 Nov - 22 Nov",
+          "roomType": "Executive Club Room",
+          "starRating": "5 Star Luxury",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-2",
+          "city": "Jodhpur",
+          "hotelName": "Welcomhotel by ITC, Jodhpur",
+          "nights": "1 Night",
+          "stayDates": "22 Nov - 23 Nov",
+          "roomType": "Deluxe Heritage Room",
+          "starRating": "5 Star Luxury",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-3",
+          "city": "Udaipur",
+          "hotelName": "Trident Hotel, Udaipur",
+          "nights": "2 Nights",
+          "stayDates": "23 Nov - 25 Nov",
+          "roomType": "Deluxe Lake View Room",
+          "starRating": "5 Star Luxury",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        }
+      ],
+      "transport": {
+        "vehicleType": "Innova Crysta AC",
+        "pickupDrop": "Delhi Pickup & Drop Included",
+        "includedFeatures": [
+          "All toll taxes, parking fees, state border permits and fuel included",
+          "Dedicated experienced driver for entire tour duration",
+          "Point-to-point sightseeing & inter-city transit as per itinerary"
+        ]
+      },
+      "days": [
+        {
+          "day": 1,
+          "title": "Sightseeing & Heritage Exploration in Jaipur",
+          "date": "20 Nov 2024",
+          "guidedTour": true,
+          "enRouteStop": "Patrika Gate Photo Stop",
+          "points": [
+            "En-Route Spot: Patrika Gate Photo Stop",
+            "Dedicated local guide assistance included for today's sightseeing",
+            "City Palace — Explore the magnificent courtyards and royal museum",
+            "Hawa Mahal — Palace of Winds photo stop and street walk",
+            "Pink City Heritage Bazaar Walk — Bustling markets for crafts, textiles and gems",
+            "Optional: Chokhi Dhani Cultural Evening — Traditional Rajasthani folk dinner and puppet show"
+          ],
+          "description": "En-Route Spot: Patrika Gate Photo Stop • Dedicated local guide assistance included for today's sightseeing • City Palace — Explore the magnificent courtyards and royal museum • Hawa Mahal — Palace of Winds photo stop and street walk • Pink City Heritage Bazaar Walk — Bustling markets for crafts, textiles and gems • Optional: Chokhi Dhani Cultural Evening — Traditional Rajasthani folk dinner and puppet show",
+          "meals": [
+            "Dinner"
+          ],
+          "stayCity": "Jaipur",
+          "stayHotel": "ITC Rajputana, A Luxury Collection",
+          "stay": "ITC Rajputana, A Luxury Collection, Jaipur",
+          "image": "/image/rajasthan/IMG_8742.JPEG"
+        },
+        {
+          "day": 2,
+          "title": "Sightseeing & Heritage Exploration in Jaipur",
+          "date": "21 Nov 2024",
+          "guidedTour": true,
+          "enRouteStop": "Jal Mahal Lake View",
+          "points": [
+            "En-Route Spot: Jal Mahal Lake View",
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Amber Fort — Grand Rajput fortress with Sheesh Mahal mirror palace",
+            "Nahargarh Sunset Point — Sunset over Pink City panorama"
+          ],
+          "description": "En-Route Spot: Jal Mahal Lake View • Dedicated local guide assistance included for today's sightseeing • Amber Fort — Grand Rajput fortress with Sheesh Mahal mirror palace • Nahargarh Sunset Point — Sunset over Pink City panorama",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "Jaipur",
+          "stayHotel": "ITC Rajputana, A Luxury Collection",
+          "stay": "ITC Rajputana, A Luxury Collection, Jaipur",
+          "image": "/image/rajasthan/IMG_8743.JPEG"
+        },
+        {
+          "day": 3,
+          "title": "Jaipur to Jodhpur via Pushkar Brahma Temple & Holy Ghats",
+          "date": "22 Nov 2024",
+          "guidedTour": false,
+          "enRouteStop": "Pushkar Brahma Temple & Holy Ghats",
+          "points": [
+            "En-Route Spot: Pushkar Brahma Temple & Holy Ghats",
+            "Clock Tower & Sardar Market — Walk through Blue City spice bazaar"
+          ],
+          "description": "En-Route Spot: Pushkar Brahma Temple & Holy Ghats • Clock Tower & Sardar Market — Walk through Blue City spice bazaar",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "Jodhpur",
+          "stayHotel": "Welcomhotel by ITC, Jodhpur",
+          "stay": "Welcomhotel by ITC, Jodhpur, Jodhpur",
+          "image": "/image/rajasthan/IMG_8744.JPEG"
+        },
+        {
+          "day": 4,
+          "title": "Jodhpur to Udaipur via Ranakpur Jain Marble Temples",
+          "date": "23 Nov 2024",
+          "guidedTour": true,
+          "enRouteStop": "Ranakpur Jain Marble Temples",
+          "points": [
+            "En-Route Spot: Ranakpur Jain Marble Temples",
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Mehrangarh Fort — Majestic hilltop fort overlooking the Blue City",
+            "Jaswant Thada — Carved white marble royal cenotaphs"
+          ],
+          "description": "En-Route Spot: Ranakpur Jain Marble Temples • Dedicated local guide assistance included for today's sightseeing • Mehrangarh Fort — Majestic hilltop fort overlooking the Blue City • Jaswant Thada — Carved white marble royal cenotaphs",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "Udaipur",
+          "stayHotel": "Trident Hotel, Udaipur",
+          "stay": "Trident Hotel, Udaipur, Udaipur",
+          "image": "/image/rajasthan/IMG_8745.JPEG"
+        },
+        {
+          "day": 5,
+          "title": "Sightseeing & Heritage Exploration in Udaipur",
+          "date": "24 Nov 2024",
+          "guidedTour": true,
+          "enRouteStop": "Fateh Sagar Lake Promenade",
+          "points": [
+            "En-Route Spot: Fateh Sagar Lake Promenade",
+            "Dedicated local guide assistance included for today's sightseeing",
+            "City Palace Udaipur — Grand royal palace overlooking Lake Pichola",
+            "Lake Pichola Scenic Boat Ride — Sunset boat cruise past Jag Mandir Island",
+            "Saheliyon Ki Bari — Historic royal fountain gardens"
+          ],
+          "description": "En-Route Spot: Fateh Sagar Lake Promenade • Dedicated local guide assistance included for today's sightseeing • City Palace Udaipur — Grand royal palace overlooking Lake Pichola • Lake Pichola Scenic Boat Ride — Sunset boat cruise past Jag Mandir Island • Saheliyon Ki Bari — Historic royal fountain gardens",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "Udaipur",
+          "stayHotel": "Trident Hotel, Udaipur",
+          "stay": "Trident Hotel, Udaipur, Udaipur",
+          "image": "/image/rajasthan/IMG_8742.JPEG"
+        },
+        {
+          "day": 6,
+          "title": "Sightseeing & Heritage Exploration in Udaipur",
+          "date": "25 Nov 2024",
+          "guidedTour": false,
+          "points": [
+            "Jagdish Temple & Old City Walk — Morning temple visit and shopping before departure"
+          ],
+          "description": "Jagdish Temple & Old City Walk — Morning temple visit and shopping before departure",
+          "meals": [
+            "Breakfast"
+          ],
+          "stayCity": "Udaipur",
+          "stayHotel": "Trident Hotel, Udaipur",
+          "stay": "Trident Hotel, Udaipur, Udaipur",
+          "image": "/image/rajasthan/IMG_8743.JPEG"
+        }
+      ],
+      "inclusions": [
+        "5 Nights accommodation in 5-star luxury heritage hotels",
+        "Private dedicated Innova Crysta AC vehicle for all transfers, inter-city travel & sightseeing",
+        "Daily gourmet breakfast & dinner (MAP plan)",
+        "Dedicated local approved guide for Amber Fort, Mehrangarh Fort & Udaipur City Palace",
+        "Sunset boat ride on Lake Pichola for entire family",
+        "All toll taxes, parking fees, driver allowance, and state border permits"
+      ],
+      "exclusions": [
+        "5% GST",
+        "Airfare / Train tickets to and from Delhi",
+        "Camera fees, monument tickets not mentioned in inclusions",
+        "Personal expenses, room service, laundry and telephone calls"
+      ],
+      "quotation": {
+        "totalPackagePrice": 129800,
+        "pricePerPerson": 28450,
+        "pricePerChild": 8000,
+        "advanceAmount": 25000,
+        "balancePendingAmount": 104800,
+        "numberOfGuests": "4 Adults, 2 Kids (Double Sharing) • Family Royal Vacation",
+        "paymentTerms": "Advance: ₹25,000, Balance pending: ₹1,04,800"
+      }
+    },
+    {
       "slug": "priya-sharma-bali",
       "tripType": "customized",
       "title": "Bali & Nusa Penida Island Escape",

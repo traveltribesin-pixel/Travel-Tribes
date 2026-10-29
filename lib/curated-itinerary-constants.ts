@@ -5,6 +5,7 @@ export interface HotelDetail {
   city: string
   hotelName: string
   nights: string
+  stayDates?: string
   roomType?: string
   starRating?: string
   amenities?: string[]
@@ -48,6 +49,9 @@ export interface DayItinerary {
   tags?: string[]
   note?: string
   briefRoute?: string
+  guidedTour?: boolean
+  enRouteStop?: string
+  optionalPoints?: string[]
 }
 
 export interface LocationGlimpse {
@@ -62,11 +66,15 @@ export interface PricingQuotation {
   xmasTripleSharingPrice?: number | string
   xmasDoubleSharingPrice?: number | string
   pricePerPerson?: number | string
+  pricePerChild?: number | string
   totalPackagePrice?: number | string
   numberOfGuests?: number | string
   advanceAmount?: number | string
+  balancePendingAmount?: number | string
   paymentTerms?: string
   validUntil?: string
+  marginPercentage?: number | string
+  gstAmount?: number | string
 }
 
 export interface CuratedItinerary {
@@ -93,6 +101,9 @@ export interface CuratedItinerary {
   clientEmail?: string
   travelDates?: string
   groupVibe?: string
+  inquiryId?: string
+  mealPlan?: string
+  specialRequirements?: string
 
   // Group Trip Specific
   batchDates?: string[]

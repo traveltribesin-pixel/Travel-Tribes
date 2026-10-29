@@ -24,7 +24,9 @@ import {
   ArrowRight,
   ChevronDown,
   Navigation,
-  X
+  X,
+  Utensils,
+  Users
 } from 'lucide-react'
 import {
   DEFAULT_POINTS_TO_BE_NOTED,
@@ -64,6 +66,12 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
     ...DEFAULT_BANK_ACCOUNT,
     ...(itinerary.accountDetails || {})
   }
+
+  // Clean & deduplicate subtitle: if subtitle begins with something like "2 DAYS / 1 NIGHTS •", strip it
+  const rawSubtitle = itinerary.subtitle || (isCustomized ? 'PRIVATE BESPOKE EXPERIENCE' : 'BACKPACKING')
+  const displaySubtitle = rawSubtitle
+    .replace(/^(\d+\s*DAYS?\s*\/?\s*\d*\s*NIGHTS?|DAYS?\s*\/?\s*NIGHTS?)\s*[•·-]?\s*/i, '')
+    .trim() || (isCustomized ? 'PRIVATE BESPOKE EXPERIENCE' : 'BACKPACKING')
 
   // Price calculations for sticky bottom booking bar
   const quotation = itinerary.quotation || {}
@@ -223,54 +231,89 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
       <main className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 print:p-0 print:m-0 print:max-w-none print:space-y-6">
 
         {/* ========================================================= */}
-        {/* PAGE 1: INTRO / COVER PAGE (COMPACT HERO BANNER)          */}
+        {/* PAGE 1: INTRO / COVER PAGE (PREMIUM BESPOKE COVER BANNER) */}
         {/* ========================================================= */}
-        <section className="print-break-page relative w-full min-h-[380px] sm:min-h-[440px] md:min-h-[480px] print:min-h-[960px] bg-slate-950 rounded-2xl shadow-xl overflow-hidden flex flex-col justify-between border border-slate-300/80">
-          {/* Background Image */}
+        <section className="print-break-page relative w-full min-h-[460px] sm:min-h-[500px] md:min-h-[540px] print:min-h-[960px] bg-slate-950 rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden flex flex-col justify-between border border-slate-300/80 p-5 sm:p-7 md:p-8">
+          {/* Background Image with Rich Vignette Gradient */}
           <div className="absolute inset-0 z-0">
             <Image
               src={itinerary.bannerImage || '/image/Meghalaya/IMG_0857.JPEG'}
               alt={itinerary.title}
               fill
               priority
-              className="object-cover object-center"
+              className="object-cover object-center scale-[1.02]"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/25 to-black/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-black/90" />
           </div>
 
-          {/* Top Logo */}
-          <div className="relative z-10 pt-4 sm:pt-6 px-4 flex justify-center">
+          {/* Top Bar: Brand Logo & Proposal Badge */}
+          <div className="relative z-10 flex flex-col items-center gap-2 pt-1 sm:pt-2">
             <Image
               src="/image/Logowhite.png"
               alt="Travel Tribes"
-              width={130}
-              height={40}
-              className="h-8 sm:h-10 w-auto object-contain drop-shadow-md"
+              width={140}
+              height={44}
+              className="h-8 sm:h-10 w-auto object-contain drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]"
             />
+            {isCustomized && (
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-1 sm:mt-1.5">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#ffde59] text-slate-950 text-[11px] sm:text-xs font-black tracking-widest uppercase shadow-md">
+                  <Sparkles className="w-3.5 h-3.5 fill-current text-slate-950" />
+                  Exclusive Proposal For {clientName}
+                </span>
+                {itinerary.inquiryId && (
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono font-bold tracking-wider">
+                    REF: #{itinerary.inquiryId.replace(/^#/, '')}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Center Titles */}
-          <div className="relative z-10 text-center px-3 py-4 sm:py-6 my-auto">
-            {isCustomized && (
-              <span className="inline-block px-3 py-0.5 rounded-full bg-[#ffde59] text-slate-950 text-xs sm:text-sm font-black tracking-widest uppercase mb-2 shadow-md">
-                Exclusive Proposal For {clientName}
-              </span>
-            )}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#ffde59] tracking-tight uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+          {/* Center Titles (Polished, High-Contrast Typography) */}
+          <div className="relative z-10 text-center px-2 sm:px-6 my-auto py-4 sm:py-6 max-w-3xl mx-auto space-y-2">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               {itinerary.title}
             </h1>
-            <p className="text-lg sm:text-2xl md:text-3xl font-extrabold text-white tracking-widest uppercase mt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-              {itinerary.subtitle || (isCustomized ? 'CUSTOM GETAWAY' : 'BACKPACKING')}
-            </p>
+            {displaySubtitle && (
+              <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#ffde59] tracking-[0.22em] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] max-w-xl mx-auto">
+                {displaySubtitle}
+              </p>
+            )}
           </div>
 
-          {/* Bottom Info & Route */}
-          <div className="relative z-10 text-center pb-4 sm:pb-6">
-            <div className="text-xl sm:text-2xl font-black text-[#ffde59] tracking-wide mb-0.5 drop-shadow-md">
-              {itinerary.duration}
-            </div>
-            <div className="text-xs sm:text-sm font-bold text-white tracking-wide px-3 drop-shadow-md">
-              {itinerary.routeText || `${itinerary.destination} Circuit`}
+          {/* Bottom Info Ribbon: Organised Coordinates Strip */}
+          <div className="relative z-10 w-full max-w-2xl mx-auto pb-1 sm:pb-2">
+            <div className="bg-black/65 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 sm:px-6 sm:py-3.5 shadow-xl grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4 text-center divide-x divide-white/10">
+              {/* Duration */}
+              <div className="flex flex-col items-center justify-center px-1">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-300 flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-[#ffde59]" /> Duration
+                </span>
+                <span className="text-xs sm:text-sm font-black text-white mt-0.5">
+                  {itinerary.duration}
+                </span>
+              </div>
+
+              {/* Route */}
+              <div className="flex flex-col items-center justify-center px-1">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-300 flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-[#ffde59]" /> Route
+                </span>
+                <span className="text-xs sm:text-sm font-black text-white mt-0.5 truncate max-w-[190px]">
+                  {itinerary.routeText || `${itinerary.destination} Circuit`}
+                </span>
+              </div>
+
+              {/* Dates or Style */}
+              <div className="col-span-2 sm:col-span-1 flex flex-col items-center justify-center px-1 border-t sm:border-t-0 pt-1.5 sm:pt-0 border-white/10">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-300 flex items-center gap-1">
+                  <Calendar className="w-3 h-3 text-[#ffde59]" /> {itinerary.travelDates ? 'Travel Dates' : 'Trip Style'}
+                </span>
+                <span className="text-xs sm:text-sm font-black text-white mt-0.5 truncate max-w-[190px]">
+                  {itinerary.travelDates || itinerary.groupVibe || (isCustomized ? 'Private Bespoke' : 'Group Tour')}
+                </span>
+              </div>
             </div>
           </div>
         </section>
@@ -340,6 +383,34 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
                 </div>
               </div>
 
+              {/* Travel Dates */}
+              {itinerary.travelDates && (
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center shrink-0 border border-orange-100 mt-0.5">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 text-sm sm:text-base leading-relaxed">
+                    <span className="font-extrabold text-slate-950">Travel Dates: </span>
+                    <span className="font-semibold text-slate-800">{itinerary.travelDates}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Party / Guests */}
+              {(itinerary.quotation.numberOfGuests || itinerary.groupVibe) && (
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center shrink-0 border border-purple-100 mt-0.5">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 text-sm sm:text-base leading-relaxed">
+                    <span className="font-extrabold text-slate-950">Group & Style: </span>
+                    <span className="font-semibold text-slate-800">
+                      {[itinerary.quotation.numberOfGuests, itinerary.groupVibe].filter(Boolean).join(' • ')}
+                    </span>
+                  </div>
+                </div>
+              )}
+
               {/* Allotted Vehicle */}
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100 mt-0.5">
@@ -353,6 +424,19 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
                   </span>
                 </div>
               </div>
+
+              {/* Meal Plan */}
+              {itinerary.mealPlan && (
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-100 mt-0.5">
+                    <Utensils className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 text-sm sm:text-base leading-relaxed">
+                    <span className="font-extrabold text-slate-950">Meal Plan: </span>
+                    <span className="font-semibold text-slate-800">{itinerary.mealPlan}</span>
+                  </div>
+                </div>
+              )}
 
               {/* Pickup & Drop */}
               <div className="flex items-start gap-3">
@@ -464,13 +548,18 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
                   className="w-full bg-[#0077b6] hover:bg-[#00689f] p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-xs text-left cursor-pointer transition-colors"
                   aria-expanded={isDayOpen}
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1 flex-wrap">
                     <span className="px-3 py-1 rounded-full bg-white/20 border border-white/35 text-white font-black text-xs sm:text-sm shrink-0 shadow-xs">
                       Day {day.day}
                     </span>
                     <h3 className="text-xs sm:text-base font-extrabold text-white uppercase tracking-tight break-words leading-snug drop-shadow-xs">
                       {day.title}
                     </h3>
+                    {day.guidedTour && (
+                      <span className="px-2 py-0.5 rounded-full bg-[#ffde59] text-slate-950 text-[10px] font-black uppercase tracking-wider shrink-0 shadow-xs">
+                        Guide Included
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -497,13 +586,22 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
                 >
                   {/* Left Column: Schedule, Distance, Meals & Stay */}
                   <div className="flex-1 w-full space-y-3">
-                    {/* Date Subtitle */}
-                    {day.date && (
-                      <div className="text-xs sm:text-sm font-black text-amber-700 tracking-wide flex items-center gap-1.5 uppercase">
-                        <Calendar className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                        <span>{day.date}</span>
-                      </div>
-                    )}
+                    {/* Date Subtitle & Badges */}
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      {day.date && (
+                        <div className="text-xs sm:text-sm font-black text-amber-700 tracking-wide flex items-center gap-1.5 uppercase">
+                          <Calendar className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                          <span>{day.date}</span>
+                        </div>
+                      )}
+
+                      {day.enRouteStop && (
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-50 border border-amber-200 text-xs font-bold text-amber-900">
+                          <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                          <span>En-Route: {day.enRouteStop}</span>
+                        </div>
+                      )}
+                    </div>
 
                     {/* Approx Travel Distance in km & hrs */}
                     {day.travelDistance && (
@@ -604,7 +702,12 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
                           {hotel.starRating || 'Comfort Stay'}
                         </span>
                       </td>
-                      <td className="py-3 px-3 sm:px-4 font-semibold text-slate-700">{hotel.nights}</td>
+                      <td className="py-3 px-3 sm:px-4 font-semibold text-slate-700">
+                        <div>{hotel.nights}</div>
+                        {hotel.stayDates && (
+                          <div className="text-[11px] text-slate-500 font-medium mt-0.5">{hotel.stayDates}</div>
+                        )}
+                      </td>
                       <td className="py-3 px-3 sm:px-4 text-xs text-slate-600 hidden sm:table-cell">
                         {hotel.roomType || 'Standard Room with Breakfast'}
                       </td>
@@ -742,15 +845,66 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
               </div>
             ) : (
               /* Customized Trip Costing */
-              <div className="max-w-md mx-auto text-center p-4 sm:p-6 rounded-2xl border-2 border-slate-200 bg-slate-50 shadow-xs">
-                <span className="text-xs text-amber-700 font-bold uppercase">Proposal For {clientName}</span>
-                <div className="text-3xl sm:text-4xl font-black text-slate-950 mt-1">
-                  ₹ {Number(itinerary.quotation.totalPackagePrice || 0).toLocaleString('en-IN')}/-
+              <div className="max-w-lg mx-auto text-center p-5 sm:p-7 rounded-2xl border-2 border-slate-200 bg-slate-50 shadow-xs space-y-3">
+                <span className="text-xs text-amber-700 font-bold uppercase tracking-wider block">
+                  Proposal For {clientName}
+                </span>
+                <div>
+                  <span className="text-xs text-slate-500 font-semibold block uppercase">Total Package Price</span>
+                  <div className="text-3xl sm:text-5xl font-black text-slate-950 mt-0.5 font-mono">
+                    ₹ {Number(itinerary.quotation.totalPackagePrice || 0).toLocaleString('en-IN')}/-
+                  </div>
                 </div>
-                {itinerary.quotation.pricePerPerson && (
-                  <p className="text-xs text-slate-600 mt-1">
-                    (₹ {Number(itinerary.quotation.pricePerPerson).toLocaleString('en-IN')}/- per person for {itinerary.quotation.numberOfGuests || 'your group'})
-                  </p>
+
+                {/* Per Person Breakdown */}
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs">
+                  {itinerary.quotation.pricePerPerson && (
+                    <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold">
+                      ₹{Number(itinerary.quotation.pricePerPerson).toLocaleString('en-IN')}/- per adult
+                    </span>
+                  )}
+                  {itinerary.quotation.pricePerChild && (
+                    <span className="px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-800 font-bold">
+                      ₹{Number(itinerary.quotation.pricePerChild).toLocaleString('en-IN')}/- per child
+                    </span>
+                  )}
+                  {itinerary.quotation.numberOfGuests && (
+                    <span className="px-3 py-1 rounded-full bg-slate-200/80 text-slate-700 font-semibold">
+                      {itinerary.quotation.numberOfGuests}
+                    </span>
+                  )}
+                </div>
+
+                {/* Advance & Pending Balance */}
+                {(itinerary.quotation.advanceAmount || itinerary.quotation.balancePendingAmount) && (
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200 text-xs">
+                    {itinerary.quotation.advanceAmount && (
+                      <div className="p-2 rounded-lg bg-white border border-slate-200">
+                        <span className="text-[10px] text-slate-500 block">Token Advance</span>
+                        <strong className="text-emerald-700 font-mono font-bold text-sm">
+                          ₹{Number(itinerary.quotation.advanceAmount).toLocaleString('en-IN')}
+                        </strong>
+                      </div>
+                    )}
+                    {itinerary.quotation.balancePendingAmount && (
+                      <div className="p-2 rounded-lg bg-white border border-slate-200">
+                        <span className="text-[10px] text-slate-500 block">Pending Balance</span>
+                        <strong className="text-slate-800 font-mono font-bold text-sm">
+                          ₹{Number(itinerary.quotation.balancePendingAmount).toLocaleString('en-IN')}
+                        </strong>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Special Requirements */}
+                {itinerary.specialRequirements && (
+                  <div className="pt-2 border-t border-slate-200 text-left">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase block mb-0.5">Special Notes:</span>
+                    <p className="text-xs text-slate-700 italic bg-amber-50/60 p-2 rounded-lg border border-amber-200/80">
+                      &quot;{itinerary.specialRequirements}&quot;
+                    </p>
+                  </div>
                 )}
               </div>
             )}
