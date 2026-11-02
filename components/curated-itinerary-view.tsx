@@ -529,7 +529,10 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
           </div>
 
           {itinerary.days.map((day) => {
-            const dayImage = day.image || (day.photos && day.photos[0]) || '/image/Meghalaya/IMG_1034.JPEG'
+            const dayFallback = (itinerary.highlightImages && itinerary.highlightImages.length > 0)
+              ? itinerary.highlightImages[(day.day - 1) % itinerary.highlightImages.length]
+              : (itinerary.bannerImage || '/image/Meghalaya/IMG_1034.JPEG')
+            const dayImage = day.image || (day.photos && day.photos[0]) || dayFallback
             const stayDisplay = day.stayHotel
               ? `${day.stayHotel}${day.stayCity ? `, ${day.stayCity}` : ''}`
               : (day.stay || 'Standard Hotel Stay')
@@ -552,7 +555,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
                     <span className="px-3 py-1 rounded-full bg-white/20 border border-white/35 text-white font-black text-xs sm:text-sm shrink-0 shadow-xs">
                       Day {day.day}
                     </span>
-                    <h3 className="text-xs sm:text-base font-extrabold text-white uppercase tracking-tight break-words leading-snug drop-shadow-xs">
+                    <h3 className="text-xs sm:text-base font-extrabold text-white tracking-tight break-words leading-snug drop-shadow-xs">
                       {day.title}
                     </h3>
                     {day.guidedTour && (
@@ -1063,86 +1066,101 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 10: CONNECT WITH US / BACK COVER (LIGHT THEME)    */}
         {/* ========================================================= */}
-        <section className="print-break-page relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-4 sm:p-8 flex flex-col items-center justify-between text-center space-y-5">
-          <div>
+        <section className="print-break-page relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-6 sm:p-10 flex flex-col items-center justify-between text-center space-y-6">
+          <div className="space-y-1.5">
             <Image
               src="/image/Logoblack.png"
               alt="Travel Tribes"
               width={160}
               height={50}
-              className="h-10 sm:h-12 w-auto object-contain mx-auto mb-1"
+              className="h-10 sm:h-12 w-auto object-contain mx-auto"
             />
-            <p className="font-extrabold text-slate-950 text-xs sm:text-sm tracking-wide">
+            <p className="font-extrabold text-[#0077b6] text-xs sm:text-sm tracking-wider uppercase">
               Tribe Hai Toh Vibe Hai
             </p>
           </div>
 
-          <div className="max-w-md mx-auto">
-            <p className="text-xs sm:text-sm font-bold text-[#0077b6] leading-relaxed">
-              This trip can be customized for private groups (Family, Corporate, Friends etc.) & quotation will be shared according to your requirement. For customization you can get in touch with us.
+          {/* Customization Callout Box */}
+          <div className="max-w-xl mx-auto bg-sky-50/70 border border-sky-100 rounded-2xl p-4 sm:p-5 shadow-xs">
+            <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-relaxed">
+              This trip can be customized for private groups (Family, Corporate, Friends etc.) &amp; quotation will be shared according to your requirement. For any custom modifications, feel free to get in touch with us anytime.
             </p>
           </div>
 
-          <div className="w-full max-w-md space-y-3">
-            <h3 className="text-xl sm:text-2xl font-black text-[#00b4d8] tracking-wider uppercase">
-              CONNECT WITH US
-            </h3>
+          <div className="w-full max-w-lg space-y-4">
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-slate-200" />
+              <h3 className="text-xs sm:text-sm font-black text-slate-800 tracking-widest uppercase">
+                Connect With Us
+              </h3>
+              <span className="h-px w-12 bg-slate-200" />
+            </div>
 
-            <div className="grid grid-cols-2 gap-2.5 text-xs sm:text-sm font-bold">
-              {/* Google Review */}
+            {/* Branded 4-Button Action Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-bold">
+              {/* 1. Google Review */}
               <a
                 href="https://g.page/r/traveltribes"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-full bg-white text-slate-900 border border-slate-300 shadow-xs flex items-center justify-center gap-1.5 hover:bg-slate-50 transition-colors"
+                className="px-4 py-3 rounded-xl bg-white text-slate-800 border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 shadow-xs flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
                 <span>Google Review</span>
               </a>
 
-              {/* Instagram */}
+              {/* 2. Instagram (Signature Vibrant Gradient — Professional & Recognizable) */}
               <a
                 href="https://instagram.com/traveltribes.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-full bg-slate-950 text-white shadow-xs flex items-center justify-center gap-1.5 hover:bg-slate-800 transition-colors"
+                className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white shadow-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <svg className="w-4 h-4 text-rose-400 fill-current shrink-0" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                <svg
+                  className="w-4 h-4 text-white shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                 </svg>
-                <span>@traveltribes.in</span>
+                <span className="text-white font-bold tracking-tight">@traveltribes.in</span>
               </a>
 
-              {/* Visit Website */}
+              {/* 3. Visit Website */}
               <Link
                 href="/"
-                className="p-2.5 sm:p-3 rounded-full bg-[#0077b6] text-white shadow-xs flex items-center justify-center gap-1.5 hover:bg-[#0096c7] transition-colors"
+                className="px-4 py-3 rounded-xl bg-[#0077b6] hover:bg-[#005f92] text-white shadow-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Globe className="w-4 h-4" />
+                <Globe className="w-4 h-4 shrink-0" />
                 <span>Visit Website</span>
               </Link>
 
-              {/* WhatsApp Call */}
+              {/* 4. WhatsApp Call / Direct Support */}
               <a
                 href="https://wa.me/919975822023"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-full bg-[#10b981] text-white shadow-xs flex items-center justify-center gap-1.5 hover:bg-emerald-600 transition-colors"
+                className="px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white shadow-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <PhoneCall className="w-4 h-4" />
-                <span>9975822023</span>
+                <PhoneCall className="w-4 h-4 shrink-0" />
+                <span>+91 99758 22023</span>
               </a>
             </div>
           </div>
 
-          {/* Group Photo */}
-          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-xl overflow-hidden shadow-xs border border-slate-200 mt-1">
-            <Image
-              src="/image/Meghalaya/IMG_0857.JPEG"
-              alt="Travel Tribes Community"
-              fill
-              className="object-cover"
-            />
+          {/* Official Bottom Contact Ribbon */}
+          <div className="pt-3 border-t border-slate-100 w-full max-w-lg flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] text-slate-500">
+            <span>Official Helpline: <strong>+91 9975822023</strong></span>
+            <span>•</span>
+            <span>Email: <strong>info@traveltribes.in</strong></span>
+            <span>•</span>
+            <span>Mumbai, India</span>
           </div>
         </section>
       </main>

@@ -1,6 +1,242 @@
 {
   "itineraries": [
     {
+      "id": "sheet-1793581177988",
+      "slug": "amit-maurya-himachal-1d",
+      "createdAt": "2026-11-02T00:59:37.999Z",
+      "updatedAt": "2026-11-02T00:59:37.999Z",
+      "tripType": "customized",
+      "title": "Himachal Escape",
+      "subtitle": "Mountain Calling",
+      "destination": "Himachal",
+      "duration": "5 Days / 4 Nights",
+      "routeText": "Delhi ➔ Manali ➔ Kasol ➔ Amritsar",
+      "bannerImage": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1600&q=80",
+      "overview": "A private bespoke 5 Days / 4 Nights journey handcrafted exclusively for Amit Maurya. Featuring handpicked accommodations, private dedicated transfers with Tempo Traveller, and curated local experiences across Himachal.",
+      "highlights": [
+        "Private transfers in dedicated Tempo Traveller with professional chauffeur for all transfers & sightseeing",
+        "Accommodations in verified properties across Manali, Kasol, Amritsar",
+        "Curated daily dining arrangement on Breakfast and Dinner plan",
+        "Private custom itinerary crafted for Family Trip",
+        "Includes top landmark visits across Himachal and Punjab"
+      ],
+      "highlightImages": [
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1597820334272-af88855e6e76?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=80"
+      ],
+      "locationGlimpses": [
+        {
+          "name": "Manali Alpine Valley",
+          "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "name": "Parvati Valley Kasol",
+          "image": "https://images.unsplash.com/photo-1597820334272-af88855e6e76?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "name": "Pine Trails & River",
+          "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "name": "Himalayan Foothills",
+          "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      "cityWiseStay": [
+        {
+          "city": "Manali",
+          "nights": "2 Nights"
+        },
+        {
+          "city": "Kasol",
+          "nights": "1 Night"
+        },
+        {
+          "city": "Amritsar",
+          "nights": "1 Night"
+        }
+      ],
+      "clientName": "Amit Maurya",
+      "clientPhone": "",
+      "clientEmail": "",
+      "inquiryId": "",
+      "travelDates": "1 Nov 2026 to 5 Nov 2026",
+      "groupVibe": "Family Trip",
+      "mealPlan": "Breakfast and Dinner",
+      "specialRequirements": "",
+      "hotels": [
+        {
+          "id": "hotel-1",
+          "city": "Manali",
+          "hotelName": "Amit Residency",
+          "nights": "2 Nights",
+          "stayDates": "1 Nov 2026 - 3 Nov 2026 (2 Nts)",
+          "roomType": "Deluxe Room",
+          "starRating": "4 star",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-2",
+          "city": "Kasol",
+          "hotelName": "Adil Residency",
+          "nights": "1 Night",
+          "stayDates": "3 Nov 2026 - 4 Nov 2026 (1 Nt)",
+          "roomType": "Luxury Room",
+          "starRating": "4Star",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-3",
+          "city": "Amritsar",
+          "hotelName": "Punjab Hotel",
+          "nights": "1 Night",
+          "stayDates": "4 Nov 2026 - 5 Nov 2026 (1 Nt)",
+          "roomType": "Standard Room",
+          "starRating": "3 star",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        }
+      ],
+      "transport": {
+        "vehicleType": "Tempo Traveller",
+        "pickupDrop": "Delhi",
+        "includedFeatures": [
+          "All toll taxes, parking fees, state border permits and fuel included",
+          "Dedicated experienced driver for entire tour duration",
+          "Point-to-point sightseeing & inter-city transit as per itinerary"
+        ]
+      },
+      "days": [
+        {
+          "day": 1,
+          "title": "Scenic Himalayan Drive from Delhi to Manali • Welcome to the Valley",
+          "date": "1 Nov 2026",
+          "guidedTour": false,
+          "points": [
+            "Scenic road transfer from Delhi along the meandering Beas River into the Kullu-Manali Valley",
+            "Spectacular alpine vistas of snow-capped Pir Panjal range as you ascend into the mountains",
+            "Evening hotel check-in at Amit Residency, Manali and leisure stroll amidst crisp pine-scented breezes"
+          ],
+          "description": "Scenic road transfer from Delhi along the meandering Beas River into the Kullu-Manali Valley • Spectacular alpine vistas of snow-capped Pir Panjal range as you ascend into the mountains • Evening hotel check-in at Amit Residency, Manali and leisure stroll amidst crisp pine-scented breezes",
+          "meals": [
+            "Dinner"
+          ],
+          "stayCity": "Manali",
+          "stayHotel": "Amit Residency",
+          "stay": "Amit Residency, Manali",
+          "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "day": 2,
+          "title": "Alpine Landscapes, Pine Forest Trails & Iconic Valley Highlights of Manali",
+          "date": "2 Nov 2026",
+          "guidedTour": false,
+          "enRouteStop": "Kullu Valley Riverfront",
+          "points": [
+            "Full day mountain sightseeing across iconic Manali alpine landscapes and cedar woodlands",
+            "Discover ancient architecture and sacred cedar forests around the historic wooden shrines",
+            "Bustling evening stroll along Mall Road and cozy cafe exploration in Old Manali"
+          ],
+          "description": "Full day mountain sightseeing across iconic Manali alpine landscapes and cedar woodlands • Discover ancient architecture and sacred cedar forests around the historic wooden shrines • Bustling evening stroll along Mall Road and cozy cafe exploration in Old Manali",
+          "meals": [
+            "Breakfast and Dinner"
+          ],
+          "stayCity": "Manali",
+          "stayHotel": "Amit Residency",
+          "stay": "Amit Residency, Manali",
+          "image": "https://images.unsplash.com/photo-1597820334272-af88855e6e76?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "day": 3,
+          "title": "Picturesque Valley Drive from Manali to Kasol along Parvati River",
+          "date": "3 Nov 2026",
+          "guidedTour": false,
+          "points": [
+            "Scenic morning drive through the enchanting Parvati Valley surrounded by towering cliffs",
+            "Picturesque riverside stop along the turquoise Parvati River and nature trails",
+            "Evening check-in at Adil Residency, Kasol with authentic cafe culture and mountain serenity"
+          ],
+          "description": "Scenic morning drive through the enchanting Parvati Valley surrounded by towering cliffs • Picturesque riverside stop along the turquoise Parvati River and nature trails • Evening check-in at Adil Residency, Kasol with authentic cafe culture and mountain serenity",
+          "meals": [
+            "Breakfast and Dinner"
+          ],
+          "stayCity": "Kasol",
+          "stayHotel": "Adil Residency",
+          "stay": "Adil Residency, Kasol",
+          "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "day": 4,
+          "title": "Scenic Foothills Journey from Kasol to Amritsar • Welcome to the Golden City",
+          "date": "4 Nov 2026",
+          "guidedTour": false,
+          "points": [
+            "Scenic downhill transition from the high Himalayas into the vibrant plains of Punjab",
+            "Arrival in Amritsar and comfortable check-in at Punjab Hotel",
+            "Evening spiritual witness to the illuminated Golden Temple and local Punjabi culinary delights"
+          ],
+          "description": "Scenic downhill transition from the high Himalayas into the vibrant plains of Punjab • Arrival in Amritsar and comfortable check-in at Punjab Hotel • Evening spiritual witness to the illuminated Golden Temple and local Punjabi culinary delights",
+          "meals": [
+            "Breakfast and Dinner"
+          ],
+          "stayCity": "Amritsar",
+          "stayHotel": "Punjab Hotel",
+          "stay": "Punjab Hotel, Amritsar",
+          "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          "day": 5,
+          "title": "Farewell to Amritsar & Scenic Return Journey to Delhi with Cherished Memories",
+          "date": "5 Nov 2026",
+          "guidedTour": false,
+          "points": [
+            "Morning sacred darshan at the Golden Temple or heritage walk through the old walled city",
+            "Scenic highway return transfer towards Delhi in dedicated Tempo Traveller",
+            "Arrival in Delhi marking the triumphant culmination of your bespoke 5-Day expedition"
+          ],
+          "description": "Morning sacred darshan at the Golden Temple or heritage walk through the old walled city • Scenic highway return transfer towards Delhi in dedicated Tempo Traveller • Arrival in Delhi marking the triumphant culmination of your bespoke 5-Day expedition",
+          "meals": [
+            "Breakfast and Dinner"
+          ],
+          "stayCity": "Delhi",
+          "stayHotel": "Punjab Hotel",
+          "stay": "Punjab Hotel, Amritsar",
+          "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      "inclusions": [
+        "fvdzjxmgdzhjkslxk",
+        "fchfbsndkxuz,kxcj",
+        "cesbhdmzncx"
+      ],
+      "exclusions": [
+        "fbjchsdmxhcxjz"
+      ],
+      "quotation": {
+        "totalPackagePrice": 80000,
+        "pricePerPerson": 20000,
+        "balancePendingAmount": 80000,
+        "numberOfGuests": "Family Trip",
+        "paymentTerms": "Advance: ₹NaN, Balance pending: ₹80,000"
+      }
+    },
+    {
       "id": "sheet-1793140467551",
       "slug": "amit-maurya-rajasthan-2d",
       "createdAt": "2026-10-27T22:34:27.801Z",

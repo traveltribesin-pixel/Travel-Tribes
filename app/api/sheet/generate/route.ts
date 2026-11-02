@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { saveCuratedItinerary, slugify, loadCuratedStore } from '@/lib/curated-itineraries-store'
 import type { CuratedItinerary, DayItinerary, HotelDetail, LocationGlimpse } from '@/lib/curated-itinerary-constants'
+import { generateProfessionalDayTitle } from '@/lib/day-title-generator'
+import { getLuxuryImagesForDestination } from '@/lib/itinerary-images'
 
 export async function POST(req: NextRequest) {
   try {
@@ -43,6 +45,13 @@ export async function POST(req: NextRequest) {
     const daysCount = Math.max(1, Number(noOfDays) || 1)
     const nightsCount = Math.max(0, Number(noOfNights) || (daysCount > 1 ? daysCount - 1 : 0))
     const durationStr = body.duration?.trim() || `${daysCount} Day${daysCount > 1 ? 's' : ''} / ${nightsCount} Night${nightsCount > 1 ? 's' : ''}`
+
+    // Resolve curated destination images for hero and day gallery
+    const destMedia = getLuxuryImagesForDestination(dest)
+    const effectiveHeroImage = heroImage?.trim() || destMedia.hero
+    const effectiveGalleryImages = (Array.isArray(galleryImages) && galleryImages.filter(Boolean).length > 0)
+      ? galleryImages.filter(Boolean)
+      : destMedia.gallery
 
     // Luxury title generator based on destination fallback
     const getLuxuryDestinationTitle = (destName: string) => {
@@ -193,11 +202,40 @@ export async function POST(req: NextRequest) {
         })
       }
 
+      // Collect raw experiences entered by the user for this day (from exp1-4, extraExperiences, points)
+      const dayRawExperiences: string[] = []
+      ;['exp1', 'exp2', 'exp3', 'exp4'].forEach(k => {
+        const val = da[k]?.trim()
+        if (val) dayRawExperiences.push(val)
+      })
+      if (Array.isArray(da.extraExperiences)) {
+        da.extraExperiences.forEach((extra: any) => {
+          if (typeof extra === 'string' && extra.trim()) dayRawExperiences.push(extra.trim())
+        })
+      }
+      if (Array.isArray(da.points)) {
+        da.points.forEach((p: any) => {
+          if (typeof p === 'string' && p.trim() && !p.toLowerCase().includes('en-route spot:')) {
+            dayRawExperiences.push(p.trim())
+          }
+        })
+      }
+
       const dayCity1 = da.city?.trim() || dest
       const dayCity2 = da.city2?.trim() || dayCity1
-      const dayTitle = da.title?.trim() || (dayCity1 && dayCity2 && dayCity1.toLowerCase() !== dayCity2.toLowerCase()
-        ? `${dayCity1} to ${dayCity2}${enRouteVal ? ` via ${enRouteVal}` : ''}`
-        : (dayCity1 ? `Sightseeing & Heritage Exploration in ${dayCity1}` : `Day ${da.dayNumber || idx + 1}`))
+
+      // Intelligent professional narrative day title
+      const dayTitle = da.title?.trim() || generateProfessionalDayTitle({
+        dayNumber: da.dayNumber || idx + 1,
+        totalDays: dayActsList.length,
+        city1: dayCity1,
+        city2: dayCity2,
+        destination: dest,
+        enRoutes: enRouteList,
+        experiences: dayRawExperiences,
+        guidedTour: Boolean(da.guidedTour),
+        customTitle: da.title || da.customTitle
+      })
 
       // Match night stay hotel: check by city match first, else by sequential night allocation
       const matchingHotelByCity = formattedHotels.find(h =>
@@ -239,13 +277,13 @@ export async function POST(req: NextRequest) {
         stayCity: dayCity2,
         stayHotel: stayHotelName,
         stay: stayDisplay,
-        image: da.image?.trim() || (galleryImages && galleryImages[idx % galleryImages.length]) || heroImage
+        image: da.image?.trim() || effectiveGalleryImages[idx % effectiveGalleryImages.length] || effectiveHeroImage
       }
     })
 
     // Location Glimpses for summary (up to 4)
-    const glimpses: LocationGlimpse[] = (Array.isArray(galleryImages) ? galleryImages : []).slice(0, 4).map((img: string, i: number) => ({
-      name: formattedDays[i]?.title?.split(':')?.[1]?.trim() || `Scenic Highlight ${i + 1}`,
+    const glimpses: LocationGlimpse[] = effectiveGalleryImages.slice(0, 4).map((img: string, i: number) => ({
+      name: formattedDays[i]?.title?.split(/[•·—–:]/)?.[0]?.trim() || `Scenic Highlight ${i + 1}`,
       image: img
     }))
 
