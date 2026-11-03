@@ -6,6 +6,7 @@ import { getCuratedItineraryBySlug } from '@/lib/curated-itineraries-store'
 import { TripContent } from './trip-content'
 import { CuratedItineraryView } from '@/components/curated-itinerary-view'
 import { PageFrame } from '@/components/site-shell'
+import { convertTripToCuratedItinerary } from '@/lib/trip-to-curated'
 
 export const dynamicParams = true
 
@@ -107,9 +108,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-export default async function ItineraryPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ItineraryPage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ slug: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const resolvedParams = await params
+  const resolvedSearchParams = searchParams ? await searchParams : {}
   const slug = resolvedParams.slug
+  const downloadPdf = resolvedSearchParams.downloadPdf === 'true'
+  const isProposalMode = downloadPdf || resolvedSearchParams.proposal === 'true' || resolvedSearchParams.view === 'proposal'
+  const clientName = typeof resolvedSearchParams.clientName === 'string' ? resolvedSearchParams.clientName : undefined
 
   // 1. Check curated itineraries
   const curated = getCuratedItineraryBySlug(slug)
@@ -125,7 +136,7 @@ export default async function ItineraryPage({ params }: { params: Promise<{ slug
           </div>
         }
       >
-        <CuratedItineraryView itinerary={curated} />
+        <CuratedItineraryView itinerary={curated} autoPrint={downloadPdf} />
       </Suspense>
     )
   }
@@ -134,6 +145,25 @@ export default async function ItineraryPage({ params }: { params: Promise<{ slug
   const trip = trips.find((t) => t.slug === slug)
   if (!trip) {
     notFound()
+  }
+
+  // If download PDF or proposal mode is requested for standard trip, render the EXACT same curated proposal template!
+  if (isProposalMode) {
+    const converted = convertTripToCuratedItinerary(trip, { clientName })
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-10 h-10 border-3 border-[#00b4d8] border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm font-semibold text-slate-400">Preparing official itinerary proposal...</p>
+            </div>
+          </div>
+        }
+      >
+        <CuratedItineraryView itinerary={converted} autoPrint={downloadPdf} />
+      </Suspense>
+    )
   }
 
   const jsonLd = {

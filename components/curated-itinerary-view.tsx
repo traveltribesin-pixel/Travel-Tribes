@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -40,13 +40,13 @@ import { generateCuratedItineraryPDF } from '@/lib/generate-itinerary-pdf'
 
 interface CuratedItineraryViewProps {
   itinerary: CuratedItinerary
+  autoPrint?: boolean
 }
 
-export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
+export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedItineraryViewProps) {
   const [copied, setCopied] = useState(false)
   const [collapsedDays, setCollapsedDays] = useState<Record<number, boolean>>({})
   const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(null)
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
 
   const toggleDay = (dayNum: number) => {
     setCollapsedDays(prev => ({
@@ -135,22 +135,27 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
     }
   }
 
-  const handlePrint = () => {
-    if (typeof window !== 'undefined') {
-      window.print()
-    }
+  const handleDownloadPdf = () => {
+    if (typeof window === 'undefined') return
+    const originalTitle = document.title
+    const safeTitle = `${itinerary.title} (${itinerary.duration}) — Travel Tribes Proposal`
+    document.title = safeTitle
+    window.print()
+    setTimeout(() => {
+      document.title = originalTitle
+    }, 1500)
   }
 
-  const handleDownloadPdf = async () => {
-    try {
-      setIsGeneratingPdf(true)
-      await generateCuratedItineraryPDF(itinerary)
-    } catch (err) {
-      console.error('Failed to generate PDF:', err)
-    } finally {
-      setIsGeneratingPdf(false)
+  const handlePrint = handleDownloadPdf
+
+  useEffect(() => {
+    if (autoPrint && typeof window !== 'undefined') {
+      const timer = setTimeout(() => {
+        handleDownloadPdf()
+      }, 700)
+      return () => clearTimeout(timer)
     }
-  }
+  }, [autoPrint])
 
   // Pre-filled WhatsApp link
   const waPhone = '919975822023'
@@ -232,30 +237,20 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
 
             <button
               onClick={handleDownloadPdf}
-              disabled={isGeneratingPdf}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ffde59] hover:bg-amber-300 text-slate-950 font-black text-xs shadow-sm transition-all hover:scale-102 cursor-pointer disabled:opacity-60"
-              title="Download Branded PDF Itinerary"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#ffde59] hover:bg-amber-300 text-slate-950 font-black text-xs shadow-sm transition-all hover:scale-102 cursor-pointer"
+              title="Download Itinerary PDF (Exact Template)"
             >
-              {isGeneratingPdf ? (
-                <>
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-slate-950" />
-                  <span>Generating PDF...</span>
-                </>
-              ) : (
-                <>
-                  <FileDown className="w-3.5 h-3.5 text-slate-950" />
-                  <span>Download PDF</span>
-                </>
-              )}
+              <FileDown className="w-3.5 h-3.5 text-slate-950" />
+              <span>Download PDF</span>
             </button>
 
             <button
               onClick={handlePrint}
               className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#0077b6] hover:bg-[#005f92] text-white font-bold text-xs shadow-sm transition-all hover:scale-102 cursor-pointer"
-              title="Print or Save as PDF"
+              title="Print Proposal"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>PDF / Print</span>
+              <span className="hidden sm:inline">Print</span>
             </button>
           </div>
         </div>
@@ -601,11 +596,11 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
 
                   <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                     {day.date && (
-                      <span className="text-[11px] sm:text-xs font-semibold text-white/90 bg-white/15 px-2 py-0.5 rounded-md hidden sm:inline">
+                      <span className="text-[11px] sm:text-xs font-semibold text-white/90 bg-white/15 px-2 py-0.5 rounded-md hidden sm:inline print:inline">
                         {day.date}
                       </span>
                     )}
-                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white">
+                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white no-print">
                       <ChevronDown
                         className={`w-4 h-4 text-white transition-transform duration-200 ${
                           isDayOpen ? 'rotate-180' : 'rotate-0'

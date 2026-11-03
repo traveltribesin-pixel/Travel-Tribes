@@ -1,6 +1,20 @@
 {
   "leads": [
     {
+      "id": "LEAD-737456",
+      "source": "Itinerary PDF Download Form",
+      "fullName": "Amit Testing",
+      "email": "amaurya2210@gmail.com",
+      "phone": "9137290903",
+      "tripTitle": "Rajasthan New Year Special",
+      "tripSlug": "rajasthan-new-year-special",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-11-03T01:02:17.456Z",
+      "updatedAt": "2026-11-03T01:02:17.456Z"
+    },
+    {
       "id": "LEAD-030944",
       "source": "Itinerary PDF Download Form",
       "fullName": "Amit testing",
@@ -290,6 +304,15 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-1793667737456",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Amit Testing (Rajasthan New Year Special)",
+      "entityType": "lead",
+      "entityId": "LEAD-737456",
+      "createdAt": "2026-11-03T01:02:17.456Z"
+    },
     {
       "id": "act-1792519030946",
       "type": "LEAD_CREATED",
