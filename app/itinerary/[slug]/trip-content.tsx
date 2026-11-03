@@ -134,22 +134,13 @@ export function TripContent({ trip }: { trip: Trip }) {
         })
       }).catch((err) => console.error('Lead error:', err))
 
-      if (trip.pdfUrl) {
-        window.open(trip.pdfUrl, '_blank', 'noopener,noreferrer')
-        setPdfSuccess(true)
-        setTimeout(() => {
-          setIsPdfModalOpen(false)
-          setPdfSuccess(false)
-        }, 1200)
-      } else {
-        // Generate & download PDF dynamically
-        await generateItineraryPDF(trip, { fullName: name, phone, email })
-        setPdfSuccess(true)
-        setTimeout(() => {
-          setIsPdfModalOpen(false)
-          setPdfSuccess(false)
-        }, 2000)
-      }
+      // Generate & download official luxury branded PDF matching the proposal template
+      await generateItineraryPDF(trip, { fullName: name, phone, email })
+      setPdfSuccess(true)
+      setTimeout(() => {
+        setIsPdfModalOpen(false)
+        setPdfSuccess(false)
+      }, 2000)
     } catch (err) {
       console.error(err)
       setPdfError('Could not generate PDF. Please try again.')

@@ -26,7 +26,9 @@ import {
   Navigation,
   X,
   Utensils,
-  Users
+  Users,
+  FileDown,
+  RefreshCw
 } from 'lucide-react'
 import {
   DEFAULT_POINTS_TO_BE_NOTED,
@@ -34,6 +36,7 @@ import {
   DEFAULT_BANK_ACCOUNT
 } from '@/lib/curated-itinerary-constants'
 import type { CuratedItinerary } from '@/lib/curated-itinerary-constants'
+import { generateCuratedItineraryPDF } from '@/lib/generate-itinerary-pdf'
 
 interface CuratedItineraryViewProps {
   itinerary: CuratedItinerary
@@ -43,6 +46,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
   const [copied, setCopied] = useState(false)
   const [collapsedDays, setCollapsedDays] = useState<Record<number, boolean>>({})
   const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(null)
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
 
   const toggleDay = (dayNum: number) => {
     setCollapsedDays(prev => ({
@@ -137,6 +141,17 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
     }
   }
 
+  const handleDownloadPdf = async () => {
+    try {
+      setIsGeneratingPdf(true)
+      await generateCuratedItineraryPDF(itinerary)
+    } catch (err) {
+      console.error('Failed to generate PDF:', err)
+    } finally {
+      setIsGeneratingPdf(false)
+    }
+  }
+
   // Pre-filled WhatsApp link
   const waPhone = '919975822023'
   const waBookingMessage = isCustomized
@@ -208,7 +223,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
           <div className="flex items-center gap-1.5 sm:gap-2.5">
             <button
               onClick={handleCopyLink}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition-colors"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition-colors cursor-pointer"
               title="Copy shareable link"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -216,8 +231,27 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
             </button>
 
             <button
+              onClick={handleDownloadPdf}
+              disabled={isGeneratingPdf}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ffde59] hover:bg-amber-300 text-slate-950 font-black text-xs shadow-sm transition-all hover:scale-102 cursor-pointer disabled:opacity-60"
+              title="Download Branded PDF Itinerary"
+            >
+              {isGeneratingPdf ? (
+                <>
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-slate-950" />
+                  <span>Generating PDF...</span>
+                </>
+              ) : (
+                <>
+                  <FileDown className="w-3.5 h-3.5 text-slate-950" />
+                  <span>Download PDF</span>
+                </>
+              )}
+            </button>
+
+            <button
               onClick={handlePrint}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#0077b6] hover:bg-[#005f92] text-white font-bold text-xs shadow-sm transition-all hover:scale-102"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#0077b6] hover:bg-[#005f92] text-white font-bold text-xs shadow-sm transition-all hover:scale-102 cursor-pointer"
               title="Print or Save as PDF"
             >
               <Printer className="w-3.5 h-3.5" />
@@ -542,7 +576,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
             return (
               <section
                 key={day.day}
-                className="print-break-page relative w-full bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200 transition-all"
+                className="print-avoid-break relative w-full bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200 transition-all"
               >
                 {/* Day Header Bar: Clickable Dropdown Trigger with Full Complete Heading */}
                 <button
@@ -665,7 +699,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 4: HOTELS TABLE (LIGHT THEME)                     */}
         {/* ========================================================= */}
-        <section className="print-break-page relative w-full bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200">
+        <section className="print-avoid-break relative w-full bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200">
           <div className="p-3.5 sm:p-6 md:p-8 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
@@ -725,7 +759,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 5: INCLUSIONS & EXCLUSIONS (LIGHT THEME)          */}
         {/* ========================================================= */}
-        <section className="print-break-page grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 print:grid-cols-2">
+        <section className="print-avoid-break grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 print:grid-cols-2">
           {/* Inclusions */}
           <div className="bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-4 sm:p-6 space-y-3">
             <div className="flex items-center gap-2 pb-2.5 border-b border-slate-200">
@@ -766,7 +800,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 6: COSTING & COMMERCIALS (LIGHT THEME)            */}
         {/* ========================================================= */}
-        <section className="print-break-page relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between border border-slate-200">
+        <section className="print-avoid-break relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between border border-slate-200">
           <div className="p-3.5 sm:p-6 md:p-8 space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div>
@@ -937,7 +971,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 7: OFFICIAL BANK ACCOUNT DETAILS (LIGHT THEME)     */}
         {/* ========================================================= */}
-        <section className="print-break-page relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200">
+        <section className="print-avoid-break relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200">
           <div className="p-3.5 sm:p-6 md:p-8 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
@@ -1011,7 +1045,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 8: REMAINING DETAILS (GUIDELINES & POLICIES)       */}
         {/* ========================================================= */}
-        <section className="print-break-page bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-4 sm:p-6 md:p-8 space-y-3">
+        <section className="print-avoid-break bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-4 sm:p-6 md:p-8 space-y-3">
           <div className="flex items-center gap-2 pb-2.5 border-b border-slate-200">
             <ShieldCheck className="w-5 h-5 text-amber-600" />
             <h2 className="text-lg sm:text-xl font-black text-slate-950 uppercase tracking-wide">
@@ -1032,7 +1066,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 9: WHY TRAVEL TRIBES & CANCELLATION (LIGHT THEME)  */}
         {/* ========================================================= */}
-        <section className="print-break-page grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 print:grid-cols-2">
+        <section className="print-avoid-break grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 print:grid-cols-2">
           {/* Why Travel Tribes */}
           <div className="bg-white text-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-4 sm:p-6 space-y-3">
             <h3 className="text-base sm:text-lg font-black text-slate-950 uppercase tracking-wider pb-2 border-b border-slate-200">
@@ -1066,7 +1100,7 @@ export function CuratedItineraryView({ itinerary }: CuratedItineraryViewProps) {
         {/* ========================================================= */}
         {/* SECTION 10: CONNECT WITH US / BACK COVER (LIGHT THEME)    */}
         {/* ========================================================= */}
-        <section className="print-break-page relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-6 sm:p-10 flex flex-col items-center justify-between text-center space-y-6">
+        <section className="print-avoid-break relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200 p-6 sm:p-10 flex flex-col items-center justify-between text-center space-y-6">
           <div className="space-y-1.5">
             <Image
               src="/image/Logoblack.png"
