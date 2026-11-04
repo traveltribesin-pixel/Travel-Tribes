@@ -134,9 +134,8 @@ export function TripContent({ trip }: { trip: Trip }) {
         })
       }).catch((err) => console.error('Lead error:', err))
 
-      // Open the exact curated proposal template in PDF download mode!
-      const downloadUrl = `/itinerary/${trip.slug}?downloadPdf=true&clientName=${encodeURIComponent(name)}`
-      window.open(downloadUrl, '_blank', 'noopener,noreferrer')
+      // Direct PDF file download to device (NO new tab / window.open!)
+      await generateItineraryPDF(trip, { fullName: name, phone, email })
       setPdfSuccess(true)
       setTimeout(() => {
         setIsPdfModalOpen(false)
@@ -506,7 +505,7 @@ export function TripContent({ trip }: { trip: Trip }) {
 
             <span className="flex items-center justify-center sm:justify-start gap-1.5 bg-white border border-slate-200/90 px-3 py-2 rounded-xl shadow-xs">
               <Users size={14} className="text-[var(--sky)] shrink-0" />
-              <span className="truncate">{trip.spots}</span>
+              <span className="truncate">Community Group</span>
             </span>
 
             <button

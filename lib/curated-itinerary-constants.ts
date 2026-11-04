@@ -59,6 +59,13 @@ export interface LocationGlimpse {
   image: string
 }
 
+export interface AvailableBatchOption {
+  date: string
+  price: string
+  note?: string
+  status?: string
+}
+
 export interface PricingQuotation {
   tripleSharingPrice?: number | string
   doubleSharingPrice?: number | string
@@ -75,6 +82,7 @@ export interface PricingQuotation {
   validUntil?: string
   marginPercentage?: number | string
   gstAmount?: number | string
+  pricingOptions?: { label: string; price: string; note?: string }[]
 }
 
 export interface CuratedItinerary {
@@ -105,8 +113,9 @@ export interface CuratedItinerary {
   mealPlan?: string
   specialRequirements?: string
 
-  // Group Trip Specific
+  // Group Trip Specific & Available Batches
   batchDates?: string[]
+  availableBatches?: AvailableBatchOption[]
   departureCity?: string
   groupSizeLimit?: string
   tripCaptainIncluded?: boolean

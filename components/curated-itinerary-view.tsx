@@ -37,6 +37,7 @@ import {
 } from '@/lib/curated-itinerary-constants'
 import type { CuratedItinerary } from '@/lib/curated-itinerary-constants'
 import { generateCuratedItineraryPDF } from '@/lib/generate-itinerary-pdf'
+import { getLuxuryImagesForDestination } from '@/lib/itinerary-images'
 
 interface CuratedItineraryViewProps {
   itinerary: CuratedItinerary
@@ -47,6 +48,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
   const [copied, setCopied] = useState(false)
   const [collapsedDays, setCollapsedDays] = useState<Record<number, boolean>>({})
   const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(null)
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false)
 
   const toggleDay = (dayNum: number) => {
     setCollapsedDays(prev => ({
@@ -84,38 +86,45 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
     : (quotation.tripleSharingPrice || quotation.pricePerPerson || 20999)
   const tokenAdvance = quotation.advanceAmount || 5000
 
-  // 4 trip images for showcase below the summary (robust collector from glimpses, highlights, or day photos)
+  // Destination-specific media catalog for robust, non-random fallbacks
+  const destMedia = getLuxuryImagesForDestination(itinerary.destination || itinerary.title)
+  const coverHeroImage = itinerary.bannerImage || destMedia.hero
+
+  // 4 trip images for showcase below the summary (strictly from this itinerary & destination)
   const summaryImages = (() => {
     const list: { label: string; url: string }[] = []
     if (itinerary.locationGlimpses && itinerary.locationGlimpses.length > 0) {
       itinerary.locationGlimpses.forEach(g => {
-        if (g.image && list.length < 4) {
+        if (g.image && list.length < 4 && !list.some(item => item.url === g.image)) {
           list.push({ label: g.name || 'Trip Highlight', url: g.image })
         }
       })
     }
     if (list.length < 4 && itinerary.highlightImages && itinerary.highlightImages.length > 0) {
       itinerary.highlightImages.forEach((img, i) => {
-        if (img && list.length < 4) {
+        if (img && list.length < 4 && !list.some(item => item.url === img)) {
           list.push({ label: `Scenic Glimpse ${i + 1}`, url: img })
         }
       })
     }
     if (list.length < 4 && itinerary.days && itinerary.days.length > 0) {
       itinerary.days.forEach(d => {
-        if (d.image && list.length < 4) {
+        if (d.image && list.length < 4 && !list.some(item => item.url === d.image)) {
           list.push({ label: d.title ? d.title.split('➔')[0].trim() : `Day ${d.day}`, url: d.image })
         }
       })
     }
-    const defaultFallbacks = [
-      { label: 'Umiam Lake', url: '/image/Meghalaya/IMG_1034.JPEG' },
-      { label: 'Laitlum Canyons', url: '/image/Meghalaya/IMG_0884.JPEG' },
-      { label: 'Living Root Bridge', url: '/image/Meghalaya/IMG_0857.JPEG' },
-      { label: 'Krang Suri Falls', url: '/image/Meghalaya/IMG_1048.JPEG' }
-    ]
-    while (list.length < 4) {
-      list.push(defaultFallbacks[list.length])
+    if (list.length < 4 && destMedia.gallery && destMedia.gallery.length > 0) {
+      destMedia.gallery.forEach((gUrl, idx) => {
+        if (list.length < 4 && !list.some(item => item.url === gUrl)) {
+          list.push({ label: `${itinerary.destination || 'Scenic'} Spot ${idx + 1}`, url: gUrl })
+        }
+      })
+    }
+    if (list.length < 4 && coverHeroImage) {
+      while (list.length < 4) {
+        list.push({ label: itinerary.title, url: coverHeroImage })
+      }
     }
     return list.slice(0, 4)
   })()
@@ -127,6 +136,18 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
         .join(' • ')
     : 'Shillong (2N) • Cherrapunji (2N) • Dawki (1N)'
 
+  // Clean circuit route string completely stripping any "Day 1:", "Day 2:" prefixes
+  const cleanRoute = (itinerary.routeText || `${itinerary.destination} Circuit`)
+    .replace(/Day\s*\d+\s*[:\-➔→]?\s*/gi, '')
+    .replace(/[•·—–\u2014\u2013\u2022\u00B7]/g, ' • ')
+    .replace(/\s*->\s*/g, ' • ')
+    .replace(/\s*➔\s*/g, ' • ')
+    .replace(/\s*→\s*/g, ' • ')
+    .replace(/\s*[•·]+\s*/g, ' • ')
+    .replace(/\s+/g, ' ')
+    .replace(/^[•·\s]+|[•·\s]+$/g, '')
+    .trim() || `${itinerary.destination} Circuit`
+
   const handleCopyLink = () => {
     if (typeof window !== 'undefined') {
       navigator.clipboard.writeText(window.location.href)
@@ -135,7 +156,21 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
     }
   }
 
-  const handleDownloadPdf = () => {
+  // Direct PDF file download to device (NO new tab / window.open!)
+  const handleDownloadPdf = async () => {
+    try {
+      setIsDownloadingPdf(true)
+      await generateCuratedItineraryPDF(itinerary)
+    } catch (err) {
+      console.error('Direct PDF download error:', err)
+      // Fallback to browser print if client-side jsPDF encounters any issue
+      window.print()
+    } finally {
+      setIsDownloadingPdf(false)
+    }
+  }
+
+  const handlePrint = () => {
     if (typeof window === 'undefined') return
     const originalTitle = document.title
     const safeTitle = `${itinerary.title} (${itinerary.duration}) — Travel Tribes Proposal`
@@ -145,8 +180,6 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
       document.title = originalTitle
     }, 1500)
   }
-
-  const handlePrint = handleDownloadPdf
 
   useEffect(() => {
     if (autoPrint && typeof window !== 'undefined') {
@@ -237,11 +270,21 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
 
             <button
               onClick={handleDownloadPdf}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#ffde59] hover:bg-amber-300 text-slate-950 font-black text-xs shadow-sm transition-all hover:scale-102 cursor-pointer"
-              title="Download Itinerary PDF (Exact Template)"
+              disabled={isDownloadingPdf}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#ffde59] hover:bg-amber-300 text-slate-950 font-black text-xs shadow-sm transition-all hover:scale-102 cursor-pointer disabled:opacity-75"
+              title="Download Itinerary PDF (Direct File Download)"
             >
-              <FileDown className="w-3.5 h-3.5 text-slate-950" />
-              <span>Download PDF</span>
+              {isDownloadingPdf ? (
+                <>
+                  <RefreshCw className="w-3.5 h-3.5 text-slate-950 animate-spin" />
+                  <span>Downloading...</span>
+                </>
+              ) : (
+                <>
+                  <FileDown className="w-3.5 h-3.5 text-slate-950" />
+                  <span>Download PDF</span>
+                </>
+              )}
             </button>
 
             <button
@@ -266,7 +309,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
           {/* Background Image with Rich Vignette Gradient */}
           <div className="absolute inset-0 z-0">
             <Image
-              src={itinerary.bannerImage || '/image/Meghalaya/IMG_0857.JPEG'}
+              src={coverHeroImage}
               alt={itinerary.title}
               fill
               priority
@@ -330,17 +373,21 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                   <MapPin className="w-3 h-3 text-[#ffde59]" /> Route
                 </span>
                 <span className="text-xs sm:text-sm font-black text-white mt-0.5 truncate max-w-[190px]">
-                  {itinerary.routeText || `${itinerary.destination} Circuit`}
+                  {cleanRoute}
                 </span>
               </div>
 
-              {/* Dates or Style */}
+              {/* Dates or Style - NEVER show a single travel date when multiple batches exist */}
               <div className="col-span-2 sm:col-span-1 flex flex-col items-center justify-center px-1 border-t sm:border-t-0 pt-1.5 sm:pt-0 border-white/10">
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-300 flex items-center gap-1">
-                  <Calendar className="w-3 h-3 text-[#ffde59]" /> {itinerary.travelDates ? 'Travel Dates' : 'Trip Style'}
+                  <Calendar className="w-3 h-3 text-[#ffde59]" /> {isCustomized && itinerary.travelDates ? 'Travel Dates' : 'Departures'}
                 </span>
                 <span className="text-xs sm:text-sm font-black text-white mt-0.5 truncate max-w-[190px]">
-                  {itinerary.travelDates || itinerary.groupVibe || (isCustomized ? 'Private Bespoke' : 'Group Tour')}
+                  {isCustomized && itinerary.travelDates
+                    ? itinerary.travelDates
+                    : ((itinerary.availableBatches && itinerary.availableBatches.length > 1) || (itinerary.batchDates && itinerary.batchDates.length > 1))
+                      ? 'Multiple Batches Available'
+                      : (itinerary.travelDates || 'Confirmed Batches')}
                 </span>
               </div>
             </div>
@@ -407,13 +454,13 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                 <div className="flex-1 text-sm sm:text-base leading-relaxed">
                   <span className="font-extrabold text-slate-950">Trip Route: </span>
                   <span className="font-semibold text-slate-800">
-                    {itinerary.routeText || `${itinerary.destination} Circuit`}
+                    {cleanRoute}
                   </span>
                 </div>
               </div>
 
-              {/* Travel Dates */}
-              {itinerary.travelDates && (
+              {/* Travel Dates / Departure Batches */}
+              {isCustomized && itinerary.travelDates ? (
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center shrink-0 border border-orange-100 mt-0.5">
                     <Calendar className="w-4 h-4" />
@@ -421,6 +468,18 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                   <div className="flex-1 text-sm sm:text-base leading-relaxed">
                     <span className="font-extrabold text-slate-950">Travel Dates: </span>
                     <span className="font-semibold text-slate-800">{itinerary.travelDates}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center shrink-0 border border-orange-100 mt-0.5">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 text-sm sm:text-base leading-relaxed">
+                    <span className="font-extrabold text-slate-950">Departure Batches: </span>
+                    <span className="font-semibold text-slate-800">
+                      {itinerary.availableBatches?.length || itinerary.batchDates?.length || 1} Upcoming Confirmed Batches (See Schedule Below)
+                    </span>
                   </div>
                 </div>
               )}
@@ -560,7 +619,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
           {itinerary.days.map((day) => {
             const dayFallback = (itinerary.highlightImages && itinerary.highlightImages.length > 0)
               ? itinerary.highlightImages[(day.day - 1) % itinerary.highlightImages.length]
-              : (itinerary.bannerImage || '/image/Meghalaya/IMG_1034.JPEG')
+              : ((destMedia.gallery && destMedia.gallery[(day.day - 1) % destMedia.gallery.length]) || coverHeroImage)
             const dayImage = day.image || (day.photos && day.photos[0]) || dayFallback
             const stayDisplay = day.stayHotel
               ? `${day.stayHotel}${day.stayCity ? `, ${day.stayCity}` : ''}`
@@ -791,6 +850,138 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
             </ul>
           </div>
         </section>
+
+        {/* ========================================================= */}
+        {/* SECTION: AVAILABLE DEPARTURE DATES & BATCH PRICING        */}
+        {/* ========================================================= */}
+        {((itinerary.availableBatches && itinerary.availableBatches.length > 0) || (itinerary.batchDates && itinerary.batchDates.length > 0) || itinerary.travelDates) && (
+          <section className="print-avoid-break relative w-full bg-white text-slate-900 rounded-2xl shadow-md overflow-hidden border border-slate-200">
+            <div className="p-3.5 sm:p-6 md:p-8 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-sky-50 text-[#0077b6] flex items-center justify-center font-bold">
+                    <Calendar className="w-4 h-4 text-[#0077b6]" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-950 uppercase tracking-tight">
+                      Available Departure Dates &amp; Batch Pricing
+                    </h2>
+                    <p className="text-xs text-slate-500">
+                      All upcoming confirmed departure dates with transparent per-person package pricing
+                    </p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-bold text-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  {itinerary.availableBatches
+                    ? `${itinerary.availableBatches.length} Dates Available`
+                    : itinerary.batchDates
+                      ? `${itinerary.batchDates.length} Dates Available`
+                      : 'Confirmed Dates'}
+                </span>
+              </div>
+
+              {/* Batches Table */}
+              <div className="overflow-x-auto rounded-xl border border-slate-200">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="bg-[#0077b6] text-white font-black uppercase text-[11px] tracking-wider">
+                      <th className="py-2.5 px-3 sm:px-4">#</th>
+                      <th className="py-2.5 px-3 sm:px-4">Departure Batch Dates</th>
+                      <th className="py-2.5 px-3 sm:px-4">Batch Category / Season</th>
+                      <th className="py-2.5 px-3 sm:px-4 text-right">Package Price</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200 bg-white">
+                    {itinerary.availableBatches && itinerary.availableBatches.length > 0 ? (
+                      itinerary.availableBatches.map((b, idx) => (
+                        <tr key={idx} className="hover:bg-sky-50/50 transition-colors">
+                          <td className="py-3 px-3 sm:px-4 font-bold text-slate-400">{idx + 1}</td>
+                          <td className="py-3 px-3 sm:px-4 font-black text-slate-900">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-3.5 h-3.5 text-[#0077b6] shrink-0" />
+                              <span className="text-xs sm:text-sm">{b.date}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-3 sm:px-4">
+                            <span className={`inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                              b.note?.toLowerCase().includes('new year') || b.note?.toLowerCase().includes('christmas') || b.note?.toLowerCase().includes('festive')
+                                ? 'bg-amber-100 border border-amber-300 text-amber-900'
+                                : 'bg-slate-100 border border-slate-200 text-slate-700'
+                            }`}>
+                              {b.note || 'Regular Departure'}
+                            </span>
+                          </td>
+                          <td className="py-3 px-3 sm:px-4 font-black text-emerald-700 text-sm font-mono text-right">
+                            {b.price.startsWith('₹') ? b.price : `₹${b.price}`}
+                          </td>
+                        </tr>
+                      ))
+                    ) : itinerary.batchDates && itinerary.batchDates.length > 0 ? (
+                      itinerary.batchDates.map((bDate, idx) => (
+                        <tr key={idx} className="hover:bg-sky-50/50 transition-colors">
+                          <td className="py-3 px-3 sm:px-4 font-bold text-slate-400">{idx + 1}</td>
+                          <td className="py-3 px-3 sm:px-4 font-black text-slate-900">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-3.5 h-3.5 text-[#0077b6] shrink-0" />
+                              <span className="text-xs sm:text-sm">{bDate}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-3 sm:px-4">
+                            <span className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold">
+                              Confirmed Batch
+                            </span>
+                          </td>
+                          <td className="py-3 px-3 sm:px-4 font-black text-emerald-700 text-sm font-mono text-right">
+                            ₹{Number(startingPrice).toLocaleString('en-IN')} / person
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr className="hover:bg-sky-50/50 transition-colors">
+                        <td className="py-3 px-3 sm:px-4 font-bold text-slate-400">1</td>
+                        <td className="py-3 px-3 sm:px-4 font-black text-slate-900">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-3.5 h-3.5 text-[#0077b6] shrink-0" />
+                            <span className="text-xs sm:text-sm">{itinerary.travelDates || 'Custom Dates on Request'}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-3 sm:px-4">
+                          <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#ffde59] text-slate-950 text-[11px] font-black uppercase">
+                            Private Bespoke
+                          </span>
+                        </td>
+                        <td className="py-3 px-3 sm:px-4 font-black text-emerald-700 text-sm font-mono text-right">
+                          ₹{Number(startingPrice).toLocaleString('en-IN')} (Total Package)
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Pricing Sharing Options Grid if available */}
+              {itinerary.quotation?.pricingOptions && itinerary.quotation.pricingOptions.length > 0 && (
+                <div className="pt-2">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                    Occupancy &amp; Sharing Pricing Options:
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                    {itinerary.quotation.pricingOptions.map((opt, i) => (
+                      <div key={i} className="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+                        <div>
+                          <span className="text-xs font-bold text-slate-800 block">{opt.label}</span>
+                          {opt.note && <span className="text-[10px] text-slate-500">{opt.note}</span>}
+                        </div>
+                        <span className="text-xs font-black text-emerald-700 font-mono">{opt.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* ========================================================= */}
         {/* SECTION 6: COSTING & COMMERCIALS (LIGHT THEME)            */}

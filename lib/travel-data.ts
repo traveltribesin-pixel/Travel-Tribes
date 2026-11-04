@@ -31,7 +31,7 @@ export type Trip = {
   alt: string
   tag: string
   description: string
-  spots: string
+  spots?: string
   gallery?: { image: string; alt: string }[]
   highlights?: string[]
   itinerary?: { id?: string; day: number; title: string; activities: string[] }[]
@@ -129,7 +129,6 @@ const baseTrips: Trip[] = [
       'Travel Tribes camping'
     ],
     description: 'Experience the perfect weekend escape with Travel Tribes at Bhandardara Lakeside Camping! Stay at a beautiful lakefront campsite with stunning sunset views, peaceful surroundings, and mountains all around. Enjoy a relaxing lakeside experience with boating, a refreshing lake dip, delicious homely meals, BBQ starters, and a cozy bonfire under the stars. Spend the evening enjoying live music, fun engagement activities, indoor games, and conversations with fellow travellers. Whether you’re travelling solo, with your partner, or with friends, Bhandardara Lakeside Camping is the perfect way to unwind, connect with nature, and find your tribe.',
-    spots: '14 spots left',
     gallery: [
       { image: '/image/Bhandardara/arthur_lake_sunset.jpg', alt: 'Sunset View over Arthur Lake, Bhandardara' },
       { image: '/image/Bhandardara/arthur_lake_panoramic.jpg', alt: 'Arthur Lake Waterfront & Mountains' },
@@ -300,7 +299,6 @@ const baseTrips: Trip[] = [
       'Travel Tribes Alibaug'
     ],
     description: "Escape the city and experience a memorable beachside getaway with Travel Tribes at Alibaug Private Beach Camping. Enjoy golden sands, calming waves, beautiful sunsets, and a peaceful stay close to nature.\n\nSpend your evening with live music, a Bollywood DJ night, an open-sky movie screening, a bonfire, and fun group activities. Enjoy freshly prepared meals with separate vegetarian and non-vegetarian food counters, along with comfortable tents and clean washroom facilities.\n\nWhether you're travelling solo, with friends, or with your partner, this experience is all about relaxing by the beach, meeting like-minded travellers, and turning strangers into friends.",
-    spots: '16 spots left',
     gallery: [
       { image: '/image/Alibaug/alibaug_sunset_sea.jpg', alt: 'Alibaug Beach Sunset over Arabian Sea' },
       { image: '/image/Alibaug/revdanda_fort_beach1.jpg', alt: 'Historic Revdanda Beach & Fort Outer Walls' },
@@ -462,7 +460,6 @@ const baseTrips: Trip[] = [
       'stargazing experience Maharashtra'
     ],
     description: 'Escape city life with an unforgettable stargazing and camping experience in Sandhan Valley, the famous “Valley of Shadows.” Camp under the open sky, enjoy a bonfire, and explore the night sky during a guided session led by an astrophysicist. Perfect for adventure lovers, nature enthusiasts, and solo travellers looking to connect with nature and meet new people.',
-    spots: '14 spots left',
     gallery: [
       { image: '/image/Sandhan/sandhan_valley_gorge.jpg', alt: 'Sandhan Valley Deep Rock Gorge — Valley of Shadows' },
       { image: '/image/Sandhan/kokankada_cliff_real.jpg', alt: 'Kokankada Massive Natural Cliff Formation' },
@@ -601,7 +598,6 @@ const baseTrips: Trip[] = [
       'Rajasthan 8 nights 9 days package'
     ],
     description: "Experience the royal charm of Rajasthan with our New Year Special Group Tour! Discover Jodhpur’s iconic blue streets, the golden sands of Jaisalmer, Jaipur’s magnificent palaces, and the beautiful lakes of Udaipur.\n\nEnjoy a desert camping experience with camel and jeep safaris, explore historic forts and colourful local markets, and celebrate New Year’s Eve in Jaipur with a rooftop party, gala dinner, DJ night, and fireworks.\n\nJoin fellow travellers for a memorable journey filled with royal heritage, desert adventures, cultural experiences, and festive celebrations.",
-    spots: '16 spots left',
     gallery: [
       { image: '/image/Rajasthan/rajasthan_main_hawa_mahal.jpg', alt: 'Hawa Mahal Palace of Winds in Jaipur' },
       { image: '/image/Rajasthan/jaisalmer_sam_sand_dunes.jpg', alt: 'Sam Sand Dunes Camel Safari in Jaisalmer' },
@@ -860,7 +856,6 @@ const baseTrips: Trip[] = [
       'Himachal 9 days 8 nights package'
     ],
     description: "Welcome the New Year amidst the beautiful mountains of Himachal Pradesh! From Shimla’s colonial charm and Manali’s snow-covered landscapes to Kasol’s riverside vibes and Amritsar’s iconic Golden Temple, this group trip brings together mountain adventures, scenic road journeys, cultural experiences, and festive celebrations.\n\nEnjoy river rafting in Kullu, explore the charming streets of Shimla and Kasol, experience Manali’s winter atmosphere, and celebrate New Year’s Eve with a gala dinner, DJ night, and fireworks.\n\nTravel with like-minded people, make new friends, and begin the New Year with unforgettable memories in the mountains.",
-    spots: '18 spots left',
     gallery: [
       { image: '/image/Himachal/manali_snow_mountains.jpg', alt: 'Manali Snow-Covered Mountains & Winter Landscapes' },
       { image: '/image/Himachal/shimla_christ_church_mall_road.jpg', alt: 'Shimla Mall Road & Christ Church' },
@@ -1127,7 +1122,6 @@ const baseTrips: Trip[] = [
           "Travel Tribes Hampi"
     ],
     description: 'Step back in time to the majestic 14th-century Vijayanagara Empire with our Hampi Backpacking Trip from Mumbai & Pune. Discover the UNESCO World Heritage ruins, the iconic Vittala Stone Chariot, the living Virupaksha Temple, thrilling cliff jumping and coracle boating at Sanapur Lake, and a mystical sunrise at Lord Hanuman’s birthplace (Anjaneya Hill). Explore boulder-strewn landscapes, vibrant hippie cafés, and create lifelong bonds with fellow travellers. Come solo or with friends — find your tribe in the City of Ruins.',
-    spots: '6 spots left',
     gallery: [
       { image: "/image/Hampi/hampi_img.jpeg", alt: "Hampi Heritage & Boulders" },
       { image: "/image/Hampi/IMG_0316.JPEG", alt: "Virupaksha Temple Architecture" },
@@ -1340,7 +1334,6 @@ pricingOptions: [
           "Travel Tribes Coorg"
     ],
     description: 'Looking for the perfect New Year trip from Mumbai? Join Travel Tribes for a 5N/6D Coorg & Mysore New Year Special packed with lush coffee plantations, misty hills, Abbey Falls, Mandalpatti, elephant encounters and the beautiful Namdroling Monastery. End the year with a one-of-a-kind New Year celebration at Mysore Palace, featuring fireworks and a royal show. Come solo. Meet strangers. Explore Coorg. Celebrate like royalty. Find your tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: '/image/Coorg/coorg_img.JPEG', alt: 'Coorg Lush Coffee Estate and Western Ghats' },
       { image: '/image/Coorg/IMG_7410.JPEG', alt: 'Mandalpatti Peak Jeep Safari & Misty Sunrise' },
@@ -1594,7 +1587,6 @@ pricingOptions: [
           "Travel Tribes Meghalaya"
     ],
     description: 'Immerse yourself in the mystical beauty of Northeast India with our 6-day Meghalaya Backpacking group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, stay by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Explore Meghalaya with fellow curious wanderers and find your tribe.',
-    spots: '5 spots left',
     gallery: [
       { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya" },
       { image: "/image/Meghalaya/IMG_0857.JPEG", alt: "Meghalaya" },
@@ -1838,7 +1830,6 @@ pricingOptions: [
           "Travel Tribes Kaziranga"
     ],
     description: 'Immerse yourself in the mystical beauty of Northeast India with our 7-day Meghalaya with Kaziranga group adventure starting from Guwahati. Trek through lush rainforests to the world-famous Nongriat Double Decker Living Root Bridge, swim in the surreal crystal waters of Blue Lagoon & Krang Suri, stay by the transparent Umngot River in Dawki/Shnongpdeng, explore Asia’s cleanest village Mawlynnong, and gaze into the clouds from Laitlum Canyons and Nohkalikai Falls. Crown your adventure with a thrilling wildlife jeep safari in Kaziranga National Park to encounter majestic One-horned Rhinoceroses, wild elephants, and rich wildlife in their natural habitat. Explore Northeast with fellow curious wanderers and find your tribe.',
-    spots: '5 spots left',
     gallery: [
       { image: "/image/Meghalaya/meghalaya_img.JPEG", alt: "Meghalaya" },
       { image: "/image/Meghalaya/IMG_0857.JPEG", alt: "Meghalaya" },
@@ -2082,7 +2073,6 @@ pricingOptions: [
       'Thailand island hopping package'
     ],
     description: "Get ready to welcome the New Year in Thailand with an unforgettable island-hopping adventure! From Phuket’s buzzing nightlife and the turquoise waters of Phi Phi Islands to the legendary Full Moon Party at Koh Phangan, this trip is packed with amazing beaches, thrilling adventures, music, nightlife, and incredible group experiences.\n\nCelebrate the New Year with your Travel Tribes crew, dance under the moonlit sky, explore breathtaking islands, and meet like-minded travellers from across the country.\n\nWhether you're travelling solo or with friends, this is your chance to end the year with unforgettable memories and begin the next one with a bang!",
-    spots: '20 spots only',
     gallery: [
       { image: '/Card Image/Full_Moon_Party_Trip.webp', alt: 'Thailand Full Moon Party New Year Celebration' },
       { image: '/image/Thailand/phi_phi_maya_bay.jpg', alt: 'Phi Phi Islands & Iconic Maya Bay' },
@@ -2329,7 +2319,6 @@ pricingOptions: [
           "Travel Tribes Sri Lanka"
     ],
     description: 'Discover the pure magic of Sri Lanka on an 8-day tropical island group escape with Travel Tribes designed for 18–40 year old wanderers. From sun-kissed palm beaches in Mirissa and ocean surfing in Weligama to the misty emerald tea hills of Nuwara Eliya and Ella. Climb the ancient Sigiriya Lion Rock Fortress, explore sacred Dambulla cave temples, feed gentle giants at Pinnawala, and experience the world’s most iconic scenic blue train journey from Nanu Oya to Ella. Stay in premium 4-star hotels, watch whales in the Indian Ocean, and create unforgettable bonds with your tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: img('photo-1588598198321-9735fd52455b'), alt: 'Iconic Nine Arch Bridge in Ella Sri Lanka' },
       { image: img('photo-1546708973-b339540b5162'), alt: 'Sigiriya Lion Rock Fortress UNESCO World Heritage' },
@@ -2586,7 +2575,6 @@ pricingOptions: [
           "Travel Tribes Bali"
     ],
     description: 'Get ready for Bali magic — lush jungles, hike majestic volcanoes, dance your heart out at beach clubs, explore tropical beaches, and soak in endless island vibes with your tribe! Curated exclusively for 18–40 year olds, this 8 Nights / 9 Days expedition takes you across Seminyak, Kuta, the dramatic coastal cliffs of Nusa Penida, the turquoise waters of Gili Trawangan, and the cultural highlands of Ubud. From an epic 4x4 Mount Batur Sunrise Jeep Safari and thrilling Jungle ATV adventure to sunset Kecak Fire Dance at Uluwatu, swimming under Tegenungan Waterfall, partying at Omma Day Club, and snorkelling with wild sea turtles in Gili T. Premium stays, island-to-jungle transfers, and lifelong tribe memories await.',
-    spots: '6 spots left',
     gallery: [
       { image: img('photo-1537996194471-e657df975ab4'), alt: 'Bali Uluwatu Cliff Temple & Sunset Panorama' },
       { image: img('photo-1552733407-5d5c46c3bb3b'), alt: 'Kelingking Beach T-Rex Cliff Nusa Penida' },
@@ -2864,7 +2852,6 @@ pricingOptions: [
           "Travel Tribes Bhutan"
     ],
     description: 'Get ready for Bhutan magic — drive through breathtaking Himalayan valleys, explore majestic 17th-century dzongs, hike to the world-famous Tiger’s Nest monastery perched on a cliff, witness panoramic mountain vistas at Dochula Pass, and soak in the peaceful spiritual vibes of the Land of the Thunder Dragon with your tribe! Curated for 18–40 year olds, this 7-day backpacking journey takes you through Phuentsholing, Thimphu, Punakha, and Paro. Experience authentic Bhutanese living culture at Simply Bhutan, traditional archery, a royal Gho & Kira costume photoshoot, thrilling suspension bridges, and unforgettable mountain bonding.',
-    spots: '6 spots left',
     gallery: [
       { image: img('photo-1578637387939-43c525550085'), alt: 'Tiger’s Nest Taktsang Monastery Clifftop in Paro' },
       { image: img('photo-1584810359583-96fc3448beaa'), alt: 'Majestic Punakha Dzong at River Confluence' },
@@ -3117,7 +3104,6 @@ pricingOptions: [
           "Travel Tribes Bhutan festival"
     ],
     description: 'Experience vibrant masked dances, ancient Buddhist traditions, Himalayan magic & unforgettable memories with your tribe! Curated exclusively for 18–40 year olds, this 6 Nights / 7 Days festival expedition takes you to the heart of the sacred Thimphu / Punakha Tshechu Festival. Witness dramatic Cham masked dances, colorful silk costumes, trumpet fanfares, and spiritual blessings. Journey through Phuentsholing, Thimphu, the 108 stupas of Dochula Pass (3,050m), the majestic Punakha Dzong, and hike to the world-famous cliffside Tiger’s Nest Monastery (Paro Taktsang). 3-star handpicked stays, cultural living museum, and traditional photoshoot included.',
-    spots: '4 spots left',
     gallery: [
       { image: img('photo-1544735716-392fe2489ffa'), alt: 'Thimphu Tshechu Festival Masked Cham Dances & Sacred Rituals' },
       { image: img('photo-1578637387939-43c525550085'), alt: 'Tiger’s Nest Taktsang Monastery Clifftop in Paro' },
@@ -3352,7 +3338,6 @@ pricingOptions: [
           "Travel Tribes Vietnam"
     ],
     description: 'Experience Vietnam in 8 days with an unforgettable group trip covering Phu Quoc, Da Nang, Hoi An, Hanoi and Halong Bay. Explore tropical islands, ride Vietnam’s famous cable car, discover Grand World, enjoy a basket boat ride in Hoi An, walk across the iconic Golden Bridge at Ba Na Hills, explore Hanoi’s Old Quarter and Train Street, and cruise through the breathtaking landscapes of Halong Bay. This Vietnam group trip from India combines adventure, culture, nightlife, scenic experiences and community travel into one exciting journey. Join solo, meet fellow travellers and explore Vietnam with your tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: img('photo-1528127269322-539801943592'), alt: 'Golden Bridge Held by Giant Hands at Ba Na Hills' },
       { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Phu Quoc Tropical Islands & Cable Car' },
@@ -3623,7 +3608,6 @@ pricingOptions: [
           "Travel Tribes Vietnam"
     ],
     description: 'Explore Vietnam in 8 days with a complete group trip covering Ho Chi Minh City, Da Nang, Hoi An, Hanoi, Halong Bay and Ninh Binh. Discover the historic Cu Chi Tunnels, experience a traditional basket boat ride in Hoi An, walk across the iconic Golden Bridge at Ba Na Hills, explore Hanoi’s Old Quarter and Train Street, cruise through Halong Bay and enjoy the scenic Trang An boat ride in Ninh Binh. This Vietnam group tour from India combines culture, adventure, iconic sightseeing and unique local experiences into one action-packed 7N/8D Vietnam itinerary. Join solo or with friends, meet fellow travellers and experience Vietnam with your tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: img('photo-1559592413-7cec4d0cae2b'), alt: 'Halong Bay Emerald Waters & Limestone Cliffs' },
       { image: img('photo-1528127269322-539801943592'), alt: 'Golden Bridge Held by Giant Hands at Ba Na Hills' },
@@ -3905,7 +3889,6 @@ pricingOptions: [
           "Travel Tribes Vietnam"
     ],
     description: "Experience Vietnam in 8 nights and 9 days with a group trip covering Ho Chi Minh City, Da Nang, Hoi An, Hanoi, Halong Bay and Sapa. Explore the historic Cu Chi Tunnels, enjoy a traditional basket boat ride in Hoi An, discover the iconic Golden Bridge at Ba Na Hills, walk through Hanoi's Old Quarter and Train Street, cruise through the limestone landscapes of Halong Bay and ride the cable car to Fansipan, the Roof of Indochina. This Vietnam group trip from India combines culture, adventure, scenic landscapes and authentic local experiences across some of Vietnam's most popular destinations.",
-    spots: '6 spots left',
     gallery: [
       { image: img('photo-1528127269322-539801943592'), alt: 'Fansipan Mountain Roof of Indochina Peak and Clouds' },
       { image: img('photo-1559592413-7cec4d0cae2b'), alt: 'Halong Bay Emerald Waters & Limestone Cliffs' },
@@ -4187,7 +4170,6 @@ pricingOptions: [
           "Travel Tribes Konkan"
     ],
     description: 'Hit the open road along Maharashtra’s most scenic Arabian Sea coastline with Travel Tribes on a 4N/5D Coastal Maharashtra Road Trip from Mumbai & Pune! From the 400-year-old seaside Ganpatipule Ganesha Temple and pristine golden sands to driving along the famous cliffside Aare-Ware coastal road with India’s first sea-facing zipline. Explore the historic Ratnadurg sea fort, seek blessings at Bhagwati Temple, catch panoramic sunset vistas at Table Point and Ratnagiri Lighthouse, and discover the hidden paradise of Devghali (Kasheli) Beach. Curated for 18–40 year old wanderers with AC bus travel, stays, meals, and unforgettable tribe bonding.',
-    spots: '8 spots left',
     gallery: [
       { image: img('photo-1507525428034-b723cf961d3e'), alt: 'Ganpatipule Clean Shores and Arabian Sea Beach' },
       { image: img('photo-1506744038136-46273834b3fb'), alt: 'Aare-Ware Scenic Ocean Highway and Cliff Road' },
@@ -4409,7 +4391,6 @@ pricingOptions: [
           "Travel Tribes Gokarna"
     ],
     description: 'Looking for the perfect Gokarna trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This Gokarna group trip combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and plenty of opportunities to meet fellow travellers. From the Gokarna beach trek covering Belekan, Paradise, Half Moon and Om Beach to the iconic Murdeshwar Shiva Statue, Honnavar backwaters and Yana Caves — this is a backpacking trip from Mumbai designed around experiences, exploration and the Travel Tribes community. Come solo. Meet strangers. Explore Gokarna. Find your tribe.',
-    spots: '8 spots left',
     gallery: [
       { image: "/image/Gokarna/gokarna_img.jpeg", alt: "Gokarna" },
       { image: "/image/Gokarna/1000002342.jpeg", alt: "Gokarna" },
@@ -4723,7 +4704,6 @@ pricingOptions: [
           "Travel Tribes Gokarna New Year"
     ],
     description: 'Looking for the perfect Gokarna New Year Trip from Mumbai? Join Travel Tribes on a 4N/5D Gokarna backpacking trip covering the beautiful beaches of Gokarna, the spiritual town of Murdeshwar, the mangrove backwaters of Honnavar and the spectacular Yana Caves. This New Year Special combines beach trekking, backwater boating, sunsets, cafés, local markets, adventure, music, games and an unforgettable New Year celebration by the beach with fireworks and a beach party. Come solo. Meet strangers. Explore Gokarna. Celebrate the New Year. Find your tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: "/image/Gokarna/gokarna_img.jpeg", alt: "Gokarna Coastal Sunset" },
       { image: "/image/Gokarna/1000002342.jpeg", alt: "Murdeshwar Shiva Statue & Temple" },
@@ -4976,7 +4956,6 @@ pricingOptions: [
           "Travel Tribes Coorg"
     ],
     description: 'Looking for a Coorg trip from Mumbai, a Coorg backpacking trip, or a fun Coorg group trip with strangers? Join Travel Tribes for an unforgettable journey to Coorg, the Scotland of India, and explore misty hills, lush coffee plantations, waterfalls, viewpoints, monasteries and scenic landscapes. This Coorg backpacking trip from Mumbai takes you through some of the best experiences in Coorg, including Abbey Falls, Mandalpatti Peak, Raja’s Seat, Chiklihole Dam, Namdroling Monastery (Golden Temple), Elephant Camp, Nisargadhama, Coffee Plantations, Madikeri Fort and Omkareshwar Temple. Travel by train from Mumbai to Mangalore, continue towards Coorg with your tribe, explore the beautiful Western Ghats and return with a camera full of memories and a bunch of new travel buddies. Come solo. Meet strangers. Explore Coorg. Find your tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: "/image/Coorg/coorg_img.JPEG", alt: "Coorg" },
       { image: "/image/Coorg/IMG_0105.JPEG", alt: "Coorg" },
@@ -5247,7 +5226,6 @@ pricingOptions: [
           "Travel Tribes Udaipur"
     ],
     description: 'Looking for a Udaipur trip from Mumbai, a Udaipur backpacking trip, or a fun Udaipur group trip with strangers? Join Travel Tribes for a 5-day backpacking adventure to the City of Lakes — Udaipur. Explore magnificent palaces, beautiful lakes, historic ghats, vibrant markets, cultural performances and some of the best viewpoints in the city. From the iconic City Palace and Lake Pichola to the sunset at Sajjangarh Monsoon Palace, the Bahubali Hills sunrise, Karni Mata cable car ride, Bagore Ki Haveli cultural show and local street-food trails — this Udaipur group trip is designed to experience the city beyond the usual tourist checklist. Travel from Mumbai to Udaipur by train, explore the city with your tribe and return home with new memories, countless photographs and new travel buddies. Come solo. Meet strangers. Explore Udaipur. Find your tribe.',
-    spots: '7 spots left',
     gallery: [
       { image: "/image/Udaipur/udaipur_img.JPEG", alt: "Udaipur" },
       { image: "/image/Udaipur/IMG_0424.JPG", alt: "Udaipur" },
@@ -5515,7 +5493,6 @@ pricingOptions: [
           "Travel Tribes Udaipur New Year"
     ],
     description: 'Celebrate Christmas & New Year in Udaipur with Travel Tribes, and experience the magic of Rajasthan’s City of Lakes with a fun-filled 5-day backpacking trip from Mumbai. Explore City Palace, Jag Mandir, Fateh Sagar Lake, Bagore Ki Haveli, Monsoon Palace and Udaipur’s vibrant local markets. Enjoy stunning sunsets, cultural experiences, Rajasthani street food and a special 31st Night New Year celebration near the ghats. Come solo, meet new people and make your festive season unforgettable with your travel tribe.',
-    spots: '6 spots left',
     gallery: [
       { image: "/image/Udaipur/udaipur_img.JPEG", alt: "City Palace & Lake Pichola Panorama" },
       { image: "/image/Udaipur/IMG_0424.JPG", alt: "Jag Mandir Island Palace" },
@@ -5734,7 +5711,6 @@ pricingOptions: [
           "Travel Tribes Spiti"
     ],
     description: 'Looking for a Spiti Valley trip from Delhi, a Spiti backpacking trip, or an unforgettable Spiti Valley group trip? Travel Tribes takes you on an epic Himalayan road trip through Shimla, Chitkul, Tabo, Dhankar, Kaza, Langza, Hikkim, Komic, Kibber, Chicham Bridge, Chandrataal and Manali. From the remote landscapes of Chitkul to the ancient Tabo Monastery, dramatic Dhankar Monastery, high-altitude villages of Langza, Hikkim and Komic, and the breathtaking Chandrataal Lake, this is a journey through some of the most incredible landscapes of Himachal Pradesh. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.',
-    spots: '5 spots left',
     gallery: [
       { image: "/image/Spiti/spiti_img.JPEG", alt: "Spiti Valley" },
       { image: "/image/Spiti/20241021_181120_D69BC4.jpeg", alt: "Spiti Valley" },
@@ -6040,7 +6016,6 @@ pricingOptions: [
           "Travel Tribes Spiti Winter"
     ],
     description: "Snow-covered mountains, frozen landscapes, remote Himalayan villages, ancient monasteries and some of the most dramatic roads in Himachal Pradesh — welcome to the Spiti Valley Winter Expedition. Travel from Delhi to Spiti Valley with Travel Tribes and explore the cold desert landscape of the Himalayas with a group of fellow travellers. From Chitkul, the last inhabited village before the Indo-China border, to the ancient Tabo Monastery, high-altitude villages of Hikkim, Komic and Langza, the iconic Key Monastery, Chicham Bridge, Kibber Village and the stunning landscapes of Kalpa, this is a true winter Himalayan adventure. This is more than a Spiti Valley trip from Delhi — it's an expedition through some of the most remote and beautiful corners of Himachal. Come solo. Meet strangers. Explore Spiti. Leave with a tribe.",
-    spots: '4 spots left',
     gallery: [
       { image: "/image/Spiti/spiti_img.JPEG", alt: "Spiti Winter Expedition" },
       { image: "/image/Spiti/20250110_154329_88A2CE.jpeg", alt: "Spiti Winter Expedition" },
@@ -6292,7 +6267,6 @@ pricingOptions: [
           "Travel Tribes Jawai"
     ],
     description: 'Experience Jawai, the Land of Leopards, with Travel Tribes on a 3N/4D experiential wildlife trip from Mumbai. Go beyond a regular weekend getaway with two Jeep safaris — a dramatic sunset leopard safari and an early-morning sunrise safari — while exploring the rugged Jawai landscape, Jawai Dam and its crocodile habitat. Add a wilderness stay, a Tribe Vibe evening with stories, music and new friends, and a scenic train journey from Mumbai to Mumbai. This Jawai leopard safari group trip is designed for travellers looking for wildlife, nature, adventure and meaningful travel experiences.',
-    spots: '8 spots left',
     gallery: [
       { image: img('photo-1456926631375-92c8ce872def'), alt: 'Wild Leopard on Granite Rocks in Jawai' },
       { image: img('photo-1516426122078-c23e76319801'), alt: 'Jawai Open 4x4 Jeep Safari Experience' },

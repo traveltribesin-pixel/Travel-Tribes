@@ -3,6 +3,8 @@ import type { Trip } from '@/lib/travel-data'
 import type { CuratedItinerary, HotelDetail, DayItinerary } from '@/lib/curated-itinerary-constants'
 import { DEFAULT_BANK_ACCOUNT, DEFAULT_POINTS_TO_BE_NOTED } from '@/lib/curated-itinerary-constants'
 import { generateProfessionalDayTitle } from '@/lib/day-title-generator'
+import { convertTripToCuratedItinerary } from '@/lib/trip-to-curated'
+import { getLuxuryImagesForDestination } from '@/lib/itinerary-images'
 
 export interface LeadInfo {
   fullName: string
@@ -24,6 +26,18 @@ export interface UnifiedItineraryData {
   clientPhone?: string
   clientEmail?: string
   travelDates?: string
+  routeText?: string
+  availableBatches?: {
+    date: string
+    price: string
+    note?: string
+    status?: string
+  }[]
+  pricingOptions?: {
+    label: string
+    price: string
+    note?: string
+  }[]
   heroImage?: string
   overview: string
   highlights: string[]
@@ -41,6 +55,8 @@ export interface UnifiedItineraryData {
     meals?: string
     stay?: string
     image?: string
+    enRouteStop?: string
+    travelDistance?: string
   }[]
   hotels?: {
     city: string
@@ -77,28 +93,30 @@ function cleanPdfText(str?: string): string {
   if (!str) return ''
   return str
     .replace(/₹/g, 'Rs. ')
+    .replace(/[—–]/g, '-')
+    .replace(/[•·]/g, ' • ')
+    .replace(/[➔→]/g, ' -> ')
     .replace(/[^\x00-\x7F\u00A0-\u00FF\u2022]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
 
 /**
- * Convert image URL to Base64 to embed in jsPDF with 3.5s timeout & CORS safeguard
+ * Convert image URL to Base64 to embed in jsPDF with 3.2s timeout & CORS fallback
  */
-async function getBase64ImageFromUrl(imageUrl: string): Promise<{ data: string; format: 'JPEG' | 'PNG' | 'WEBP' } | null> {
+async function getBase64ImageFromUrl(imageUrl: string): Promise<{ data: string; format: 'JPEG' | 'PNG' } | null> {
   if (!imageUrl) return null
 
   // If already a data URL
   if (imageUrl.startsWith('data:image/')) {
-    let format: 'JPEG' | 'PNG' | 'WEBP' = 'JPEG'
-    if (imageUrl.startsWith('data:image/png')) format = 'PNG'
-    else if (imageUrl.startsWith('data:image/webp')) format = 'WEBP'
+    const format: 'JPEG' | 'PNG' = imageUrl.startsWith('data:image/png') ? 'PNG' : 'JPEG'
     return { data: imageUrl, format }
   }
 
+  // 1. Try Fetch first
   try {
     const controller = typeof AbortController !== 'undefined' ? new AbortController() : null
-    const timeoutId = controller ? setTimeout(() => controller.abort(), 3500) : null
+    const timeoutId = controller ? setTimeout(() => controller.abort(), 3200) : null
 
     const resolvedUrl = typeof window !== 'undefined' && imageUrl.startsWith('/')
       ? `${window.location.origin}${imageUrl}`
@@ -109,33 +127,73 @@ async function getBase64ImageFromUrl(imageUrl: string): Promise<{ data: string; 
     })
 
     if (timeoutId) clearTimeout(timeoutId)
-    if (!res.ok) return null
-
-    const blob = await res.blob()
-
-    return new Promise((resolve) => {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        const base64data = reader.result as string
-        if (!base64data) {
-          resolve(null)
-          return
+    if (res.ok) {
+      const blob = await res.blob()
+      return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          const base64data = reader.result as string
+          if (!base64data) {
+            resolve(null)
+            return
+          }
+          const format: 'JPEG' | 'PNG' = blob.type.includes('png') ? 'PNG' : 'JPEG'
+          resolve({ data: base64data, format })
         }
-        let format: 'JPEG' | 'PNG' | 'WEBP' = 'JPEG'
-        if (blob.type.includes('png')) format = 'PNG'
-        else if (blob.type.includes('webp')) format = 'WEBP'
-        resolve({ data: base64data, format })
-      }
-      reader.onerror = () => resolve(null)
-      reader.readAsDataURL(blob)
-    })
+        reader.onerror = () => resolve(null)
+        reader.readAsDataURL(blob)
+      })
+    }
   } catch {
-    return null
+    // Continue to HTML Image element fallback
   }
+
+  // 2. Fallback using HTML Image element & canvas (handles cross-origin images smoothly)
+  if (typeof window !== 'undefined') {
+    try {
+      return await new Promise((resolve) => {
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        const timer = setTimeout(() => {
+          img.src = ''
+          resolve(null)
+        }, 3000)
+
+        img.onload = () => {
+          clearTimeout(timer)
+          try {
+            const canvas = document.createElement('canvas')
+            canvas.width = img.naturalWidth || img.width
+            canvas.height = img.naturalHeight || img.height
+            const ctx = canvas.getContext('2d')
+            if (!ctx) {
+              resolve(null)
+              return
+            }
+            ctx.drawImage(img, 0, 0)
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.85)
+            resolve({ data: dataUrl, format: 'JPEG' })
+          } catch {
+            resolve(null)
+          }
+        }
+        img.onerror = () => {
+          clearTimeout(timer)
+          resolve(null)
+        }
+        img.src = imageUrl.startsWith('/') ? `${window.location.origin}${imageUrl}` : imageUrl
+      })
+    } catch {
+      return null
+    }
+  }
+
+  return null
 }
 
 /**
- * Core Luxury PDF Renderer matching the Curated Itinerary Design Template
+ * World-Class Luxury PDF Generator for Travel Tribes Itineraries & Proposals
+ * Meticulously engineered for pixel-perfect alignment, rich editorial typography, and zero pagination bugs.
  */
 export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Promise<void> {
   const doc = new jsPDF({
@@ -146,148 +204,154 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
 
   const pageWidth = doc.internal.pageSize.getWidth() // 210mm
   const pageHeight = doc.internal.pageSize.getHeight() // 297mm
-  const margin = 14
-  const contentWidth = pageWidth - margin * 2 // 182mm
+  const margin = 12
+  const contentWidth = pageWidth - margin * 2 // 186mm
   let y = 0
 
-  // Brand Palette (Travel Tribes Curated System)
-  const navy: [number, number, number] = [11, 41, 64] // #0b2940
-  const bluePrimary: [number, number, number] = [0, 119, 182] // #0077b6
-  const blueSky: [number, number, number] = [0, 180, 216] // #00b4d8
-  const gold: [number, number, number] = [255, 222, 89] // #ffde59
-  const darkText: [number, number, number] = [15, 23, 42] // #0f172a
-  const mutedText: [number, number, number] = [100, 116, 139] // #64748b
-  const lightBg: [number, number, number] = [248, 250, 252] // #f8fafc
-  const cardBorder: [number, number, number] = [226, 232, 240] // #e2e8f0
-  const emerald: [number, number, number] = [16, 185, 129] // #10b981
-  const rose: [number, number, number] = [225, 29, 72] // #e11d48
+  // Luxury Brand Color Palette
+  const navy: [number, number, number] = [11, 41, 64] // #0B2940 Deep Navy
+  const bluePrimary: [number, number, number] = [0, 119, 182] // #0077B6 Ocean Blue
+  const blueSky: [number, number, number] = [0, 180, 216] // #00B4D8 Electric Cyan
+  const gold: [number, number, number] = [245, 176, 0] // #F5B000 Tribe Gold
+  const goldTint: [number, number, number] = [254, 249, 235] // #FEF9EB Soft Gold
+  const darkText: [number, number, number] = [15, 23, 42] // #0F172A Slate Text
+  const mutedText: [number, number, number] = [100, 116, 139] // #64748B Slate Muted
+  const lightBg: [number, number, number] = [248, 250, 252] // #F8FAFC Page Background
+  const cardBorder: [number, number, number] = [226, 232, 240] // #E2E8F0 Card Border
+  const emerald: [number, number, number] = [16, 185, 129] // #10B981
+  const emeraldBg: [number, number, number] = [240, 253, 244] // #F0FDF4
+  const emeraldBorder: [number, number, number] = [187, 247, 208] // #BBF7D0
+  const rose: [number, number, number] = [225, 29, 72] // #E11D48
+  const roseBg: [number, number, number] = [254, 242, 242] // #FEF2F2
+  const roseBorder: [number, number, number] = [254, 202, 202] // #FECACA
 
-  // Pre-fetch images in parallel with timeouts
-  let heroImgBase64: { data: string; format: 'JPEG' | 'PNG' | 'WEBP' } | null = null
-  let whiteLogoBase64: { data: string; format: 'JPEG' | 'PNG' | 'WEBP' } | null = null
-  let showcaseImgsBase64: ({ data: string; format: 'JPEG' | 'PNG' | 'WEBP' } | null)[] = []
+  // Pre-fetch all necessary images in parallel
+  let heroImgBase64: { data: string; format: 'JPEG' | 'PNG' } | null = null
+  let whiteLogoBase64: { data: string; format: 'JPEG' | 'PNG' } | null = null
+  let showcaseImgsBase64: ({ data: string; format: 'JPEG' | 'PNG' } | null)[] = []
+  let dayImgsBase64: ({ data: string; format: 'JPEG' | 'PNG' } | null)[] = []
 
   try {
+    const dayImageUrls = (data.days || []).map((d) => d.image).filter(Boolean) as string[]
     const results = await Promise.all([
       data.heroImage ? getBase64ImageFromUrl(data.heroImage) : Promise.resolve(null),
       getBase64ImageFromUrl('/image/Logowhite.png'),
-      ...(data.showcaseImages || []).slice(0, 4).map((sc) => getBase64ImageFromUrl(sc.url))
+      ...(data.showcaseImages || []).slice(0, 4).map((sc) => getBase64ImageFromUrl(sc.url)),
+      ...dayImageUrls.slice(0, 8).map((u) => getBase64ImageFromUrl(u))
     ])
 
     heroImgBase64 = results[0]
     whiteLogoBase64 = results[1]
-    showcaseImgsBase64 = results.slice(2)
+    showcaseImgsBase64 = results.slice(2, 2 + Math.min(4, (data.showcaseImages || []).length))
+    dayImgsBase64 = results.slice(2 + Math.min(4, (data.showcaseImages || []).length))
   } catch {
-    // Continue gracefully if image fetching has network issues
+    // Continue gracefully if image prefetch fails
   }
 
   // Draw modern top header on page 2+
   const drawPageHeader = (pageTitle?: string) => {
     doc.setFillColor(...navy)
-    doc.rect(0, 0, pageWidth, 13, 'F')
+    doc.rect(0, 0, pageWidth, 12, 'F')
     doc.setFillColor(...gold)
-    doc.rect(0, 13, pageWidth, 1.2, 'F')
+    doc.rect(0, 12, pageWidth, 1, 'F')
 
     // Logo Wordmark
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(9)
+    doc.setFontSize(8.5)
     doc.setTextColor(255, 255, 255)
-    doc.text('TRAVEL TRIBES', margin, 8.5)
+    doc.text('TRAVEL TRIBES', margin, 8)
 
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(7.5)
+    doc.setFontSize(7)
     doc.setTextColor(...gold)
-    doc.text('|  WHERE WANDERERS BECOME TRIBE', margin + 30, 8.5)
+    doc.text('|  WHERE WANDERERS BECOME TRIBE', margin + 28, 8)
 
     if (pageTitle) {
       doc.setFont('helvetica', 'bold')
-      doc.setFontSize(8)
-      doc.setTextColor(220, 235, 245)
-      doc.text(pageTitle.toUpperCase(), pageWidth - margin, 8.5, { align: 'right' })
+      doc.setFontSize(7.5)
+      doc.setTextColor(220, 238, 250)
+      doc.text(cleanPdfText(pageTitle).toUpperCase(), pageWidth - margin, 8, { align: 'right' })
     }
   }
 
   // Draw modern branded footer on all pages
   const drawPageFooter = (pageNum: number, totalPages: number) => {
-    doc.setFillColor(245, 248, 250)
-    doc.rect(0, pageHeight - 11, pageWidth, 11, 'F')
+    doc.setFillColor(245, 248, 251)
+    doc.rect(0, pageHeight - 10, pageWidth, 10, 'F')
     doc.setDrawColor(...cardBorder)
-    doc.line(0, pageHeight - 11, pageWidth, pageHeight - 11)
+    doc.line(0, pageHeight - 10, pageWidth, pageHeight - 10)
 
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(7.5)
+    doc.setFontSize(7)
     doc.setTextColor(...mutedText)
-    doc.text('Travel Tribes  •  Helpline: +91 99758 22023  •  hello@traveltribes.in  •  traveltribes.in', margin, pageHeight - 4.5)
+    doc.text('Travel Tribes  •  Helpline: +91 99758 22023  •  hello@traveltribes.in  •  traveltribes.in', margin, pageHeight - 4)
 
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(...navy)
-    doc.text(`Page ${pageNum} of ${totalPages}`, pageWidth - margin, pageHeight - 4.5, { align: 'right' })
+    doc.text(`Page ${pageNum} of ${totalPages}`, pageWidth - margin, pageHeight - 4, { align: 'right' })
   }
 
   // Dynamic pagination checker
   const checkAddPage = (neededSpace: number, nextHeaderTitle = 'Journey Itinerary') => {
-    if (y + neededSpace > pageHeight - 18) {
+    if (y + neededSpace > pageHeight - 16) {
       doc.addPage()
       drawPageHeader(nextHeaderTitle)
-      y = 20
+      y = 19
     }
   }
 
   // =========================================================================
-  // PAGE 1: COVER HERO & EXECUTIVE PROPOSAL SNAPSHOT (FULL LUXURY COVER)
+  // PAGE 1: FULL LUXURY COVER & EXECUTIVE SNAPSHOT
   // =========================================================================
-
-  // Full Page Light Background
   doc.setFillColor(...lightBg)
   doc.rect(0, 0, pageWidth, pageHeight, 'F')
 
-  // 1. Top Hero Section Banner
+  // 1. Hero Section Banner (Height: 120mm)
   const heroH = 120
   doc.setFillColor(...navy)
-  doc.rect(margin, 10, contentWidth, heroH, 'F')
+  doc.roundedRect(margin, 12, contentWidth, heroH, 3, 3, 'F')
 
   if (heroImgBase64) {
     try {
-      doc.addImage(heroImgBase64.data, heroImgBase64.format, margin, 10, contentWidth, heroH)
+      doc.addImage(heroImgBase64.data, heroImgBase64.format, margin, 12, contentWidth, heroH)
       // Dark bottom gradient overlay simulation
       doc.setFillColor(11, 41, 64)
-      doc.rect(margin, 10 + heroH - 46, contentWidth, 46, 'F')
+      doc.rect(margin, 12 + heroH - 48, contentWidth, 48, 'F')
       // Top translucent scrim
       doc.setFillColor(11, 41, 64)
-      doc.rect(margin, 10, contentWidth, 22, 'F')
+      doc.rect(margin, 12, contentWidth, 22, 'F')
     } catch {
-      // Fallback if image draw error
       doc.setFillColor(...navy)
-      doc.rect(margin, 10, contentWidth, heroH, 'F')
+      doc.rect(margin, 12, contentWidth, heroH, 'F')
     }
   }
 
   // Top Logo inside Hero
   if (whiteLogoBase64) {
     try {
-      doc.addImage(whiteLogoBase64.data, whiteLogoBase64.format, margin + 6, 14, 40, 11)
+      doc.addImage(whiteLogoBase64.data, whiteLogoBase64.format, margin + 6, 16, 38, 10.5)
     } catch {
       doc.setFont('helvetica', 'bold')
-      doc.setFontSize(14)
+      doc.setFontSize(13)
       doc.setTextColor(255, 255, 255)
-      doc.text('TRAVEL TRIBES', margin + 6, 22)
+      doc.text('TRAVEL TRIBES', margin + 6, 24)
     }
   } else {
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(14)
+    doc.setFontSize(13)
     doc.setTextColor(255, 255, 255)
-    doc.text('TRAVEL TRIBES', margin + 6, 22)
+    doc.text('TRAVEL TRIBES', margin + 6, 24)
   }
 
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(7.5)
   doc.setTextColor(...gold)
-  doc.text('OFFICIAL TRAVEL PROPOSAL', pageWidth - margin - 6, 21, { align: 'right' })
+  doc.text('OFFICIAL TRAVEL PROPOSAL', pageWidth - margin - 6, 23, { align: 'right' })
 
-  // Proposal Badge inside Hero (bottom area)
-  const badgeY = 10 + heroH - 39
+  // Badge inside Hero (bottom area)
+  const badgeY = 12 + heroH - 41
   doc.setFillColor(...gold)
-  doc.roundedRect(margin + 6, badgeY, 78, 6.5, 2, 2, 'F')
+  doc.roundedRect(margin + 6, badgeY, 82, 6.5, 2, 2, 'F')
 
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(7)
@@ -306,23 +370,23 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
 
   // Big Trip Title inside Hero
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(15)
+  doc.setFontSize(16)
   doc.setTextColor(255, 255, 255)
   const fullTitle = cleanPdfText(`${data.title.toUpperCase()} (${data.duration.toUpperCase()})`)
-  const titleLines = doc.splitTextToSize(fullTitle, contentWidth - 40)
-  doc.text(titleLines.slice(0, 2), margin + 6, badgeY + 19)
+  const titleLines = doc.splitTextToSize(fullTitle, contentWidth - 45)
+  doc.text(titleLines.slice(0, 2), margin + 6, badgeY + 20)
 
   // Starting Price pill inside Hero (Bottom Right)
   if (data.price) {
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(9)
     doc.setTextColor(...gold)
-    doc.text(cleanPdfText(`Quote: ${data.price}`), pageWidth - margin - 6, badgeY + 19, { align: 'right' })
+    doc.text(cleanPdfText(`Quote: ${data.price}`), pageWidth - margin - 6, badgeY + 20, { align: 'right' })
   }
 
-  y = 10 + heroH + 5
+  y = 12 + heroH + 5
 
-  // 2. Personalized "PREPARED EXCLUSIVELY FOR" Banner Card
+  // 2. Personalized "PREPARED EXCLUSIVELY FOR" Banner Card (Height: 20mm)
   doc.setFillColor(255, 255, 255)
   doc.roundedRect(margin, y, contentWidth, 20, 2.5, 2.5, 'F')
   doc.setDrawColor(...cardBorder)
@@ -341,23 +405,41 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   doc.setFontSize(11)
   doc.setTextColor(...navy)
   const clientDisplayName = cleanPdfText(data.clientName || 'Valued Tribe Explorer')
-  doc.text(clientDisplayName, margin + 7, y + 14)
+  doc.text(clientDisplayName, margin + 7, y + 14.5)
 
   const todayStr = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(7.5)
   doc.setTextColor(...mutedText)
   doc.text(`Proposal Date: ${todayStr}`, pageWidth - margin - 6, y + 7.5, { align: 'right' })
-  doc.text('Helpline: +91 99758 22023  •  hello@traveltribes.in', pageWidth - margin - 6, y + 14, { align: 'right' })
+  doc.text('Helpline: +91 99758 22023  •  hello@traveltribes.in', pageWidth - margin - 6, y + 14.5, { align: 'right' })
 
   y += 24
 
-  // 3. Fast-Facts Metric Ribbon (4 Equal Width Metric Cards)
+  // 3. Fast-Facts Metric Ribbon (4 Equal Width Metric Cards, Height: 20mm)
   const boxW = (contentWidth - 9) / 4
+  const hasMultipleBatches = Boolean(data.availableBatches && data.availableBatches.length > 1)
+  const displayRoute = cleanPdfText(
+    (data.routeText || data.destination)
+      .replace(/Day\s*\d+\s*[:\-➔→]?\s*/gi, '')
+      .replace(/[•·—–]/g, ' • ')
+      .replace(/\s*->\s*/g, ' • ')
+      .replace(/\s*➔\s*/g, ' • ')
+      .replace(/\s*→\s*/g, ' • ')
+      .replace(/\s*[•·]+\s*/g, ' • ')
+      .replace(/\s+/g, ' ')
+      .replace(/^[•·\s]+|[•·\s]+$/g, '')
+      .trim() || data.destination
+  )
+
   const metricCards = [
     { label: 'DURATION', val: data.duration, sub: 'Days & Nights' },
-    { label: 'DESTINATION', val: data.destination, sub: 'Curated Route' },
-    { label: 'TRAVEL STYLE', val: data.tripType === 'customized' ? 'Private Road Trip' : 'Community Trip', sub: 'Verified Transfers' },
+    { label: 'ROUTE', val: displayRoute, sub: 'Curated Circuit' },
+    {
+      label: hasMultipleBatches ? 'DEPARTURES' : (data.travelDates ? 'TRAVEL DATES' : 'EXPEDITION'),
+      val: hasMultipleBatches ? 'Multiple Batches' : (data.travelDates || 'Community Trip'),
+      sub: hasMultipleBatches ? `${data.availableBatches!.length} Upcoming Dates` : 'Verified Transfers'
+    },
     { label: 'PACKAGE QUOTE', val: data.price ? cleanPdfText(data.price) : 'Custom Quote', sub: 'Taxes & Driver Incl.' }
   ]
 
@@ -387,18 +469,18 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
 
   y += 23
 
-  // 4. Welcome to Travel Tribes & Trust Assurance Box
+  // 4. Welcome to Travel Tribes & Trust Assurance Box (Height: 44mm)
   doc.setFillColor(255, 255, 255)
-  doc.roundedRect(margin, y, contentWidth, 42, 2.5, 2.5, 'F')
+  doc.roundedRect(margin, y, contentWidth, 43, 2.5, 2.5, 'F')
   doc.setDrawColor(...cardBorder)
-  doc.roundedRect(margin, y, contentWidth, 42, 2.5, 2.5, 'D')
+  doc.roundedRect(margin, y, contentWidth, 43, 2.5, 2.5, 'D')
 
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(9.5)
   doc.setTextColor(...navy)
   doc.text('WELCOME TO TRAVEL TRIBES • HANDCRAFTED EXPLORATION', margin + 6, y + 7)
 
-  // Underline
+  // Gold accent line
   doc.setFillColor(...gold)
   doc.rect(margin + 6, y + 8.5, 24, 0.8, 'F')
 
@@ -439,7 +521,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
     doc.text(tb.sub, tX + 6.5, trustY + 8.5)
   })
 
-  y += 46
+  y += 47
 
   // 5. Destination Highlights Glimpses Ribbon
   if (data.highlights && data.highlights.length > 0) {
@@ -453,7 +535,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
     y += 5.5
 
     const highPills = data.highlights.slice(0, 4)
-    const pillW = (contentWidth - 9) / Math.max(highPills.length, 1)
+    const pillW = (contentWidth - (highPills.length - 1) * 3) / Math.max(highPills.length, 1)
 
     highPills.forEach((h, i) => {
       const pX = margin + i * (pillW + 3)
@@ -480,7 +562,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   // =========================================================================
   doc.addPage()
   drawPageHeader('Trip Blueprint & Specifications')
-  y = 20
+  y = 19
 
   // 1. Blueprint & Key Specifications Title
   doc.setFont('helvetica', 'bold')
@@ -489,7 +571,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   doc.text('1. TRIP BLUEPRINT & KEY SPECIFICATIONS', margin, y)
   doc.setFillColor(...gold)
   doc.rect(margin, y + 1.5, 26, 0.8, 'F')
-  y += 7
+  y += 6.5
 
   // 4 Specification Cards (2x2 Grid)
   const specW = (contentWidth - 6) / 2
@@ -553,7 +635,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
     doc.text(nLines.slice(0, 2), curX + 4, curY + 17)
   })
 
-  y += specH * 2 + 10
+  y += specH * 2 + 9
 
   // 2. Destination Showcase Gallery (4 Photos / Highlight Cards)
   doc.setFont('helvetica', 'bold')
@@ -562,7 +644,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   doc.text('2. DESTINATION SHOWCASE & SCENIC GLIMPSES', margin, y)
   doc.setFillColor(...gold)
   doc.rect(margin, y + 1.5, 26, 0.8, 'F')
-  y += 7
+  y += 6.5
 
   const scW = (contentWidth - 9) / 4
   const scH = 34
@@ -608,7 +690,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   doc.text('3. ABOUT THIS HANDCRAFTED EXPERIENCE', margin, y)
   doc.setFillColor(...gold)
   doc.rect(margin, y + 1.5, 26, 0.8, 'F')
-  y += 6.5
+  y += 6
 
   doc.setFillColor(255, 255, 255)
   const overviewClean = cleanPdfText(data.overview)
@@ -626,34 +708,69 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
 
   y += overviewBoxH + 6
 
-  // 4. Special Requirements Note if present
-  if (data.quotation?.specialNotes) {
-    doc.setFillColor(254, 243, 199) // amber light
-    doc.roundedRect(margin, y, contentWidth, 16, 2, 2, 'F')
-    doc.setDrawColor(245, 158, 11)
-    doc.roundedRect(margin, y, contentWidth, 16, 2, 2, 'D')
+  // 4. Accommodations & Stay Breakdown Table
+  if (data.hotels && data.hotels.length > 0) {
+    checkAddPage(38, 'Accommodations Breakdown')
 
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(7.5)
-    doc.setTextColor(146, 64, 14) // dark amber
-    doc.text('SPECIAL CLIENT REQUIREMENTS / ITINERARY NOTES', margin + 5, y + 5.5)
+    doc.setFontSize(10.5)
+    doc.setTextColor(...navy)
+    doc.text('4. ACCOMMODATIONS & STAY BREAKDOWN', margin, y)
+    doc.setFillColor(...gold)
+    doc.rect(margin, y + 1.5, 26, 0.8, 'F')
+    y += 6.5
 
-    doc.setFont('helvetica', 'normal')
-    doc.setFontSize(7.2)
-    doc.setTextColor(120, 53, 15)
-    const noteLines = doc.splitTextToSize(cleanPdfText(data.quotation.specialNotes), contentWidth - 10)
-    doc.text(noteLines[0] || data.quotation.specialNotes, margin + 5, y + 11)
+    // Table Header
+    doc.setFillColor(...navy)
+    doc.roundedRect(margin, y, contentWidth, 7, 1.5, 1.5, 'F')
 
-    y += 20
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(7)
+    doc.setTextColor(255, 255, 255)
+    doc.text('CITY / DESTINATION', margin + 4, y + 4.8)
+    doc.text('HOTEL / RESORT NAME', margin + 45, y + 4.8)
+    doc.text('DURATION', margin + 120, y + 4.8)
+    doc.text('ROOM CATEGORY / MEAL PLAN', margin + 145, y + 4.8)
+
+    y += 7.5
+
+    data.hotels.forEach((h, hIdx) => {
+      const rowBg = hIdx % 2 === 0 ? lightBg : ([255, 255, 255] as [number, number, number])
+      doc.setFillColor(...rowBg)
+      doc.rect(margin, y, contentWidth, 7.5, 'F')
+      doc.setDrawColor(...cardBorder)
+      doc.line(margin, y + 7.5, pageWidth - margin, y + 7.5)
+
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(7.5)
+      doc.setTextColor(...navy)
+      doc.text(cleanPdfText(h.city), margin + 4, y + 5)
+
+      doc.setFont('helvetica', 'normal')
+      doc.setTextColor(...darkText)
+      doc.text(cleanPdfText(h.hotelName || 'Handpicked Boutique Stay'), margin + 45, y + 5)
+
+      doc.setFont('helvetica', 'bold')
+      doc.setTextColor(...bluePrimary)
+      doc.text(cleanPdfText(h.nights || 'Included'), margin + 120, y + 5)
+
+      doc.setFont('helvetica', 'normal')
+      doc.setTextColor(...darkText)
+      doc.text(cleanPdfText(h.roomType || 'Deluxe Room (CPAI/MAPAI)'), margin + 145, y + 5)
+
+      y += 8
+    })
+
+    y += 4
   }
 
   // =========================================================================
-  // PAGE 3+: DAY-BY-DAY DETAILED JOURNEY ITINERARY
+  // PAGE 3+: DAY-BY-DAY DETAILED JOURNEY ITINERARY (WITH DAY IMAGES)
   // =========================================================================
   if (data.days && data.days.length > 0) {
     doc.addPage()
     drawPageHeader('Day-by-Day Journey Itinerary')
-    y = 20
+    y = 19
 
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(11)
@@ -663,25 +780,38 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
     doc.rect(margin, y + 1.5, 26, 0.8, 'F')
     y += 7
 
-    data.days.forEach((d) => {
-      // Calculate height for this day card
-      const actLines = d.activities.map((a) => doc.splitTextToSize(cleanPdfText(a), contentWidth - 20))
-      const totalActLinesCount = actLines.reduce((acc, lines) => acc + lines.length, 0)
-      const estimatedDayHeight = 16 + totalActLinesCount * 4.2 + d.activities.length * 1.5 + 13
+    data.days.forEach((d, dIdx) => {
+      const dayImgBase64 = dayImgsBase64[dIdx]
+      const hasDayImage = Boolean(dayImgBase64)
 
-      checkAddPage(estimatedDayHeight + 5, 'Day-by-Day Journey Itinerary')
+      // Column widths inside day card
+      const leftColW = hasDayImage ? contentWidth - 52 : contentWidth - 14
+      const rightColW = 46
+      const rightImgH = 34
+
+      // Wrap activity lines
+      const actLines = d.activities.map((a) => doc.splitTextToSize(cleanPdfText(a), leftColW - 10))
+      const totalActLinesCount = actLines.reduce((acc, lines) => acc + lines.length, 0)
+
+      // Calculate total required card height
+      const headerH = 9
+      const footerH = 7.5
+      const activitiesH = totalActLinesCount * 4.1 + d.activities.length * 1.5 + (d.enRouteStop ? 6 : 0)
+      const contentH = Math.max(activitiesH, hasDayImage ? rightImgH : 0) + 8
+      const totalCardH = headerH + contentH + footerH
+
+      checkAddPage(totalCardH + 4, 'Day-by-Day Journey Itinerary')
 
       // Main Day Container Card
       doc.setFillColor(255, 255, 255)
-      doc.roundedRect(margin, y, contentWidth, estimatedDayHeight, 2.5, 2.5, 'F')
+      doc.roundedRect(margin, y, contentWidth, totalCardH, 2.5, 2.5, 'F')
       doc.setDrawColor(...cardBorder)
-      doc.roundedRect(margin, y, contentWidth, estimatedDayHeight, 2.5, 2.5, 'D')
+      doc.roundedRect(margin, y, contentWidth, totalCardH, 2.5, 2.5, 'D')
 
       // Header Strip in Blue Primary
-      const headerH = 9
       doc.setFillColor(...bluePrimary)
       doc.roundedRect(margin, y, contentWidth, headerH, 2.5, 2.5, 'F')
-      doc.rect(margin, y + headerH - 2, contentWidth, 2, 'F') // square bottom corners of strip
+      doc.rect(margin, y + headerH - 2, contentWidth, 2, 'F')
 
       // Day Pill Badge (Gold)
       doc.setFillColor(...gold)
@@ -704,105 +834,184 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
       doc.setFont('helvetica', 'bold')
       doc.setFontSize(7)
       doc.setTextColor(220, 235, 245)
-      const rightLabel = rightDate ? `${rightDate}  •  Guided` : 'Guided Itinerary'
+      const rightLabel = rightDate ? `${rightDate}  •  Guided` : 'Guided Expedition'
       doc.text(rightLabel, pageWidth - margin - 5, y + 5.5, { align: 'right' })
 
-      // Card Content: Activities Bullets
+      // Card Content: Activities
       let curActY = y + headerH + 5
+
+      // En-route stop badge if present
+      if (d.enRouteStop) {
+        doc.setFillColor(...goldTint)
+        doc.roundedRect(margin + 5, curActY - 1, leftColW - 10, 5, 1, 1, 'F')
+        doc.setFont('helvetica', 'bold')
+        doc.setFontSize(6.5)
+        doc.setTextColor(146, 64, 14) // dark amber
+        doc.text(`En-Route Spot: ${cleanPdfText(d.enRouteStop)}`, margin + 8, curActY + 2.5)
+        curActY += 6.5
+      }
+
       d.activities.forEach((act, actIdx) => {
         // Cyan dot bullet
         doc.setFillColor(...bluePrimary)
-        doc.circle(margin + 6, curActY - 1, 1, 'F')
+        doc.circle(margin + 7, curActY - 1, 0.9, 'F')
 
         doc.setFont('helvetica', 'normal')
-        doc.setFontSize(7.8)
+        doc.setFontSize(7.6)
         doc.setTextColor(...darkText)
         const lines = actLines[actIdx] || [act]
-        doc.text(lines, margin + 10, curActY)
-        curActY += lines.length * 4.1 + 1.5
+        doc.text(lines, margin + 11, curActY)
+        curActY += lines.length * 4.0 + 1.2
       })
 
+      // Right Column: Day Photo if available
+      if (hasDayImage && dayImgBase64) {
+        const imgX = margin + contentWidth - rightColW - 3
+        const imgY = y + headerH + 4
+        try {
+          doc.addImage(dayImgBase64.data, dayImgBase64.format, imgX, imgY, rightColW, rightImgH)
+          doc.setDrawColor(...cardBorder)
+          doc.rect(imgX, imgY, rightColW, rightImgH, 'D')
+        } catch {
+          // Graceful fallback
+        }
+      }
+
       // Bottom Row inside Day Card: Meals & Stay Badges
-      const footerY = y + estimatedDayHeight - 8
+      const footerY = y + totalCardH - footerH
       doc.setFillColor(...lightBg)
-      doc.roundedRect(margin + 3, footerY - 1, contentWidth - 6, 7, 1.5, 1.5, 'F')
+      doc.roundedRect(margin + 2, footerY - 0.5, contentWidth - 4, footerH - 0.5, 1.5, 1.5, 'F')
 
       // Meals badge
       doc.setFont('helvetica', 'bold')
       doc.setFontSize(6.8)
       doc.setTextColor(...bluePrimary)
-      doc.text('MEALS:', margin + 6, footerY + 3.5)
+      doc.text('MEALS:', margin + 5, footerY + 4)
 
       doc.setFont('helvetica', 'normal')
       doc.setTextColor(...darkText)
-      doc.text(cleanPdfText(d.meals || 'Breakfast & Dinner Included'), margin + 18, footerY + 3.5)
+      doc.text(cleanPdfText(d.meals || 'Breakfast & Dinner Included'), margin + 18, footerY + 4)
 
       // Stay badge on Right
       doc.setFont('helvetica', 'bold')
       doc.setTextColor(...navy)
       const stayText = cleanPdfText(`STAY: ${d.stay || data.destination}`)
-      doc.text(stayText, pageWidth - margin - 6, footerY + 3.5, { align: 'right' })
+      doc.text(stayText, pageWidth - margin - 5, footerY + 4, { align: 'right' })
 
-      y += estimatedDayHeight + 4
+      y += totalCardH + 4
     })
   }
 
   // =========================================================================
-  // ACCOMMODATIONS & STAY BREAKDOWN
+  // AVAILABLE DEPARTURE DATES & BATCH PRICING TABLE (ACCURATE & TRANSPARENT)
   // =========================================================================
-  if (data.hotels && data.hotels.length > 0) {
-    checkAddPage(50, 'Accommodations Breakdown')
+  if (data.availableBatches && data.availableBatches.length > 0) {
+    checkAddPage(42, 'Available Departure Dates')
 
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(10.5)
     doc.setTextColor(...navy)
-    doc.text('ACCOMMODATIONS & STAY BREAKDOWN', margin, y)
+    doc.text('AVAILABLE DEPARTURE DATES & BATCH PRICING', margin, y)
     doc.setFillColor(...gold)
     doc.rect(margin, y + 1.5, 26, 0.8, 'F')
-    y += 7
+    y += 6.5
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7.5)
+    doc.setTextColor(...mutedText)
+    doc.text('All upcoming confirmed departure dates with transparent per-person package pricing', margin, y)
+    y += 4.5
 
     // Table Header
-    doc.setFillColor(...navy)
+    doc.setFillColor(...bluePrimary)
     doc.roundedRect(margin, y, contentWidth, 7, 1.5, 1.5, 'F')
 
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(7)
     doc.setTextColor(255, 255, 255)
-    doc.text('CITY / DESTINATION', margin + 4, y + 4.8)
-    doc.text('HOTEL / RESORT NAME', margin + 45, y + 4.8)
-    doc.text('DURATION', margin + 115, y + 4.8)
-    doc.text('ROOM CATEGORY / MEAL PLAN', margin + 140, y + 4.8)
+    doc.text('#', margin + 3, y + 4.8)
+    doc.text('DEPARTURE BATCH DATES', margin + 12, y + 4.8)
+    doc.text('BATCH CATEGORY / SEASON', margin + 90, y + 4.8)
+    doc.text('PACKAGE PRICE', pageWidth - margin - 5, y + 4.8, { align: 'right' })
 
     y += 7.5
 
-    data.hotels.forEach((h, hIdx) => {
-      const rowBg = hIdx % 2 === 0 ? lightBg : [255, 255, 255] as [number, number, number]
+    data.availableBatches.forEach((b, bIdx) => {
+      checkAddPage(8.5, 'Available Departure Dates')
+
+      const rowBg = bIdx % 2 === 0 ? lightBg : ([255, 255, 255] as [number, number, number])
       doc.setFillColor(...rowBg)
-      doc.rect(margin, y, contentWidth, 7.5, 'F')
+      doc.rect(margin, y, contentWidth, 6.8, 'F')
       doc.setDrawColor(...cardBorder)
-      doc.line(margin, y + 7.5, pageWidth - margin, y + 7.5)
+      doc.line(margin, y + 6.8, pageWidth - margin, y + 6.8)
 
+      // #
       doc.setFont('helvetica', 'bold')
-      doc.setFontSize(7.5)
+      doc.setFontSize(7)
+      doc.setTextColor(...mutedText)
+      doc.text(String(bIdx + 1), margin + 3, y + 4.5)
+
+      // Date
+      doc.setFont('helvetica', 'bold')
       doc.setTextColor(...navy)
-      doc.text(cleanPdfText(h.city), margin + 4, y + 5)
+      doc.text(cleanPdfText(b.date), margin + 12, y + 4.5)
 
+      // Note / Category
       doc.setFont('helvetica', 'normal')
-      doc.setTextColor(...darkText)
-      doc.text(cleanPdfText(h.hotelName || 'Handpicked Boutique Stay'), margin + 45, y + 5)
+      const isFestive =
+        b.note?.toLowerCase().includes('special') ||
+        b.note?.toLowerCase().includes('new year') ||
+        b.note?.toLowerCase().includes('christmas')
+      if (isFestive) {
+        doc.setTextColor(180, 83, 9)
+      } else {
+        doc.setTextColor(...darkText)
+      }
+      doc.text(cleanPdfText(b.note || 'Regular Departure'), margin + 90, y + 4.5)
 
+      // Price (Aligned Right)
       doc.setFont('helvetica', 'bold')
-      doc.setTextColor(...bluePrimary)
-      doc.text(cleanPdfText(h.nights || 'Included'), margin + 115, y + 5)
+      doc.setTextColor(...emerald)
+      doc.text(cleanPdfText(b.price), pageWidth - margin - 5, y + 4.5, { align: 'right' })
 
-      doc.setFont('helvetica', 'normal')
-      doc.setTextColor(...darkText)
-      doc.text(cleanPdfText(h.roomType || 'Deluxe Room (CPAI/MAPAI)'), margin + 140, y + 5)
-
-      y += 8
+      y += 7.2
     })
 
-    y += 6
+    // Pricing Options Cards if available
+    if (data.pricingOptions && data.pricingOptions.length > 0) {
+      y += 2
+      checkAddPage(22, 'Available Departure Dates')
+
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(7)
+      doc.setTextColor(...mutedText)
+      doc.text('OCCUPANCY & SHARING PRICING OPTIONS:', margin, y)
+      y += 4
+
+      const optCount = Math.min(data.pricingOptions.length, 4)
+      const optW = (contentWidth - (optCount - 1) * 3) / optCount
+      data.pricingOptions.slice(0, 4).forEach((opt, oIdx) => {
+        const oX = margin + oIdx * (optW + 3)
+        doc.setFillColor(255, 255, 255)
+        doc.roundedRect(oX, y, optW, 12, 1.5, 1.5, 'F')
+        doc.setDrawColor(...cardBorder)
+        doc.roundedRect(oX, y, optW, 12, 1.5, 1.5, 'D')
+
+        doc.setFont('helvetica', 'bold')
+        doc.setFontSize(6.5)
+        doc.setTextColor(...navy)
+        doc.text(cleanPdfText(opt.label), oX + 3, y + 4.5)
+
+        doc.setFont('helvetica', 'bold')
+        doc.setFontSize(7.5)
+        doc.setTextColor(...emerald)
+        doc.text(cleanPdfText(opt.price), oX + 3, y + 9.5)
+      })
+
+      y += 15
+    } else {
+      y += 5
+    }
   }
 
   // =========================================================================
@@ -831,7 +1040,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
         '24x7 On-Trip Assistance & Tribe Concierge'
       ]
 
-  const incLinesArr = incList.map((inc) => doc.splitTextToSize(cleanPdfText(inc), halfWidth - 10))
+  const incLinesArr = incList.map((inc) => doc.splitTextToSize(cleanPdfText(inc), halfWidth - 12))
   const totalIncLines = incLinesArr.reduce((a, b) => a + b.length, 0)
   const incBoxH = 10 + totalIncLines * 4 + incList.length * 1.5
 
@@ -846,16 +1055,16 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
         'GST 5% as applicable on travel packages'
       ]
 
-  const excLinesArr = excList.map((exc) => doc.splitTextToSize(cleanPdfText(exc), halfWidth - 10))
+  const excLinesArr = excList.map((exc) => doc.splitTextToSize(cleanPdfText(exc), halfWidth - 12))
   const totalExcLines = excLinesArr.reduce((a, b) => a + b.length, 0)
   const excBoxH = 10 + totalExcLines * 4 + excList.length * 1.5
 
   const maxIncExcH = Math.max(incBoxH, excBoxH)
 
   // Draw Inclusions Card
-  doc.setFillColor(240, 253, 244) // soft emerald
+  doc.setFillColor(...emeraldBg)
   doc.roundedRect(margin, y, halfWidth, maxIncExcH, 2.5, 2.5, 'F')
-  doc.setDrawColor(187, 247, 208)
+  doc.setDrawColor(...emeraldBorder)
   doc.roundedRect(margin, y, halfWidth, maxIncExcH, 2.5, 2.5, 'D')
 
   doc.setFont('helvetica', 'bold')
@@ -878,9 +1087,9 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
 
   // Draw Exclusions Card
   const excX = margin + halfWidth + 6
-  doc.setFillColor(254, 242, 242) // soft rose
+  doc.setFillColor(...roseBg)
   doc.roundedRect(excX, y, halfWidth, maxIncExcH, 2.5, 2.5, 'F')
-  doc.setDrawColor(254, 202, 202)
+  doc.setDrawColor(...roseBorder)
   doc.roundedRect(excX, y, halfWidth, maxIncExcH, 2.5, 2.5, 'D')
 
   doc.setFont('helvetica', 'bold')
@@ -940,7 +1149,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   // =========================================================================
   // PACKAGE COMMERCIALS & OFFICIAL BANK ACCOUNT
   // =========================================================================
-  checkAddPage(58, 'Commercials & Bank Account')
+  checkAddPage(52, 'Commercials & Bank Account')
 
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(10.5)
@@ -994,7 +1203,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
 
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(8)
-  doc.setTextColor(...navy)
+  doc.setTextColor(146, 64, 14) // dark gold/amber
   doc.text('OFFICIAL VERIFIED BANK ACCOUNT', bankX + 5, y + 6)
 
   doc.setFont('helvetica', 'normal')
@@ -1013,7 +1222,7 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   y += commH + 6
 
   // =========================================================================
-  // CLOSING SECTION: CONNECT WITH US (MATCHING SECTION 10)
+  // CLOSING SECTION: CONNECT WITH TRAVEL TRIBES
   // =========================================================================
   checkAddPage(38, 'Connect with Travel Tribes')
 
@@ -1065,10 +1274,13 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   const totalPages = doc.getNumberOfPages()
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i)
+    if (i > 1) {
+      // Top header already drawn by checkAddPage or doc.addPage
+    }
     drawPageFooter(i, totalPages)
   }
 
-  // Save / Trigger Download
+  // Save / Trigger Direct File Download
   const safeTitle = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
   const filename = `${safeTitle}-itinerary-proposal.pdf`
   doc.save(filename)
@@ -1078,90 +1290,26 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
  * Generate PDF for standard Trip objects (used on standard trip pages)
  */
 export async function generateItineraryPDF(trip: Trip, lead?: LeadInfo): Promise<void> {
-  // Collect 4 showcase images from gallery or destination
-  const showcaseList: { label: string; url: string }[] = []
-  if (trip.gallery && trip.gallery.length > 0) {
-    trip.gallery.forEach((g, idx) => {
-      if (g.image && showcaseList.length < 4) {
-        showcaseList.push({ label: g.alt || `Highlight ${idx + 1}`, url: g.image })
-      }
-    })
-  }
-
-  // Days mapping
-  const totalDays = trip.itinerary?.length || 1
-  const mappedDays = (trip.itinerary || []).map((d) => {
-    const narrativeTitle = generateProfessionalDayTitle({
-      dayNumber: d.day,
-      totalDays,
-      customTitle: d.title,
-      destination: trip.location
-    })
-
-    return {
-      day: d.day,
-      title: narrativeTitle,
-      guidedTour: true,
-      activities: d.activities || [],
-      meals: 'Breakfast & Dinner Included',
-      stay: trip.location,
-      image: trip.gallery?.[d.day - 1]?.image || trip.image
-    }
-  })
-
-  const unifiedData: UnifiedItineraryData = {
-    title: trip.title,
-    subtitle: `${trip.region?.toUpperCase() || 'COMMUNITY'} EXPEDITION • WHERE WANDERERS BECOME TRIBE`,
-    destination: trip.location,
-    duration: trip.duration,
-    price: trip.price,
-    tripType: 'group',
-    clientName: lead?.fullName || 'Valued Tribe Explorer',
+  const curated = convertTripToCuratedItinerary(trip, {
+    clientName: lead?.fullName,
     clientPhone: lead?.phone,
-    clientEmail: lead?.email,
-    travelDates: trip.date || trip.dates?.[0],
-    heroImage: trip.image,
-    overview: trip.description,
-    highlights: trip.highlights || [],
-    showcaseImages: showcaseList,
-    vehicleDetails: 'Comfortable AC Tempo Traveller / SUV as per group size',
-    mealPlanDetails: 'Breakfast & Dinner Included as per itinerary plan',
-    tourLeadDetails: 'Dedicated Travel Tribes Trip Leader & Local Chauffeur',
-    staySummary: 'Handpicked Community Stays, Boutique Cottages & Camps',
-    days: mappedDays,
-    hotels: [
-      {
-        city: trip.location,
-        hotelName: 'Handpicked Verified Premium Stay',
-        nights: trip.duration,
-        roomType: 'Double / Triple Sharing'
-      }
-    ],
-    inclusions: trip.inclusions || [],
-    exclusions: trip.exclusions || [],
-    quotation: {
-      totalPrice: trip.price,
-      perPerson: trip.price,
-      advanceToken: trip.bookingAmount || 'Rs. 3,000',
-      balancePending: 'To be paid 7 days prior to departure'
-    },
-    accountDetails: DEFAULT_BANK_ACCOUNT,
-    pointsToNote: trip.policies || DEFAULT_POINTS_TO_BE_NOTED
-  }
-
-  await renderUnifiedItineraryPDF(unifiedData)
+    clientEmail: lead?.email
+  })
+  await generateCuratedItineraryPDF(curated)
 }
 
 /**
  * Generate PDF for Curated Itineraries (used on curated proposal pages)
  */
 export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): Promise<void> {
-  // Collect 4 showcase images
+  const destMedia = getLuxuryImagesForDestination(itinerary.destination || itinerary.title)
+
+  // Collect 4 showcase images strictly from this trip and destination
   const showcaseList: { label: string; url: string }[] = []
 
   if (itinerary.locationGlimpses && itinerary.locationGlimpses.length > 0) {
     itinerary.locationGlimpses.forEach((g) => {
-      if (g.image && showcaseList.length < 4) {
+      if (g.image && showcaseList.length < 4 && !showcaseList.some((item) => item.url === g.image)) {
         showcaseList.push({ label: g.name || 'Trip Highlight', url: g.image })
       }
     })
@@ -1169,15 +1317,23 @@ export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): 
 
   if (showcaseList.length < 4 && itinerary.highlightImages && itinerary.highlightImages.length > 0) {
     itinerary.highlightImages.forEach((img, i) => {
-      if (img && showcaseList.length < 4) {
+      if (img && showcaseList.length < 4 && !showcaseList.some((item) => item.url === img)) {
         showcaseList.push({ label: `Scenic Glimpse ${i + 1}`, url: img })
+      }
+    })
+  }
+
+  if (showcaseList.length < 4 && destMedia.gallery && destMedia.gallery.length > 0) {
+    destMedia.gallery.forEach((gUrl, idx) => {
+      if (gUrl && showcaseList.length < 4 && !showcaseList.some((item) => item.url === gUrl)) {
+        showcaseList.push({ label: `${itinerary.destination || 'Scenic'} Spot ${idx + 1}`, url: gUrl })
       }
     })
   }
 
   if (showcaseList.length < 4 && itinerary.days && itinerary.days.length > 0) {
     itinerary.days.forEach((d) => {
-      if (d.image && showcaseList.length < 4) {
+      if (d.image && showcaseList.length < 4 && !showcaseList.some((item) => item.url === d.image)) {
         showcaseList.push({ label: d.title ? d.title.split('➔')[0].trim() : `Day ${d.day}`, url: d.image })
       }
     })
@@ -1192,7 +1348,7 @@ export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): 
       ? itinerary.hotels.map((h) => `${h.city} (${h.nights})`).join(' • ')
       : 'Handpicked Boutique Stays'
 
-  // Map days
+  // Map days with narrative titles and strictly destination-accurate images
   const totalDays = itinerary.days?.length || 1
   const mappedDays = (itinerary.days || []).map((d) => {
     const narrativeTitle = d.title && d.title.length > 5 && !d.title.startsWith('DAY')
@@ -1204,15 +1360,23 @@ export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): 
           destination: itinerary.destination
         })
 
+    const dayImg =
+      d.image ||
+      (destMedia.gallery && destMedia.gallery.length > 0
+        ? destMedia.gallery[(d.day - 1) % destMedia.gallery.length]
+        : itinerary.bannerImage || destMedia.hero)
+
     return {
       day: d.day,
       title: narrativeTitle,
       date: d.date,
       guidedTour: d.guidedTour ?? true,
       activities: d.points || (d.description ? [d.description] : []),
-      meals: d.meals && d.meals.length > 0 ? d.meals.join(', ') : 'As per plan',
+      meals: d.meals && d.meals.length > 0 ? d.meals.join(', ') : 'Breakfast & Dinner as per Plan',
       stay: d.stayHotel || d.stay || 'Handpicked Boutique Stay',
-      image: d.image
+      image: dayImg,
+      enRouteStop: d.enRouteStop,
+      travelDistance: d.travelDistance
     }
   })
 
@@ -1226,6 +1390,8 @@ export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): 
   const advanceTokenVal = quote.advanceAmount || '5,000'
   const balancePendingVal = quote.balancePendingAmount || 'As per invoice'
 
+  const hasMultipleBatches = Boolean(itinerary.availableBatches && itinerary.availableBatches.length > 1)
+
   const unifiedData: UnifiedItineraryData = {
     title: itinerary.title,
     subtitle: itinerary.subtitle || (isCustom ? 'PRIVATE BESPOKE EXPERIENCE' : 'COMMUNITY BACKPACKING'),
@@ -1236,8 +1402,11 @@ export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): 
     clientName: itinerary.clientName || 'Valued Tribe Explorer',
     clientPhone: itinerary.clientPhone,
     clientEmail: itinerary.clientEmail,
-    travelDates: itinerary.travelDates,
-    heroImage: itinerary.bannerImage,
+    travelDates: hasMultipleBatches ? undefined : itinerary.travelDates,
+    routeText: itinerary.routeText,
+    availableBatches: itinerary.availableBatches,
+    pricingOptions: quote.pricingOptions,
+    heroImage: itinerary.bannerImage || destMedia.hero,
     overview: itinerary.overview,
     highlights: itinerary.highlights || [],
     showcaseImages: showcaseList,

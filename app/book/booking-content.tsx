@@ -868,7 +868,7 @@ export function BookingContent() {
                     <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500 mt-1.5 font-medium">
                       <span className="flex items-center gap-1"><Clock3 size={12} className="text-[var(--sky)] shrink-0" /> {selectedTrip.duration}</span>
                       <span>•</span>
-                      <span>{selectedTrip.spots}</span>
+                      <span className="flex items-center gap-1"><Users size={12} className="text-[var(--sky)] shrink-0" /> Community Trip</span>
                     </div>
                   </div>
                 </div>

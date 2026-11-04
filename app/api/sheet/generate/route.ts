@@ -333,7 +333,7 @@ export async function POST(req: NextRequest) {
       destination: dest,
       duration: durationStr,
       routeText,
-      bannerImage: heroImage || 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=80',
+      bannerImage: effectiveHeroImage,
       overview: `A private bespoke ${durationStr} journey handcrafted exclusively for ${guestName}. Featuring handpicked accommodations, private dedicated transfers with ${vehicleType || 'Dedicated AC Vehicle'}, and curated local experiences across ${dest}.`,
       highlights: topHighlights,
       highlightImages: Array.isArray(galleryImages) ? galleryImages : [],
