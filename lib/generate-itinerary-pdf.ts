@@ -23,6 +23,7 @@ export interface UnifiedItineraryData {
   price?: string
   tripType: 'customized' | 'group'
   clientName?: string
+  clientFirstName?: string
   clientPhone?: string
   clientEmail?: string
   travelDates?: string
@@ -372,7 +373,17 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(16)
   doc.setTextColor(255, 255, 255)
-  const fullTitle = cleanPdfText(`${data.title.toUpperCase()} (${data.duration.toUpperCase()})`)
+
+  let displayTitle = data.title.toUpperCase()
+  const fName = data.clientFirstName?.trim()
+  if (fName && fName.toLowerCase() !== 'valued') {
+    const poss = fName.endsWith('s') ? `${fName.toUpperCase()}'` : `${fName.toUpperCase()}'S`
+    if (!displayTitle.startsWith(poss) && !displayTitle.startsWith(fName.toUpperCase())) {
+      displayTitle = `${poss} ${displayTitle}`
+    }
+  }
+
+  const fullTitle = cleanPdfText(`${displayTitle} (${data.duration.toUpperCase()})`)
   const titleLines = doc.splitTextToSize(fullTitle, contentWidth - 45)
   doc.text(titleLines.slice(0, 2), margin + 6, badgeY + 20)
 
@@ -1400,6 +1411,7 @@ export async function generateCuratedItineraryPDF(itinerary: CuratedItinerary): 
     price: `Rs. ${totalPriceVal}`,
     tripType: itinerary.tripType,
     clientName: itinerary.clientName || 'Valued Tribe Explorer',
+    clientFirstName: itinerary.clientFirstName || (itinerary.clientName && itinerary.clientName !== 'Valued Tribe Explorer' ? itinerary.clientName.trim().split(/\s+/)[0] : undefined),
     clientPhone: itinerary.clientPhone,
     clientEmail: itinerary.clientEmail,
     travelDates: hasMultipleBatches ? undefined : itinerary.travelDates,

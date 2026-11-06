@@ -48,6 +48,8 @@ export async function POST(req: NextRequest) {
     } = body
 
     const guestName = fullName || clientName || 'Valued Guest'
+    const guestFirstName = body.clientFirstName || body.firstName || (guestName && guestName !== 'Valued Guest' ? guestName.trim().split(/\s+/)[0] : '')
+    const guestLastName = body.clientLastName || body.lastName || (guestName && guestName !== 'Valued Guest' ? guestName.trim().split(/\s+/).slice(1).join(' ') : '')
     const dest = destination || 'Custom Trip'
     const daysCount = Math.max(1, Number(noOfDays) || 1)
     const nightsCount = Math.max(0, Number(noOfNights) || (daysCount > 1 ? daysCount - 1 : 0))
@@ -392,6 +394,8 @@ export async function POST(req: NextRequest) {
         nights: h.nights
       })),
       clientName: guestName,
+      clientFirstName: guestFirstName || undefined,
+      clientLastName: guestLastName || undefined,
       clientPhone: clientPhone || body.mobile || body.phone || '',
       clientEmail: clientEmail || body.email || '',
       departureCity: departureCity || body.departureCity || '',

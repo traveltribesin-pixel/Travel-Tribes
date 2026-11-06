@@ -105,6 +105,8 @@ export interface CuratedItinerary {
 
   // Customized Trip Specific
   clientName?: string
+  clientFirstName?: string
+  clientLastName?: string
   clientPhone?: string
   clientEmail?: string
   travelDates?: string

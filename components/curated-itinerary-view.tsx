@@ -59,6 +59,29 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
 
   const isCustomized = itinerary.tripType === 'customized'
   const clientName = itinerary.clientName || 'Valued Traveller'
+  const clientFirstName = itinerary.clientFirstName || (itinerary.clientName && itinerary.clientName !== 'Valued Traveller' ? itinerary.clientName.trim().split(/\s+/)[0] : '')
+
+  // Build possessive name and clean title: e.g. "Amit's" + "Rajasthan New Year Special"
+  const { namePrefix, cleanTitle } = (() => {
+    const rawTitle = itinerary.title || ''
+    const fName = clientFirstName?.trim() || ''
+
+    if (!fName || fName.toLowerCase() === 'valued' || fName.toLowerCase() === 'valued traveller') {
+      return { namePrefix: '', cleanTitle: rawTitle }
+    }
+
+    const poss = fName.endsWith("'s") || fName.endsWith("’s")
+      ? fName
+      : fName.endsWith('s')
+        ? `${fName}'`
+        : `${fName}'s`
+
+    // Remove leading name or name's from rawTitle if already typed
+    const regex = new RegExp(`^${fName}('s|’s|')?\\s*`, 'i')
+    const cleaned = rawTitle.replace(regex, '').trim()
+
+    return { namePrefix: poss, cleanTitle: cleaned || rawTitle }
+  })()
 
   const pointsToNote = itinerary.pointsToBeNoted && itinerary.pointsToBeNoted.length > 0
     ? itinerary.pointsToBeNoted
@@ -332,19 +355,19 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
               height={44}
               className="h-8 sm:h-10 w-auto object-contain drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]"
             />
-            {clientName && (
+            {clientName && clientName !== 'Valued Traveller' && (
               <div className="flex flex-wrap items-center justify-center gap-2 mt-1 sm:mt-1.5">
-                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#ffde59] text-slate-950 text-xs sm:text-sm font-black tracking-wider uppercase shadow-lg">
-                  <Sparkles className="w-4 h-4 fill-current text-slate-950" />
-                  Exclusive Proposal For {clientName}
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#ffde59] text-slate-950 text-xs font-black tracking-wider uppercase shadow-md">
+                  <Sparkles className="w-3.5 h-3.5 fill-current text-slate-950" />
+                  Exclusive Bespoke Proposal
                 </span>
                 {itinerary.departureCity && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/30 text-white font-mono font-bold text-xs tracking-wider">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-white/95 font-mono font-bold text-xs tracking-wider">
                     EX-{itinerary.departureCity.toUpperCase()}
                   </span>
                 )}
                 {itinerary.inquiryId && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/30 text-white font-mono font-bold text-xs tracking-wider">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-white/95 font-mono font-bold text-xs tracking-wider">
                     REF: #{itinerary.inquiryId.replace(/^#/, '')}
                   </span>
                 )}
@@ -353,22 +376,16 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
           </div>
 
           {/* Center Titles (Polished, High-Contrast Typography) */}
-          <div className="relative z-10 text-center px-2 sm:px-6 my-auto py-4 sm:py-6 max-w-3xl mx-auto space-y-3">
-            {/* Prominent Golden Dedication Badge Right in Hero Center */}
-            {clientName && clientName !== 'Valued Traveller' && (
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/65 backdrop-blur-md border-2 border-[#ffde59]/80 shadow-2xl mb-1">
-                <Sparkles className="w-4 h-4 text-[#ffde59] fill-[#ffde59]" />
-                <span className="text-[10.5px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#ffde59]">
-                  Personalized Proposal Handcrafted For
+          <div className="relative z-10 text-center px-2 sm:px-6 my-auto py-4 sm:py-6 max-w-3xl mx-auto space-y-2.5">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+              {namePrefix && (
+                <span className="font-serif italic capitalize text-[#ffde59] font-bold mr-2 sm:mr-3 inline-block drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+                  {namePrefix}
                 </span>
-                <span className="text-xs sm:text-sm font-black text-white tracking-wide uppercase underline decoration-[#ffde59] decoration-2 underline-offset-2">
-                  {clientName}
-                </span>
-              </div>
-            )}
-
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-              {itinerary.title}
+              )}
+              <span className="font-sans font-black text-white uppercase">
+                {cleanTitle}
+              </span>
             </h1>
             {displaySubtitle && (
               <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#ffde59] tracking-[0.22em] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] max-w-xl mx-auto">

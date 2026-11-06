@@ -232,6 +232,8 @@ export default function CurateItineraryPage() {
   const [selectedTemplateSlug, setSelectedTemplateSlug] = useState('');
 
   // 1. Client & Guest Details
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [fullName, setFullName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
   const [clientEmail, setClientEmail] = useState('');
@@ -328,7 +330,16 @@ export default function CurateItineraryPage() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object') {
-          if (parsed.fullName) setFullName(parsed.fullName);
+          if (parsed.firstName) setFirstName(parsed.firstName);
+          if (parsed.lastName) setLastName(parsed.lastName);
+          if (parsed.fullName) {
+            setFullName(parsed.fullName);
+            if (!parsed.firstName) {
+              const parts = parsed.fullName.trim().split(/\s+/);
+              setFirstName(parts[0] || '');
+              setLastName(parts.slice(1).join(' ') || '');
+            }
+          }
           if (parsed.clientPhone) setClientPhone(parsed.clientPhone);
           if (parsed.clientEmail) setClientEmail(parsed.clientEmail);
           if (parsed.inquiryId) setInquiryId(parsed.inquiryId);
@@ -386,6 +397,8 @@ export default function CurateItineraryPage() {
     const timer = setTimeout(() => {
       try {
         const draft = {
+          firstName,
+          lastName,
           fullName,
           clientPhone,
           clientEmail,
@@ -427,6 +440,8 @@ export default function CurateItineraryPage() {
 
     return () => clearTimeout(timer);
   }, [
+    firstName,
+    lastName,
     fullName,
     clientPhone,
     clientEmail,
@@ -1096,8 +1111,12 @@ export default function CurateItineraryPage() {
     return {
       tripTitle: tripTitle.trim() || undefined,
       subtitle: subtitle.trim() || undefined,
-      fullName: fullName.trim() || 'Valued Guest',
-      clientName: fullName.trim() || 'Valued Guest',
+      firstName: firstName.trim() || undefined,
+      lastName: lastName.trim() || undefined,
+      clientFirstName: firstName.trim() || (fullName ? fullName.trim().split(/\s+/)[0] : undefined),
+      clientLastName: lastName.trim() || undefined,
+      fullName: fullName.trim() || `${firstName} ${lastName}`.trim() || 'Valued Guest',
+      clientName: fullName.trim() || `${firstName} ${lastName}`.trim() || 'Valued Guest',
       clientPhone: clientPhone.trim() || undefined,
       clientEmail: clientEmail.trim() || undefined,
       inquiryId: inquiryId.trim() || undefined,
@@ -1269,6 +1288,8 @@ export default function CurateItineraryPage() {
         image: img
       })),
       clientName: guestName,
+      clientFirstName: payload.clientFirstName || firstName.trim() || undefined,
+      clientLastName: payload.clientLastName || lastName.trim() || undefined,
       clientPhone: clientPhone || undefined,
       clientEmail: clientEmail || undefined,
       inquiryId: inquiryId || undefined,
@@ -1309,6 +1330,8 @@ export default function CurateItineraryPage() {
       }
     };
   }, [
+    firstName,
+    lastName,
     fullName,
     clientPhone,
     clientEmail,
@@ -1466,20 +1489,44 @@ export default function CurateItineraryPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Full Name */}
+            {/* First Name */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
-                <span>Client Full Name <span className="text-rose-500">*</span></span>
-                <span className="text-[10px] text-amber-600 font-extrabold uppercase">Cover Highlight</span>
+                <span>First Name <span className="text-rose-500">*</span></span>
+                <span className="text-[10px] text-amber-600 font-extrabold uppercase">Title Highlight</span>
               </label>
               <Input
-                value={fullName}
-                onChange={e => setFullName(e.target.value)}
-                placeholder="e.g. Rahul & Sneha Sharma"
-                className="bg-slate-50 font-semibold border-amber-200 focus:border-[#0077b6]"
+                value={firstName}
+                onChange={e => {
+                  const val = e.target.value;
+                  setFirstName(val);
+                  setFullName(`${val} ${lastName}`.trim());
+                }}
+                placeholder="e.g. Amit"
+                className="bg-slate-50 font-semibold border-amber-300 focus:border-[#0077b6]"
               />
-              <p className="text-[10.5px] text-slate-500 mt-1 font-medium">
-                Shown prominently at the start of proposal (&quot;Handcrafted for {fullName || 'Client'}&quot;)
+              <p className="text-[10px] text-slate-500 mt-1 font-medium truncate">
+                In Title: <span className="font-bold text-[#0077b6]">{firstName ? `${firstName}'s ${tripTitle || 'Trip'}` : "Client's Trip"}</span>
+              </p>
+            </div>
+
+            {/* Last Name */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Last Name / Surname
+              </label>
+              <Input
+                value={lastName}
+                onChange={e => {
+                  const val = e.target.value;
+                  setLastName(val);
+                  setFullName(`${firstName} ${val}`.trim());
+                }}
+                placeholder="e.g. Maurya"
+                className="bg-slate-50 font-semibold"
+              />
+              <p className="text-[10px] text-slate-500 mt-1 font-medium">
+                Used in commercials &amp; full proposal details
               </p>
             </div>
 
