@@ -22,9 +22,18 @@ const categories = [
 ]
 
 export default function Page() {
-  const upcomingTrips = trips.filter(
-    (t) => !t.slug.startsWith('hampi') && !t.slug.startsWith('jawai') && t.slug !== 'spiti-valley-chandrataal' && isTripUpcoming(t)
+  const filtered = trips.filter(
+    (t) =>
+      !t.slug.startsWith('hampi') &&
+      !t.slug.startsWith('jawai') &&
+      t.slug !== 'spiti-valley-chandrataal' &&
+      isTripUpcoming(t)
   )
+
+  const upcomingTrips = [
+    ...filtered.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
+    ...filtered.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
+  ]
 
   return (
     <TripsPage

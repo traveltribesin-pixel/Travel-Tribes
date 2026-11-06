@@ -8,6 +8,19 @@ import { trips } from '@/lib/travel-data'
 import { isTripUpcoming } from '@/lib/date-utils'
 
 export function UpcomingTripsSection() {
+  const filteredTrips = trips.filter(
+    (t) =>
+      !t.slug.startsWith('hampi') &&
+      !t.slug.startsWith('jawai') &&
+      t.slug !== 'spiti-valley-chandrataal' &&
+      isTripUpcoming(t)
+  )
+
+  const prioritizedTrips = [
+    ...filteredTrips.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
+    ...filteredTrips.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
+  ]
+
   return (
     <section
       className="py-8 sm:py-10 bg-white"
@@ -22,11 +35,9 @@ export function UpcomingTripsSection() {
         center
       />
       <HorizontalRail label="Upcoming trips">
-        {trips
-          .filter(t => !t.slug.startsWith('hampi') && !t.slug.startsWith('jawai') && t.slug !== 'spiti-valley-chandrataal' && isTripUpcoming(t))
-          .map(t => (
-            <TripCard key={t.slug} trip={t} featured />
-          ))}
+        {prioritizedTrips.map((t) => (
+          <TripCard key={t.slug} trip={t} featured />
+        ))}
       </HorizontalRail>
 
       {/* Centered Glow Button Below Cards */}

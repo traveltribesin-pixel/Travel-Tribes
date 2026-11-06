@@ -7,6 +7,20 @@ import { TripCard } from '@/components/trip-card'
 import { trips } from '@/lib/travel-data'
 
 export function DomesticJourneysSection() {
+  const filteredTrips = trips.filter(
+    (t) =>
+      t.region !== 'International' &&
+      !t.slug.startsWith('hampi') &&
+      !t.slug.startsWith('jawai') &&
+      t.slug !== 'spiti-valley-chandrataal' &&
+      !t.date?.toLowerCase().includes('no upcoming')
+  )
+
+  const prioritizedTrips = [
+    ...filteredTrips.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
+    ...filteredTrips.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
+  ]
+
   return (
     <section className="w-full max-w-[1280px] py-8 sm:py-10 px-[5vw] mx-auto editorial-section">
       <SectionHeading 
@@ -15,11 +29,9 @@ export function DomesticJourneysSection() {
         center
       />
       <HorizontalRail label="Domestic trips">
-        {trips
-          .filter(t => t.region !== 'International' && !t.slug.startsWith('hampi') && !t.slug.startsWith('jawai') && t.slug !== 'spiti-valley-chandrataal' && !t.date?.toLowerCase().includes('no upcoming'))
-          .map(t => (
-            <TripCard key={t.slug} trip={t} />
-          ))}
+        {prioritizedTrips.map((t) => (
+          <TripCard key={t.slug} trip={t} />
+        ))}
       </HorizontalRail>
 
       {/* Centered Glow Button Below Cards */}

@@ -1097,6 +1097,261 @@ const baseTrips: Trip[] = [
     ]
   },
   {
+    id: 'spiti-valley-xmas-new-year-mumbai',
+    slug: 'spiti-valley-xmas-new-year-mumbai',
+    title: 'Spiti Valley — Xmas & New Year Special (Mumbai to Mumbai)',
+    location: 'Chitkul · Tabo · Dhankar · Kaza · Langza · Hikkim · Komic · Key Monastery · Chicham · Kibber · Kalpa',
+    region: 'Domestic',
+    date: 'Dec 18–28, 2026 (Christmas Special)',
+    dates: [
+      'Dec 18–28, 2026 (Christmas Special)',
+      'Dec 25, 2026 – Jan 04, 2027 (New Year Special)'
+    ],
+    duration: '9N/10D',
+    price: '₹23,999',
+    image: '/new-year-trip-images/4.png',
+    alt: 'Spiti Valley Winter Expedition (Mumbai to Mumbai) in White Snow',
+    tag: 'Xmas & New Year Special',
+    seoDescription: 'Celebrate Christmas & New Year in Spiti Valley with Travel Tribes (Mumbai to Mumbai). 10-day winter expedition including 3AC train, Key Monastery, Hikkim, Komic, Chitkul & snow landscapes.',
+    seoKeywords: [
+      'Spiti Valley New Year trip from Mumbai',
+      'Spiti Valley Xmas New Year Mumbai to Mumbai',
+      'Winter Spiti Mumbai package',
+      'Spiti Valley winter expedition',
+      'White Spiti New Year group trip',
+      'Key Monastery in snow',
+      'Travel Tribes Spiti Mumbai'
+    ],
+    description: "Snow-covered mountains, frozen landscapes, remote Himalayan villages, ancient monasteries, and some of the most dramatic roads in Himachal Pradesh — welcome to the Spiti Valley Winter Expedition (Mumbai to Mumbai). Travel with Travel Tribes on an epic 10-day journey from Mumbai to the high-altitude cold desert of the Himalayas with a group of fellow travellers. From Mumbai to Delhi by 3AC train, Delhi to Shimla by AC Volvo, and onward by dedicated mountain tempo traveller, journey along the Sutlej and Baspa rivers to Chitkul — the last inhabited village before the Indo-China border. Discover 1,025-year-old ancient caves and monastery in Tabo, marvel at the cliffside Dhankar Monastery, post handwritten letters from Hikkim (world's highest post office), visit Komic (world's highest motorable village) and Langza (fossil village of India), stand before the 11th-century Key Monastery perched high on a hill, cross Asia's highest Chicham Bridge at 13,596 ft, look for snow leopards in Kibber, and soak in breathtaking sunsets from Kalpa Suicide Point. With confirmed/RAC 3AC train tickets from Mumbai, luxury semi-sleeper Volvo, dedicated mountain tempo traveller, handpicked boutique stays & homestays, 6 hearty breakfasts & dinners, and an experienced Travel Tribes Captain throughout, this is the ultimate festive adventure. Come solo, meet strangers, and leave with a tribe.",
+    gallery: [
+      { image: '/Card Image/winter_spiti.png', alt: 'Spiti Valley Winter Expedition in White Snow' },
+      { image: '/image/Spiti/spiti_img.JPEG', alt: 'Spiti Valley Key Monastery' },
+      { image: '/image/Spiti/20250110_154329_88A2CE.jpeg', alt: 'Chicham Bridge Asia Highest Bridge' },
+      { image: '/image/Spiti/20250110_154841_8079AD.jpeg', alt: 'Hikkim Highest Post Office' },
+      { image: '/image/Spiti/20250110_161203_82E076.jpeg', alt: 'Langza Buddha Statue Spiti' },
+      { image: '/image/Spiti/20250110_162802_88500D.jpeg', alt: 'Komic Highest Village' },
+      { image: '/image/Spiti/IMG_5120.JPEG', alt: 'Chitkul Baspa River Snow' },
+      { image: '/image/Spiti/IMG_5385.JPEG', alt: 'Tabo Monastery and Caves' },
+      { image: '/image/Spiti/IMG_5565.jpg', alt: 'Dhankar Monastery Cliff' },
+      { image: '/image/Spiti/IMG_7218.JPEG', alt: 'Kalpa Suicide Point Views' }
+    ],
+    highlights: [
+      '🏔️ Chitkul — the last inhabited village before the Indo-China border',
+      '🍜 Maggi by the Baspa River & Hindustan ka Aakhri Dhaba',
+      '🛕 Tabo Monastery & Ancient Meditation Caves (1,025-year-old history)',
+      '🏰 Cliffside Dhankar Monastery overlooking Spiti & Pin confluence',
+      '📮 Postcards from Hikkim — the world\'s highest post office (14,567 ft)',
+      '🏔️ Komic — the world\'s highest motorable village (15,027 ft)',
+      '🗿 Langza — India\'s fossil village with giant Golden Buddha statue',
+      '🏯 Key Monastery perched on the hill (11th century)',
+      '🌉 Chicham Bridge — Asia\'s Highest Bridge at 13,596 ft',
+      '🐆 Exploring Kibber village, famous for snow leopard sightings',
+      '🌄 Kalpa and its stunning views capturing memories at Suicide Point in Kalpa'
+    ],
+    itinerary: [
+      {
+        id: 'spiti-mumbai-day-1',
+        day: 1,
+        title: 'DAY 1 — MUMBAI TO DELHI | Board the Train & Meet the Tribe 🚆',
+        activities: [
+          'Board the train from Mumbai to Delhi (Mumbai to Mumbai 3AC Train CNF or RAC ticket provided).',
+          'Meet your fellow travellers and trip captain at the railway station.',
+          'Kick off the journey with fun ice-breaking games, conversations, music, and new friendships!',
+          'Included Today: Meetup & Ice Breaking games session.',
+          'Meals: Not Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-2',
+        day: 2,
+        title: 'DAY 2 — DELHI TO SHIMLA | Overnight Semi-Sleeper AC Volvo 🚍',
+        activities: [
+          'Arrive in Delhi and assemble at Kashmiri Gate / R K Ashram boarding point.',
+          'Our exciting journey to Shimla begins at 8:00 PM.',
+          'Get ready to board our Semi-Sleeper AC Volvo bus for an overnight ride to the enchanting Queen of Hills.',
+          'Relax, unwind, and enjoy the winding mountain roads as we ascend towards Himachal.',
+          'Meals: Not Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-3',
+        day: 3,
+        title: 'DAY 3 — SHIMLA TO CHITKUL | Journey to the Last Village of India 🏡',
+        activities: [
+          'As the first light of day breaks, we arrive in Shimla, and the real Himalayan adventure begins!',
+          'Hit the road in our dedicated tempo traveler as we journey from Shimla to the mystical Chitkul.',
+          'Follow the Sutlej River, taking a thrilling turn towards Chitkul along the mesmerizing Baspa River.',
+          'Chitkul, the last inhabited village before the Indo-China border, awaits us for an unforgettable overnight stay.',
+          'Enjoy a piping hot, delicious dinner in the quaint village of Chitkul.',
+          'Meals: Dinner Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-4',
+        day: 4,
+        title: 'DAY 4 — CHITKUL TO TABO | Baspa River, Last Dhaba & Khab Sangam 🍲',
+        activities: [
+          'After breakfast, head out to explore the picturesque Chitkul village.',
+          'Trek down to the Baspa riverside or enjoy some hot Maggi at the "Hindustan ka Aakhri Dhaba" (Last Dhaba of India).',
+          'Move towards Tabo, halting on the way at Khab Sangam (confluence of Sutlej and Spiti rivers).',
+          'Arrive in Tabo and check into our warm, welcoming homestay.',
+          'Enjoy a delicious, freshly prepared local home-cooked meal.',
+          'Meals: Breakfast & Dinner Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-5',
+        day: 5,
+        title: 'DAY 5 — TABO TO KAZA VIA DHANKAR | 1,025-Year-Old Monastery & Cliffs 🛕',
+        activities: [
+          'Tabo, with its 1,025-year-old history, holds ancient Himalayan secrets waiting to be uncovered.',
+          'Today, dive into the village\'s soul, exploring its meditation caves and the awe-inspiring Tabo Monastery.',
+          'Our journey then takes us to the dramatic cliffside Dhankar Monastery before we head to Kaza, the heart of Spiti.',
+          'Arrive in Kaza, where we will spend the following three days.',
+          'Check-in at our homestay and savor a warm group dinner.',
+          'Meals: Breakfast & Dinner Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-6',
+        day: 6,
+        title: 'DAY 6 — KAZA, LANGZA, HIKKIM & KOMIC | World\'s Highest Post Office 📮',
+        activities: [
+          'After enjoying delicious local breakfast at the homestay, get ready to explore the highest post office of the world in Hikkim (14,567 ft).',
+          'Post handwritten letters with official postal stamps to your loved ones from the top of the world.',
+          'Visit Komic Village (15,027 ft) — the world\'s highest motorable village.',
+          'Explore Langza, the fossil village of India, guarded by the iconic giant Golden Buddha statue overlooking snow peaks.',
+          'Come back to Kaza by evening, explore the vibrant local market, and enjoy dinner at the stay.',
+          'Meals: Breakfast & Dinner Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-7',
+        day: 7,
+        title: 'DAY 7 — KEY MONASTERY TO CHICHAM | Asia\'s Highest Bridge & Kibber 🌉',
+        activities: [
+          'Prepare for awe-inspiring sights today as we visit the famous Key Monastery, perched high on a conical hill with a history dating back to the 11th century.',
+          'Interact with Buddhist monks, explore the ancient murals, and soak in panoramic views of the Spiti valley.',
+          'After Key, cross the incredible Chicham Bridge — Asia\'s highest suspension bridge at 13,596 ft.',
+          'Our journey takes us to Kibber village, world-famous for snow leopard sightings.',
+          'Come back to Kaza and enjoy some warm, local home-cooked dinner.',
+          'Meals: Breakfast & Dinner Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-8',
+        day: 8,
+        title: 'DAY 8 — KAZA TO KALPA | Scenic Drive via Nako Village 🏔️',
+        activities: [
+          'Our last morning in Kaza invites us to take a leisurely walk through town, soaking in the breathtaking scenery one last time.',
+          'Hit the road to reach Kalpa via the picturesque Nako village and sacred Nako lake.',
+          'Get ready for an overnight stay in Kalpa, surrounded by awe-inspiring vistas of the sacred Kinner Kailash range.',
+          'Enjoy dinner and rest at our hotel in Kalpa.',
+          'Meals: Breakfast & Dinner Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-9',
+        day: 9,
+        title: 'DAY 9 — KALPA TO SHIMLA & DEPARTURE TO DELHI | Suicide Point 📸',
+        activities: [
+          'Wake up to the serene beauty of Kalpa and enjoy a hearty breakfast with a majestic mountain view.',
+          'Explore Kalpa, visit the nearby Suicide Point, and capture stunning photographs and Instagram-worthy reels.',
+          'As we bid farewell to Kalpa, we will make our way back to Delhi via Shimla, cherishing the memories of an unforgettable journey.',
+          'Board our overnight Volvo bus from Shimla to Delhi.',
+          'Meals: Breakfast Included.'
+        ]
+      },
+      {
+        id: 'spiti-mumbai-day-10',
+        day: 10,
+        title: 'DAY 10 — ARRIVAL DELHI TO MUMBAI | Return with Lifetime Memories 🚆',
+        activities: [
+          'Arrive in Delhi early morning, carrying a heart full of memories and a bunch of new friends.',
+          'Head to the railway station and board your 3AC train back to Mumbai.',
+          'Trip concludes with hugs, smiles, unforgettable stories, and a lifelong Travel Tribe bond.',
+          'Meals: Not Included.'
+        ]
+      }
+    ],
+    inclusions: [
+      'Mumbai to Mumbai 3AC Train (CNF or RAC)',
+      'Delhi to Shimla Semi-Sleeper AC Volvo',
+      'Shimla to Kaza to Shimla Dedicated Tempo Traveler',
+      'Shimla to Delhi AC Volvo Bus',
+      'Stay for 6 nights: 01 night hotel at Chitkul/Sangla, 01 night homestay at Tabo, 03 nights homestay at Kaza, 01 night hotel in Kalpa',
+      '6 Breakfasts & 6 Dinners',
+      'Trip Captain & Support throughout the trip',
+      'Driver Night Charges, Toll Tax, State Border Taxes & Parking Charges',
+      'Visit Tabo Monastery & explore ancient caves',
+      'Explore Komic & Langza fossil village',
+      'Visit Key Monastery & Dhankar Monastery',
+      'Send postcards from Hikkim (World\'s Highest Post Office)',
+      'Cross Chicham Bridge (Asia\'s Highest Bridge)',
+      'Spot snow leopards in Kibber village'
+    ],
+    exclusions: [
+      'Meals: Any kind of food or beverage that is not included in the package like alcoholic drinks, mineral water, meals/refreshments/lunches on the highway',
+      'Stay: Any Expense in Delhi like stay for fresh up/food etc.',
+      'Personal Expenses: Tip to the driver, camera/video camera charges, laundry, Room Heater, etc.',
+      'Natural Calamities: Any cost arising due to natural calamities like landslides, roadblocks etc. (to be borne directly by the customer on the spot)',
+      '5% GST as applicable on travel packages',
+      'Other: Anything not mentioned in the inclusions'
+    ],
+    thingsToCarry: [
+      'Valid Government Photo ID (Aadhaar / Passport / Driving License) — Mandatory',
+      'Heavy sub-zero winter wear: Thermals (2-3 pairs), fleece layers, heavy down jacket (-15°C to -20°C rated)',
+      'High-ankle waterproof trekking snow boots with good grip + 4-5 pairs of heavy woollen socks',
+      'Woollen beanie, balaclava / face mask, neck warmer, and insulated snow gloves',
+      'UV protection polarized sunglasses (essential against snow blindness) & cold-cream + lip balm',
+      'Personal medical kit (Diamox for altitude, cold/fever tablets, pain relief, glucose, ORS)',
+      'High-capacity power bank (cold drains battery fast) & universal chargers',
+      'Thermos insulated water bottle (prevents drinking water from freezing)',
+      'Sufficient cash (ATMs in Spiti often remain closed or out of cash in winter)'
+    ],
+    policies: [
+      'The trip leader has all the rights to discard, skip or alter the sightseeing/itinerary if an emergency occurs, act of God or over unfavorable behavior of participants.',
+      'Triple Sharing Room: In triple-sharing rooms, an extra mattress is provided, but it should not be confused with an extra bed.',
+      'Any delay in time at particular sightseeing by participants will result in cancellations of further sightseeing.',
+      'Participants should coordinate, disciplined and align together as a team during the Trip.',
+      'No refund will be provided if the participant doesn\'t show up on the day of the event.',
+      'Alcohol Consumption: The consumption and serving of alcohol in hotels/rooms are subject to the rules and regulations of the respective hotels.',
+      'Though we assure safety as a top priority, Event Organizers are not responsible for any severe injuries or fatal events.',
+      'Mandatory ID Requirement: As mandated by the Government, a valid photo ID for all members staying at the hotel is mandatory.',
+      'Itineraries might change a bit on public holidays/festivals.',
+      'Exclusive Vehicle Usage: The vehicle provided will be used exclusively as per the itinerary on a point-to-point basis and will not be available for personal use.',
+      'Travelers must take care of their luggage & belongings. The management shall not be accountable for missing items along the tour.',
+      'Due to any Special occasion/Public Holiday/long Weekend or Festivals, if any sightseeing will be close, Travel Tribes are not liable for that.',
+      'We do not provide any insurance policy to cover the expenditure on sickness or accidents or losses incurred due to theft or other reasons.',
+      'Water and Electricity Scarcity: In hilly areas, scarcity of water and electricity is a natural phenomenon. Some hotels have fixed schedules for supplying hot and cold water. Cooperation is appreciated despite the inconvenience caused.',
+      'Please do not expect luxury facilities and appreciate being cooperative with fellow Participants.',
+      'Transportation and Logistics may vary depending on group size (7 sumo, 11 tt, 20 bus) Because we don\'t want to spoil your planned weekend :)',
+      'We understand and appreciate physical intimacies (handshakes, hugs, etc.) but not at the cost of someone else\'s discomfort. TRAVEL TRIBES strictly stands against any form of harassment.',
+      'Individual who wishes to enroll in this plan must consume all Road, vehicle and any nature related risk. The operating company/Trip leaders are not responsible for any harm/damage/loss of life.',
+      'AC Availability: AC will not be available in vehicles like Tempo Traveler/Innova/Xylo/Scorpio or similar categories in hilly regions.',
+      'Bus Breakdowns: Buses provided by third-party vendors may experience breakdowns. While a new vehicle is arranged in such cases, it may take some time for on-ground operations. Cooperation is required in case of any breakdowns.',
+      'Predefined Bus Halts: The bus halts for lunch/dinner are predefined by the vendor and cannot be changed for convenience.',
+      'Refund will be done only in case of cancellation of plan from the company or organizers or the plan is postponed.',
+      'You give consent and authority to TRAVEL TRIBES to use any clicked pictures / videos of you to be used to be posted on social media, or any other media or for marketing purposes in the future. All pictures and videos from the trip are a property of TRAVEL TRIBES.',
+      'Cancellation Policy: The Initial Registration amount is non-refundable. You can reschedule your trip at free of cost or get credit note. Out of the second and final installment paid, cancellation fees will be: 25% deducted if cancelled before 30 days of the trip; 50% deducted if cancelled before 15 days of the trip; 75% deducted if cancelled before 10 days of the trip; 100% deducted if cancelled before 05 days of the trip.'
+    ],
+    regularPackages: [
+      { label: 'Triple Sharing', price: '₹23,999 / person' },
+      { label: 'Double Sharing', price: '₹25,999 / person' }
+    ],
+    festivePackages: [
+      { label: 'Triple Sharing', price: '₹23,999 / person' },
+      { label: 'Double Sharing', price: '₹25,999 / person' }
+    ],
+    doubleSharingRate: 2000,
+    pricingOptions: [
+      { label: 'Triple Sharing (From Mumbai)', price: '₹23,999 / person' },
+      { label: 'Double Sharing (From Mumbai)', price: '₹25,999 / person' }
+    ],
+    bookingAmount: '₹5,000 / person',
+    pdfUrl: 'https://drive.google.com/file/d/160QHg3nelc9C95BUzUWkb30kOSNK_amV/view'
+  },
+  {
     id: 'hampi-backpacking',
     slug: 'hampi-backpacking',
     title: 'Hampi Backpacking Trip',
@@ -6926,6 +7181,7 @@ export const TRIP_DRIVE_PDF_MAP: Record<string, string> = {
   'spiti-valley-chandrataal': 'https://drive.google.com/file/d/1TyWTcj96NY4pplPgOOraSdkGnUYyDP5M/view',
   'spiti-winter-expedition': 'https://drive.google.com/file/d/160QHg3nelc9C95BUzUWkb30kOSNK_amV/view',
   'spiti-winter-expedition-xmas-new-year': 'https://drive.google.com/file/d/160QHg3nelc9C95BUzUWkb30kOSNK_amV/view',
+  'spiti-valley-xmas-new-year-mumbai': 'https://drive.google.com/file/d/160QHg3nelc9C95BUzUWkb30kOSNK_amV/view',
 }
 
 export const trips: Trip[] = [...baseTrips, ...duplicateTrips].map((t) => ({

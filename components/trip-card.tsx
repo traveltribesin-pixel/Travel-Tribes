@@ -130,6 +130,10 @@ function getTripRouteInfo(trip: Trip): { startEnd: string; fullRoute: string } {
       startEnd: 'Delhi - Delhi',
       fullRoute: 'Delhi-Shimla-Chitkul-Tabo-Kaza-Key-Kalpa-Delhi',
     },
+    'spiti-valley-xmas-new-year-mumbai': {
+      startEnd: 'Mumbai - Mumbai',
+      fullRoute: 'Mumbai – Delhi – Shimla – Chitkul – Tabo – Kaza – Kalpa – Delhi – Mumbai',
+    },
     'jawai-leopard-safari': {
       startEnd: 'Mumbai - Mumbai',
       fullRoute: 'Mumbai-Jawai-Bera-Jawai Dam-Mumbai',
@@ -304,6 +308,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
               }
             />
             <span
+              suppressHydrationWarning
               className={`truncate ${
                 isWeekend
                   ? 'text-slate-800 font-bold'

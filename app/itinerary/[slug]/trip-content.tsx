@@ -44,13 +44,16 @@ export function TripContent({ trip }: { trip: Trip }) {
   const [pdfError, setPdfError] = useState<string | null>(null)
 
   const primaryDate = useMemo(() => getTripPrimaryDate(trip), [trip])
-  const upcomingDates = useMemo(() => {
+  
+  // All available departure dates strictly as per itinerary data
+  const availableDates = useMemo(() => {
     if (trip.dates && trip.dates.length > 0) {
-      const filtered = filterUpcomingDates(trip.dates)
-      if (filtered.length > 0) return filtered
+      return trip.dates
     }
     return [primaryDate]
   }, [trip, primaryDate])
+
+  const upcomingDates = availableDates
 
   const initialDate = useMemo(() => {
     if (isFestiveParam && trip.dates && trip.dates.length > 0) {
@@ -63,8 +66,35 @@ export function TripContent({ trip }: { trip: Trip }) {
   }, [isFestiveParam, trip.dates, primaryDate])
 
   const [selectedDate, setSelectedDate] = useState(initialDate)
+  const [isHeaderDateDropdownOpen, setIsHeaderDateDropdownOpen] = useState(false)
+  const headerDateDropdownRef = useRef<HTMLDivElement>(null)
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false)
   const [isMobileDateDropdownOpen, setIsMobileDateDropdownOpen] = useState(false)
+
+  // Close header date dropdown on outside click or escape key
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        headerDateDropdownRef.current &&
+        !headerDateDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsHeaderDateDropdownOpen(false)
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsHeaderDateDropdownOpen(false)
+      }
+    }
+    if (isHeaderDateDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleKeyDown)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isHeaderDateDropdownOpen])
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showAllPhotos, setShowAllPhotos] = useState(false)
@@ -498,10 +528,188 @@ export function TripContent({ trip }: { trip: Trip }) {
               <span className="truncate">{trip.duration}</span>
             </span>
 
-            <span className={`flex items-center justify-center sm:justify-start gap-1.5 bg-white border px-3 py-2 rounded-xl shadow-xs truncate ${primaryDate === 'No Upcoming Trips' ? 'border-amber-200 text-amber-600 font-bold' : 'border-slate-200/90 text-slate-600 font-semibold'}`}>
-              <CalendarDays size={14} className={primaryDate === 'No Upcoming Trips' ? 'text-amber-500 shrink-0' : 'text-[var(--sky)] shrink-0'} />
-              <span className="truncate">{primaryDate}</span>
-            </span>
+            {/* 2. Interactive Departure Date Badge with Professional Dropdown */}
+            <div ref={headerDateDropdownRef} className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  if (availableDates.length > 1) {
+                    setIsHeaderDateDropdownOpen((prev) => !prev)
+                  }
+                }}
+                className={`w-full flex items-center justify-between sm:justify-start gap-1.5 bg-white border px-3 py-2 rounded-xl shadow-xs text-[11.5px] sm:text-xs transition-all duration-200 group text-left ${
+                  availableDates.length > 1
+                    ? 'cursor-pointer hover:border-[var(--sky)] hover:shadow-sm'
+                    : 'cursor-default'
+                } ${
+                  isHeaderDateDropdownOpen
+                    ? 'border-[var(--sky)] ring-3 ring-[var(--sky)]/15 text-[var(--navy)] font-bold'
+                    : selectedDate === 'No Upcoming Trips'
+                      ? 'border-amber-200 text-amber-600 font-bold'
+                      : 'border-slate-200/90 text-slate-700 font-semibold'
+                }`}
+                title={availableDates.length > 1 ? `Click to choose from ${availableDates.length} available departure dates` : selectedDate}
+                aria-expanded={isHeaderDateDropdownOpen}
+              >
+                <div className="flex items-center gap-1.5 min-w-0 truncate">
+                  <CalendarDays
+                    size={14}
+                    className={
+                      selectedDate === 'No Upcoming Trips'
+                        ? 'text-amber-500 shrink-0'
+                        : 'text-[var(--sky)] shrink-0'
+                    }
+                  />
+                  <span className="truncate max-w-[115px] sm:max-w-[175px] md:max-w-[210px]">
+                    {selectedDate}
+                  </span>
+                </div>
+
+                {availableDates.length > 1 && (
+                  <div className="flex items-center gap-1 shrink-0 ml-1">
+                    <span className="hidden xl:inline-flex px-1.5 py-0.2 rounded-full text-[9.5px] font-bold bg-[var(--sky-pale)] text-[var(--sky)]">
+                      {availableDates.length}
+                    </span>
+                    <ChevronDown
+                      size={13}
+                      className={`text-slate-400 group-hover:text-[var(--sky)] transition-transform duration-200 ${
+                        isHeaderDateDropdownOpen ? 'rotate-180 text-[var(--sky)]' : ''
+                      }`}
+                    />
+                  </div>
+                )}
+              </button>
+
+              {/* Professional Dropdown Popover */}
+              <AnimatePresence>
+                {isHeaderDateDropdownOpen && availableDates.length > 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                    className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-[calc(100vw-3rem)] sm:w-[380px] md:w-[410px] max-w-[94vw] bg-white rounded-2xl border border-slate-200 shadow-[0_16px_50px_rgba(11,41,64,0.22)] z-50 overflow-hidden divide-y divide-slate-100"
+                  >
+                    {/* Header */}
+                    <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white px-4 py-3 flex items-center justify-between">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-7 h-7 rounded-lg bg-[var(--sky)]/25 text-[var(--sky)] flex items-center justify-center shrink-0">
+                          <CalendarDays size={15} />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-xs font-black tracking-wide uppercase text-white truncate">
+                            Available Departure Batches
+                          </div>
+                          <div className="text-[10px] font-medium text-slate-300 truncate">
+                            Select date to update pricing & schedule
+                          </div>
+                        </div>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[var(--sky)] text-white shadow-xs shrink-0">
+                        {availableDates.length} Batches
+                      </span>
+                    </div>
+
+                    {/* Scrollable List of Batches */}
+                    <div className="max-h-[300px] overflow-y-auto divide-y divide-slate-100 review-scroll bg-white">
+                      {availableDates.map((d, i) => {
+                        const isSelected = selectedDate === d
+                        const isFestive = isFestiveDate(d)
+                        const isLW = isLongWeekendDate(d)
+
+                        // Extract note in parentheses if any
+                        const noteMatch = d.match(/\((.*?)\)/)
+                        const noteText = noteMatch ? noteMatch[1] : (isFestive ? 'Festive Special' : isLW ? 'Long Weekend' : null)
+                        const cleanDate = d.replace(/\(.*?\)/, '').trim()
+
+                        // Calculate dynamic price for this batch
+                        const pkgPricing = resolveTripDynamicPackages(trip, d)
+                        const batchPrice = pkgPricing.packages?.[0]?.price || trip.price
+
+                        return (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => {
+                              setSelectedDate(d)
+                              setIsHeaderDateDropdownOpen(false)
+                            }}
+                            className={`w-full text-left px-3.5 sm:px-4 py-3 flex items-center justify-between gap-3 transition-colors cursor-pointer ${
+                              isSelected
+                                ? 'bg-[var(--sky-pale)]/50 border-l-4 border-l-[var(--sky)]'
+                                : 'hover:bg-slate-50 border-l-4 border-l-transparent'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <div
+                                className={`w-2 h-2 rounded-full shrink-0 ${
+                                  isSelected ? 'bg-[var(--sky)] ring-4 ring-sky-100' : 'bg-slate-300'
+                                }`}
+                              />
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-1.5 flex-wrap">
+                                  <span
+                                    className={`text-xs ${
+                                      isSelected
+                                        ? 'font-black text-[var(--navy)]'
+                                        : 'font-bold text-slate-800'
+                                    }`}
+                                  >
+                                    {cleanDate}
+                                  </span>
+                                  {noteText && (
+                                    <span
+                                      className={`text-[9.5px] font-bold px-1.5 py-0.2 rounded-md ${
+                                        isFestive
+                                          ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                                          : isLW
+                                            ? 'bg-sky-100 text-sky-800 border border-sky-200'
+                                            : 'bg-slate-100 text-slate-600'
+                                      }`}
+                                    >
+                                      {noteText}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-[10px] text-slate-400 font-medium mt-0.5">
+                                  Verified Group Departure
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex flex-col items-end shrink-0">
+                              <span className="text-xs font-black text-emerald-600">
+                                {batchPrice}
+                              </span>
+                              {isSelected && (
+                                <span className="text-[9.5px] font-bold text-[var(--sky)] flex items-center gap-0.5">
+                                  <Check size={10} /> Selected
+                                </span>
+                              )}
+                            </div>
+                          </button>
+                        )
+                      })}
+                    </div>
+
+                    {/* Footer note */}
+                    <div className="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                      <span className="text-slate-500 font-medium">Need custom private dates?</span>
+                      <a
+                        href={`https://wa.me/919975822023?text=${encodeURIComponent(
+                          `Hi Travel Tribes! 👋 I want to ask about custom departure dates for ${trip.title}.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--sky)] font-bold hover:underline"
+                      >
+                        WhatsApp Us →
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             <span className="flex items-center justify-center sm:justify-start gap-1.5 bg-white border border-slate-200/90 px-3 py-2 rounded-xl shadow-xs">
               <Users size={14} className="text-[var(--sky)] shrink-0" />

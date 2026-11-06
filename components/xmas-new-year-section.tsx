@@ -326,7 +326,10 @@ export function XmasNewYearSection() {
 
         {/* Horizontal Rail containing the trips */}
         <HorizontalRail label="Xmas & New Year trips">
-          {xmasNewYearTrips.map(t => (
+          {[
+            ...xmasNewYearTrips.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
+            ...xmasNewYearTrips.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
+          ].map((t) => (
             <TripCard key={t.slug} trip={t} featured />
           ))}
         </HorizontalRail>

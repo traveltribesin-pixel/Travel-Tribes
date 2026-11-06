@@ -23,9 +23,13 @@ export default function Page() {
     const s = slug.toLowerCase()
     return s.includes('hampi') || s === 'spiti-valley-chandrataal'
   }
-  const activeDomesticTrips = trips.filter(
+  const rawActive = trips.filter(
     (t) => t.region !== 'International' && !isEndedTrip(t.slug) && !isJawai(t.slug)
   )
+  const activeDomesticTrips = [
+    ...rawActive.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
+    ...rawActive.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
+  ]
   const endedDomesticTrips = trips.filter(
     (t) => t.region !== 'International' && isEndedTrip(t.slug) && !isJawai(t.slug)
   )
