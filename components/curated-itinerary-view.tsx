@@ -333,6 +333,11 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                   <Sparkles className="w-3.5 h-3.5 fill-current text-slate-950" />
                   Exclusive Proposal For {clientName}
                 </span>
+                {itinerary.departureCity && (
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono font-bold tracking-wider">
+                    EX-{itinerary.departureCity.toUpperCase()}
+                  </span>
+                )}
                 {itinerary.inquiryId && (
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono font-bold tracking-wider">
                     REF: #{itinerary.inquiryId.replace(/^#/, '')}
@@ -1071,6 +1076,8 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
               <div className="max-w-lg mx-auto text-center p-5 sm:p-7 rounded-2xl border-2 border-slate-200 bg-slate-50 shadow-xs space-y-3">
                 <span className="text-xs text-amber-700 font-bold uppercase tracking-wider block">
                   Proposal For {clientName}
+                  {itinerary.clientPhone ? ` • ${itinerary.clientPhone}` : ''}
+                  {itinerary.clientEmail ? ` • ${itinerary.clientEmail}` : ''}
                 </span>
                 <div>
                   <span className="text-xs text-slate-500 font-semibold block uppercase">Total Package Price</span>

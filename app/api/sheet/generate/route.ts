@@ -15,14 +15,21 @@ export async function POST(req: NextRequest) {
       inquiryId,
       fullName,
       clientName,
+      clientPhone,
+      clientEmail,
       destination,
+      departureCity,
       noOfDays,
       noOfNights,
       startDate,
       endDate,
       adults,
       kids,
+      sharingType,
+      travelStyle,
+      groupVibe,
       vehicleType,
+      pickupDrop,
       mealPlan,
       hotels,
       dayActivities,
@@ -141,9 +148,6 @@ export async function POST(req: NextRequest) {
         enRouteList.push(da.enRoute.trim())
       }
 
-      enRouteList.forEach(spot => {
-        expPoints.push(`En-Route Spot: ${spot}`)
-      })
       const enRouteVal = enRouteList.join(' & ') || undefined
 
       if (da.guidedTour) {
@@ -238,19 +242,45 @@ export async function POST(req: NextRequest) {
       })
 
       // Match night stay hotel: check by city match first, else by sequential night allocation
-      const matchingHotelByCity = formattedHotels.find(h =>
-        dayCity2 && h.city && (
-          h.city.toLowerCase() === dayCity2.toLowerCase() ||
-          dayCity2.toLowerCase().includes(h.city.toLowerCase()) ||
-          h.city.toLowerCase().includes(dayCity2.toLowerCase())
-        )
-      )
-      const mappedHotelByNight = nightToHotelMap[idx] || formattedHotels[formattedHotels.length - 1]
-      const assignedHotel = matchingHotelByCity || mappedHotelByNight
+      const isTourFinalDay = idx === dayActsList.length - 1 && dayActsList.length > 1 && idx >= nightsCount
 
-      const stayHotelName = da.stayHotel?.trim() || da.stay?.trim() || (assignedHotel ? assignedHotel.hotelName : (dayCity2 ? `${dayCity2} Stay` : 'Comfort Stay'))
-      const stayCityName = assignedHotel ? assignedHotel.city : dayCity2
-      const stayDisplay = da.stay?.trim() || (stayHotelName && stayCityName && !stayHotelName.toLowerCase().includes(stayCityName.toLowerCase()) ? `${stayHotelName}, ${stayCityName}` : stayHotelName)
+      let stayHotelName = da.stayHotel?.trim()
+      let stayCityName = da.stayCity?.trim() || dayCity2
+      let stayDisplay = da.stay?.trim()
+
+      if (!stayDisplay && !stayHotelName) {
+        if (isTourFinalDay) {
+          stayHotelName = 'Departure / Tour Concludes'
+          stayDisplay = 'Departure / Tour Concludes (No Overnight Hotel)'
+        } else {
+          const matchingHotelByCity = formattedHotels.find(h =>
+            dayCity2 && h.city && (
+              h.city.toLowerCase() === dayCity2.toLowerCase() ||
+              dayCity2.toLowerCase().includes(h.city.toLowerCase()) ||
+              h.city.toLowerCase().includes(dayCity2.toLowerCase())
+            )
+          )
+          const mappedHotelByNight = nightToHotelMap[idx] || formattedHotels[formattedHotels.length - 1]
+          const assignedHotel = matchingHotelByCity || mappedHotelByNight
+
+          stayHotelName = assignedHotel ? assignedHotel.hotelName : (dayCity2 ? `${dayCity2} Stay` : 'Comfort Stay')
+          stayCityName = assignedHotel ? assignedHotel.city : dayCity2
+          
+          if (stayHotelName && stayCityName) {
+            const hLower = stayHotelName.toLowerCase()
+            const cLower = stayCityName.toLowerCase()
+            stayDisplay = hLower.includes(cLower) ? stayHotelName : `${stayHotelName}, ${stayCityName}`
+          } else {
+            stayDisplay = stayHotelName || stayCityName || 'Comfort Stay'
+          }
+        }
+      } else if (!stayDisplay && stayHotelName) {
+        if (stayCityName && !stayHotelName.toLowerCase().includes(stayCityName.toLowerCase())) {
+          stayDisplay = `${stayHotelName}, ${stayCityName}`
+        } else {
+          stayDisplay = stayHotelName
+        }
+      }
       
       const formatDisplayDate = (dStr?: string): string | undefined => {
         if (!dStr) return undefined
@@ -343,8 +373,9 @@ export async function POST(req: NextRequest) {
         nights: h.nights
       })),
       clientName: guestName,
-      clientPhone: body.mobile || '',
-      clientEmail: body.email || '',
+      clientPhone: clientPhone || body.mobile || body.phone || '',
+      clientEmail: clientEmail || body.email || '',
+      departureCity: departureCity || body.departureCity || '',
       inquiryId: inquiryId || '',
       travelDates: finalTravelDates,
       groupVibe: finalGroupVibe,
@@ -378,7 +409,11 @@ export async function POST(req: NextRequest) {
         pricePerChild: perKidPrice || undefined,
         advanceAmount: advanceAmountPaid || undefined,
         balancePendingAmount: balancePendingAmount || undefined,
-        numberOfGuests: body.groupVibe?.trim() || `${adults || 2} Adults${kids > 0 ? `, ${kids} Kids` : ''} (${body.sharingType || 'Double Sharing'})${body.travelStyle ? ` • ${body.travelStyle}` : ''}`,
+        numberOfGuests: body.groupVibe?.trim() || (
+          adults || kids || sharingType
+            ? `${adults || 2} Adults${Number(kids) > 0 ? `, ${kids} Kids` : ''}${sharingType ? ` (${sharingType})` : ''}${travelStyle ? ` • ${travelStyle}` : ''}`
+            : '2 Adults (Double Sharing)'
+        ),
         paymentTerms: balancePendingAmount ? `Advance: ₹${Number(advanceAmountPaid).toLocaleString('en-IN')}, Balance pending: ₹${Number(balancePendingAmount).toLocaleString('en-IN')}` : undefined
       }
     }
