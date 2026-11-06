@@ -1468,15 +1468,19 @@ export default function CurateItineraryPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Full Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Client Full Name <span className="text-rose-500">*</span>
+              <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                <span>Client Full Name <span className="text-rose-500">*</span></span>
+                <span className="text-[10px] text-amber-600 font-extrabold uppercase">Cover Highlight</span>
               </label>
               <Input
                 value={fullName}
                 onChange={e => setFullName(e.target.value)}
                 placeholder="e.g. Rahul & Sneha Sharma"
-                className="bg-slate-50 font-semibold"
+                className="bg-slate-50 font-semibold border-amber-200 focus:border-[#0077b6]"
               />
+              <p className="text-[10.5px] text-slate-500 mt-1 font-medium">
+                Shown prominently at the start of proposal (&quot;Handcrafted for {fullName || 'Client'}&quot;)
+              </p>
             </div>
 
             {/* Mobile / WhatsApp */}

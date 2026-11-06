@@ -251,11 +251,16 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
             />
           </Link>
 
-          <div className="hidden md:flex items-center gap-1.5 text-xs text-slate-600 truncate">
+          <div className="hidden md:flex items-center gap-2 text-xs text-slate-600 truncate">
             <span className="text-slate-400 font-semibold">Itinerary:</span>
             <span className="font-bold text-[#0077b6] truncate">
               {itinerary.title} ({itinerary.duration})
             </span>
+            {clientName && clientName !== 'Valued Traveller' && (
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-black text-[11px] border border-amber-300 shrink-0">
+                Curated For: {clientName}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2.5">
@@ -327,19 +332,19 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
               height={44}
               className="h-8 sm:h-10 w-auto object-contain drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]"
             />
-            {isCustomized && (
+            {clientName && (
               <div className="flex flex-wrap items-center justify-center gap-2 mt-1 sm:mt-1.5">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#ffde59] text-slate-950 text-[11px] sm:text-xs font-black tracking-widest uppercase shadow-md">
-                  <Sparkles className="w-3.5 h-3.5 fill-current text-slate-950" />
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#ffde59] text-slate-950 text-xs sm:text-sm font-black tracking-wider uppercase shadow-lg">
+                  <Sparkles className="w-4 h-4 fill-current text-slate-950" />
                   Exclusive Proposal For {clientName}
                 </span>
                 {itinerary.departureCity && (
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono font-bold tracking-wider">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/30 text-white font-mono font-bold text-xs tracking-wider">
                     EX-{itinerary.departureCity.toUpperCase()}
                   </span>
                 )}
                 {itinerary.inquiryId && (
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono font-bold tracking-wider">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/30 text-white font-mono font-bold text-xs tracking-wider">
                     REF: #{itinerary.inquiryId.replace(/^#/, '')}
                   </span>
                 )}
@@ -348,7 +353,20 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
           </div>
 
           {/* Center Titles (Polished, High-Contrast Typography) */}
-          <div className="relative z-10 text-center px-2 sm:px-6 my-auto py-4 sm:py-6 max-w-3xl mx-auto space-y-2">
+          <div className="relative z-10 text-center px-2 sm:px-6 my-auto py-4 sm:py-6 max-w-3xl mx-auto space-y-3">
+            {/* Prominent Golden Dedication Badge Right in Hero Center */}
+            {clientName && clientName !== 'Valued Traveller' && (
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/65 backdrop-blur-md border-2 border-[#ffde59]/80 shadow-2xl mb-1">
+                <Sparkles className="w-4 h-4 text-[#ffde59] fill-[#ffde59]" />
+                <span className="text-[10.5px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#ffde59]">
+                  Personalized Proposal Handcrafted For
+                </span>
+                <span className="text-xs sm:text-sm font-black text-white tracking-wide uppercase underline decoration-[#ffde59] decoration-2 underline-offset-2">
+                  {clientName}
+                </span>
+              </div>
+            )}
+
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               {itinerary.title}
             </h1>
@@ -399,6 +417,39 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
           </div>
         </section>
 
+        {/* Executive Personalized Dedication Banner */}
+        {clientName && clientName !== 'Valued Traveller' && (
+          <div className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white rounded-2xl p-4 sm:p-5 shadow-lg border border-sky-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#ffde59] to-amber-300 text-slate-950 flex items-center justify-center shrink-0 shadow-md font-black text-xl">
+                {clientName.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-[#ffde59] flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 fill-[#ffde59]" />
+                  Exclusive Customized Trip Proposal
+                </span>
+                <h3 className="text-base sm:text-xl font-black text-white capitalize mt-0.5">
+                  Specially Designed For: <span className="text-[#ffde59]">{clientName}</span>
+                </h3>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  {itinerary.departureCity ? `Boarding: Ex-${itinerary.departureCity} • ` : ''}Duration: {itinerary.duration}
+                  {itinerary.groupVibe ? ` • ${itinerary.groupVibe}` : ''}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 self-start sm:self-center">
+              <span className="px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold border border-white/15">
+                Ref: {itinerary.inquiryId ? `#${itinerary.inquiryId.replace(/^#/, '')}` : 'TT-CUSTOM'}
+              </span>
+              <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Tailormade Itinerary</span>
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* ========================================================= */}
         {/* PAGE 2: TRIP SUMMARY, 4 TRIP IMAGES & HIGHLIGHTS          */}
         {/* ========================================================= */}
@@ -425,6 +476,29 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
 
             {/* 1. Trip Summary Details (Clean, open, spacious, stacked one below the other) */}
             <div className="py-2 space-y-3.5 sm:space-y-4 text-slate-800">
+              {/* Guest / Client Name Card */}
+              {clientName && clientName !== 'Valued Traveller' && (
+                <div className="flex items-start gap-3 bg-sky-50/80 p-3.5 rounded-xl border border-sky-200">
+                  <div className="w-8 h-8 rounded-lg bg-[#0077b6] text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 text-sm sm:text-base leading-relaxed">
+                    <span className="font-extrabold text-slate-950">Curated For: </span>
+                    <span className="font-black text-[#0077b6] text-base">{clientName}</span>
+                    {itinerary.departureCity && (
+                      <span className="text-xs font-bold text-slate-600 ml-2">
+                        (Boarding: Ex-{itinerary.departureCity})
+                      </span>
+                    )}
+                    {itinerary.groupVibe && (
+                      <div className="text-xs text-slate-600 mt-0.5 font-medium">
+                        Travel Party: {itinerary.groupVibe}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Total Duration */}
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0077b6] flex items-center justify-center shrink-0 border border-sky-100 mt-0.5">
