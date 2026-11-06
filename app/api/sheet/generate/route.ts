@@ -346,21 +346,16 @@ export async function POST(req: NextRequest) {
     })
     const routeText = body.routeText?.trim() || (routeCities.length > 0 ? routeCities.join(' ➔ ') : `${dest} Circuit`)
 
-    // Generate dynamic highlights
-    const topHighlights = Array.isArray(body.highlights) && body.highlights.length > 0
-      ? body.highlights
-      : [
-          `Private transfers in dedicated ${vehicleType || 'AC Vehicle'} with professional chauffeur for all transfers & sightseeing`,
-          `Accommodations in verified properties across ${formattedHotels.map(h => h.city).filter((v, i, a) => a.indexOf(v) === i).join(', ') || dest}`,
-          `Curated daily dining arrangement on ${mealPlan || 'Breakfast & Dinner'} plan`,
-          `Private custom itinerary crafted for ${body.groupVibe?.trim() || `${adults || 2} Adults${kids > 0 ? ` & ${kids} Children` : ''} (${body.sharingType || 'Double Sharing'})`}`
-        ]
-    if (dayActsList.some((d: any) => d.guidedTour)) {
-      topHighlights.push('Dedicated local guide assistance for key heritage monuments & cultural walks')
-    }
-    if (keyAttractions.length > 0) {
-      topHighlights.push(`Includes top landmark visits: ${keyAttractions.slice(0, 5).join(', ')}`)
-    }
+    // Generate dynamic highlights with ALL sightseeing points & attractions
+    const topHighlights = keyAttractions.length > 0
+      ? keyAttractions
+      : (Array.isArray(body.highlights) && body.highlights.length > 0
+          ? body.highlights
+          : [
+              `Private transfers in dedicated ${vehicleType || 'AC Vehicle'} with professional chauffeur for all transfers & sightseeing`,
+              `Accommodations in verified properties across ${formattedHotels.map(h => h.city).filter((v, i, a) => a.indexOf(v) === i).join(', ') || dest}`,
+              `Curated daily dining arrangement on ${mealPlan || 'Breakfast & Dinner'} plan`
+            ])
 
     // Construct slug
     const cleanGuest = slugify(guestName).slice(0, 20) || 'guest'

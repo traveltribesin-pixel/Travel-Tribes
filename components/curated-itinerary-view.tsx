@@ -61,10 +61,21 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
   const clientName = itinerary.clientName || 'Valued Traveller'
   const clientFirstName = itinerary.clientFirstName || (itinerary.clientName && itinerary.clientName !== 'Valued Traveller' ? itinerary.clientName.trim().split(/\s+/)[0] : '')
 
-  // Build possessive name and clean title: e.g. "Amit's" + "Rajasthan New Year Special"
+  // Build possessive name and clean title: e.g. "Amit's" + "Spiti Valley New Year Special Itinerary"
   const { namePrefix, cleanTitle } = (() => {
-    const rawTitle = itinerary.title || ''
+    let rawTitle = (itinerary.title || '').trim()
     const fName = clientFirstName?.trim() || ''
+
+    // Strip leading client name from title if already typed
+    if (fName && fName.toLowerCase() !== 'valued' && fName.toLowerCase() !== 'valued traveller') {
+      const regex = new RegExp(`^${fName}('s|’s|')?\\s*`, 'i')
+      rawTitle = rawTitle.replace(regex, '').trim()
+    }
+
+    // Ensure it ends with "Itinerary"
+    if (!rawTitle.toLowerCase().endsWith('itinerary')) {
+      rawTitle = `${rawTitle} Itinerary`.trim()
+    }
 
     if (!fName || fName.toLowerCase() === 'valued' || fName.toLowerCase() === 'valued traveller') {
       return { namePrefix: '', cleanTitle: rawTitle }
@@ -76,11 +87,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
         ? `${fName}'`
         : `${fName}'s`
 
-    // Remove leading name or name's from rawTitle if already typed
-    const regex = new RegExp(`^${fName}('s|’s|')?\\s*`, 'i')
-    const cleaned = rawTitle.replace(regex, '').trim()
-
-    return { namePrefix: poss, cleanTitle: cleaned || rawTitle }
+    return { namePrefix: poss, cleanTitle: rawTitle }
   })()
 
   const pointsToNote = itinerary.pointsToBeNoted && itinerary.pointsToBeNoted.length > 0
@@ -169,7 +176,48 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
     .replace(/\s*[•·]+\s*/g, ' • ')
     .replace(/\s+/g, ' ')
     .replace(/^[•·\s]+|[•·\s]+$/g, '')
-    .trim() || `${itinerary.destination} Circuit`
+    .trim() || `${itinerary.destination} Circuit`;
+
+  // Gather ALL sightseeing points and activities across all days for Highlights section
+  const allSightseeingHighlights = (() => {
+    const list: string[] = [];
+
+    // 1. First gather all sightseeing points from each day
+    (itinerary.days || []).forEach((day: any) => {
+      (day.points || []).forEach((p: any) => {
+        const clean = String(p || '').trim()
+          .replace(/^[•\-\*]\s*/, '')
+          .replace(/^Dedicated local guide assistance.*/i, '')
+          .replace(/^Meals:?.*/i, '')
+          .replace(/^Sightseeing & leisure exploration in.*/i, '');
+        if (clean && clean.length > 3 && !list.includes(clean)) {
+          list.push(clean);
+        }
+      });
+      if (day.enRouteStop) {
+        const en = `En-Route: ${day.enRouteStop}`;
+        if (!list.includes(en)) list.push(en);
+      }
+    });
+
+    // 2. Also check if itinerary.highlights has specific attractions not already in list
+    (itinerary.highlights || []).forEach((h: any) => {
+      const clean = String(h || '').trim();
+      if (
+        clean &&
+        !clean.toLowerCase().startsWith('private transfers in dedicated') &&
+        !clean.toLowerCase().startsWith('accommodations in verified') &&
+        !clean.toLowerCase().startsWith('curated daily dining') &&
+        !clean.toLowerCase().startsWith('private custom itinerary') &&
+        !list.includes(clean)
+      ) {
+        list.push(clean);
+      }
+    });
+
+    if (list.length > 0) return list;
+    return itinerary.highlights || [];
+  })();
 
   const handleCopyLink = () => {
     if (typeof window !== 'undefined') {
@@ -434,39 +482,6 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
           </div>
         </section>
 
-        {/* Executive Personalized Dedication Banner */}
-        {clientName && clientName !== 'Valued Traveller' && (
-          <div className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white rounded-2xl p-4 sm:p-5 shadow-lg border border-sky-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#ffde59] to-amber-300 text-slate-950 flex items-center justify-center shrink-0 shadow-md font-black text-xl">
-                {clientName.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-[#ffde59] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 fill-[#ffde59]" />
-                  Exclusive Customized Trip Proposal
-                </span>
-                <h3 className="text-base sm:text-xl font-black text-white capitalize mt-0.5">
-                  Specially Designed For: <span className="text-[#ffde59]">{clientName}</span>
-                </h3>
-                <p className="text-xs text-slate-300 mt-0.5">
-                  {itinerary.departureCity ? `Boarding: Ex-${itinerary.departureCity} • ` : ''}Duration: {itinerary.duration}
-                  {itinerary.groupVibe ? ` • ${itinerary.groupVibe}` : ''}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 self-start sm:self-center">
-              <span className="px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold border border-white/15">
-                Ref: {itinerary.inquiryId ? `#${itinerary.inquiryId.replace(/^#/, '')}` : 'TT-CUSTOM'}
-              </span>
-              <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Tailormade Itinerary</span>
-              </span>
-            </div>
-          </div>
-        )}
-
         {/* ========================================================= */}
         {/* PAGE 2: TRIP SUMMARY, 4 TRIP IMAGES & HIGHLIGHTS          */}
         {/* ========================================================= */}
@@ -656,24 +671,27 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
               </div>
             </div>
 
-            {/* 3. Structured Trip Highlights */}
-            <div className="pt-1 border-t border-slate-200/80">
-              <div className="flex items-center gap-1.5 mb-2">
-                <h3 className="text-base sm:text-lg font-black text-slate-950 uppercase tracking-wide">
-                  Key Trip Highlights
+            {/* 3. Structured Trip Highlights & Sightseeing (Shows ALL Sightseeings) */}
+            <div className="pt-2 border-t border-slate-200/80">
+              <div className="flex items-center justify-between mb-2.5">
+                <h3 className="text-base sm:text-lg font-black text-slate-950 uppercase tracking-wide flex items-center gap-2">
+                  <span>Key Trip Highlights &amp; Sightseeing</span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-[#0077b6] text-[11px] font-bold">
+                    {allSightseeingHighlights.length} Sightseeings Included
+                  </span>
                 </h3>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {itinerary.highlights.slice(0, 12).map((highlight, idx) => (
+                {allSightseeingHighlights.map((highlight, idx) => (
                   <div
                     key={idx}
-                    className="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-2 transition-colors hover:bg-sky-50/50"
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-2.5 transition-colors hover:bg-sky-50/60"
                   >
                     <div className="w-5 h-5 rounded-md bg-[#0077b6] text-white text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
                       {idx + 1}
                     </div>
-                    <p className="text-[11px] sm:text-xs text-slate-800 font-medium leading-snug">
+                    <p className="text-[11px] sm:text-xs text-slate-800 font-semibold leading-snug">
                       {highlight}
                     </p>
                   </div>

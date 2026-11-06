@@ -1277,12 +1277,20 @@ export default function CurateItineraryPage() {
       routeText: cleanRoute,
       bannerImage: heroImage || '/image/Meghalaya/IMG_0857.JPEG',
       overview: `A private bespoke ${duration || `${days.length} Days`} journey handcrafted exclusively for ${guestName}. Featuring handpicked accommodations, private dedicated transfers with ${vehicleType || 'Dedicated AC Vehicle'}, and curated local experiences across ${dest}.`,
-      highlights: [
-        `Private transfers in dedicated ${vehicleType || 'AC Vehicle'} with professional chauffeur for all transfers & sightseeing`,
-        `Accommodations across ${hotels.map(h => h.city).filter(Boolean).join(', ') || dest}`,
-        `Curated daily dining arrangement on ${mealPlan || 'Breakfast & Dinner'} plan`,
-        `Private custom itinerary crafted for ${payload.groupVibe}`
-      ],
+      highlights: (() => {
+        const list: string[] = [];
+        days.forEach(d => {
+          (d.sightseeings || []).forEach(s => {
+            const val = (s || '').trim();
+            if (val && !list.includes(val)) list.push(val);
+          });
+          [d.exp1, d.exp2, d.exp3, d.exp4, ...(d.extraExps || [])].forEach(ex => {
+            const val = (ex || '').trim();
+            if (val && !list.includes(val)) list.push(val);
+          });
+        });
+        return list.length > 0 ? list : [`Key sightseeing & leisure exploration across ${dest}`];
+      })(),
       locationGlimpses: galleryImages.filter(Boolean).slice(0, 4).map((img, i) => ({
         name: `Scenic Highlight ${i + 1}`,
         image: img
@@ -1506,7 +1514,7 @@ export default function CurateItineraryPage() {
                 className="bg-slate-50 font-semibold border-amber-300 focus:border-[#0077b6]"
               />
               <p className="text-[10px] text-slate-500 mt-1 font-medium truncate">
-                In Title: <span className="font-bold text-[#0077b6]">{firstName ? `${firstName}'s ${tripTitle || 'Trip'}` : "Client's Trip"}</span>
+                In Title: <span className="font-bold text-[#0077b6]">{firstName ? `${firstName}'s ${tripTitle || 'Trip'} Itinerary` : "Client's Trip Itinerary"}</span>
               </p>
             </div>
 

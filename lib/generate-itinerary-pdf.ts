@@ -382,6 +382,9 @@ export async function renderUnifiedItineraryPDF(data: UnifiedItineraryData): Pro
       displayTitle = `${poss} ${displayTitle}`
     }
   }
+  if (!displayTitle.endsWith('ITINERARY')) {
+    displayTitle = `${displayTitle} ITINERARY`
+  }
 
   const fullTitle = cleanPdfText(`${displayTitle} (${data.duration.toUpperCase()})`)
   const titleLines = doc.splitTextToSize(fullTitle, contentWidth - 45)
