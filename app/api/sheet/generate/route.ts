@@ -154,10 +154,21 @@ export async function POST(req: NextRequest) {
         expPoints.push(`Dedicated local guide assistance included for today's sightseeing`)
       }
 
-      // Experience 1, 2, 3, 4 columns
+      // Sightseeings / Highlights list (Dynamic unlimited array)
+      if (Array.isArray(da.sightseeings)) {
+        da.sightseeings.forEach((s: any) => {
+          const val = typeof s === 'string' ? s.trim() : ''
+          if (val && !expPoints.includes(val)) {
+            keyAttractions.push(val)
+            expPoints.push(val)
+          }
+        })
+      }
+
+      // Experience 1, 2, 3, 4 columns (legacy / fallback)
       ;['exp1', 'exp2', 'exp3', 'exp4'].forEach(k => {
         const val = da[k]?.trim()
-        if (val) {
+        if (val && !expPoints.includes(val)) {
           keyAttractions.push(val)
           expPoints.push(val)
         }
@@ -167,7 +178,7 @@ export async function POST(req: NextRequest) {
       if (Array.isArray(da.extraExperiences)) {
         da.extraExperiences.forEach((extra: any) => {
           const val = typeof extra === 'string' ? extra.trim() : ''
-          if (val) {
+          if (val && !expPoints.includes(val)) {
             keyAttractions.push(val)
             expPoints.push(val)
           }
@@ -197,29 +208,37 @@ export async function POST(req: NextRequest) {
       // If user typed multiline activities or provided points array
       if (typeof da.activitiesText === 'string' && da.activitiesText.trim()) {
         da.activitiesText.split('\n').map((s: string) => s.trim().replace(/^[•\-\*]\s*/, '')).filter(Boolean).forEach((act: string) => {
-          expPoints.push(act)
+          if (!expPoints.includes(act)) expPoints.push(act)
         })
       }
       if (Array.isArray(da.points) && da.points.length > 0) {
         da.points.forEach((p: any) => {
-          if (typeof p === 'string' && p.trim()) expPoints.push(p.trim())
+          if (typeof p === 'string' && p.trim() && !expPoints.includes(p.trim())) expPoints.push(p.trim())
         })
       }
 
-      // Collect raw experiences entered by the user for this day (from exp1-4, extraExperiences, points)
+      // Collect raw experiences entered by the user for this day (from sightseeings, exp1-4, extraExperiences, points)
       const dayRawExperiences: string[] = []
+      if (Array.isArray(da.sightseeings)) {
+        da.sightseeings.forEach((s: any) => {
+          const val = typeof s === 'string' ? s.trim() : ''
+          if (val && !dayRawExperiences.includes(val)) dayRawExperiences.push(val)
+        })
+      }
       ;['exp1', 'exp2', 'exp3', 'exp4'].forEach(k => {
         const val = da[k]?.trim()
-        if (val) dayRawExperiences.push(val)
+        if (val && !dayRawExperiences.includes(val)) dayRawExperiences.push(val)
       })
       if (Array.isArray(da.extraExperiences)) {
         da.extraExperiences.forEach((extra: any) => {
-          if (typeof extra === 'string' && extra.trim()) dayRawExperiences.push(extra.trim())
+          if (typeof extra === 'string' && extra.trim() && !dayRawExperiences.includes(extra.trim())) {
+            dayRawExperiences.push(extra.trim())
+          }
         })
       }
       if (Array.isArray(da.points)) {
         da.points.forEach((p: any) => {
-          if (typeof p === 'string' && p.trim() && !p.toLowerCase().includes('en-route spot:')) {
+          if (typeof p === 'string' && p.trim() && !p.toLowerCase().includes('en-route spot:') && !dayRawExperiences.includes(p.trim())) {
             dayRawExperiences.push(p.trim())
           }
         })

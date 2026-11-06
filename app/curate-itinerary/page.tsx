@@ -63,11 +63,12 @@ interface DayItem {
   city: string;
   enRoutes: string[];
   city2: string;
-  exp1: string;
-  exp2: string;
-  exp3: string;
-  exp4: string;
-  extraExps: string[];
+  sightseeings: string[];
+  exp1?: string;
+  exp2?: string;
+  exp3?: string;
+  exp4?: string;
+  extraExps?: string[];
   travelDistance?: string;
   customTitle?: string;
   activitiesText?: string;
@@ -280,6 +281,7 @@ export default function CurateItineraryPage() {
       city: '',
       enRoutes: [''],
       city2: '',
+      sightseeings: ['', '', ''],
       exp1: '',
       exp2: '',
       exp3: '',
@@ -347,7 +349,19 @@ export default function CurateItineraryPage() {
           if (parsed.mealPlan) setMealPlan(parsed.mealPlan);
           if (parsed.routeText) setRouteText(parsed.routeText);
           if (Array.isArray(parsed.hotels) && parsed.hotels.length > 0) setHotels(parsed.hotels);
-          if (Array.isArray(parsed.days) && parsed.days.length > 0) setDays(parsed.days);
+          if (Array.isArray(parsed.days) && parsed.days.length > 0) {
+            const restoredDays: DayItem[] = parsed.days.map((d: any) => {
+              const legacy = [d.exp1, d.exp2, d.exp3, d.exp4, ...(d.extraExps || [])].filter(Boolean);
+              const validSights = Array.isArray(d.sightseeings) && d.sightseeings.length > 0
+                ? d.sightseeings
+                : (legacy.length > 0 ? legacy : ['', '', '']);
+              return {
+                ...d,
+                sightseeings: validSights
+              };
+            });
+            setDays(restoredDays);
+          }
           if (Array.isArray(parsed.inclusions) && parsed.inclusions.length > 0) setInclusions(parsed.inclusions);
           if (Array.isArray(parsed.exclusions) && parsed.exclusions.length > 0) setExclusions(parsed.exclusions);
           if (parsed.finalQuotationAmount) setFinalQuotationAmount(parsed.finalQuotationAmount);
@@ -512,41 +526,62 @@ export default function CurateItineraryPage() {
     // Days mapping
     if (t.itinerary && t.itinerary.length > 0) {
       const newDays: DayItem[] = t.itinerary.map(d => {
-        const actLines = d.activities || [];
-        const exp1 = actLines[0] || '';
-        const exp2 = actLines[1] || '';
-        const exp3 = actLines[2] || '';
-        const exp4 = actLines[3] || '';
-        const extraExps = actLines.slice(4);
+        const rawActs = d.activities || [];
+        let hasB = d.day > 1;
+        let hasL = false;
+        let hasD = true;
+        const cleanActs: string[] = [];
 
-        // Try to parse from & to city from title
+        rawActs.forEach(act => {
+          const lower = act.toLowerCase().trim();
+          if (lower.startsWith('meals:') || lower.startsWith('meal:')) {
+            if (lower.includes('breakfast')) hasB = true;
+            if (lower.includes('lunch')) hasL = true;
+            if (lower.includes('dinner')) hasD = true;
+            if (lower.includes('not included') || lower.includes('no meal')) {
+              hasB = false;
+              hasL = false;
+              hasD = false;
+            }
+          } else if (act.trim()) {
+            cleanActs.push(act.trim());
+          }
+        });
+
+        const sightseeings = cleanActs.length > 0 ? cleanActs : ['Sightseeing & leisure exploration'];
+
+        // Intelligent parsing for from & to city from title
         let c1 = destName;
         let c2 = destName;
-        if (d.title.includes('TO')) {
-          const parts = d.title.replace(/^DAY\s*\d+\s*[—–\-:]\s*/i, '').split(/TO/i);
-          if (parts.length >= 2) {
-            c1 = parts[0].replace(/[^a-zA-Z\s]/g, '').trim();
-            c2 = parts[1].replace(/[^a-zA-Z\s]/g, '').trim();
-          }
+        const cleanTitle = d.title.replace(/^DAY\s*\d+\s*[—–\-:]\s*/i, '').trim();
+
+        // Check for arrows or separators: "Mumbai → Mangalore | ...", "Mangalore to Coorg", etc.
+        const arrowSplit = cleanTitle.split(/→|->|➔|–|—|\bto\b/i);
+        if (arrowSplit.length >= 2) {
+          const p0 = arrowSplit[0].split(/[|:(]/)[0].trim().replace(/[^a-zA-Z\s]/g, '').trim();
+          const p1 = arrowSplit[1].split(/[|:(]/)[0].trim().replace(/[^a-zA-Z\s]/g, '').trim();
+          if (p0 && p0.length >= 3 && !p0.toLowerCase().includes('arrival')) c1 = p0;
+          if (p1 && p1.length >= 3 && !p1.toLowerCase().includes('arrival')) c2 = p1;
         }
 
         return {
           id: `d-${Date.now()}-${d.day}`,
           dayNumber: d.day,
           guidedTour: true,
-          breakfast: d.day > 1,
-          lunch: false,
-          dinner: true,
+          breakfast: hasB,
+          lunch: hasL,
+          dinner: hasD,
           city: c1,
           enRoutes: [''],
           city2: c2,
-          exp1,
-          exp2,
-          exp3,
-          exp4,
-          extraExps,
-          customTitle: d.title.replace(/^DAY\s*\d+\s*[—–\-:]\s*/i, '').trim(),
-          activitiesText: actLines.join('\n'),
+          sightseeings, // ALL sightseeing points preserved without artificial limits!
+          exp1: sightseeings[0] || '',
+          exp2: sightseeings[1] || '',
+          exp3: sightseeings[2] || '',
+          exp4: sightseeings[3] || '',
+          extraExps: sightseeings.slice(4),
+          customTitle: cleanTitle,
+          activitiesText: cleanActs.join('\n'),
           travelDistance: '',
           image: ''
         };
@@ -650,6 +685,9 @@ export default function CurateItineraryPage() {
     const newDays: DayItem[] = [];
     for (let i = 0; i < count; i++) {
       const existing = days[i];
+      const existingSights = existing?.sightseeings && existing.sightseeings.length > 0
+        ? existing.sightseeings
+        : (existing?.exp1 ? [existing.exp1, existing?.exp2, existing?.exp3].filter(Boolean) as string[] : ['', '', '']);
       newDays.push({
         id: existing?.id || `d-${Date.now()}-${i}`,
         dayNumber: i + 1,
@@ -660,11 +698,12 @@ export default function CurateItineraryPage() {
         city: existing?.city || (i === 0 ? destination : ''),
         enRoutes: existing?.enRoutes || [''],
         city2: existing?.city2 || destination,
-        exp1: existing?.exp1 || '',
-        exp2: existing?.exp2 || '',
-        exp3: existing?.exp3 || '',
-        exp4: existing?.exp4 || '',
-        extraExps: existing?.extraExps || [],
+        sightseeings: existingSights,
+        exp1: existing?.exp1 || existingSights[0] || '',
+        exp2: existing?.exp2 || existingSights[1] || '',
+        exp3: existing?.exp3 || existingSights[2] || '',
+        exp4: existing?.exp4 || existingSights[3] || '',
+        extraExps: existing?.extraExps || existingSights.slice(4),
         travelDistance: existing?.travelDistance || '',
         customTitle: existing?.customTitle || '',
         activitiesText: existing?.activitiesText || '',
@@ -742,6 +781,7 @@ export default function CurateItineraryPage() {
           city: lastDay?.city2 || destination,
           enRoutes: [''],
           city2: destination,
+          sightseeings: ['', '', ''],
           exp1: '',
           exp2: '',
           exp3: '',
@@ -766,6 +806,55 @@ export default function CurateItineraryPage() {
       const filtered = prev.filter(d => d.id !== id);
       return filtered.map((d, idx) => ({ ...d, dayNumber: idx + 1 }));
     });
+  };
+
+  // Sightseeing Points Handlers (Unlimited & Dynamic)
+  const addDaySightseeing = (dayId: string) => {
+    setDays(prev =>
+      prev.map(d => {
+        if (d.id !== dayId) return d;
+        const current = d.sightseeings || [];
+        return { ...d, sightseeings: [...current, ''] };
+      })
+    );
+  };
+
+  const updateDaySightseeing = (dayId: string, idx: number, val: string) => {
+    setDays(prev =>
+      prev.map(d => {
+        if (d.id !== dayId) return d;
+        const next = [...(d.sightseeings || [''])];
+        next[idx] = val;
+        return {
+          ...d,
+          sightseeings: next,
+          exp1: next[0] || '',
+          exp2: next[1] || '',
+          exp3: next[2] || '',
+          exp4: next[3] || '',
+          extraExps: next.slice(4)
+        };
+      })
+    );
+  };
+
+  const removeDaySightseeing = (dayId: string, idx: number) => {
+    setDays(prev =>
+      prev.map(d => {
+        if (d.id !== dayId) return d;
+        const current = d.sightseeings || [''];
+        const next = current.length <= 1 ? [''] : current.filter((_, i) => i !== idx);
+        return {
+          ...d,
+          sightseeings: next,
+          exp1: next[0] || '',
+          exp2: next[1] || '',
+          exp3: next[2] || '',
+          exp4: next[3] || '',
+          extraExps: next.slice(4)
+        };
+      })
+    );
   };
 
   const addDayEnRoute = (dayId: string) => {
@@ -950,6 +1039,7 @@ export default function CurateItineraryPage() {
           city: '',
           enRoutes: [''],
           city2: '',
+          sightseeings: ['', '', ''],
           exp1: '',
           exp2: '',
           exp3: '',
@@ -1027,26 +1117,36 @@ export default function CurateItineraryPage() {
       mealPlan: mealPlan.trim() || undefined,
       routeText: routeText.trim() || (computedRouteCircuit || undefined),
       hotels: formattedHotels,
-      dayActivities: days.map(d => ({
-        dayNumber: d.dayNumber,
-        title: d.customTitle?.trim() || undefined,
-        date: startDate ? addDaysToIso(startDate, d.dayNumber - 1) : undefined,
-        city: d.city?.trim() || undefined,
-        city2: d.city2?.trim() || undefined,
-        enRoutes: (d.enRoutes || []).map(s => s.trim()).filter(Boolean),
-        guidedTour: d.guidedTour,
-        exp1: d.exp1?.trim() || undefined,
-        exp2: d.exp2?.trim() || undefined,
-        exp3: d.exp3?.trim() || undefined,
-        exp4: d.exp4?.trim() || undefined,
-        extraExperiences: (d.extraExps || []).map(s => s.trim()).filter(Boolean),
-        activitiesText: d.activitiesText?.trim() || undefined,
-        breakfast: d.breakfast,
-        lunch: d.lunch,
-        dinner: d.dinner,
-        travelDistance: d.travelDistance?.trim() || undefined,
-        image: d.image?.trim() || undefined
-      })),
+      dayActivities: days.map(d => {
+        const cleanSights = (d.sightseeings && d.sightseeings.length > 0
+          ? d.sightseeings
+          : [d.exp1, d.exp2, d.exp3, d.exp4, ...(d.extraExps || [])]
+        ).map(s => (s || '').trim()).filter(Boolean);
+
+        return {
+          dayNumber: d.dayNumber,
+          title: d.customTitle?.trim() || undefined,
+          date: startDate ? addDaysToIso(startDate, d.dayNumber - 1) : undefined,
+          city: d.city?.trim() || undefined,
+          city2: d.city2?.trim() || undefined,
+          enRoutes: (d.enRoutes || []).map(s => s.trim()).filter(Boolean),
+          guidedTour: d.guidedTour,
+          sightseeings: cleanSights,
+          experiences: cleanSights,
+          points: cleanSights,
+          exp1: cleanSights[0] || undefined,
+          exp2: cleanSights[1] || undefined,
+          exp3: cleanSights[2] || undefined,
+          exp4: cleanSights[3] || undefined,
+          extraExperiences: cleanSights.slice(4),
+          activitiesText: d.activitiesText?.trim() || undefined,
+          breakfast: d.breakfast,
+          lunch: d.lunch,
+          dinner: d.dinner,
+          travelDistance: d.travelDistance?.trim() || undefined,
+          image: d.image?.trim() || undefined
+        };
+      }),
       inclusions: inclusions.map(s => s.trim()).filter(Boolean),
       exclusions: exclusions.map(s => s.trim()).filter(Boolean),
       finalQuotationAmount: finalQuotationAmount.trim() ? Number(finalQuotationAmount.replace(/[^\d.]/g, '')) : undefined,
@@ -1102,13 +1202,20 @@ export default function CurateItineraryPage() {
     const formattedDays = days.map((d, idx) => {
       const expPoints: string[] = [];
       if (d.guidedTour) expPoints.push("Dedicated local guide assistance included for today's sightseeing");
-      if (d.exp1?.trim()) expPoints.push(d.exp1.trim());
-      if (d.exp2?.trim()) expPoints.push(d.exp2.trim());
-      if (d.exp3?.trim()) expPoints.push(d.exp3.trim());
-      if (d.exp4?.trim()) expPoints.push(d.exp4.trim());
-      (d.extraExps || []).forEach(e => { if (e?.trim()) expPoints.push(e.trim()); });
+
+      const cleanSights = (d.sightseeings && d.sightseeings.length > 0
+        ? d.sightseeings
+        : [d.exp1, d.exp2, d.exp3, d.exp4, ...(d.extraExps || [])]
+      ).map(s => (s || '').trim()).filter(Boolean);
+
+      cleanSights.forEach(s => {
+        if (!expPoints.includes(s)) expPoints.push(s);
+      });
+
       if (d.activitiesText?.trim()) {
-        d.activitiesText.split('\n').map(s => s.trim().replace(/^[•\-\*]\s*/, '')).filter(Boolean).forEach(s => expPoints.push(s));
+        d.activitiesText.split('\n').map(s => s.trim().replace(/^[•\-\*]\s*/, '')).filter(Boolean).forEach(s => {
+          if (!expPoints.includes(s)) expPoints.push(s);
+        });
       }
 
       const isFinalDay = idx === days.length - 1 && days.length > 1;
@@ -1758,15 +1865,13 @@ export default function CurateItineraryPage() {
               <thead>
                 <tr className="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200 text-[11px] uppercase tracking-wider">
                   <th className="py-2.5 px-2 text-center w-12">Day</th>
-                  <th className="py-2.5 px-3 min-w-[240px]">Day Narrative Title / Heading</th>
+                  <th className="py-2.5 px-3 min-w-[220px]">Day Narrative Title / Heading</th>
                   <th className="py-2.5 px-2 text-center w-20">Meals</th>
                   <th className="py-2.5 px-2 text-center w-16">Guide</th>
-                  <th className="py-2.5 px-2 min-w-[120px]">From City</th>
-                  <th className="py-2.5 px-2 min-w-[150px]">En-Route Stops</th>
-                  <th className="py-2.5 px-2 min-w-[120px]">To / Stay City</th>
-                  <th className="py-2.5 px-2 min-w-[140px]">Sightseeing #1</th>
-                  <th className="py-2.5 px-2 min-w-[140px]">Sightseeing #2</th>
-                  <th className="py-2.5 px-2 min-w-[140px]">Sightseeing #3</th>
+                  <th className="py-2.5 px-2 min-w-[110px]">From City</th>
+                  <th className="py-2.5 px-2 min-w-[130px]">En-Route Stops</th>
+                  <th className="py-2.5 px-2 min-w-[110px]">To / Stay City</th>
+                  <th className="py-2.5 px-3 min-w-[380px]">Sightseeing &amp; Activities (All Highlights)</th>
                   <th className="py-2.5 px-2 text-center w-16">Actions</th>
                 </tr>
               </thead>
@@ -1871,7 +1976,7 @@ export default function CurateItineraryPage() {
                       </td>
 
                       {/* En-Route Spot */}
-                      <td className="py-2 px-2 align-top">
+                      <td className="py-2 px-2 align-middle">
                         <div className="space-y-1">
                           {(day.enRoutes || ['']).map((spot, sIdx) => (
                             <div key={sIdx} className="flex items-center gap-1">
@@ -1916,37 +2021,48 @@ export default function CurateItineraryPage() {
                         />
                       </td>
 
-                      {/* Experience 1 */}
-                      <td className="py-2 px-2 align-middle">
-                        <input
-                          type="text"
-                          value={day.exp1}
-                          onChange={e => updateDay(day.id, 'exp1', e.target.value)}
-                          placeholder="e.g. Police Bazar Walk"
-                          className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-[#0077b6]"
-                        />
-                      </td>
+                      {/* Sightseeings Column (All Points + Dynamic Add) */}
+                      <td className="py-2 px-3 align-top bg-slate-50/20">
+                        <div className="space-y-1.5">
+                          {(day.sightseeings || ['']).map((sight, sIdx) => (
+                            <div key={sIdx} className="flex items-center gap-1.5 group">
+                              <span className="w-5 h-5 rounded-md bg-sky-100 text-[#0077b6] text-[10px] font-black flex items-center justify-center shrink-0">
+                                {sIdx + 1}
+                              </span>
+                              <input
+                                type="text"
+                                value={sight}
+                                onChange={e => updateDaySightseeing(day.id, sIdx, e.target.value)}
+                                placeholder={`Sightseeing #${sIdx + 1} (e.g. Abbey Falls, Mandalpatti Jeep Safari)`}
+                                className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs text-slate-800 focus:outline-none focus:border-[#0077b6] focus:ring-1 focus:ring-sky-200 transition-all font-medium"
+                              />
+                              {(day.sightseeings || []).length > 1 && (
+                                <button
+                                  type="button"
+                                  onClick={() => removeDaySightseeing(day.id, sIdx)}
+                                  className="text-slate-300 hover:text-rose-600 p-1 shrink-0 cursor-pointer transition-colors"
+                                  title="Remove sightseeing point"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          ))}
 
-                      {/* Experience 2 */}
-                      <td className="py-2 px-2 align-middle">
-                        <input
-                          type="text"
-                          value={day.exp2}
-                          onChange={e => updateDay(day.id, 'exp2', e.target.value)}
-                          placeholder="e.g. Cafe Hopping"
-                          className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-[#0077b6]"
-                        />
-                      </td>
-
-                      {/* Experience 3 */}
-                      <td className="py-2 px-2 align-middle">
-                        <input
-                          type="text"
-                          value={day.exp3}
-                          onChange={e => updateDay(day.id, 'exp3', e.target.value)}
-                          placeholder="e.g. Sunset Viewpoint"
-                          className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-[#0077b6]"
-                        />
+                          <div className="pt-1 flex items-center justify-between">
+                            <button
+                              type="button"
+                              onClick={() => addDaySightseeing(day.id)}
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-sky-50 text-[#0077b6] hover:bg-sky-100 text-[11px] font-bold cursor-pointer transition-all border border-sky-200 shadow-2xs"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Add Sightseeing</span>
+                            </button>
+                            <span className="text-[10px] text-slate-400 font-semibold">
+                              {(day.sightseeings || []).length} {(day.sightseeings || []).length === 1 ? 'point' : 'points'}
+                            </span>
+                          </div>
+                        </div>
                       </td>
 
                       {/* Actions: Drawer toggle & Delete */}
@@ -2043,17 +2159,19 @@ export default function CurateItineraryPage() {
                     />
                   </div>
 
-                  {/* Sightseeing 4 */}
-                  <div>
+                  {/* Sightseeing Quick-Add in Drawer */}
+                  <div className="flex flex-col justify-end">
                     <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Additional Sightseeing Point #4
+                      Sightseeing Points ({expDay.sightseeings?.length || 0} active)
                     </label>
-                    <Input
-                      value={expDay.exp4 || ''}
-                      onChange={e => updateDay(expDay.id, 'exp4', e.target.value)}
-                      placeholder="e.g. Local Handicraft Emporium"
-                      className="bg-white text-xs h-9"
-                    />
+                    <Button
+                      type="button"
+                      onClick={() => addDaySightseeing(expDay.id)}
+                      className="bg-[#0077b6] hover:bg-[#006093] text-white text-xs font-bold h-9 cursor-pointer w-full"
+                    >
+                      <Plus className="w-3.5 h-3.5 mr-1" />
+                      <span>+ Add Another Sightseeing</span>
+                    </Button>
                   </div>
                 </div>
 
