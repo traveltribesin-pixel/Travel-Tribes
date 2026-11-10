@@ -36,12 +36,27 @@ import {
   Info,
   AlertTriangle,
   ArrowUpDown,
-  BookOpen
+  BookOpen,
+  Wand2,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { ItineraryHistorySection } from '@/components/itinerary/itinerary-history-section';
 import { CuratedItineraryView } from '@/components/curated-itinerary-view';
 import type { CuratedItinerary } from '@/lib/curated-itinerary-constants';
 import { trips, type Trip } from '@/lib/travel-data';
+import {
+  DEFAULT_EXCLUSIONS,
+  DEFAULT_INCLUSIONS,
+  MEAL_PLAN_OPTIONS,
+  PICKUP_DROP_OPTIONS,
+  ROOM_TYPE_OPTIONS,
+  SHARING_OPTIONS,
+  STAR_RATING_OPTIONS,
+  TRAVEL_STYLE_OPTIONS,
+  VEHICLE_OPTIONS,
+  type ParsedItineraryData
+} from '@/lib/curate-form-options';
 
 interface HotelItem {
   id: string;
@@ -74,88 +89,6 @@ interface DayItem {
   activitiesText?: string;
   image?: string;
 }
-
-// Standard Travel Tribes Inclusions & Exclusions
-const DEFAULT_INCLUSIONS = [
-  'Accommodation in verified, handpicked hotels / boutique stays on selected occupancy',
-  'Dedicated private AC vehicle with experienced chauffeur for all transfers & sightseeing as per itinerary',
-  'Daily hearty breakfast & dinner included (MAP Meal Plan)',
-  'Driver night allowance, fuel charges, interstate taxes, toll taxes and parking fees included',
-  'Sightseeing & inter-city transfers strictly as per the curated day-by-day itinerary',
-  '24/7 dedicated on-ground concierge support and trip coordination by Travel Tribes'
-];
-
-const DEFAULT_EXCLUSIONS = [
-  '5% GST as applicable on government travel and holiday services',
-  'Airfare or train tickets to/from the arrival and departure city (unless specified)',
-  'Monument entrance fees, camera tickets, boating & optional adventure activity charges',
-  'Lunch, highway refreshments, alcoholic beverages and personal mineral water',
-  'Personal expenses such as laundry, room heater charges, phone calls and tips',
-  'Any cost arising due to unforeseen natural calamities, landslides, roadblocks or flight/train delays'
-];
-
-const VEHICLE_OPTIONS = [
-  'Private Dedicated AC Vehicle (Innova Crysta / Ertiga / Similar)',
-  'Innova Crysta AC (6+1 Seater Luxury MPV)',
-  'Maruti Ertiga AC (4+1 Seater MPV)',
-  'Tempo Traveller AC (12-Seater Luxury)',
-  'Tempo Traveller AC (17-Seater Luxury)',
-  'Toyota Fortuner 4x4 Luxury SUV',
-  'Sedan AC (Dzire / Etios)',
-  'Dedicated Mountain Tempo Traveller & 3AC Train'
-];
-
-const MEAL_PLAN_OPTIONS = [
-  'Breakfast & Dinner Included (MAP Plan)',
-  'Daily Breakfast Included (CP Plan)',
-  'All Meals Included — Breakfast, Lunch & Dinner (AP Plan)',
-  'Room Only — No Meals Included (EP Plan)'
-];
-
-const PICKUP_DROP_OPTIONS = [
-  'Airport & Railway Station Pickup & Drop Included',
-  'Ex-Guwahati Airport / Railway Station',
-  'Ex-Delhi Airport / Railway Station',
-  'Ex-Mumbai Airport / Railway Station',
-  'Ex-Jaipur Airport / Railway Station',
-  'Ex-Kochi Airport / Ernakulam Railway Station',
-  'Ex-Srinagar Airport',
-  'Ex-Denpasar Airport (Bali)'
-];
-
-const SHARING_OPTIONS = [
-  'Double Sharing',
-  'Triple Sharing',
-  'Quad Sharing',
-  'Single Occupancy',
-  'Family Suites'
-];
-
-const TRAVEL_STYLE_OPTIONS = [
-  'Couple / Honeymoon Getaway',
-  'Family Vacation with Kids',
-  'Group of Friends / Adventure',
-  'Corporate Offsite / Incentive',
-  'Solo Custom Expedition'
-];
-
-const STAR_RATING_OPTIONS = [
-  '5 Star Luxury',
-  '4 Star Deluxe',
-  '3 Star Comfort',
-  'Heritage Palace / Haveli',
-  'Boutique Resort',
-  'Luxury Homestay / Alpine Camps'
-];
-
-const ROOM_TYPE_OPTIONS = [
-  'Deluxe Room',
-  'Super Deluxe Room',
-  'Executive Lake View / Mountain View Room',
-  'Superior Luxury Suite',
-  'Cottage / Wooden Chalet',
-  'Luxury Swiss Alpine Tent'
-];
 
 // Date helpers
 const formatIsoToHuman = (iso: string): string => {
@@ -322,6 +255,13 @@ export default function CurateItineraryPage() {
   const [copied, setCopied] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [draftRestoredToast, setDraftRestoredToast] = useState(false);
+
+  // Groq AI Magic Paste State
+  const [isAiPanelExpanded, setIsAiPanelExpanded] = useState(true);
+  const [aiRawText, setAiRawText] = useState('');
+  const [aiParsing, setAiParsing] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [aiSuccessSummary, setAiSuccessSummary] = useState<string | null>(null);
 
   // LocalStorage Draft Autosave & Restore
   useEffect(() => {
@@ -650,6 +590,176 @@ export default function CurateItineraryPage() {
           setBalancePendingAmount(String(totalVal - (numAdults * 5000)));
         }
       }
+    }
+  };
+
+  // Apply Groq AI parsed itinerary payload into form states cleanly
+  const applyParsedItinerary = (
+    parsed: ParsedItineraryData,
+    suggestedMedia?: { heroImage?: string; galleryImages?: string[] },
+    meta?: { model?: string; durationMs?: number; daysCount?: number; hotelsCount?: number; sightseeingsCount?: number }
+  ) => {
+    setSelectedTemplateSlug('');
+
+    // Preserve manual client details unless explicitly found in pasted text
+    const nextFirst = parsed.firstName ?? firstName;
+    const nextLast = parsed.lastName ?? lastName;
+    if (parsed.firstName !== null) setFirstName(parsed.firstName);
+    if (parsed.lastName !== null) setLastName(parsed.lastName);
+    if (parsed.firstName !== null || parsed.lastName !== null) {
+      setFullName(`${nextFirst} ${nextLast}`.trim());
+    }
+    if (parsed.clientPhone) setClientPhone(parsed.clientPhone);
+    if (parsed.clientEmail) setClientEmail(parsed.clientEmail);
+    if (parsed.departureCity) setDepartureCity(parsed.departureCity);
+    if (parsed.adults) setAdults(parsed.adults);
+    if (parsed.kids) setKids(parsed.kids);
+    if (parsed.sharingType) setSharingType(parsed.sharingType);
+    if (parsed.travelStyle) setTravelStyle(parsed.travelStyle);
+
+    // Trip Overview & Logistics
+    setTripTitle(parsed.tripTitle);
+    setSubtitle(parsed.subtitle || 'PRIVATE BESPOKE EXPERIENCE');
+    setDestination(parsed.destination);
+    setDuration(parsed.duration);
+    setRouteText(parsed.routeText);
+
+    if (parsed.vehicleType) setVehicleType(parsed.vehicleType);
+    if (parsed.pickupDrop) setPickupDrop(parsed.pickupDrop);
+    if (parsed.mealPlan) setMealPlan(parsed.mealPlan);
+
+    // Dates
+    const effectiveStart = parsed.startDate || startDate;
+    const effectiveEnd = parsed.endDate || endDate;
+    if (parsed.startDate) setStartDate(parsed.startDate);
+    if (parsed.endDate) setEndDate(parsed.endDate);
+    if (parsed.travelDates) {
+      setTravelDates(parsed.travelDates);
+    } else if (effectiveStart && effectiveEnd) {
+      setTravelDates(`${formatIsoToHuman(effectiveStart)} to ${formatIsoToHuman(effectiveEnd)}`);
+    }
+
+    // Days Schedule (All sightseeings + en-routes preserved)
+    const nowTs = Date.now();
+    const mappedDays: DayItem[] = parsed.days.map((d, idx) => {
+      const sights = d.sightseeings.length > 0 ? d.sightseeings : ['Sightseeing & leisure exploration'];
+      const enRoutes = d.enRoutes.length > 0 ? d.enRoutes : [''];
+      return {
+        id: `d-${nowTs}-${idx + 1}`,
+        dayNumber: d.dayNumber || idx + 1,
+        guidedTour: d.guidedTour,
+        breakfast: d.breakfast,
+        lunch: d.lunch,
+        dinner: d.dinner,
+        city: d.city,
+        enRoutes,
+        city2: d.city2,
+        sightseeings: sights,
+        exp1: sights[0] || '',
+        exp2: sights[1] || '',
+        exp3: sights[2] || '',
+        exp4: sights[3] || '',
+        extraExps: sights.slice(4),
+        travelDistance: d.travelDistance || '',
+        customTitle: d.customTitle,
+        activitiesText: d.activitiesText || '',
+        image: ''
+      };
+    });
+    setDays(mappedDays);
+
+    // Hotels
+    const mappedHotels: HotelItem[] = parsed.hotels.map((h, hIdx) => ({
+      id: `h-${nowTs}-${hIdx + 1}`,
+      city: h.city,
+      hotelName: h.hotelName,
+      starRating: h.starRating,
+      nights: h.nights,
+      stayDates: '',
+      roomType: h.roomType
+    }));
+    setHotels(recomputeHotelDates(effectiveStart, mappedHotels));
+
+    // Inclusions & Exclusions (only replace defaults if text explicitly listed them)
+    if (parsed.inclusions.length > 0) setInclusions(parsed.inclusions);
+    if (parsed.exclusions.length > 0) setExclusions(parsed.exclusions);
+
+    // Commercials
+    const adultsNum = Math.max(1, Number(parsed.adults || adults) || 2);
+    if (parsed.perAdultPrice) setPerAdultPrice(parsed.perAdultPrice);
+    if (parsed.perKidPrice) setPerKidPrice(parsed.perKidPrice);
+    if (parsed.specialRequirements) setSpecialRequirements(parsed.specialRequirements);
+
+    if (parsed.finalQuotationAmount) {
+      const totalNum = Number(parsed.finalQuotationAmount) || 0;
+      setFinalQuotationAmount(parsed.finalQuotationAmount);
+      if (!parsed.perAdultPrice && totalNum > 0) {
+        setPerAdultPrice(String(Math.round(totalNum / adultsNum)));
+      }
+      const advNum = parsed.advanceAmountPaid
+        ? Number(parsed.advanceAmountPaid) || 0
+        : Math.min(totalNum, adultsNum * 5000);
+      setAdvanceAmountPaid(String(advNum));
+      setBalancePendingAmount(String(Math.max(0, totalNum - advNum)));
+    } else if (parsed.advanceAmountPaid) {
+      setAdvanceAmountPaid(parsed.advanceAmountPaid);
+    }
+
+    // Fill destination media only when slots are currently blank
+    if (!heroImage.trim() && suggestedMedia?.heroImage) {
+      setHeroImage(suggestedMedia.heroImage);
+    }
+    if (galleryImages.every(g => !g.trim()) && suggestedMedia?.galleryImages?.length) {
+      const imgs = suggestedMedia.galleryImages.slice(0, 4);
+      while (imgs.length < 4) imgs.push('');
+      setGalleryImages(imgs);
+    }
+
+    const totalSights = meta?.sightseeingsCount ?? mappedDays.reduce((s, d) => s + d.sightseeings.length, 0);
+    const secs = meta?.durationMs ? `${(meta.durationMs / 1000).toFixed(1)}s` : 'instant';
+    setAiSuccessSummary(
+      `Auto-filled ${mappedDays.length} Days, ${mappedHotels.length} Stays & ${totalSights} Sightseeing Points in ${secs}${meta?.model ? ` (${meta.model})` : ''}!`
+    );
+  };
+
+  // Call Groq AI Parser endpoint
+  const handleParseWithGroq = async () => {
+    const text = aiRawText.trim();
+    if (text.length < 20) {
+      setAiError('Please paste the itinerary text first (at least a few lines or day schedule).');
+      return;
+    }
+
+    const hasExistingSchedule = Boolean(
+      tripTitle.trim() && days.length > 1 && days.some(d => d.customTitle?.trim())
+    );
+    if (
+      hasExistingSchedule &&
+      !window.confirm('Auto-fill with Groq AI? This will replace current trip details, days, and hotels (empty guest fields stay preserved).')
+    ) {
+      return;
+    }
+
+    setAiParsing(true);
+    setAiError(null);
+    setAiSuccessSummary(null);
+
+    try {
+      const res = await fetch('/api/ai/parse-itinerary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rawText: text })
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success || !json.data) {
+        throw new Error(json.error || 'Failed to parse itinerary with Groq AI.');
+      }
+
+      applyParsedItinerary(json.data, json.suggestedMedia, json.meta);
+    } catch (err: any) {
+      setAiError(err?.message || 'Error while parsing itinerary with Groq AI.');
+    } finally {
+      setAiParsing(false);
     }
   };
 
@@ -1013,8 +1123,13 @@ export default function CurateItineraryPage() {
       localStorage.removeItem('travel_tribes_curate_draft');
       setTripTitle('');
       setSubtitle('');
+      setFirstName('');
+      setLastName('');
       setFullName('');
       setClientPhone('');
+      setAiRawText('');
+      setAiError(null);
+      setAiSuccessSummary(null);
       setClientEmail('');
       setInquiryId('');
       setDepartureCity('');
@@ -1442,7 +1557,7 @@ export default function CurateItineraryPage() {
         </div>
 
         {/* ⚡ Quick-Fill Template Selector Bar */}
-        <div className="bg-gradient-to-r from-sky-900 via-slate-900 to-sky-950 text-white rounded-2xl p-4 sm:p-5 mb-8 shadow-md border border-sky-800">
+        <div className="bg-gradient-to-r from-sky-900 via-slate-900 to-sky-950 text-white rounded-2xl p-4 sm:p-5 mb-5 shadow-md border border-sky-800">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-[#ffde59] text-slate-950 flex items-center justify-center shrink-0 shadow-sm font-black">
@@ -1456,7 +1571,7 @@ export default function CurateItineraryPage() {
                   </span>
                 </h3>
                 <p className="text-xs text-slate-300 mt-0.5">
-                  Pick any verified group trip to pre-populate days, hotels, highlights & photos. You can fully customize everything afterwards.
+                  Pick any verified group trip to pre-populate days, hotels, highlights &amp; photos. You can fully customize everything afterwards.
                 </p>
               </div>
             </div>
@@ -1478,6 +1593,120 @@ export default function CurateItineraryPage() {
               </select>
             </div>
           </div>
+        </div>
+
+        {/* ✨ Groq AI Smart Paste Itinerary Auto-Filler */}
+        <div className="bg-white rounded-2xl border-2 border-indigo-200/90 shadow-sm overflow-hidden mb-8">
+          <button
+            type="button"
+            onClick={() => setIsAiPanelExpanded(prev => !prev)}
+            aria-expanded={isAiPanelExpanded}
+            className="w-full text-left bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 text-white px-4 sm:px-5 py-3.5 flex items-center justify-between gap-3 cursor-pointer select-none"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ffde59] to-amber-400 text-slate-950 flex items-center justify-center shrink-0 shadow-sm">
+                <Wand2 className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-sm sm:text-base font-black text-white flex flex-wrap items-center gap-2">
+                  <span>Paste Full Itinerary Text (AI Auto-Fill)</span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-[10px] font-black uppercase tracking-wider">
+                    Powered by Groq AI
+                  </span>
+                </h3>
+                <p className="text-[11px] sm:text-xs text-slate-300 mt-0.5">
+                  Paste any WhatsApp plan, supplier PDF copy, or rough day-wise text — Groq AI will populate all days, hotels, sightseeings, meals &amp; route automatically.
+                </p>
+              </div>
+            </div>
+
+            <span className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center shrink-0">
+              {isAiPanelExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </span>
+          </button>
+
+          {isAiPanelExpanded && (
+            <div className="p-4 sm:p-5 bg-gradient-to-b from-indigo-50/40 to-white space-y-3">
+              <textarea
+                rows={6}
+                value={aiRawText}
+                onChange={e => {
+                  setAiRawText(e.target.value);
+                  if (aiError) setAiError(null);
+                }}
+                placeholder={`Paste ANY raw itinerary text here...\n\nExample:\nClient: Amit Maurya (2 Adults)\nSpiti Valley 6N/7D Winter Special (Ex-Delhi, Innova Crysta, MAP Plan)\nDay 1: Delhi to Shimla - Overnight journey\nDay 2: Shimla to Chitkul via Sangla Valley, Kamru Fort & Hindustan ka Aakhri Dhaba...\n...`}
+                className="w-full rounded-xl border border-indigo-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 font-medium leading-relaxed"
+              />
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3 text-[11px] text-slate-500 font-semibold">
+                  <span>{aiRawText.trim().length.toLocaleString()} characters</span>
+                  <span>•</span>
+                  <span>Manual client details you typed stay safe unless text includes new ones</span>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  {aiRawText && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={aiParsing}
+                      onClick={() => {
+                        setAiRawText('');
+                        setAiError(null);
+                        setAiSuccessSummary(null);
+                      }}
+                      className="text-xs font-bold text-slate-600 hover:text-rose-600 h-9 cursor-pointer"
+                    >
+                      Clear Text
+                    </Button>
+                  )}
+
+                  <Button
+                    type="button"
+                    disabled={aiParsing || aiRawText.trim().length < 20}
+                    onClick={handleParseWithGroq}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs sm:text-sm px-5 h-9 rounded-xl shadow-sm cursor-pointer disabled:opacity-60"
+                  >
+                    {aiParsing ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+                        <span>Structuring Itinerary with AI...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Wand2 className="w-3.5 h-3.5 mr-1.5 text-[#ffde59]" />
+                        <span>Auto-Fill All Fields with Groq AI</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              {aiError && (
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold flex items-start gap-2">
+                  <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{aiError}</span>
+                </div>
+              )}
+
+              {aiSuccessSummary && (
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{aiSuccessSummary} Review the fields below &amp; click &quot;Preview Live Proposal&quot; anytime.</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setAiSuccessSummary(null)}
+                    className="text-emerald-700 hover:text-emerald-950 font-black cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ======================================================== */}

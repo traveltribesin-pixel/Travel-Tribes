@@ -1,6 +1,530 @@
 {
   "itineraries": [
     {
+      "id": "sheet-1793944158944",
+      "slug": "amit-maurya-chitkul-1d",
+      "createdAt": "2026-11-06T05:49:18.946Z",
+      "updatedAt": "2026-11-06T05:49:18.946Z",
+      "tripType": "customized",
+      "title": "Spiti Valley — Xmas & New Year Special (Mumbai to Mumbai)",
+      "subtitle": "PRIVATE BESPOKE EXPERIENCE",
+      "destination": "Chitkul",
+      "duration": "9N/10D",
+      "routeText": "MUMBAI ➔ DELHI ➔ SHIMLA ➔ CHITKUL ➔ TABO ➔ KAZA VIA DHANKAR ➔ Chitkul ➔ KEY MONASTERY ➔ CHICHAM ➔ KAZA ➔ KALPA ➔ SHIMLA  DEPARTURE",
+      "bannerImage": "/new-year-trip-images/4.png",
+      "overview": "A private bespoke 9N/10D journey handcrafted exclusively for Amit Maurya. Featuring handpicked accommodations, private dedicated transfers with Private Dedicated AC Vehicle (Innova Crysta / Ertiga / Similar), and curated local experiences across Chitkul.",
+      "highlights": [
+        "Board the train from Mumbai to Delhi (Mumbai to Mumbai 3AC Train CNF or RAC ticket provided).",
+        "Meet your fellow travellers and trip captain at the railway station.",
+        "Kick off the journey with fun ice-breaking games, conversations, music, and new friendships!",
+        "Included Today: Meetup & Ice Breaking games session.",
+        "Arrive in Delhi and assemble at Kashmiri Gate / R K Ashram boarding point.",
+        "Our exciting journey to Shimla begins at 8:00 PM.",
+        "Get ready to board our Semi-Sleeper AC Volvo bus for an overnight ride to the enchanting Queen of Hills.",
+        "Relax, unwind, and enjoy the winding mountain roads as we ascend towards Himachal.",
+        "As the first light of day breaks, we arrive in Shimla, and the real Himalayan adventure begins!",
+        "Hit the road in our dedicated tempo traveler as we journey from Shimla to the mystical Chitkul.",
+        "Follow the Sutlej River, taking a thrilling turn towards Chitkul along the mesmerizing Baspa River.",
+        "Chitkul, the last inhabited village before the Indo-China border, awaits us for an unforgettable overnight stay.",
+        "Enjoy a piping hot, delicious dinner in the quaint village of Chitkul.",
+        "After breakfast, head out to explore the picturesque Chitkul village.",
+        "Trek down to the Baspa riverside or enjoy some hot Maggi at the \"Hindustan ka Aakhri Dhaba\" (Last Dhaba of India).",
+        "Move towards Tabo, halting on the way at Khab Sangam (confluence of Sutlej and Spiti rivers).",
+        "Arrive in Tabo and check into our warm, welcoming homestay.",
+        "Enjoy a delicious, freshly prepared local home-cooked meal.",
+        "Tabo, with its 1,025-year-old history, holds ancient Himalayan secrets waiting to be uncovered.",
+        "Today, dive into the village's soul, exploring its meditation caves and the awe-inspiring Tabo Monastery.",
+        "Our journey then takes us to the dramatic cliffside Dhankar Monastery before we head to Kaza, the heart of Spiti.",
+        "Arrive in Kaza, where we will spend the following three days.",
+        "Check-in at our homestay and savor a warm group dinner.",
+        "After enjoying delicious local breakfast at the homestay, get ready to explore the highest post office of the world in Hikkim (14,567 ft).",
+        "Post handwritten letters with official postal stamps to your loved ones from the top of the world.",
+        "Visit Komic Village (15,027 ft) — the world's highest motorable village.",
+        "Explore Langza, the fossil village of India, guarded by the iconic giant Golden Buddha statue overlooking snow peaks.",
+        "Come back to Kaza by evening, explore the vibrant local market, and enjoy dinner at the stay.",
+        "Prepare for awe-inspiring sights today as we visit the famous Key Monastery, perched high on a conical hill with a history dating back to the 11th century.",
+        "Interact with Buddhist monks, explore the ancient murals, and soak in panoramic views of the Spiti valley.",
+        "After Key, cross the incredible Chicham Bridge — Asia's highest suspension bridge at 13,596 ft.",
+        "Our journey takes us to Kibber village, world-famous for snow leopard sightings.",
+        "Come back to Kaza and enjoy some warm, local home-cooked dinner.",
+        "Our last morning in Kaza invites us to take a leisurely walk through town, soaking in the breathtaking scenery one last time.",
+        "Hit the road to reach Kalpa via the picturesque Nako village and sacred Nako lake.",
+        "Get ready for an overnight stay in Kalpa, surrounded by awe-inspiring vistas of the sacred Kinner Kailash range.",
+        "Enjoy dinner and rest at our hotel in Kalpa.",
+        "Wake up to the serene beauty of Kalpa and enjoy a hearty breakfast with a majestic mountain view.",
+        "Explore Kalpa, visit the nearby Suicide Point, and capture stunning photographs and Instagram-worthy reels.",
+        "As we bid farewell to Kalpa, we will make our way back to Delhi via Shimla, cherishing the memories of an unforgettable journey.",
+        "Board our overnight Volvo bus from Shimla to Delhi.",
+        "Arrive in Delhi early morning, carrying a heart full of memories and a bunch of new friends.",
+        "Head to the railway station and board your 3AC train back to Mumbai.",
+        "Trip concludes with hugs, smiles, unforgettable stories, and a lifelong Travel Tribe bond."
+      ],
+      "highlightImages": [
+        "/Card Image/winter_spiti.png",
+        "/image/Spiti/spiti_img.JPEG",
+        "/image/Spiti/20250110_154329_88A2CE.jpeg",
+        "/image/Spiti/20250110_154841_8079AD.jpeg"
+      ],
+      "locationGlimpses": [
+        {
+          "name": "MUMBAI TO DELHI | Board the Train & Meet the Tribe 🚆",
+          "image": "/Card Image/winter_spiti.png"
+        },
+        {
+          "name": "DELHI TO SHIMLA | Overnight Semi-Sleeper AC Volvo 🚍",
+          "image": "/image/Spiti/spiti_img.JPEG"
+        },
+        {
+          "name": "SHIMLA TO CHITKUL | Journey to the Last Village of India 🏡",
+          "image": "/image/Spiti/20250110_154329_88A2CE.jpeg"
+        },
+        {
+          "name": "CHITKUL TO TABO | Baspa River, Last Dhaba & Khab Sangam 🍲",
+          "image": "/image/Spiti/20250110_154841_8079AD.jpeg"
+        }
+      ],
+      "cityWiseStay": [
+        {
+          "city": "DELHI",
+          "nights": "1 Night"
+        },
+        {
+          "city": "SHIMLA",
+          "nights": "1 Night"
+        },
+        {
+          "city": "CHITKUL",
+          "nights": "1 Night"
+        },
+        {
+          "city": "TABO",
+          "nights": "1 Night"
+        },
+        {
+          "city": "KAZA VIA DHANKAR",
+          "nights": "1 Night"
+        },
+        {
+          "city": "Chitkul",
+          "nights": "1 Night"
+        },
+        {
+          "city": "CHICHAM",
+          "nights": "1 Night"
+        },
+        {
+          "city": "KALPA",
+          "nights": "1 Night"
+        },
+        {
+          "city": "SHIMLA  DEPARTURE",
+          "nights": "1 Night"
+        }
+      ],
+      "clientName": "Amit Maurya",
+      "clientFirstName": "Amit",
+      "clientLastName": "Maurya",
+      "clientPhone": "9137290903",
+      "clientEmail": "",
+      "departureCity": "",
+      "inquiryId": "",
+      "travelDates": "",
+      "groupVibe": "2 Adults (Double Sharing) • Couple / Honeymoon Getaway",
+      "mealPlan": "Breakfast & Dinner Included (MAP Plan)",
+      "specialRequirements": "",
+      "hotels": [
+        {
+          "id": "hotel-1",
+          "city": "DELHI",
+          "hotelName": "Handpicked 4-Star Boutique Stay (DELHI)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-2",
+          "city": "SHIMLA",
+          "hotelName": "Handpicked 4-Star Boutique Stay (SHIMLA)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-3",
+          "city": "CHITKUL",
+          "hotelName": "Handpicked 4-Star Boutique Stay (CHITKUL)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-4",
+          "city": "TABO",
+          "hotelName": "Handpicked 4-Star Boutique Stay (TABO)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-5",
+          "city": "KAZA VIA DHANKAR",
+          "hotelName": "Handpicked 4-Star Boutique Stay (KAZA VIA DHANKAR)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-6",
+          "city": "Chitkul",
+          "hotelName": "Handpicked 4-Star Boutique Stay (Chitkul)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-7",
+          "city": "CHICHAM",
+          "hotelName": "Handpicked 4-Star Boutique Stay (CHICHAM)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-8",
+          "city": "KALPA",
+          "hotelName": "Handpicked 4-Star Boutique Stay (KALPA)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        },
+        {
+          "id": "hotel-9",
+          "city": "SHIMLA  DEPARTURE",
+          "hotelName": "Handpicked 4-Star Boutique Stay (SHIMLA  DEPARTURE)",
+          "nights": "1 Night",
+          "stayDates": "1 Night",
+          "roomType": "Deluxe Room",
+          "starRating": "4 Star Deluxe",
+          "amenities": [
+            "Free High-Speed WiFi",
+            "Daily Curated Breakfast",
+            "Air Conditioned",
+            "24/7 Room Service"
+          ]
+        }
+      ],
+      "transport": {
+        "vehicleType": "Private Dedicated AC Vehicle (Innova Crysta / Ertiga / Similar)",
+        "pickupDrop": "Airport & Railway Station Pickup & Drop Included",
+        "includedFeatures": [
+          "All toll taxes, parking fees, state border permits and fuel included",
+          "Dedicated experienced driver for entire tour duration",
+          "Point-to-point sightseeing & inter-city transit as per itinerary"
+        ]
+      },
+      "days": [
+        {
+          "day": 1,
+          "title": "MUMBAI TO DELHI | Board the Train & Meet the Tribe 🚆",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Board the train from Mumbai to Delhi (Mumbai to Mumbai 3AC Train CNF or RAC ticket provided).",
+            "Meet your fellow travellers and trip captain at the railway station.",
+            "Kick off the journey with fun ice-breaking games, conversations, music, and new friendships!",
+            "Included Today: Meetup & Ice Breaking games session."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Board the train from Mumbai to Delhi (Mumbai to Mumbai 3AC Train CNF or RAC ticket provided). • Meet your fellow travellers and trip captain at the railway station. • Kick off the journey with fun ice-breaking games, conversations, music, and new friendships! • Included Today: Meetup & Ice Breaking games session.",
+          "meals": [
+            "Breakfast & Dinner Included (MAP Plan)"
+          ],
+          "stayCity": "DELHI",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (DELHI)",
+          "stay": "Handpicked 4-Star Boutique Stay (DELHI)",
+          "image": "/Card Image/winter_spiti.png"
+        },
+        {
+          "day": 2,
+          "title": "DELHI TO SHIMLA | Overnight Semi-Sleeper AC Volvo 🚍",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Arrive in Delhi and assemble at Kashmiri Gate / R K Ashram boarding point.",
+            "Our exciting journey to Shimla begins at 8:00 PM.",
+            "Get ready to board our Semi-Sleeper AC Volvo bus for an overnight ride to the enchanting Queen of Hills.",
+            "Relax, unwind, and enjoy the winding mountain roads as we ascend towards Himachal."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Arrive in Delhi and assemble at Kashmiri Gate / R K Ashram boarding point. • Our exciting journey to Shimla begins at 8:00 PM. • Get ready to board our Semi-Sleeper AC Volvo bus for an overnight ride to the enchanting Queen of Hills. • Relax, unwind, and enjoy the winding mountain roads as we ascend towards Himachal.",
+          "meals": [
+            "Breakfast & Dinner Included (MAP Plan)"
+          ],
+          "stayCity": "SHIMLA",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (SHIMLA)",
+          "stay": "Handpicked 4-Star Boutique Stay (SHIMLA)",
+          "image": "/image/Spiti/spiti_img.JPEG"
+        },
+        {
+          "day": 3,
+          "title": "SHIMLA TO CHITKUL | Journey to the Last Village of India 🏡",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "As the first light of day breaks, we arrive in Shimla, and the real Himalayan adventure begins!",
+            "Hit the road in our dedicated tempo traveler as we journey from Shimla to the mystical Chitkul.",
+            "Follow the Sutlej River, taking a thrilling turn towards Chitkul along the mesmerizing Baspa River.",
+            "Chitkul, the last inhabited village before the Indo-China border, awaits us for an unforgettable overnight stay.",
+            "Enjoy a piping hot, delicious dinner in the quaint village of Chitkul."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • As the first light of day breaks, we arrive in Shimla, and the real Himalayan adventure begins! • Hit the road in our dedicated tempo traveler as we journey from Shimla to the mystical Chitkul. • Follow the Sutlej River, taking a thrilling turn towards Chitkul along the mesmerizing Baspa River. • Chitkul, the last inhabited village before the Indo-China border, awaits us for an unforgettable overnight stay. • Enjoy a piping hot, delicious dinner in the quaint village of Chitkul.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "CHITKUL",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (CHITKUL)",
+          "stay": "Handpicked 4-Star Boutique Stay (CHITKUL)",
+          "image": "/image/Spiti/20250110_154329_88A2CE.jpeg"
+        },
+        {
+          "day": 4,
+          "title": "CHITKUL TO TABO | Baspa River, Last Dhaba & Khab Sangam 🍲",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "After breakfast, head out to explore the picturesque Chitkul village.",
+            "Trek down to the Baspa riverside or enjoy some hot Maggi at the \"Hindustan ka Aakhri Dhaba\" (Last Dhaba of India).",
+            "Move towards Tabo, halting on the way at Khab Sangam (confluence of Sutlej and Spiti rivers).",
+            "Arrive in Tabo and check into our warm, welcoming homestay.",
+            "Enjoy a delicious, freshly prepared local home-cooked meal."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • After breakfast, head out to explore the picturesque Chitkul village. • Trek down to the Baspa riverside or enjoy some hot Maggi at the \"Hindustan ka Aakhri Dhaba\" (Last Dhaba of India). • Move towards Tabo, halting on the way at Khab Sangam (confluence of Sutlej and Spiti rivers). • Arrive in Tabo and check into our warm, welcoming homestay. • Enjoy a delicious, freshly prepared local home-cooked meal.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "TABO",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (TABO)",
+          "stay": "Handpicked 4-Star Boutique Stay (TABO)",
+          "image": "/image/Spiti/20250110_154841_8079AD.jpeg"
+        },
+        {
+          "day": 5,
+          "title": "TABO TO KAZA VIA DHANKAR | 1,025-Year-Old Monastery & Cliffs 🛕",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Tabo, with its 1,025-year-old history, holds ancient Himalayan secrets waiting to be uncovered.",
+            "Today, dive into the village's soul, exploring its meditation caves and the awe-inspiring Tabo Monastery.",
+            "Our journey then takes us to the dramatic cliffside Dhankar Monastery before we head to Kaza, the heart of Spiti.",
+            "Arrive in Kaza, where we will spend the following three days.",
+            "Check-in at our homestay and savor a warm group dinner."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Tabo, with its 1,025-year-old history, holds ancient Himalayan secrets waiting to be uncovered. • Today, dive into the village's soul, exploring its meditation caves and the awe-inspiring Tabo Monastery. • Our journey then takes us to the dramatic cliffside Dhankar Monastery before we head to Kaza, the heart of Spiti. • Arrive in Kaza, where we will spend the following three days. • Check-in at our homestay and savor a warm group dinner.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "KAZA VIA DHANKAR",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (KAZA VIA DHANKAR)",
+          "stay": "Handpicked 4-Star Boutique Stay (KAZA VIA DHANKAR)",
+          "image": "/Card Image/winter_spiti.png"
+        },
+        {
+          "day": 6,
+          "title": "KAZA, LANGZA, HIKKIM & KOMIC | World's Highest Post Office 📮",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "After enjoying delicious local breakfast at the homestay, get ready to explore the highest post office of the world in Hikkim (14,567 ft).",
+            "Post handwritten letters with official postal stamps to your loved ones from the top of the world.",
+            "Visit Komic Village (15,027 ft) — the world's highest motorable village.",
+            "Explore Langza, the fossil village of India, guarded by the iconic giant Golden Buddha statue overlooking snow peaks.",
+            "Come back to Kaza by evening, explore the vibrant local market, and enjoy dinner at the stay."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • After enjoying delicious local breakfast at the homestay, get ready to explore the highest post office of the world in Hikkim (14,567 ft). • Post handwritten letters with official postal stamps to your loved ones from the top of the world. • Visit Komic Village (15,027 ft) — the world's highest motorable village. • Explore Langza, the fossil village of India, guarded by the iconic giant Golden Buddha statue overlooking snow peaks. • Come back to Kaza by evening, explore the vibrant local market, and enjoy dinner at the stay.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "Chitkul",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (CHITKUL)",
+          "stay": "Handpicked 4-Star Boutique Stay (CHITKUL)",
+          "image": "/image/Spiti/spiti_img.JPEG"
+        },
+        {
+          "day": 7,
+          "title": "KEY MONASTERY TO CHICHAM | Asia's Highest Bridge & Kibber 🌉",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Prepare for awe-inspiring sights today as we visit the famous Key Monastery, perched high on a conical hill with a history dating back to the 11th century.",
+            "Interact with Buddhist monks, explore the ancient murals, and soak in panoramic views of the Spiti valley.",
+            "After Key, cross the incredible Chicham Bridge — Asia's highest suspension bridge at 13,596 ft.",
+            "Our journey takes us to Kibber village, world-famous for snow leopard sightings.",
+            "Come back to Kaza and enjoy some warm, local home-cooked dinner."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Prepare for awe-inspiring sights today as we visit the famous Key Monastery, perched high on a conical hill with a history dating back to the 11th century. • Interact with Buddhist monks, explore the ancient murals, and soak in panoramic views of the Spiti valley. • After Key, cross the incredible Chicham Bridge — Asia's highest suspension bridge at 13,596 ft. • Our journey takes us to Kibber village, world-famous for snow leopard sightings. • Come back to Kaza and enjoy some warm, local home-cooked dinner.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "CHICHAM",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (CHICHAM)",
+          "stay": "Handpicked 4-Star Boutique Stay (CHICHAM)",
+          "image": "/image/Spiti/20250110_154329_88A2CE.jpeg"
+        },
+        {
+          "day": 8,
+          "title": "KAZA TO KALPA | Scenic Drive via Nako Village 🏔️",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Our last morning in Kaza invites us to take a leisurely walk through town, soaking in the breathtaking scenery one last time.",
+            "Hit the road to reach Kalpa via the picturesque Nako village and sacred Nako lake.",
+            "Get ready for an overnight stay in Kalpa, surrounded by awe-inspiring vistas of the sacred Kinner Kailash range.",
+            "Enjoy dinner and rest at our hotel in Kalpa."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Our last morning in Kaza invites us to take a leisurely walk through town, soaking in the breathtaking scenery one last time. • Hit the road to reach Kalpa via the picturesque Nako village and sacred Nako lake. • Get ready for an overnight stay in Kalpa, surrounded by awe-inspiring vistas of the sacred Kinner Kailash range. • Enjoy dinner and rest at our hotel in Kalpa.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "KALPA",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (KALPA)",
+          "stay": "Handpicked 4-Star Boutique Stay (KALPA)",
+          "image": "/image/Spiti/20250110_154841_8079AD.jpeg"
+        },
+        {
+          "day": 9,
+          "title": "KALPA TO SHIMLA & DEPARTURE TO DELHI | Suicide Point 📸",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Wake up to the serene beauty of Kalpa and enjoy a hearty breakfast with a majestic mountain view.",
+            "Explore Kalpa, visit the nearby Suicide Point, and capture stunning photographs and Instagram-worthy reels.",
+            "As we bid farewell to Kalpa, we will make our way back to Delhi via Shimla, cherishing the memories of an unforgettable journey.",
+            "Board our overnight Volvo bus from Shimla to Delhi."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Wake up to the serene beauty of Kalpa and enjoy a hearty breakfast with a majestic mountain view. • Explore Kalpa, visit the nearby Suicide Point, and capture stunning photographs and Instagram-worthy reels. • As we bid farewell to Kalpa, we will make our way back to Delhi via Shimla, cherishing the memories of an unforgettable journey. • Board our overnight Volvo bus from Shimla to Delhi.",
+          "meals": [
+            "Breakfast",
+            "Dinner"
+          ],
+          "stayCity": "SHIMLA  DEPARTURE",
+          "stayHotel": "Handpicked 4-Star Boutique Stay (SHIMLA)",
+          "stay": "Handpicked 4-Star Boutique Stay (SHIMLA)",
+          "image": "/Card Image/winter_spiti.png"
+        },
+        {
+          "day": 10,
+          "title": "ARRIVAL DELHI TO MUMBAI | Return with Lifetime Memories 🚆",
+          "guidedTour": true,
+          "points": [
+            "Dedicated local guide assistance included for today's sightseeing",
+            "Arrive in Delhi early morning, carrying a heart full of memories and a bunch of new friends.",
+            "Head to the railway station and board your 3AC train back to Mumbai.",
+            "Trip concludes with hugs, smiles, unforgettable stories, and a lifelong Travel Tribe bond."
+          ],
+          "description": "Dedicated local guide assistance included for today's sightseeing • Arrive in Delhi early morning, carrying a heart full of memories and a bunch of new friends. • Head to the railway station and board your 3AC train back to Mumbai. • Trip concludes with hugs, smiles, unforgettable stories, and a lifelong Travel Tribe bond.",
+          "meals": [
+            "Breakfast & Dinner Included (MAP Plan)"
+          ],
+          "stayCity": "MUMBAI",
+          "stayHotel": "Departure / Tour Concludes",
+          "stay": "Departure / Tour Concludes (No Overnight Hotel)",
+          "image": "/image/Spiti/spiti_img.JPEG"
+        }
+      ],
+      "inclusions": [
+        "Mumbai to Mumbai 3AC Train (CNF or RAC)",
+        "Delhi to Shimla Semi-Sleeper AC Volvo",
+        "Shimla to Kaza to Shimla Dedicated Tempo Traveler",
+        "Shimla to Delhi AC Volvo Bus",
+        "Stay for 6 nights: 01 night hotel at Chitkul/Sangla, 01 night homestay at Tabo, 03 nights homestay at Kaza, 01 night hotel in Kalpa",
+        "6 Breakfasts & 6 Dinners",
+        "Trip Captain & Support throughout the trip",
+        "Driver Night Charges, Toll Tax, State Border Taxes & Parking Charges",
+        "Visit Tabo Monastery & explore ancient caves",
+        "Explore Komic & Langza fossil village",
+        "Visit Key Monastery & Dhankar Monastery",
+        "Send postcards from Hikkim (World's Highest Post Office)",
+        "Cross Chicham Bridge (Asia's Highest Bridge)",
+        "Spot snow leopards in Kibber village"
+      ],
+      "exclusions": [
+        "Meals: Any kind of food or beverage that is not included in the package like alcoholic drinks, mineral water, meals/refreshments/lunches on the highway",
+        "Stay: Any Expense in Delhi like stay for fresh up/food etc.",
+        "Personal Expenses: Tip to the driver, camera/video camera charges, laundry, Room Heater, etc.",
+        "Natural Calamities: Any cost arising due to natural calamities like landslides, roadblocks etc. (to be borne directly by the customer on the spot)",
+        "5% GST as applicable on travel packages",
+        "Other: Anything not mentioned in the inclusions"
+      ],
+      "quotation": {
+        "totalPackagePrice": 47998,
+        "pricePerPerson": 23999,
+        "advanceAmount": 10000,
+        "balancePendingAmount": 37998,
+        "numberOfGuests": "2 Adults (Double Sharing) • Couple / Honeymoon Getaway",
+        "paymentTerms": "Advance: ₹10,000, Balance pending: ₹37,998"
+      }
+    },
+    {
       "id": "sheet-1793581177988",
       "slug": "amit-maurya-himachal-1d",
       "createdAt": "2026-11-02T00:59:37.999Z",
