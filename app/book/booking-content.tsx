@@ -28,7 +28,7 @@ import {
 } from 'lucide-react'
 import { trips } from '@/lib/travel-data'
 import type { Trip } from '@/lib/travel-data'
-import { calculateBookingPricing, sanitizeGuests, validateCoupon, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
+import { calculateBookingPricing, sanitizeGuests, validateCoupon, FULL_PAYMENT_DISCOUNT_PER_PERSON, MAX_GUESTS, MIN_GUESTS } from '@/lib/pricing-calculator'
 import { getTripPrimaryDate, filterUpcomingDates, isDateUpcoming } from '@/lib/date-utils'
 import { fireCelebrationConfetti } from '@/lib/confetti'
 
@@ -204,7 +204,7 @@ export function BookingContent() {
   const handleSelectFullPayment = () => {
     if (paymentType !== 'full') {
       setPaymentType('full')
-      const fullDiscountTotal = pricing.isFullPaymentDiscountEligible ? 1000 * guests : 0
+      const fullDiscountTotal = pricing.isFullPaymentDiscountEligible ? FULL_PAYMENT_DISCOUNT_PER_PERSON * guests : 0
 
       if (fullDiscountTotal > 0) {
         // 🎉 Launch Celebration Animation & Toast
@@ -212,7 +212,7 @@ export function BookingContent() {
         setCelebrationToast({
           show: true,
           title: 'Full Payment Discount Unlocked!',
-          subtitle: `Woohoo! You saved flat ₹${fullDiscountTotal.toLocaleString('en-IN')} (₹1,000 x ${guests} ${guests > 1 ? 'guests' : 'guest'})!`,
+          subtitle: `Woohoo! You saved flat ₹${fullDiscountTotal.toLocaleString('en-IN')} (₹${FULL_PAYMENT_DISCOUNT_PER_PERSON.toLocaleString('en-IN')} x ${guests} ${guests > 1 ? 'guests' : 'guest'})!`,
           discountAmount: fullDiscountTotal
         })
       }
@@ -898,7 +898,7 @@ export function BookingContent() {
                     </label>
                     {pricing.isFullPaymentDiscountEligible && (
                       <span className="text-[10px] sm:text-[10.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
-                        <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(1000 * guests).toLocaleString('en-IN')} on Full Pay
+                        <Sparkles size={11} className="text-emerald-600 shrink-0" /> Save ₹{(FULL_PAYMENT_DISCOUNT_PER_PERSON * guests).toLocaleString('en-IN')} on Full Pay
                       </span>
                     )}
                   </div>
@@ -941,7 +941,7 @@ export function BookingContent() {
                             <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded ${
                               paymentType === 'full' ? 'bg-white text-emerald-700' : 'bg-emerald-600 text-white'
                             }`}>
-                              -₹{(1000 * guests).toLocaleString('en-IN')}
+                              -₹{(FULL_PAYMENT_DISCOUNT_PER_PERSON * guests).toLocaleString('en-IN')}
                             </span>
                           )}
                         </div>
@@ -954,7 +954,7 @@ export function BookingContent() {
                           </span>
                         )}
                         <span className={`text-xs font-extrabold ${paymentType === 'full' ? 'text-white' : 'text-emerald-700'}`}>
-                          ₹{Math.max(0, grandTotal - (pricing.isFullPaymentDiscountEligible ? 1000 * guests : 0)).toLocaleString('en-IN')}
+                          ₹{Math.max(0, grandTotal - (pricing.isFullPaymentDiscountEligible ? FULL_PAYMENT_DISCOUNT_PER_PERSON * guests : 0)).toLocaleString('en-IN')}
                         </span>
                       </div>
                     </button>
@@ -1083,7 +1083,7 @@ export function BookingContent() {
                     <div className="flex justify-between items-center bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1.5 rounded-xl text-xs border border-emerald-200/80">
                       <span className="flex items-center gap-1.5">
                         <Sparkles size={13} className="text-emerald-600 shrink-0" />
-                        <span>Full Pay Discount (₹1,000 × {guests})</span>
+                        <span>Full Pay Discount (₹{FULL_PAYMENT_DISCOUNT_PER_PERSON.toLocaleString('en-IN')} × {guests})</span>
                       </span>
                       <span>-₹{fullPaymentDiscount.toLocaleString('en-IN')}</span>
                     </div>
@@ -1130,7 +1130,7 @@ export function BookingContent() {
                           onClick={handleSelectFullPayment}
                           className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer"
                         >
-                          <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(1000 * guests).toLocaleString('en-IN')} instantly!
+                          <Sparkles size={12} className="text-emerald-600 shrink-0" /> Pay full amount & save ₹{(FULL_PAYMENT_DISCOUNT_PER_PERSON * guests).toLocaleString('en-IN')} instantly!
                         </button>
                       )}
                     </div>
@@ -1138,7 +1138,7 @@ export function BookingContent() {
                     pricing.isFullPaymentDiscountEligible && (
                       <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/90 py-1.5 px-2.5 rounded-lg border border-emerald-200">
                         <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
-                        <span>Flat ₹{(1000 * guests).toLocaleString('en-IN')} instant discount applied!</span>
+                        <span>Flat ₹{(FULL_PAYMENT_DISCOUNT_PER_PERSON * guests).toLocaleString('en-IN')} instant discount applied!</span>
                       </div>
                     )
                   )}

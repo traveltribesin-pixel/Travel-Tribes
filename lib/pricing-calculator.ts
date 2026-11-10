@@ -38,8 +38,8 @@ export interface PricingBreakdown {
   availablePackages: TripPricingOption[]
 }
 
-export const FULL_PAYMENT_DISCOUNT_PER_PERSON = 1000
-export const FULL_PAYMENT_DISCOUNT_AMOUNT = 1000 // alias for backward compatibility
+export const FULL_PAYMENT_DISCOUNT_PER_PERSON = 500
+export const FULL_PAYMENT_DISCOUNT_AMOUNT = 500 // alias for backward compatibility
 export const GST_RATE = 0.05
 export const INTERNATIONAL_TCS_RATE = 0.02
 export const DEFAULT_DOUBLE_SHARING_RATE = 1500
@@ -298,8 +298,8 @@ export function calculateBookingPricing(params: {
   const rawAdvanceTotal = advancePerPerson * guests
   const advanceTotal = Math.min(rawAdvanceTotal, grandTotal)
 
-  // 9. Payment Type & Discount (₹1,000 off per person strictly for full payment on eligible non-weekend trips)
-  // CRITICAL BUSINESS RULE: Trips that are Weekend Getaways are strictly NOT eligible for the ₹1,000 full payment discount anywhere!
+  // 9. Payment Type & Discount (₹500 off per person strictly for full payment on eligible non-weekend trips)
+  // CRITICAL BUSINESS RULE: Trips that are Weekend Getaways are strictly NOT eligible for the ₹500 full payment discount anywhere!
   const isWeekend = isWeekendTrip(trip)
   const isFullPaymentDiscountEligible = !isWeekend
 
