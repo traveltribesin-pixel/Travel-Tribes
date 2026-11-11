@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { saveCuratedItinerary, slugify, loadCuratedStore } from '@/lib/curated-itineraries-store'
+import { saveCuratedItineraryAsync, slugify } from '@/lib/curated-itineraries-store'
 import type { CuratedItinerary, DayItinerary, HotelDetail, LocationGlimpse } from '@/lib/curated-itinerary-constants'
 import { generateProfessionalDayTitle } from '@/lib/day-title-generator'
 import { getLuxuryImagesForDestination } from '@/lib/itinerary-images'
@@ -51,8 +51,14 @@ export async function POST(req: NextRequest) {
     const guestFirstName = body.clientFirstName || body.firstName || (guestName && guestName !== 'Valued Guest' ? guestName.trim().split(/\s+/)[0] : '')
     const guestLastName = body.clientLastName || body.lastName || (guestName && guestName !== 'Valued Guest' ? guestName.trim().split(/\s+/).slice(1).join(' ') : '')
     const dest = destination || 'Custom Trip'
-    const daysCount = Math.max(1, Number(noOfDays) || 1)
-    const nightsCount = Math.max(0, Number(noOfNights) || (daysCount > 1 ? daysCount - 1 : 0))
+    const dayActsList = Array.isArray(dayActivities) ? dayActivities : []
+    const daysCount = Math.max(1, Number(noOfDays) || dayActsList.length || 1)
+    const nightsCount = Math.max(
+      0,
+      noOfNights !== undefined && noOfNights !== null && noOfNights !== ''
+        ? Number(noOfNights)
+        : (daysCount > 1 ? daysCount - 1 : 0)
+    )
     const durationStr = body.duration?.trim() || `${daysCount} Day${daysCount > 1 ? 's' : ''} / ${nightsCount} Night${nightsCount > 1 ? 's' : ''}`
 
     // Resolve curated destination images for hero and day gallery
@@ -134,7 +140,6 @@ export async function POST(req: NextRequest) {
     })
 
     // Format dayActivities into DayItinerary[]
-    const dayActsList = Array.isArray(dayActivities) ? dayActivities : []
     const formattedDays: DayItinerary[] = dayActsList.map((da: any, idx: number) => {
       const expPoints: string[] = []
       
@@ -436,7 +441,19 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const saved = saveCuratedItinerary(newCurated)
+    const { itinerary: saved, persistence } = await saveCuratedItineraryAsync(newCurated)
+
+    // In serverless production (read-only FS), require successful cloud sync so clients never receive a 404 link
+    if (!persistence.fileSaved && !persistence.cloudSaved) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Could not persist itinerary to cloud storage (${persistence.cloudError || 'Webhook sync failed'}). Please verify GOOGLE_SHEET_WEBHOOK_URL in environment settings.`
+        },
+        { status: 500 }
+      )
+    }
+
     const shareUrl = `/itinerary/${saved.slug}`
 
     return NextResponse.json({
@@ -444,6 +461,7 @@ export async function POST(req: NextRequest) {
       itinerary: saved,
       slug: saved.slug,
       url: shareUrl,
+      persistence,
       message: 'Itinerary generated & published successfully!'
     })
   } catch (error: any) {

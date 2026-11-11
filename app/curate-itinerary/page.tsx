@@ -1241,6 +1241,8 @@ export default function CurateItineraryPage() {
       kids: Number(kids) || 0,
       sharingType: sharingType || 'Double Sharing',
       travelStyle: travelStyle || undefined,
+      noOfDays: days.length,
+      noOfNights: Math.max(0, days.length - 1),
       duration: duration.trim() || `${days.length} Days`,
       travelDates: finalDatesStr,
       startDate: startDate || undefined,

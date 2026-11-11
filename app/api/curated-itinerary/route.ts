@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
-  getAllCuratedItineraries,
-  getCuratedItineraryBySlug,
-  saveCuratedItinerary,
+  getAllCuratedItinerariesAsync,
+  getCuratedItineraryBySlugAsync,
+  saveCuratedItineraryAsync,
   deleteCuratedItinerary,
   slugify
 } from '@/lib/curated-itineraries-store'
@@ -13,14 +13,14 @@ export async function GET(req: NextRequest) {
     const slug = searchParams.get('slug')
 
     if (slug) {
-      const itinerary = getCuratedItineraryBySlug(slug)
+      const itinerary = await getCuratedItineraryBySlugAsync(slug)
       if (!itinerary) {
         return NextResponse.json({ success: false, error: 'Itinerary not found' }, { status: 404 })
       }
       return NextResponse.json({ success: true, itinerary })
     }
 
-    const itineraries = getAllCuratedItineraries()
+    const itineraries = await getAllCuratedItinerariesAsync()
     return NextResponse.json({ success: true, itineraries, total: itineraries.length })
   } catch (error: any) {
     console.error('Error fetching curated itineraries:', error)
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const saved = saveCuratedItinerary({
+    const { itinerary: saved, persistence } = await saveCuratedItineraryAsync({
       ...body,
       slug: slugify(rawSlug),
       tripType: tripType === 'group' ? 'group' : 'customized',
@@ -85,6 +85,13 @@ export async function POST(req: NextRequest) {
       exclusions: Array.isArray(body.exclusions) ? body.exclusions : [],
       quotation: quotation || {}
     })
+
+    if (!persistence.fileSaved && !persistence.cloudSaved) {
+      return NextResponse.json(
+        { success: false, error: `Could not persist itinerary to cloud storage (${persistence.cloudError || 'Webhook failed'}).` },
+        { status: 500 }
+      )
+    }
 
     const shareUrl = `/itinerary/${saved.slug}`
 

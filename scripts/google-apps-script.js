@@ -39,6 +39,8 @@ function doPost(e) {
       logBooking(ss, timestamp, source, data);
     } else if (dataType === "newsletter") {
       logNewsletter(ss, timestamp, source, data);
+    } else if (dataType === "curated_itinerary") {
+      logCuratedItinerary(ss, timestamp, source, data);
     } else {
       // lead, contact, custom_trip, etc.
       logLeadOrInquiry(ss, timestamp, source, data);
@@ -202,6 +204,45 @@ function logNewsletter(ss, timestamp, source, data) {
     data.email || "N/A",
     source,
     "ACTIVE"
+  ];
+
+  insertRowAtTop(sheet, row);
+}
+
+// -------------------------------------------------------------
+// 3B. CURATED ITINERARIES SHEET
+// -------------------------------------------------------------
+function logCuratedItinerary(ss, timestamp, source, data) {
+  var sheetName = "📄 Curated Itineraries";
+  var sheet = ss.getSheetByName(sheetName);
+  var headers = [
+    "Date & Time (IST)",
+    "Client Name",
+    "Slug",
+    "Title",
+    "Destination",
+    "Duration",
+    "Live URL",
+    "Compressed Payload"
+  ];
+
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName, 3);
+    setupHeaders(sheet, headers, "#0369A1"); // Ocean blue
+  }
+
+  var slug = data.tripSlug || data.tripTitle || "";
+  var liveUrl = slug ? "https://www.traveltribes.in/itinerary/" + slug : "";
+
+  var row = [
+    timestamp,
+    data.fullName || data.name || "Valued Guest",
+    slug,
+    data.title || slug || "Custom Itinerary",
+    data.destination || "Custom",
+    data.travelDates || "",
+    liveUrl,
+    JSON.stringify(data)
   ];
 
   insertRowAtTop(sheet, row);

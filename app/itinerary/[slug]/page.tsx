@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { trips } from '@/lib/travel-data'
-import { getCuratedItineraryBySlug } from '@/lib/curated-itineraries-store'
+import { getCuratedItineraryBySlugAsync } from '@/lib/curated-itineraries-store'
 import { TripContent } from './trip-content'
 import { CuratedItineraryView } from '@/components/curated-itinerary-view'
 import { PageFrame } from '@/components/site-shell'
 import { convertTripToCuratedItinerary } from '@/lib/trip-to-curated'
 
+export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
 export function generateStaticParams() {
@@ -20,8 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolvedParams = await params
   const slug = resolvedParams.slug
 
-  // 1. Check curated store first
-  const curated = getCuratedItineraryBySlug(slug)
+  // 1. Check curated store first (local + cloud Sheet)
+  const curated = await getCuratedItineraryBySlugAsync(slug)
   if (curated) {
     const isCustom = curated.tripType === 'customized'
     const title = isCustom
@@ -122,8 +123,8 @@ export default async function ItineraryPage({
   const isProposalMode = downloadPdf || resolvedSearchParams.proposal === 'true' || resolvedSearchParams.view === 'proposal'
   const clientName = typeof resolvedSearchParams.clientName === 'string' ? resolvedSearchParams.clientName : undefined
 
-  // 1. Check curated itineraries
-  const curated = getCuratedItineraryBySlug(slug)
+  // 1. Check curated itineraries (local + cloud Sheet)
+  const curated = await getCuratedItineraryBySlugAsync(slug)
   if (curated) {
     return (
       <Suspense
