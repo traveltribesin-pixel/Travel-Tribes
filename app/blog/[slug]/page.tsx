@@ -109,7 +109,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <Image
                   src={blog.author.avatar}
                   alt={blog.author.name}
-                  fill
+                  width={44}
+                  height={44}
                   className="object-cover"
                 />
               </div>
@@ -137,6 +138,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               alt={blog.title}
               fill
               priority
+              sizes="(max-width: 1024px) 100vw, 860px"
               className="object-cover"
             />
           </div>
@@ -246,6 +248,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                       src={b.image}
                       alt={b.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>

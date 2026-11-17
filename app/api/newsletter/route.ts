@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
-import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
+import { sendLeadToThriviaCRM } from '@/lib/thrivia-crm'
 
 export async function POST(req: NextRequest) {
   try {
@@ -113,16 +113,16 @@ export async function POST(req: NextRequest) {
       })
     )
 
-    // 4. Push Newsletter Subscriber to Zyntex CRM Platform
+    // 4. Push Newsletter Subscriber to Thrivia CRM Platform
     tasks.push(
-      sendLeadToZyntexCRM({
+      sendLeadToThriviaCRM({
         name: 'Newsletter Subscriber',
         phone: '',
         email: cleanEmail,
         source: 'Website Newsletter Subscription',
         message: 'Subscribed to Travel Tribes travel deals & updates'
       }).catch((err) => {
-        console.error('Zyntex CRM dispatch error:', err)
+        console.error('Thrivia CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

@@ -222,7 +222,9 @@ export function CorporateContent() {
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=90"
               alt="Corporate team on mountain summit watching sunset"
               fill
+              sizes="100vw"
               priority
+              unoptimized
               className="object-cover object-center scale-105"
             />
             {/* Cinematic Gradient Overlays */}
@@ -403,6 +405,7 @@ export function CorporateContent() {
                       src={item.image}
                       alt={item.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover object-balanced group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
@@ -642,6 +645,7 @@ export function CorporateContent() {
                     src={act.image}
                     alt={act.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     className="object-cover object-balanced group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
@@ -667,6 +671,8 @@ export function CorporateContent() {
               src="https://images.unsplash.com/photo-1528605248659-144006cb075b?auto=format&fit=crop&w=2200&q=88"
               alt="Team cheering around sunset bonfire"
               fill
+              sizes="100vw"
+              unoptimized
               className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0b2940] via-[#0b2940]/90 to-transparent" />

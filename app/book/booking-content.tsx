@@ -855,6 +855,7 @@ export function BookingContent() {
                       src={selectedTrip.image}
                       alt={selectedTrip.alt}
                       fill
+                      sizes="(max-width: 640px) 80px, 96px"
                       className="object-cover"
                     />
                   </div>

@@ -389,6 +389,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
               alt={itinerary.title}
               fill
               priority
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="object-cover object-center scale-[1.02]"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-black/90" />
@@ -664,6 +665,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                       src={img.url}
                       alt={img.label || `Trip Image ${idx + 1}`}
                       fill
+                      sizes="(max-width: 640px) 50vw, 25vw"
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
@@ -854,6 +856,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                         src={dayImage}
                         alt={`Day ${day.day} - ${day.title}`}
                         fill
+                        sizes="(max-width: 768px) 100vw, 42vw"
                         className="object-cover object-center"
                       />
                     </div>
@@ -1576,6 +1579,7 @@ export function CuratedItineraryView({ itinerary, autoPrint = false }: CuratedIt
                 src={activeLightboxImage}
                 alt="Trip Visual Preview"
                 fill
+                sizes="(max-width: 1024px) 100vw, 896px"
                 className="object-contain"
               />
             </div>

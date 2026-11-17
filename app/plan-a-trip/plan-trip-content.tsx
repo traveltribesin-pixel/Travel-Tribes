@@ -257,7 +257,9 @@ export function PlanTripContent() {
               src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2200&q=88"
               alt="Mountain ridge sunset travel background"
               fill
+              sizes="100vw"
               priority
+              unoptimized
               className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#f7fbfd] via-transparent to-transparent" />
@@ -717,6 +719,7 @@ export function PlanTripContent() {
                       src={vibe.image}
                       alt={vibe.label}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover object-balanced group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -801,6 +804,7 @@ export function PlanTripContent() {
                       src={dest.image}
                       alt={dest.title}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover object-balanced group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
@@ -1031,7 +1035,8 @@ export function PlanTripContent() {
                       <Image
                         src={item.image}
                         alt={item.name}
-                        fill
+                        width={44}
+                        height={44}
                         className="object-cover object-center"
                       />
                     </div>
@@ -1057,6 +1062,8 @@ export function PlanTripContent() {
               src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=88"
               alt="Hiker looking at mountain sunset"
               fill
+              sizes="100vw"
+              unoptimized
               className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0b2940] via-[#0b2940]/80 to-transparent" />

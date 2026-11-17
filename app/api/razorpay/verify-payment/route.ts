@@ -3,7 +3,7 @@ import { verifyRazorpaySignature, getRazorpayInstance } from '@/lib/razorpay'
 import { calculateBookingPricing, sanitizeGuests } from '@/lib/pricing-calculator'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
-import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
+import { sendLeadToThriviaCRM } from '@/lib/thrivia-crm'
 import { addBooking, addLead } from '@/lib/crm-store'
 
 // In-memory ledger to prevent Replay / Double-Processing attacks
@@ -458,9 +458,9 @@ export async function POST(req: NextRequest) {
       })
     )
 
-    // Push Confirmed Booking Customer directly to Zyntex CRM Platform
+    // Push Confirmed Booking Customer directly to Thrivia CRM Platform
     tasks.push(
-      sendLeadToZyntexCRM({
+      sendLeadToThriviaCRM({
         name: fullName,
         phone,
         email,
@@ -471,7 +471,7 @@ export async function POST(req: NextRequest) {
         budget: `₹${grandTotal.toLocaleString('en-IN')}`,
         message: `Confirmed Razorpay Booking ${bookingId}! Paid: ₹${amountPaid.toLocaleString('en-IN')} via ${paymentMethodUsed} (Payment ID: ${razorpay_payment_id}). Balance: ₹${remainingBalance.toLocaleString('en-IN')}. ${specialRequest ? `Special Request: ${specialRequest}` : ''}`
       }).catch((err) => {
-        console.error('Zyntex CRM dispatch error:', err)
+        console.error('Thrivia CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

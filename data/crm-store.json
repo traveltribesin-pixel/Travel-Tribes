@@ -1,6 +1,20 @@
 {
   "leads": [
     {
+      "id": "LEAD-573585",
+      "source": "Contact Us Page Form",
+      "fullName": "Amit Testing",
+      "email": "cbdhxbcxn@gmail.com",
+      "phone": "8888888888",
+      "tripTitle": "Surprise me",
+      "message": "testing website",
+      "status": "NEW",
+      "priority": "HIGH",
+      "notes": [],
+      "createdAt": "2026-11-16T10:39:33.585Z",
+      "updatedAt": "2026-11-16T10:39:33.585Z"
+    },
+    {
       "id": "LEAD-203825",
       "source": "Itinerary PDF Download Form",
       "fullName": "Amit Testing",
@@ -374,6 +388,15 @@
     }
   ],
   "activities": [
+    {
+      "id": "act-1794825573585",
+      "type": "LEAD_CREATED",
+      "title": "New Lead Captured",
+      "description": "Amit Testing (Surprise me)",
+      "entityType": "lead",
+      "entityId": "LEAD-573585",
+      "createdAt": "2026-11-16T10:39:33.585Z"
+    },
     {
       "id": "act-1793769203825",
       "type": "LEAD_CREATED",

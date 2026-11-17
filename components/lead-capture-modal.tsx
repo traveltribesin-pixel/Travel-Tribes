@@ -155,6 +155,8 @@ export function LeadCaptureModal() {
                     src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=85"
                     alt="Travel Tribes Mountain Sunset"
                     fill
+                    sizes="(max-width: 1024px) 50vw, 400px"
+                    unoptimized
                     className="object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b2940] via-[#0b2940]/70 to-[#0b2940]/50" />

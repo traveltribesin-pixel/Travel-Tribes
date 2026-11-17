@@ -344,6 +344,7 @@ export function PicturePerfectGallery({
                   alt={photos[lightboxIndex].alt || 'Trip photo'}
                   fill
                   priority
+                  sizes="(max-width: 1024px) 100vw, 896px"
                   className="object-contain"
                 />
               </div>

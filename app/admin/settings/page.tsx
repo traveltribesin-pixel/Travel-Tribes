@@ -144,7 +144,7 @@ export default function SettingsPage() {
         </div>
       </form>
 
-      {/* Zyntex CRM Cloud Integration Card */}
+      {/* Thrivia CRM Integration Card */}
       <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/90 to-blue-950/40 border border-cyan-500/30 shadow-2xl space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-800 pb-4">
           <div className="flex items-center gap-3">
@@ -153,25 +153,25 @@ export default function SettingsPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-black text-lg text-white">Zyntex CRM Cloud Pipeline</h2>
+                <h2 className="font-black text-lg text-white">Thrivia CRM Integration</h2>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   Active & Connected
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">
-                Multi-tenant B2B SaaS CRM pipeline receiving all website leads, trips & payments in real-time.
+                Tour operator CRM receiving all website leads, trip bookings & inquiries in real-time.
               </p>
             </div>
           </div>
 
           <a
-            href="https://crm-alpha-drab.vercel.app"
+            href="https://thrivia.io/creator"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-lg shadow-cyan-500/20 transition-all shrink-0"
           >
-            <span>Open Zyntex CRM</span>
+            <span>Open Thrivia CRM</span>
             <ExternalLink size={13} />
           </a>
         </div>
@@ -179,24 +179,24 @@ export default function SettingsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Company Live API Key</span>
-              <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md">Zoho-Style Auth</span>
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Thrivia API Key</span>
+              <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md">Header: X-Thrivia-Key</span>
             </div>
             <p className="font-mono text-cyan-300 font-bold break-all text-xs bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
-              zyn_live_395987dcebb63e58836fd423f51abf3b
+              Configured via .env (THRIVIA_KEY)
             </p>
-            <p className="text-[10px] text-slate-500">Configured in <code>.env</code> as <code>ZYNTEX_CRM_API_KEY</code></p>
+            <p className="text-[10px] text-slate-500">Configured in <code>.env</code> as <code>THRIVIA_KEY</code></p>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-1.5">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Webhook Ingestion Endpoint</span>
-              <span className="text-[10px] text-cyan-400 font-bold bg-cyan-500/10 px-2 py-0.5 rounded-md">HTTPS + CORS</span>
+              <span className="text-[10px] text-cyan-400 font-bold bg-cyan-500/10 px-2 py-0.5 rounded-md">HTTPS Webform Ingest</span>
             </div>
             <p className="font-mono text-slate-200 break-all text-xs bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
-              https://crm-alpha-drab.vercel.app/api/v1/capture-lead
+              https://api.thrivia.io/api/webforms/ingest
             </p>
-            <p className="text-[10px] text-slate-500">Auto-heals & synchronizes on serverless redeployments</p>
+            <p className="text-[10px] text-slate-500">Auto-routes leads to upcoming trips and launches automations</p>
           </div>
         </div>
 
@@ -216,7 +216,7 @@ export default function SettingsPage() {
               )
             ) : (
               <span className="text-slate-400 text-[11px]">
-                Click test to verify real-time handshake between Travel Tribes and your Zyntex CRM.
+                Click test to verify real-time handshake between Travel Tribes and your Thrivia CRM.
               </span>
             )}
           </div>
@@ -244,7 +244,7 @@ export default function SettingsPage() {
           <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1">
             <span className="text-slate-400 font-bold flex items-center gap-1.5">
               <Cloud size={14} className="text-cyan-400" />
-              <span>Zyntex CRM Cloud</span>
+              <span>Thrivia CRM Cloud</span>
             </span>
             <p className="text-emerald-300 font-medium">Live & Synchronizing</p>
             <p className="text-[10px] text-slate-500">Auto-push on all forms</p>

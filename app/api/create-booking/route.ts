@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { calculateBookingPricing } from '@/lib/pricing-calculator'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
-import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
+import { sendLeadToThriviaCRM } from '@/lib/thrivia-crm'
 import { addBooking, addLead } from '@/lib/crm-store'
 
 // Simple in-memory rate limiting map for basic DDoS/spam prevention
@@ -336,9 +336,10 @@ export async function POST(req: NextRequest) {
       })
     )
 
-    // Push Booking Customer directly to Zyntex CRM Platform
+    // Push Booking Customer directly to Thrivia CRM Platform
+    // Push Booking Customer directly to Thrivia CRM Platform
     tasks.push(
-      sendLeadToZyntexCRM({
+      sendLeadToThriviaCRM({
         name: fullName,
         phone,
         email,
@@ -349,7 +350,7 @@ export async function POST(req: NextRequest) {
         budget: `₹${pricing.grandTotal.toLocaleString('en-IN')}`,
         message: `Booking Inquiry ID: ${bookingId}. Amount to pay: ₹${pricing.amountToPayToday}. Balance: ₹${pricing.remainingBalance}. ${specialRequest ? `Special Request: ${specialRequest}` : ''}`
       }).catch((err) => {
-        console.error('Zyntex CRM dispatch error:', err)
+        console.error('Thrivia CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

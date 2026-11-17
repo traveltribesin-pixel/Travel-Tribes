@@ -1462,6 +1462,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                     alt={galleryImages[lightboxIndex].alt}
                     fill
                     priority
+                    sizes="(max-width: 1024px) 100vw, 896px"
                     className="object-contain"
                   />
                 </div>

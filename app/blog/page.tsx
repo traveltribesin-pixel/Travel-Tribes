@@ -54,6 +54,7 @@ export default function BlogIndexPage() {
                     alt={featuredBlog.title}
                     fill
                     priority
+                    sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[var(--navy)]/90 text-white text-[11px] font-bold backdrop-blur-xs">
@@ -95,6 +96,7 @@ export default function BlogIndexPage() {
                     src={blog.image}
                     alt={blog.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/95 text-[var(--navy)] text-[10px] font-extrabold backdrop-blur-xs shadow-xs">
@@ -120,7 +122,7 @@ export default function BlogIndexPage() {
                   <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="relative w-6 h-6 rounded-full overflow-hidden shrink-0">
-                        <Image src={blog.author.avatar} alt={blog.author.name} fill className="object-cover" />
+                        <Image src={blog.author.avatar} alt={blog.author.name} width={24} height={24} className="object-cover" />
                       </div>
                       <span className="text-xs font-semibold text-slate-600">{blog.author.name}</span>
                     </div>

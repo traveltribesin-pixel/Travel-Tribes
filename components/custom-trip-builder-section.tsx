@@ -99,7 +99,9 @@ export function CustomTripBuilderSection() {
           src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2200&q=88"
           alt="Scenic Mountain Sunset Adventure"
           fill
+          sizes="100vw"
           priority
+          unoptimized
           className="object-cover object-balanced opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50/98 via-slate-50/95 to-[#edf5f8]/90" />

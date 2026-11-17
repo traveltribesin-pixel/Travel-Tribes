@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticatedAdmin } from '@/lib/admin-auth'
 import { getLeads, addLead } from '@/lib/crm-store'
-import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
+import { sendLeadToThriviaCRM } from '@/lib/thrivia-crm'
 
 export async function GET(req: NextRequest) {
   const isAuth = await isAuthenticatedAdmin()
@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
       priority: body.priority || 'HIGH'
     })
 
-    // Also push manual entry to Zyntex CRM Platform
-    sendLeadToZyntexCRM({
+    // Also push manual entry to Thrivia CRM Platform
+    sendLeadToThriviaCRM({
       name: lead.fullName,
       phone: lead.phone,
       email: lead.email,
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
       groupSize: lead.groupSize,
       budget: lead.budget,
       message: lead.message
-    }).catch((err) => console.error('Zyntex CRM push error on admin manual lead:', err))
+    }).catch((err) => console.error('Thrivia CRM push error on admin manual lead:', err))
 
     return NextResponse.json({ success: true, lead })
   } catch (error) {

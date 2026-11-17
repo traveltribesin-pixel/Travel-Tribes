@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail, getAdminEmails } from '@/lib/mail'
 import { appendToGoogleSheet } from '@/lib/google-sheets'
-import { sendLeadToZyntexCRM } from '@/lib/zyntex-crm'
+import { sendLeadToThriviaCRM } from '@/lib/thrivia-crm'
 import { addLead } from '@/lib/crm-store'
 
 export async function POST(req: NextRequest) {
@@ -151,9 +151,9 @@ export async function POST(req: NextRequest) {
       })
     )
 
-    // 4. Push Lead directly to Zyntex CRM Platform
+    // 4. Push Lead directly to Thrivia CRM Platform
     tasks.push(
-      sendLeadToZyntexCRM({
+      sendLeadToThriviaCRM({
         name: cleanName,
         phone: cleanPhone,
         email: cleanEmail,
@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
         tripTitle: tripName,
         message: `Downloaded Itinerary Brochure for ${tripName}`
       }).catch((err) => {
-        console.error('Zyntex CRM dispatch error:', err)
+        console.error('Thrivia CRM dispatch error:', err)
         return { success: false, error: err?.message }
       })
     )

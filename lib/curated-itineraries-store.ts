@@ -213,6 +213,21 @@ async function fetchCuratedFromGoogleSheetBySlug(slug: string): Promise<CuratedI
     }
   }
 
+  // 3. Fallback prefix lookup if slug had a day suffix variation (e.g. legacy '-1d' vs '-6d')
+  const basePrefix = safeSlug.replace(/-\d+d$/, '')
+  if (basePrefix && basePrefix !== safeSlug) {
+    const prefixRows = await queryGoogleSheetGViz(
+      '🗂️ All Master Log',
+      `SELECT H WHERE B = 'CURATED_ITINERARY' AND G starts with '${basePrefix}' LIMIT 1`
+    )
+    for (const row of prefixRows) {
+      const decoded = decodeCuratedPayload(row?.c?.[0]?.v)
+      if (decoded) {
+        return decoded
+      }
+    }
+  }
+
   return null
 }
 
@@ -233,7 +248,17 @@ export function getCuratedItineraryBySlug(slug: string): CuratedItinerary | null
   if (!slug) return null
   const cleanSlug = String(slug).trim().toLowerCase()
   const store = loadCuratedStore()
-  return store.itineraries.find(it => it.slug.toLowerCase() === cleanSlug) || null
+  const exact = store.itineraries.find(it => it.slug.toLowerCase() === cleanSlug)
+  if (exact) return exact
+
+  // Fallback prefix lookup (e.g. if slug had -1d legacy suffix)
+  const basePrefix = cleanSlug.replace(/-\d+d$/, '')
+  if (basePrefix && basePrefix !== cleanSlug) {
+    const prefixMatch = store.itineraries.find(it => it.slug.toLowerCase().startsWith(basePrefix))
+    if (prefixMatch) return prefixMatch
+  }
+
+  return null
 }
 
 export async function getCuratedItineraryBySlugAsync(slug: string): Promise<CuratedItinerary | null> {

@@ -340,6 +340,7 @@ export function GallerySection() {
                   src={gallery[selectedPhotoIndex].image}
                   alt={gallery[selectedPhotoIndex].alt}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 1024px"
                   className="object-contain"
                   priority
                 />
