@@ -398,7 +398,7 @@ export function TripContent({ trip }: { trip: Trip }) {
     <div className="bg-slate-50 min-h-screen pb-24">
 
       {/* 1. Hero Gallery */}
-      <section className="pt-4 lg:pt-4 pb-8 max-w-[1160px] mx-auto px-6 lg:px-8">
+      <section className={`pt-4 lg:pt-4 pb-8 max-w-[1160px] mx-auto px-6 lg:px-8 relative ${isHeaderDateDropdownOpen ? 'z-40' : 'z-10'}`}>
         {/* Mobile View: Swipeable Carousel with Image Counter & Chevrons */}
         <div className="relative md:hidden w-full aspect-[3/2] overflow-hidden rounded-3xl mb-8 group/mobilehero">
           <div
@@ -544,7 +544,7 @@ export function TripContent({ trip }: { trip: Trip }) {
             </span>
 
             {/* 2. Interactive Departure Date Badge with Professional Dropdown */}
-            <div ref={headerDateDropdownRef} className="relative">
+            <div ref={headerDateDropdownRef} className={`relative ${isHeaderDateDropdownOpen ? 'z-50' : 'z-10'}`}>
               <button
                 type="button"
                 onClick={() => {
@@ -603,7 +603,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -6, scale: 0.98 }}
                     transition={{ duration: 0.18, ease: 'easeOut' }}
-                    className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-[calc(100vw-3rem)] sm:w-[380px] md:w-[410px] max-w-[94vw] bg-white rounded-2xl border border-slate-200 shadow-[0_16px_50px_rgba(11,41,64,0.22)] z-30 overflow-hidden divide-y divide-slate-100"
+                    className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-[calc(100vw-3rem)] sm:w-[380px] md:w-[410px] max-w-[94vw] bg-white rounded-2xl border border-slate-200 shadow-[0_16px_50px_rgba(11,41,64,0.22)] z-50 overflow-hidden divide-y divide-slate-100"
                   >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white px-4 py-3 flex items-center justify-between">

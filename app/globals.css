@@ -58,7 +58,7 @@
 .sticky-itinerary-nav {
   position: sticky !important;
   top: var(--nav-header-height) !important;
-  z-index: 40 !important;
+  z-index: 30 !important;
 }
 
 .itinerary-scroll-target {

@@ -21,7 +21,7 @@ export function Navbar() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 transition-all duration-300 shadow-sm">
+    <header className="sticky top-0 z-[60] transition-all duration-300 shadow-sm">
       
       {/* =========================================================================
           1. MAIN PRIMARY NAVBAR (Light & Crisp)
