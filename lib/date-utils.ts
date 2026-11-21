@@ -51,7 +51,55 @@ export function parseTripDate(dateStr?: string): ParsedTripDate | null {
 
   const currentYear = new Date().getFullYear()
 
-  // 1. Cross-month or cross-year range: "Oct 29–Nov 02, 2026" or "Dec 29, 2026 – Jan 04, 2027 (New Year Special)"
+  // 1. Day-first range: "02 Oct – 09 Oct 2026", "28 Nov – 05 Dec 2026", "14 Nov – 21 Nov"
+  const dayFirstMatch = cleaned.match(
+    /(\d{1,2})\s+([A-Za-z]+)(?:,\s*(\d{4}))?\s*[-–—]\s*(\d{1,2})\s+([A-Za-z]+)(?:,\s*(\d{4}))?/i
+  )
+  if (dayFirstMatch) {
+    const d1 = parseInt(dayFirstMatch[1], 10)
+    const m1Str = dayFirstMatch[2].toLowerCase()
+    const d2 = parseInt(dayFirstMatch[4], 10)
+    const m2Str = dayFirstMatch[5].toLowerCase()
+    const endYearParsed = dayFirstMatch[6] ? parseInt(dayFirstMatch[6], 10) : currentYear
+    const startYearParsed = dayFirstMatch[3]
+      ? parseInt(dayFirstMatch[3], 10)
+      : (m1Str in MONTH_MAP && m2Str in MONTH_MAP && MONTH_MAP[m1Str] > MONTH_MAP[m2Str] ? endYearParsed - 1 : endYearParsed)
+
+    if (m1Str in MONTH_MAP && m2Str in MONTH_MAP) {
+      const m1 = MONTH_MAP[m1Str]
+      const m2 = MONTH_MAP[m2Str]
+
+      const startDate = new Date(startYearParsed, m1, d1, 0, 0, 0, 0)
+      const endDate = new Date(endYearParsed, m2, d2, 23, 59, 59, 999)
+
+      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+        return { startDate, endDate, raw: cleaned }
+      }
+    }
+  }
+
+  // 2. Day-range within same month: "02 – 09 Oct 2026" or "10-15 Nov"
+  const dayRangeSameMonthMatch = cleaned.match(
+    /(\d{1,2})\s*[-–—]\s*(\d{1,2})\s+([A-Za-z]+)(?:,\s*(\d{4}))?/i
+  )
+  if (dayRangeSameMonthMatch) {
+    const d1 = parseInt(dayRangeSameMonthMatch[1], 10)
+    const d2 = parseInt(dayRangeSameMonthMatch[2], 10)
+    const mStr = dayRangeSameMonthMatch[3].toLowerCase()
+    const year = dayRangeSameMonthMatch[4] ? parseInt(dayRangeSameMonthMatch[4], 10) : currentYear
+
+    if (mStr in MONTH_MAP) {
+      const m = MONTH_MAP[mStr]
+      const startDate = new Date(year, m, d1, 0, 0, 0, 0)
+      const endDate = new Date(year, m, d2, 23, 59, 59, 999)
+
+      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+        return { startDate, endDate, raw: cleaned }
+      }
+    }
+  }
+
+  // 3. Cross-month or cross-year range: "Oct 29–Nov 02, 2026" or "Dec 29, 2026 – Jan 04, 2027 (New Year Special)"
   const crossMonthMatch = cleaned.match(
     /([A-Za-z]+)\s*(\d{1,2})(?:,\s*(\d{4}))?\s*[-–—]\s*([A-Za-z]+)\s*(\d{1,2})(?:,\s*(\d{4}))?/i
   )
@@ -99,12 +147,30 @@ export function parseTripDate(dateStr?: string): ParsedTripDate | null {
     }
   }
 
-  // 3. Single date: "Oct 18, 2026" or "Oct 18"
+  // 4. Single date: "Oct 18, 2026" or "Oct 18"
   const singleDateMatch = cleaned.match(/([A-Za-z]+)\s*(\d{1,2})(?:,\s*(\d{4}))?/i)
   if (singleDateMatch) {
     const mStr = singleDateMatch[1].toLowerCase()
     const d = parseInt(singleDateMatch[2], 10)
     const year = singleDateMatch[3] ? parseInt(singleDateMatch[3], 10) : currentYear
+
+    if (mStr in MONTH_MAP) {
+      const m = MONTH_MAP[mStr]
+      const startDate = new Date(year, m, d, 0, 0, 0, 0)
+      const endDate = new Date(year, m, d, 23, 59, 59, 999)
+
+      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+        return { startDate, endDate, raw: cleaned }
+      }
+    }
+  }
+
+  // 5. Day-first single date: "18 Oct 2026" or "18 Oct"
+  const dayFirstSingleMatch = cleaned.match(/(\d{1,2})\s+([A-Za-z]+)(?:,\s*(\d{4}))?/i)
+  if (dayFirstSingleMatch) {
+    const d = parseInt(dayFirstSingleMatch[1], 10)
+    const mStr = dayFirstSingleMatch[2].toLowerCase()
+    const year = dayFirstSingleMatch[3] ? parseInt(dayFirstSingleMatch[3], 10) : currentYear
 
     if (mStr in MONTH_MAP) {
       const m = MONTH_MAP[mStr]
@@ -168,8 +234,13 @@ export function getTripPrimaryDate(
     return trip.date
   }
 
-  // If all specific dates are in the past or none defined, fallback to first date or trip.date
-  return trip.dates?.[0] || trip.date || 'Upcoming'
+  // If trip had dates but all are in the past:
+  if (trip.dates && trip.dates.length > 0) {
+    return 'No Upcoming Trips'
+  }
+
+  // If none defined, fallback to trip.date or 'Upcoming'
+  return trip.date || 'Upcoming'
 }
 
 /**

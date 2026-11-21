@@ -73,7 +73,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap"
           rel="stylesheet"
         />
       </head>
@@ -93,6 +93,12 @@ export default function RootLayout({
           `}
         </Script>
         {children}
+        {/* Thrivia CRM & Event Booking Embed SDK */}
+        <Script
+          src="https://www.thrivia.io/embed/v1.js"
+          data-key="pk_live_322b3dc5889c6618df5aa17899d64049"
+          strategy="afterInteractive"
+        />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

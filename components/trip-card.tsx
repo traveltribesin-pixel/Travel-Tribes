@@ -255,7 +255,7 @@ export function TripCard({ trip, featured = false }: { trip: Trip; featured?: bo
         </h3>
 
         {/* Complete Full Route (Below Heading - Complete, not hidden or truncated) */}
-        <p className="text-slate-700 font-semibold text-[12.5px] sm:text-[13px] leading-snug mb-3 break-words">
+        <p className="text-slate-700 font-semibold text-[12.5px] sm:text-[13px] leading-snug mb-3 break-words min-h-[36px] sm:min-h-[38px] line-clamp-2">
           {routeInfo.fullRoute}
         </p>
 

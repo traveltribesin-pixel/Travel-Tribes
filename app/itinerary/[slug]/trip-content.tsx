@@ -13,6 +13,7 @@ import { TripCard } from '@/components/trip-card'
 import { ReviewCard } from '@/components/trip-components'
 import { generateItineraryPDF } from '@/lib/generate-itinerary-pdf'
 import { PicturePerfectGallery } from '@/components/picture-perfect-gallery'
+import { getThriviaEventId } from '@/lib/thrivia-events'
 
 import { resolveTripDynamicPackages, parseNumericPrice } from '@/lib/pricing-calculator'
 
@@ -44,34 +45,47 @@ export function TripContent({ trip }: { trip: Trip }) {
   const [pdfError, setPdfError] = useState<string | null>(null)
 
   const primaryDate = useMemo(() => getTripPrimaryDate(trip), [trip])
+  const thriviaEventId = useMemo(() => getThriviaEventId(trip.slug), [trip.slug])
   
-  // All available departure dates strictly as per itinerary data
+  // Only upcoming active dates strictly on or after current date (past dates automatically hidden!)
   const availableDates = useMemo(() => {
     if (trip.dates && trip.dates.length > 0) {
-      return trip.dates
+      const upcoming = filterUpcomingDates(trip.dates)
+      if (upcoming.length > 0) {
+        return upcoming
+      }
     }
-    return [primaryDate]
+    if (primaryDate && primaryDate !== 'No Upcoming Trips') {
+      return [primaryDate]
+    }
+    return []
   }, [trip, primaryDate])
 
   const upcomingDates = availableDates
 
   const initialDate = useMemo(() => {
-    if (isFestiveParam && trip.dates && trip.dates.length > 0) {
-      const festiveUpcoming = filterUpcomingDates(trip.dates).filter(isFestiveDate)
+    if (isFestiveParam && availableDates.length > 0) {
+      const festiveUpcoming = availableDates.filter(isFestiveDate)
       if (festiveUpcoming.length > 0) return festiveUpcoming[0]
-      const allFestive = trip.dates.filter(isFestiveDate)
-      if (allFestive.length > 0) return allFestive[0]
     }
-    return primaryDate
-  }, [isFestiveParam, trip.dates, primaryDate])
+    return availableDates[0] || primaryDate
+  }, [isFestiveParam, availableDates, primaryDate])
 
   const [selectedDate, setSelectedDate] = useState(initialDate)
+
+  // Keep selectedDate in sync if availableDates updates or selected date has expired
+  useEffect(() => {
+    if (availableDates.length > 0 && !availableDates.includes(selectedDate)) {
+      setSelectedDate(availableDates[0])
+    }
+  }, [availableDates, selectedDate])
+
   const [isHeaderDateDropdownOpen, setIsHeaderDateDropdownOpen] = useState(false)
   const headerDateDropdownRef = useRef<HTMLDivElement>(null)
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false)
   const [isMobileDateDropdownOpen, setIsMobileDateDropdownOpen] = useState(false)
 
-  // Close header date dropdown on outside click or escape key
+  // Close header date dropdown on outside click, escape key, or page scroll
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -86,15 +100,44 @@ export function TripContent({ trip }: { trip: Trip }) {
         setIsHeaderDateDropdownOpen(false)
       }
     }
+    function handleScroll(event: Event) {
+      // Do not close if scrolling inside the dropdown's batch list itself
+      if (
+        headerDateDropdownRef.current &&
+        event.target instanceof Node &&
+        headerDateDropdownRef.current.contains(event.target)
+      ) {
+        return
+      }
+      setIsHeaderDateDropdownOpen(false)
+    }
+
     if (isHeaderDateDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleKeyDown)
+      window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
     }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('scroll', handleScroll, { capture: true })
     }
   }, [isHeaderDateDropdownOpen])
+
+  // Close sidebar and mobile date dropdown on page scroll
+  useEffect(() => {
+    if (!isDateDropdownOpen && !isMobileDateDropdownOpen) return
+
+    function handleScroll() {
+      setIsDateDropdownOpen(false)
+      setIsMobileDateDropdownOpen(false)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [isDateDropdownOpen, isMobileDateDropdownOpen])
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showAllPhotos, setShowAllPhotos] = useState(false)
@@ -1243,14 +1286,26 @@ export function TripContent({ trip }: { trip: Trip }) {
 
               {/* Action Buttons */}
               <div className="w-[160px] lg:w-full space-y-2.5">
-                <Link
-                  href={`/book?trip=${trip.slug}&date=${encodeURIComponent(selectedDate)}&guests=${guests}&pkg=${selectedPackageIndex}`}
-                  className="block w-full"
-                >
-                  <button className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 lg:py-3.5 rounded-full font-bold text-[13px] lg:text-sm">
+                {thriviaEventId ? (
+                  <a
+                    href={`https://www.thrivia.io/e/${thriviaEventId}`}
+                    data-thrivia-action="checkout"
+                    data-thrivia-event-id={thriviaEventId}
+                    suppressHydrationWarning
+                    className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 lg:py-3.5 rounded-full font-bold text-[13px] lg:text-sm text-white select-none cursor-pointer"
+                  >
                     Book Now <ArrowRight size={16} className="hidden lg:block" />
-                  </button>
-                </Link>
+                  </a>
+                ) : (
+                  <Link
+                    href={`/book?trip=${trip.slug}&date=${encodeURIComponent(selectedDate)}&guests=${guests}&pkg=${selectedPackageIndex}`}
+                    className="block w-full"
+                  >
+                    <button className="glow-btn w-full inline-flex items-center justify-center gap-2 py-3 lg:py-3.5 rounded-full font-bold text-[13px] lg:text-sm">
+                      Book Now <ArrowRight size={16} className="hidden lg:block" />
+                    </button>
+                  </Link>
+                )}
 
                 <button
                   type="button"
