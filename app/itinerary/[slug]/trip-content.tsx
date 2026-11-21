@@ -85,7 +85,7 @@ export function TripContent({ trip }: { trip: Trip }) {
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false)
   const [isMobileDateDropdownOpen, setIsMobileDateDropdownOpen] = useState(false)
 
-  // Close header date dropdown on outside click, escape key, or page scroll
+  // Close header date dropdown on outside click or escape key (stays open during scrolling until user closes it)
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -100,44 +100,16 @@ export function TripContent({ trip }: { trip: Trip }) {
         setIsHeaderDateDropdownOpen(false)
       }
     }
-    function handleScroll(event: Event) {
-      // Do not close if scrolling inside the dropdown's batch list itself
-      if (
-        headerDateDropdownRef.current &&
-        event.target instanceof Node &&
-        headerDateDropdownRef.current.contains(event.target)
-      ) {
-        return
-      }
-      setIsHeaderDateDropdownOpen(false)
-    }
 
     if (isHeaderDateDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleKeyDown)
-      window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
     }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('scroll', handleScroll, { capture: true })
     }
   }, [isHeaderDateDropdownOpen])
-
-  // Close sidebar and mobile date dropdown on page scroll
-  useEffect(() => {
-    if (!isDateDropdownOpen && !isMobileDateDropdownOpen) return
-
-    function handleScroll() {
-      setIsDateDropdownOpen(false)
-      setIsMobileDateDropdownOpen(false)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [isDateDropdownOpen, isMobileDateDropdownOpen])
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showAllPhotos, setShowAllPhotos] = useState(false)
@@ -631,7 +603,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -6, scale: 0.98 }}
                     transition={{ duration: 0.18, ease: 'easeOut' }}
-                    className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-[calc(100vw-3rem)] sm:w-[380px] md:w-[410px] max-w-[94vw] bg-white rounded-2xl border border-slate-200 shadow-[0_16px_50px_rgba(11,41,64,0.22)] z-50 overflow-hidden divide-y divide-slate-100"
+                    className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-[calc(100vw-3rem)] sm:w-[380px] md:w-[410px] max-w-[94vw] bg-white rounded-2xl border border-slate-200 shadow-[0_16px_50px_rgba(11,41,64,0.22)] z-30 overflow-hidden divide-y divide-slate-100"
                   >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white px-4 py-3 flex items-center justify-between">
