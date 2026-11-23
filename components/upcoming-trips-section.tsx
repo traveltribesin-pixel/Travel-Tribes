@@ -4,17 +4,19 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { HorizontalRail, SectionHeading } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
-import { trips } from '@/lib/travel-data'
+import { trips, type Trip } from '@/lib/travel-data'
 import { isTripUpcoming } from '@/lib/date-utils'
 
-export function UpcomingTripsSection() {
-  const filteredTrips = trips.filter(
-    (t) =>
-      !t.slug.startsWith('hampi') &&
-      !t.slug.startsWith('jawai') &&
-      t.slug !== 'spiti-valley-chandrataal' &&
-      isTripUpcoming(t)
-  )
+export function UpcomingTripsSection({ trips: propTrips }: { trips?: Trip[] } = {}) {
+  const filteredTrips = propTrips && propTrips.length > 0
+    ? propTrips
+    : trips.filter(
+        (t) =>
+          !t.slug.startsWith('hampi') &&
+          !t.slug.startsWith('jawai') &&
+          t.slug !== 'spiti-valley-chandrataal' &&
+          isTripUpcoming(t)
+      )
 
   const prioritizedTrips = [
     ...filteredTrips.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),

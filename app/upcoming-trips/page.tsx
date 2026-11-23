@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips } from '@/lib/travel-data'
+import { getPublicTripsForPage } from '@/lib/trips-store'
 import { isTripUpcoming } from '@/lib/date-utils'
 
 export const metadata: Metadata = {
@@ -22,7 +23,9 @@ const categories = [
 ]
 
 export default function Page() {
-  const filtered = trips.filter(
+  const storeTrips = getPublicTripsForPage('upcoming')
+  const baseSource = storeTrips.length > 0 ? storeTrips : trips
+  const filtered = baseSource.filter(
     (t) =>
       !t.slug.startsWith('hampi') &&
       !t.slug.startsWith('jawai') &&

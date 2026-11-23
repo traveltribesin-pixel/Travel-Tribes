@@ -1,4 +1,5 @@
 import { PageFrame } from '@/components/site-shell'
+import { getPublicTripsForPage } from '@/lib/trips-store'
 import { Newsletter } from '@/components/trip-components'
 import { HeroSection } from '@/components/hero-section'
 import { BrandValuesSection } from '@/components/brand-values-section'
@@ -19,6 +20,10 @@ import { BlogSection } from '@/components/blog-section'
 import { HomeCtaSection } from '@/components/home-cta-section'
 
 export default function Home() {
+  const homeUpcoming = getPublicTripsForPage('home-upcoming')
+  const homeIntl = getPublicTripsForPage('home-international')
+  const homeDomestic = getPublicTripsForPage('domestic')
+
   return (
     <PageFrame>
       <main>
@@ -26,7 +31,7 @@ export default function Home() {
         <HeroSection />
 
         {/* 2. Upcoming Trips (All Itineraries) */}
-        <UpcomingTripsSection />
+        <UpcomingTripsSection trips={homeUpcoming} />
 
         {/* Explore Categories Rail */}
         <ExploreCategoriesSection />
@@ -38,10 +43,10 @@ export default function Home() {
         <CommunityBannerSection />
 
         {/* 5. International Trips */}
-        <InternationalTripsSection />
+        <InternationalTripsSection trips={homeIntl} />
 
         {/* 6. Domestic Journeys */}
-        <DomesticJourneysSection />
+        <DomesticJourneysSection trips={homeDomestic} />
 
 
 

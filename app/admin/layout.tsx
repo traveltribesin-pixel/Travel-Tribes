@@ -23,6 +23,7 @@ import {
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
+  { href: '/admin/itineraries', label: 'Itineraries CMS 🗺️', icon: Compass },
   { href: '/curate-itinerary', label: 'Curate Itinerary ✨', icon: Sparkles },
   { href: '/admin/leads', label: 'Leads Pipeline', icon: Users },
   { href: '/admin/bookings', label: 'Bookings & Payments', icon: CreditCard },

@@ -4,9 +4,13 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { HorizontalRail, SectionHeading } from '@/components/trip-components'
 import { TripCard } from '@/components/trip-card'
-import { trips } from '@/lib/travel-data'
+import { trips, type Trip } from '@/lib/travel-data'
 
-export function InternationalTripsSection() {
+export function InternationalTripsSection({ trips: propTrips }: { trips?: Trip[] } = {}) {
+  const displayTrips = propTrips && propTrips.length > 0
+    ? propTrips
+    : trips.filter((t) => t.region === 'International')
+
   return (
     <section 
       className="py-8 sm:py-10 bg-[var(--sky-pale)]"
@@ -21,11 +25,9 @@ export function InternationalTripsSection() {
         center
       />
       <HorizontalRail label="International trips">
-        {trips
-          .filter(t => t.region === 'International')
-          .map(t => (
-            <TripCard key={t.slug} trip={t} />
-          ))}
+        {displayTrips.map((t) => (
+          <TripCard key={t.slug} trip={t} />
+        ))}
       </HorizontalRail>
 
       {/* Centered Glow Button Below Cards */}

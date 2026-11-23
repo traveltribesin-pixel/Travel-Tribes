@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { xmasNewYearTrips } from '@/lib/travel-data'
+import { getPublicTripsForPage } from '@/lib/trips-store'
 
 export const metadata: Metadata = {
   title: 'Xmas & New Year Trips 2026-2027 | Festive Group Escapes | Travel Tribes',
@@ -19,9 +20,11 @@ const categories = [
 ]
 
 export default function Page() {
+  const storeTrips = getPublicTripsForPage('festive')
+  const sourceTrips = storeTrips.length > 0 ? storeTrips : xmasNewYearTrips
   const sortedXmasTrips = [
-    ...xmasNewYearTrips.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
-    ...xmasNewYearTrips.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
+    ...sourceTrips.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
+    ...sourceTrips.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
   ]
 
   return (

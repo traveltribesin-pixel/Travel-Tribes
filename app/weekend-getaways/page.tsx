@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips, type Trip, isWeekendTrip } from '@/lib/travel-data'
+import { getPublicTripsForPage } from '@/lib/trips-store'
 
 export const metadata: Metadata = {
   title: 'Weekend Getaways & Short Trips from Mumbai & Pune | Travel Tribes',
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  const weekendTrips: Trip[] = trips.filter((t) => isWeekendTrip(t))
+  const storeTrips = getPublicTripsForPage('weekend')
+  const weekendTrips: Trip[] = storeTrips.length > 0 ? storeTrips : trips.filter((t) => isWeekendTrip(t))
   return (
     <TripsPage
       eyebrow="A little time away"

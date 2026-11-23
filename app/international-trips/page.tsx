@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips } from '@/lib/travel-data'
+import { getPublicTripsForPage } from '@/lib/trips-store'
 
 export const metadata: Metadata = {
   title: 'International Group Tours & Backpacking Trips | Travel Tribes',
@@ -22,7 +23,8 @@ const categories = [
 ]
 
 export default function Page() {
-  const internationalTrips = trips.filter(t => t.region === 'International')
+  const storeTrips = getPublicTripsForPage('international')
+  const internationalTrips = storeTrips.length > 0 ? storeTrips : trips.filter(t => t.region === 'International')
   return (
     <TripsPage
       eyebrow="Go further, together"

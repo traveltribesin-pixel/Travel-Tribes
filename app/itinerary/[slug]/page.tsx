@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { trips } from '@/lib/travel-data'
+import { getStoredTripBySlug } from '@/lib/trips-store'
 import { getCuratedItineraryBySlugAsync } from '@/lib/curated-itineraries-store'
 import { TripContent } from './trip-content'
 import { CuratedItineraryView } from '@/components/curated-itinerary-view'
@@ -62,8 +63,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
   }
 
-  // 2. Check standard travel data trips
-  const trip = trips.find((t) => t.slug === slug)
+  // 2. Check standard travel data trips or dynamic admin trips store
+  const trip = getStoredTripBySlug(slug) || trips.find((t) => t.slug === slug)
   if (!trip) return {}
 
   const title = `${trip.title} (${trip.duration}) | Travel Tribes`
@@ -142,8 +143,8 @@ export default async function ItineraryPage({
     )
   }
 
-  // 2. Fall back to standard trips
-  const trip = trips.find((t) => t.slug === slug)
+  // 2. Fall back to standard trips or dynamic admin store
+  const trip = getStoredTripBySlug(slug) || trips.find((t) => t.slug === slug)
   if (!trip) {
     notFound()
   }

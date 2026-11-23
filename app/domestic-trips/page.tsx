@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TripsPage } from '@/app/trips-page'
 import { trips } from '@/lib/travel-data'
+import { getPublicTripsForPage } from '@/lib/trips-store'
 
 export const metadata: Metadata = {
   title: 'Domestic Group Trips & Backpacking in India | Travel Tribes',
@@ -18,22 +19,24 @@ const categories = [
 ]
 
 export default function Page() {
+  const storeTrips = getPublicTripsForPage('domestic')
+  const baseTrips = storeTrips.length > 0 ? storeTrips : trips
   const isJawai = (slug: string) => slug.toLowerCase().includes('jawai')
   const isEndedTrip = (slug: string) => {
     const s = slug.toLowerCase()
     return s.includes('hampi') || s === 'spiti-valley-chandrataal'
   }
-  const rawActive = trips.filter(
+  const rawActive = baseTrips.filter(
     (t) => t.region !== 'International' && !isEndedTrip(t.slug) && !isJawai(t.slug)
   )
   const activeDomesticTrips = [
     ...rawActive.filter((t) => t.slug === 'spiti-valley-xmas-new-year-mumbai'),
     ...rawActive.filter((t) => t.slug !== 'spiti-valley-xmas-new-year-mumbai'),
   ]
-  const endedDomesticTrips = trips.filter(
+  const endedDomesticTrips = baseTrips.filter(
     (t) => t.region !== 'International' && isEndedTrip(t.slug) && !isJawai(t.slug)
   )
-  const jawaiTrips = trips.filter(
+  const jawaiTrips = baseTrips.filter(
     (t) => t.region !== 'International' && isJawai(t.slug)
   )
   const domesticTrips = [...activeDomesticTrips, ...endedDomesticTrips, ...jawaiTrips]
