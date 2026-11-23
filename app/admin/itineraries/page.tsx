@@ -22,7 +22,8 @@ import {
   RefreshCw,
   Sliders,
   Check,
-  X
+  X,
+  Database
 } from 'lucide-react'
 import type { AdminTrip } from '@/lib/trips-store'
 
@@ -36,6 +37,24 @@ export default function AdminItinerariesPage() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null)
+  const [syncingDb, setSyncingDb] = useState(false)
+
+  const handleSyncDatabase = async () => {
+    setSyncingDb(true)
+    try {
+      const res = await fetch('/api/admin/database', { method: 'POST' })
+      const data = await res.json()
+      if (data.success) {
+        setMessage({ type: 'success', text: `Database synchronized successfully (${data.syncedCount}/${data.total} itineraries)!` })
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Database sync completed in local mode.' })
+      }
+    } catch (err: any) {
+      setMessage({ type: 'error', text: err.message || 'Error syncing database' })
+    } finally {
+      setSyncingDb(false)
+    }
+  }
 
   const fetchTrips = async () => {
     setLoading(true)
@@ -195,6 +214,16 @@ export default function AdminItinerariesPage() {
         </div>
 
         <div className="flex items-center gap-2.5 shrink-0">
+          <button
+            onClick={handleSyncDatabase}
+            disabled={syncingDb}
+            className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 hover:text-cyan-200 text-xs font-bold transition-all cursor-pointer disabled:opacity-50"
+            title="Sync all itineraries to database"
+          >
+            <Database size={15} className={syncingDb ? 'animate-spin text-[#00b4d8]' : ''} />
+            <span className="hidden sm:inline">Sync Database</span>
+          </button>
+
           <button
             onClick={fetchTrips}
             disabled={loading}

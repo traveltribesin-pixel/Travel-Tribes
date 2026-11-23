@@ -3,6 +3,7 @@ import os from 'os'
 import path from 'path'
 import { trips as baseStaticTrips, type Trip, type TripPricingOption, isWeekendTrip } from './travel-data'
 import { TRIP_THRIVIA_EVENTS } from './thrivia-events'
+import { syncTripToMongo, deleteTripFromMongo, syncAllItinerariesToMongo } from './db'
 
 export interface TripPlacements {
   showOnHome: boolean
@@ -296,6 +297,11 @@ export function saveAdminTrip(tripInput: Partial<AdminTrip>): {
 
     saveAdminTripsStore(list)
 
+    // Seamlessly persist to MongoDB in the background
+    syncTripToMongo(completeTrip).catch((err) => {
+      console.warn('[Database] Background Mongo sync error for', completeTrip.slug, err?.message)
+    })
+
     return {
       success: true,
       trip: completeTrip,
@@ -327,6 +333,11 @@ export function deleteAdminTrip(idOrSlug: string): { success: boolean; deletedSl
 
     const [deleted] = list.splice(idx, 1)
     saveAdminTripsStore(list)
+
+    // Sync deletion to MongoDB
+    deleteTripFromMongo(deleted.id || deleted.slug).catch((err) => {
+      console.warn('[Database] Background Mongo delete error for', deleted.slug, err?.message)
+    })
 
     return { success: true, deletedSlug: deleted.slug }
   } catch (err) {
@@ -380,6 +391,11 @@ export function toggleAdminTripStatus(idOrSlug: string): { success: boolean; sta
     if (idx !== -1) {
       list[idx] = trip
       saveAdminTripsStore(list)
+
+      // Sync status to MongoDB
+      syncTripToMongo(trip).catch((err) => {
+        console.warn('[Database] Background Mongo status update error for', trip.slug, err?.message)
+      })
     }
 
     return { success: true, status: newStatus }
@@ -459,3 +475,17 @@ export function getStoredTripBySlug(slug: string): AdminTrip | null {
   if (found) return found // Allow preview even if draft for testing
   return null
 }
+
+/**
+ * Syncs/Seeds all stored itineraries into the database
+ */
+export async function syncAllTripsToDatabase(): Promise<{
+  success: boolean
+  syncedCount: number
+  total: number
+  error?: string
+}> {
+  const allTrips = getAllAdminTrips()
+  return await syncAllItinerariesToMongo(allTrips)
+}
+

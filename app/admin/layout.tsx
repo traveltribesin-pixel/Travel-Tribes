@@ -4,32 +4,16 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
-  LayoutDashboard,
-  Users,
-  CreditCard,
-  Building2,
-  TrendingUp,
-  Settings,
+  Compass,
   LogOut,
   ExternalLink,
-  MessageSquare,
-  FileSpreadsheet,
   Menu,
   X,
-  Compass,
-  Bell,
-  Sparkles
+  Database
 } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
   { href: '/admin/itineraries', label: 'Itineraries CMS 🗺️', icon: Compass },
-  { href: '/curate-itinerary', label: 'Curate Itinerary ✨', icon: Sparkles },
-  { href: '/admin/leads', label: 'Leads Pipeline', icon: Users },
-  { href: '/admin/bookings', label: 'Bookings & Payments', icon: CreditCard },
-  { href: '/admin/custom-trips', label: 'Corporate & Custom', icon: Building2 },
-  { href: '/admin/analytics', label: 'Analytics', icon: TrendingUp },
-  { href: '/admin/settings', label: 'WhatsApp & Settings', icon: Settings },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -95,7 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="w-8 h-8 rounded-lg bg-[#00b4d8] flex items-center justify-center font-black text-slate-950 text-xs">
             TT
           </div>
-          <span className="font-bold text-sm tracking-tight text-white">Travel Tribes CRM</span>
+          <span className="font-bold text-sm tracking-tight text-white">Travel Tribes Admin</span>
         </div>
 
         <button
@@ -125,7 +109,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <h2 className="font-black text-sm tracking-tight text-white">TRAVEL TRIBES</h2>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#00b4d8]">CRM Live Portal</span>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#00b4d8]">Itinerary CMS</span>
                 </div>
               </div>
             </div>
@@ -134,7 +118,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Nav Links */}
           <nav className="p-3 space-y-1">
             {NAV_ITEMS.map((item) => {
-              const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href)
+              const isActive = pathname.startsWith(item.href)
               const Icon = item.icon
               return (
                 <Link
@@ -154,57 +138,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             })}
           </nav>
 
-          {/* Quick Actions in Sidebar */}
-          <div className="px-3 pt-3 space-y-2">
-            {/* Thrivia CRM Quick Link */}
-            <div className="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/40 to-blue-950/40 border border-cyan-500/30 text-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase font-bold text-cyan-300 tracking-wider">Thrivia CRM</span>
-                <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Live Sync
-                </span>
+          {/* Database Info Card */}
+          <div className="px-3 pt-3">
+            <div className="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800 text-xs">
+              <div className="flex items-center gap-2 text-cyan-400 font-semibold mb-1">
+                <Database size={14} />
+                <span className="text-[11px] uppercase tracking-wider font-bold">Database Storage</span>
               </div>
-              <div className="mt-2">
-                <a
-                  href="https://thrivia.io/creator"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 hover:text-white transition-all text-[11px] font-semibold border border-cyan-500/20"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Sparkles size={13} className="text-[#00b4d8]" />
-                    <span>Open Thrivia CRM</span>
-                  </span>
-                  <ExternalLink size={12} className="text-slate-400" />
-                </a>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Quick Exports</span>
-              <div className="mt-2 space-y-1.5">
-                <a
-                  href="/api/admin/export?type=leads"
-                  download
-                  className="flex items-center justify-between p-2 rounded-lg bg-slate-800 hover:bg-slate-700/80 text-slate-300 hover:text-white transition-all text-[11px]"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <FileSpreadsheet size={13} className="text-emerald-400" />
-                    <span>Download Leads CSV</span>
-                  </span>
-                </a>
-                <a
-                  href="/api/admin/export?type=bookings"
-                  download
-                  className="flex items-center justify-between p-2 rounded-lg bg-slate-800 hover:bg-slate-700/80 text-slate-300 hover:text-white transition-all text-[11px]"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <FileSpreadsheet size={13} className="text-[#00b4d8]" />
-                    <span>Download Bookings CSV</span>
-                  </span>
-                </a>
-              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                All itineraries are stored & synchronized directly in the database.
+              </p>
             </div>
           </div>
         </div>
@@ -236,7 +179,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <span>Visit Website</span>
               <ExternalLink size={10} />
             </Link>
-            <span>v2.4 CRM</span>
+            <span className="text-slate-500">v2.5 CMS</span>
           </div>
         </div>
       </aside>
