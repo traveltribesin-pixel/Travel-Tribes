@@ -65,7 +65,7 @@ export const TRIP_THRIVIA_EVENTS: Record<string, string> = {
 
   // Coorg Backpacking - Regular (from Mumbai)
   'coorg-backpacking': '6ad31a30a4173ffeb139579d',
-  // Coorg Backpacking - Xmas & New Year Special (4N/5D)
+  // Coorg Backpacking - Xmas Special (4N/5D)
   'coorg-backpacking-xmas-new-year': '6af32e5a9b85caba6f0cd0f5',
 
   // Coorg and Mysore New Year Trip from Mumbai

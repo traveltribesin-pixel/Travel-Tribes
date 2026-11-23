@@ -6924,6 +6924,7 @@ const festiveDuplicateOverrides: {
   title: string
   dates: string[]
   price: string
+  tag?: string
   image?: string
   alt?: string
   seoDescription?: string
@@ -7053,10 +7054,11 @@ const festiveDuplicateOverrides: {
     origId: 'coorg-backpacking',
     id: 'coorg-backpacking-xmas-new-year',
     slug: 'coorg-backpacking-xmas-new-year',
-    title: 'Coorg Backpacking — Xmas & New Year Special',
+    title: 'Coorg Backpacking — Xmas Special',
+    tag: 'Xmas Special',
     image: '/new-year-trip-images/6.png',
-    alt: 'Coorg Backpacking Xmas & New Year Special Coffee Estate Bonfire Evening',
-    seoDescription: 'Celebrate Christmas & New Year in Coorg with Travel Tribes! 5-day backpacking trip from Mumbai with coffee estate bonfire, Mandalpatti sunrise & Abbey Falls.',
+    alt: 'Coorg Backpacking Xmas Special Coffee Estate Bonfire Evening',
+    seoDescription: 'Celebrate Christmas in Coorg with Travel Tribes! 5-day backpacking trip from Mumbai with coffee estate bonfire, Mandalpatti sunrise & Abbey Falls.',
     seoKeywords: [
       'Coorg New Year trip',
       'Coorg Christmas backpacking trip',
@@ -7126,7 +7128,7 @@ const duplicateTrips: Trip[] = festiveDuplicateOverrides.map((override) => {
     date: override.dates[0],
     dates: override.dates,
     price: override.price,
-    tag: 'Xmas & New Year Special',
+    tag: override.tag || 'Xmas & New Year Special',
     ...(override.image ? { image: override.image } : {}),
     ...(override.alt ? { alt: override.alt } : {}),
     ...(override.seoDescription ? { seoDescription: override.seoDescription } : {}),
