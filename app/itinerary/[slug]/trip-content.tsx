@@ -66,9 +66,12 @@ export function TripContent({ trip }: { trip: Trip }) {
   const initialDate = useMemo(() => {
     if (isFestiveParam && availableDates.length > 0) {
       const festiveUpcoming = availableDates.filter(isFestiveDate)
+      const openFestive = festiveUpcoming.find((d) => !d.toLowerCase().includes('sold out'))
+      if (openFestive) return openFestive
       if (festiveUpcoming.length > 0) return festiveUpcoming[0]
     }
-    return availableDates[0] || primaryDate
+    const openDate = availableDates.find((d) => !d.toLowerCase().includes('sold out'))
+    return openDate || availableDates[0] || primaryDate
   }, [isFestiveParam, availableDates, primaryDate])
 
   const [selectedDate, setSelectedDate] = useState(initialDate)
@@ -631,6 +634,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                         const isSelected = selectedDate === d
                         const isFestive = isFestiveDate(d)
                         const isLW = isLongWeekendDate(d)
+                        const isSoldOut = d.toLowerCase().includes('sold out')
 
                         // Extract note in parentheses if any
                         const noteMatch = d.match(/\((.*?)\)/)
@@ -658,7 +662,7 @@ export function TripContent({ trip }: { trip: Trip }) {
                             <div className="flex items-center gap-2.5 min-w-0">
                               <div
                                 className={`w-2 h-2 rounded-full shrink-0 ${
-                                  isSelected ? 'bg-[var(--sky)] ring-4 ring-sky-100' : 'bg-slate-300'
+                                  isSelected ? (isSoldOut ? 'bg-rose-500 ring-4 ring-rose-100' : 'bg-[var(--sky)] ring-4 ring-sky-100') : 'bg-slate-300'
                                 }`}
                               />
                               <div className="min-w-0">
@@ -675,7 +679,9 @@ export function TripContent({ trip }: { trip: Trip }) {
                                   {noteText && (
                                     <span
                                       className={`text-[9.5px] font-bold px-1.5 py-0.2 rounded-md ${
-                                        isFestive
+                                        isSoldOut
+                                          ? 'bg-rose-100 text-rose-700 border border-rose-200 font-extrabold'
+                                          : isFestive
                                           ? 'bg-amber-100 text-amber-800 border border-amber-200'
                                           : isLW
                                             ? 'bg-sky-100 text-sky-800 border border-sky-200'
@@ -693,11 +699,17 @@ export function TripContent({ trip }: { trip: Trip }) {
                             </div>
 
                             <div className="flex flex-col items-end shrink-0">
-                              <span className="text-xs font-black text-emerald-600">
-                                {batchPrice}
-                              </span>
+                              {isSoldOut ? (
+                                <span className="text-[11px] font-extrabold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                                  Sold Out
+                                </span>
+                              ) : (
+                                <span className="text-xs font-black text-emerald-600">
+                                  {batchPrice}
+                                </span>
+                              )}
                               {isSelected && (
-                                <span className="text-[9.5px] font-bold text-[var(--sky)] flex items-center gap-0.5">
+                                <span className={`text-[9.5px] font-bold flex items-center gap-0.5 ${isSoldOut ? 'text-rose-600' : 'text-[var(--sky)]'}`}>
                                   <Check size={10} /> Selected
                                 </span>
                               )}
@@ -1258,7 +1270,18 @@ export function TripContent({ trip }: { trip: Trip }) {
 
               {/* Action Buttons */}
               <div className="w-[160px] lg:w-full space-y-2.5">
-                {thriviaEventId ? (
+                {selectedDate && selectedDate.toLowerCase().includes('sold out') ? (
+                  <a
+                    href={`https://wa.me/919975822023?text=${encodeURIComponent(
+                      `Hi Travel Tribes! 👋 I noticed the ${trip.title} batch for ${selectedDate} is Sold Out. Can you let me know if any slots open up or waitlist?`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3 lg:py-3.5 rounded-full font-bold text-[13px] lg:text-sm text-white bg-rose-600 hover:bg-rose-700 shadow-md transition-colors select-none cursor-pointer text-center"
+                  >
+                    Batch Sold Out • Inquire on WhatsApp
+                  </a>
+                ) : thriviaEventId ? (
                   <a
                     href={`https://www.thrivia.io/e/${thriviaEventId}`}
                     data-thrivia-action="checkout"

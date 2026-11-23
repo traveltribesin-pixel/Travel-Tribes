@@ -226,7 +226,8 @@ export function getTripPrimaryDate(
   if (trip.dates && trip.dates.length > 0) {
     const upcoming = filterUpcomingDates(trip.dates, referenceDate)
     if (upcoming.length > 0) {
-      return upcoming[0]
+      const openDate = upcoming.find((d) => !d.toLowerCase().includes('sold out'))
+      return openDate || upcoming[0]
     }
   }
 
